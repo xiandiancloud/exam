@@ -57,7 +57,7 @@
       <script src="assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
     <![endif]-->
 </head>
-<body class='contrast-blue fixed-header'>
+<body class='contrast-red fixed-header'>
 	<jsp:include page="header.jsp"></jsp:include>
 	<div id='wrapper'>
 		<section id=''>

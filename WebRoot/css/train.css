@@ -22,30 +22,12 @@ h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5,h6,.h6 {
 		width: 1200px;
 	}
 }
-
-.navbar {
-  margin: 0;
-  background-color: #49bf67;
-  border: none;
-  min-height: 60px;
-  height: 60px;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  -ms-border-radius: 0;
-  -o-border-radius: 0;
-  border-radius: 0; 
-  }
-.navbar .navbar-brand img {
-      margin-top: -8px; }
-.nav > li > a {
+.navbar-default .navbar-nav > li > a {
+      color: white;
       text-shadow: none;
       padding-top: 20px;
-      padding-bottom: 20px; 
-      color: white;
-      }
-.navbar-default .navbar-nav > li > a {
-color:#fff;
-}
+      padding-bottom: 20px; }
+      
 .list-group-item-success{color:#3c763d;background-color:#dff0d8}a.list-group-item-success{color:#3c763d}a.list-group-item-success .list-group-item-heading{color:inherit}a.list-group-item-success:hover,a.list-group-item-success:focus{color:#3c763d;background-color:#d0e9c6}a.list-group-item-success.active,a.list-group-item-success.active:hover,a.list-group-item-success.active:focus{color:#fff;background-color:#3c763d;border-color:#3c763d}
 
 /*
@@ -99,6 +81,7 @@ color:#fff;
 .top10{margin-top: 10px;}
 .top20{margin-top: 20px;}
 .top50{margin-top: 50px;}
+.pleft15{padding-left: 15px;}
 .left40{margin-left: 40px;}
 .left80{margin-left: 80px;}
 .left120{margin-left: 120px;}
