@@ -280,7 +280,14 @@ public class LmsController extends BaseController {
 		view.setViewName("/lms/train");
 		return view;
 	}
-
+	@RequestMapping("/competion")
+	public ModelAndView competion(HttpServletRequest request, int courseId,
+			int verticalId, int trainId) {
+		ModelAndView view = new ModelAndView();
+		view.setViewName("/lms/competion");
+		return view;
+	}
+	
 	/**
 	 * 首页显示最近操作的课程，登陆后显示
 	 * 

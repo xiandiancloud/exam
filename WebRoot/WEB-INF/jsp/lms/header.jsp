@@ -24,6 +24,7 @@
 					<ul class="nav navbar-nav navbar-left pleft15">
 						<li><a href="lms/getAllCategory.action">首页</a></li>
 						<li><a href="lms/courselist.action">题库</a></li>
+						<li><a href="lms/competion.action">竞赛</a></li>
 						<li><a href="lms/mycourse.action">我的云课堂</a></li>
 					</ul>
 					<!--向右对齐-->
