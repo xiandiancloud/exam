@@ -281,8 +281,7 @@ public class LmsController extends BaseController {
 		return view;
 	}
 	@RequestMapping("/competion")
-	public ModelAndView competion(HttpServletRequest request, int courseId,
-			int verticalId, int trainId) {
+	public ModelAndView competion(HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
 		view.setViewName("/lms/competion");
 		return view;
