@@ -45,7 +45,7 @@ import com.dhl.web.BaseController;
  * @since
  */
 @Controller
-@RequestMapping("/cms")
+@RequestMapping("/cms22")
 public class CmsController extends BaseController {
 	// 课程
 	@Autowired

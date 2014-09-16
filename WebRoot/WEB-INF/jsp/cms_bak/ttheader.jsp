@@ -4,14 +4,14 @@
   <header class="primary" role="banner">
 
     <div class="wrapper wrapper-l">
-      <h1 class="branding"><a href="cms/totexamlist.action"><img src="" alt="edX Studio" /></a></h1>
+      <h1 class="branding"><a href="cms/totcourselist.action"><img src="" alt="edX Studio" /></a></h1>
 
       
       <h2 class="info-course">
-        <span class="sr">当前试卷</span>
-        <a class="course-link" href="cms/totexam.action?courseId=${examId}">
-          <span class="course-org">${exam.org}</span><span class="course-number">${exam.coursecode}</span>
-          <span class="course-title" title="edX Demonstration Course">${exam.name}</span>
+        <span class="sr">当前课程</span>
+        <a class="course-link" href="cms/totcourse.action?courseId=${courseId}">
+          <span class="course-org">${course.org}</span><span class="course-number">${course.coursecode}</span>
+          <span class="course-title" title="edX Demonstration Course">${course.name}</span>
         </a>
       </h2>
 
@@ -19,13 +19,13 @@
         <h2 class="sr">edX Demonstration Course导航：</h2>
         <ol>
           <li class="nav-item nav-course-courseware">
-            <h3 class="title"><span class="label"><span class="label-prefix sr">试卷 </span>内容</span> <i class="icon-caret-down ui-toggle-dd"></i></h3>
+            <h3 class="title"><span class="label"><span class="label-prefix sr">课程 </span>内容</span> <i class="icon-caret-down ui-toggle-dd"></i></h3>
 
             <div class="wrapper wrapper-nav-sub">
               <div class="nav-sub">
                 <ul>
                   <li class="nav-item nav-course-courseware-outline">
-                    <a href="cms/totexam.action?examId=${examId}">大纲</a>
+                    <a href="cms/totcourse.action?courseId=${courseId}">大纲</a>
                   </li>
                   <!--<li class="nav-item nav-course-courseware-updates">
                     <a href="cms/totupdate.action?courseId=${courseId}">更新</a>
@@ -45,19 +45,19 @@
           </li>
 
           <li class="nav-item nav-course-settings">
-            <h3 class="title"><span class="label"><span class="label-prefix sr">试卷 </span>设置</span> <i class="icon-caret-down ui-toggle-dd"></i></h3>
+            <h3 class="title"><span class="label"><span class="label-prefix sr">课程 </span>设置</span> <i class="icon-caret-down ui-toggle-dd"></i></h3>
 
             <div class="wrapper wrapper-nav-sub">
               <div class="nav-sub">
                 <ul>
                   <li class="nav-item nav-course-settings-schedule">
-                    <a href="cms/totexamschedule.action?examId=${examId}">日程 &amp; 细节</a>
+                    <a href="cms/totschedule.action?courseId=${courseId}">日程 &amp; 细节</a>
                   </li>
                  <!--  <li class="nav-item nav-course-settings-grading">
                     <a href="/settings/grading/edX/Open_DemoX/edx_demo_course">评分</a>
                   </li> 
                   <li class="nav-item nav-course-settings-team">
-                    <a href="cms/totteam.action?courseId=${courseId}">试卷团队</a>
+                    <a href="cms/totteam.action?courseId=${courseId}">课程团队</a>
                   </li>-->
                 <!--   <li class="nav-item nav-course-settings-advanced">
                     <a href="/settings/advanced/edX/Open_DemoX/edx_demo_course">高级设置</a>
@@ -105,7 +105,7 @@
               <div class="nav-sub">
                 <ul>
                   <li class="nav-item nav-account-dashboard">
-                    <a href="/">我的试卷</a>
+                    <a href="/">我的课程</a>
                   </li>
                   <li class="nav-item nav-account-signout">
                     <a class="action action-signout" href="/logout">退出</a>
@@ -132,7 +132,7 @@
 								<div class="wrapper wrapper-nav-sub">
 									<div class="nav-sub">
 										<ul>
-											<li class="nav-item nav-account-dashboard"><a href="cms/totexamlist.action">我的试卷</a>
+											<li class="nav-item nav-account-dashboard"><a href="cms/totcourselist.action">我的课程</a>
 											</li>
 											<li class="nav-item nav-account-signout"><a
 												class="action action-signout" href="cms/tloginout.action">退出</a></li>

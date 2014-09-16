@@ -93,7 +93,7 @@
 			<div class="wrapper-mast wrapper">
 				<header class="mast has-actions has-subtitle">
 					<h1 class="page-header">
-						<small class="subtitle">内容</small> <span class="sr">&gt; </span>试卷大纲
+						<small class="subtitle">内容</small> <span class="sr">&gt; </span>课程大纲
 					</h1>
 
 					<nav class="nav-actions">
@@ -121,16 +121,16 @@
                        title="Click to open the courseware in the LMS in a new tab">在线查看</a>
                 </li> -->
 							<c:choose>
-								<c:when test="${exam.publish == 0}">
+								<c:when test="${course.publish == 0}">
 									<li class="nav-item"><a href="javascript:void(0);"
-										onclick="publish(${examId},1,'发布成功');" rel="external"
+										onclick="publish(${courseId},1,'发布成功');" rel="external"
 										class="button view-button view-live-button"
-										title="Click to open the courseware in the LMS in a new tab">发布试卷</a>
+										title="Click to open the courseware in the LMS in a new tab">发布课程</a>
 									</li>
 								</c:when>
 								<c:otherwise>
 									<li class="nav-item"><a href="javascript:void(0);"
-										onclick="publish(${examId},0,'取消成功');" rel="external"
+										onclick="publish(${courseId},0,'取消成功');" rel="external"
 										class="button view-button view-live-button"
 										title="Click to open the courseware in the LMS in a new tab">取消发布</a>
 									</li>
@@ -152,14 +152,14 @@
           										<h3 class="section-name is_editable">
             										<form class="section-name-form">
               											<input type="text" class="new-section-name" value="新章节的名字" id="coursename">
-              											<input type="button" value="保存" class="new-section-name-save" onclick="savechapter(${examId});">
+              											<input type="button" value="保存" class="new-section-name-save" onclick="savechapter(${courseId});">
               											<input type="button" value="取消" class="new-section-name-cancel">
             										</form>
           										</h3>
         								</li>
     								</ol>									
 									<!-- 章节 -->
-									<c:forEach var="chapter" items="${exam.examchapters}">
+									<c:forEach var="chapter" items="${course.chapters}">
 										<ol class="list-sections is-sortable">
 											<li class="outline-item outline-section has-warnings is-draggable is-collapsible ">
 												<div class="section-header">
@@ -198,7 +198,7 @@
 
 												<div class="outline-content section-content">
 													<!-- 小节 -->
-													<c:forEach var="sequential" items="${chapter.esequentials}">
+													<c:forEach var="sequential" items="${chapter.sequentials}">
 														<ol class="list-subsections is-sortable">
 															<li class="outline-item outline-subsection has-warnings is-draggable is-collapsible is-collapsed">
 																<div class="subsection-header">
@@ -239,7 +239,7 @@
 
 																<div class="outline-content subsection-content">
 																	<!-- 单元  -->
-																	<c:forEach var="vertical" items="${sequential.examVerticals}">
+																	<c:forEach var="vertical" items="${sequential.verticals}">
 																		<ol class="list-units is-sortable">
 																			<li class="outline-item outline-unit  is-draggable  ">
 																				<div class="unit-header">
@@ -280,7 +280,7 @@
 																		<a title="Click to add a new 单元"
 																			data-default-name="单元" data-parent=""
 																			data-category="vertical" class="button button-new"
-																			href="cms/totexamtrain.action?examId=${examId}&sequentialId=${sequential.id}&verticalId=-1"> <i class="icon icon-plus"></i>新建单元
+																			href="cms/tottrain.action?courseId=${courseId}&sequentialId=${sequential.id}&verticalId=-1"> <i class="icon icon-plus"></i>新建单元
 																		</a>
 																	</div>
 																</div>
@@ -448,12 +448,12 @@
 				}
 			});
 		}
-		function savechapter(examId)
+		function savechapter(courseId)
 		{
 			var name = $("#coursename").val();
-			var data = {examId:examId,name:name};
+			var data = {courseId:courseId,name:name};
 			$.ajax({
-				url:"cms/createexamchapter.action",
+				url:"cms/createchapter.action",
 				type:"post",
 				data:data,
 				success:function(s){
@@ -492,7 +492,7 @@
 				var chapterId = $("#dialogid").val();
 				var data = {chapterId:chapterId,name:name};
 				$.ajax({
-					url:"cms/updateexamchapter.action",
+					url:"cms/updatechapter.action",
 					type:"post",
 					data:data,
 					success:function(s){
@@ -509,7 +509,7 @@
 				var sequentialId = $("#dialogid").val();
 				var data = {sequentialId:sequentialId,name:name};
 				$.ajax({
-					url:"cms/updateExamSequential.action",
+					url:"cms/updateSequential.action",
 					type:"post",
 					data:data,
 					success:function(s){
@@ -527,7 +527,7 @@
 				var verticalId = $("#dialogid").val();
 				var data = {sequenticalId:sequenticalId,verticalId:verticalId,name:name};
 				$.ajax({
-					url:"cms/createExamVertical.action",
+					url:"cms/createVertical.action",
 					type:"post",
 					data:data,
 					success:function(s){
@@ -546,7 +546,7 @@
 			{
 				var data = {chapterId:id};
 				$.ajax({
-					url:"cms/delexamchapter.action",
+					url:"cms/delchapter.action",
 					type:"post",
 					data:data,
 					success:function(s){
@@ -562,7 +562,7 @@
 			{
 				var data = {sequentialId:id};
 				$.ajax({
-					url:"cms/delExamSequential.action",
+					url:"cms/delSequential.action",
 					type:"post",
 					data:data,
 					success:function(s){
@@ -578,7 +578,7 @@
 			{
 				var data = {verticalId:id};
 				$.ajax({
-					url:"cms/delExamVertical.action",
+					url:"cms/delVertical.action",
 					type:"post",
 					data:data,
 					success:function(s){
@@ -597,7 +597,7 @@
 			var name = $(id).val();
 			var data = {chapterId:chapterId,name:name};
 			$.ajax({
-				url:"cms/createExamSequential.action",
+				url:"cms/createSequential.action",
 				type:"post",
 				data:data,
 				success:function(s){

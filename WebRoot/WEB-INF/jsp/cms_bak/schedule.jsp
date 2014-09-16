@@ -384,23 +384,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <section class="group-settings basic">
           <header>
             <h2 class="title-2">基本信息</h2>
-            <span class="tip">您试卷的具体细节</span>
+            <span class="tip">您课程的具体细节</span>
           </header>
 
           <ol class="list-input">
             <li class="field text is-not-editable" id="field-course-organization">
               <label for="course-organization">组织</label>
-              <input title="该字段已禁用：信息不可修改。" type="text" class="long" id="course-organization" readonly="" value="${exam.org}">
+              <input title="该字段已禁用：信息不可修改。" type="text" class="long" id="course-organization" readonly="" value="${course.org}">
             </li>
 
             <li class="field text is-not-editable" id="field-course-number">
-              <label for="course-number">试卷代码</label>
-              <input title="该字段已禁用：信息不可修改。" type="text" class="short" id="course-number" readonly="" value="${exam.coursecode}">
+              <label for="course-number">课程代码</label>
+              <input title="该字段已禁用：信息不可修改。" type="text" class="short" id="course-number" readonly="" value="${course.coursecode}">
             </li>
 
             <li class="field text is-not-editable" id="field-course-name">
               <label for="course-name">开课时间</label>
-              <input title="该字段已禁用：信息不可修改。" type="text" class="long" id="course-name" readonly="" value="${exam.starttime}">
+              <input title="该字段已禁用：信息不可修改。" type="text" class="long" id="course-name" readonly="" value="${course.starttime}">
             </li>
           </ol>
 
@@ -412,20 +412,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         <section class="group-settings schedule">
           <header>
-            <h2 class="title-2">试卷时间表</h2>
-            <span class="tip">调整您的试卷可以浏览的日期</span>
+            <h2 class="title-2">课程时间表</h2>
+            <span class="tip">调整您的课程可以浏览的日期</span>
           </header>
 
           <ol class="list-input">
             <li class="field-group field-group-course-start" id="course-start">
               <div class="field date" id="field-course-start-date">
-                <label for="course-start-date">试卷开始日期</label>
-                <input type="text" class="start-date date start datepicker hasDatepicker" id="starttimedetail" placeholder="YYYY-MM-DD" autocomplete="off" value="${exam.starttimedetail}">
-                <span class="tip tip-stacked">试卷开始的第一天</span>
+                <label for="course-start-date">课程开始日期</label>
+                <input type="text" class="start-date date start datepicker hasDatepicker" id="starttimedetail" placeholder="YYYY-MM-DD" autocomplete="off" value="${course.starttimedetail}">
+                <span class="tip tip-stacked">课程开始的第一天</span>
               </div>
 
 <!--               <div class="field time" id="field-course-start-time">
-                <label for="course-start-time">试卷开始时间</label>
+                <label for="course-start-time">课程开始时间</label>
                 <input type="text" class="time start timepicker ui-timepicker-input" id="course-start-time" value="" placeholder="HH:MM" autocomplete="off">
                 <span class="tip tip-stacked" id="timezone">(中国标准时间)</span>
               </div> -->
@@ -433,13 +433,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
             <li class="field-group field-group-course-end" id="course-end">
               <div class="field date" id="field-course-end-date">
-                <label for="course-end-date">试卷结束日期</label>
-                <input type="text" class="end-date date end hasDatepicker" id="endtimedetail" placeholder="YYYY-MM-DD" autocomplete="off" value="${exam.endtimedetail}">
-                <span class="tip tip-stacked">您试卷结束的最后一天</span>
+                <label for="course-end-date">课程结束日期</label>
+                <input type="text" class="end-date date end hasDatepicker" id="endtimedetail" placeholder="YYYY-MM-DD" autocomplete="off" value="${course.endtimedetail}">
+                <span class="tip tip-stacked">您课程结束的最后一天</span>
               </div>
 
 <!--               <div class="field time" id="field-course-end-time">
-                <label for="course-end-time">试卷结束时间</label>
+                <label for="course-end-time">课程结束时间</label>
                 <input type="text" class="time end ui-timepicker-input" id="course-end-time" value="" placeholder="HH:MM" autocomplete="off">
                 <span class="tip tip-stacked" id="timezone">(中国标准时间)</span>
               </div> -->
@@ -452,23 +452,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <hr class="divide">
             <section class="group-settings marketing">
               <header>
-                <h2 class="title-2">介绍您的试卷</h2>
+                <h2 class="title-2">介绍您的课程</h2>
                 <span class="tip">提供给预期学生的信息</span>
               </header>
               <ol class="list-input">
                 <li class="field text" id="field-course-short-description">
-                  <label for="course-overview">试卷简介</label>
+                  <label for="course-overview">课程简介</label>
                   <textarea class="text" id="describle"></textarea>
-                  <span class="tip tip-stacked">将在学生浏览试卷目录时出现。限制150个字符。</span>
+                  <span class="tip tip-stacked">将在学生浏览课程目录时出现。限制150个字符。</span>
                 </li>
 
                 
 
                 <li class="field image" id="field-course-image">
-                  <label>试卷图片</label>
+                  <label>课程图片</label>
                   <div class="current current-course-image">
                     <span class="wrapper-course-image">
-                      <img class="course-image" id="course-image" src="${exam.imgpath}" alt="试卷图片">
+                      <img class="course-image" id="course-image" src="${course.imgpath}" alt="课程图片">
                     </span>
 
                     <span class="msg msg-help">
@@ -480,9 +480,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <div class="wrapper-input">
                     <div class="input">
                       <input type="text" class="long new-course-image-url" id="imgpath" value="" placeholder="Your course image URL" autocomplete="off">
-                      <span class="tip tip-stacked">请为您的试卷图片提供一个有效的路径和名字（注意：仅支持JPEG和PNG格式）</span>
+                      <span class="tip tip-stacked">请为您的课程图片提供一个有效的路径和名字（注意：仅支持JPEG和PNG格式）</span>
                     </div>
-                    <!-- <button type="button" class="action action-upload-image">上传试卷图片</button> -->
+                    <!-- <button type="button" class="action action-upload-image">上传课程图片</button> -->
                     <div id="bootstrapped-fine-uploader"></div>
                   </div>
                 </li>
@@ -495,19 +495,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!--             <section class="group-settings requirements">
               <header>
                 <h2 class="title-2">要求</h2>
-                <span class="tip">对参加本门试卷的学生的期望</span>
+                <span class="tip">对参加本门课程的学生的期望</span>
               </header>
 
               <ol class="list-input">
                 <li class="field text" id="field-course-effort">
-                  <label for="course-effort">每周投入试卷学习的小时数</label>
+                  <label for="course-effort">每周投入课程学习的小时数</label>
                   <input type="text" class="short time" id="course-effort" placeholder="HH:MM">
-                  <span class="tip tip-inline">在整个试卷上投入的时间</span>
+                  <span class="tip tip-inline">在整个课程上投入的时间</span>
                 </li>
               </ol>
             </section> -->
             <ul class="course-actions">
-				<li class="action"><a href="javascript:void(0);" rel="external" onclick="updateCourse(${examId});"
+				<li class="action"><a href="javascript:void(0);" rel="external" onclick="updateCourse(${courseId});"
 					class="button view-button view-live-button">保存</a></li>
 			</ul>
       </form>
@@ -515,18 +515,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <aside class="content-supplementary" role="complimentary">
      <div class="bit">
         <h3 class="title-3">如何使用这些设置？</h3>
-        <p>您的试卷时间表决定何时学生可以注册和开始本门试卷。</p>
+        <p>您的课程时间表决定何时学生可以注册和开始本门课程。</p>
 
-        <p>本页面的其他信息将会出现在你试卷的关于页面上。这些信息包括试卷概要，试卷图片，介绍视频，以及预估的时间要求。学生们使用关于页面来选择要上的试卷。</p>
+        <p>本页面的其他信息将会出现在你课程的关于页面上。这些信息包括课程概要，课程图片，介绍视频，以及预估的时间要求。学生们使用关于页面来选择要上的课程。</p>
      </div>
 
      <div class="bit">
           
-        <h3 class="title-3">试卷其他设置</h3>
+        <h3 class="title-3">课程其他设置</h3>
         <nav class="nav-related">
           <ul>
             <li class="nav-item"><a href="/settings/grading/cetc/CS201/2014_T1">评分</a></li>
-            <li class="nav-item"><a href="/course_team/cetc/CS201/2014_T1/">试卷团队</a></li>
+            <li class="nav-item"><a href="/course_team/cetc/CS201/2014_T1/">课程团队</a></li>
             <li class="nav-item"><a href="/settings/advanced/cetc/CS201/2014_T1">高级设置</a></li>
           </ul>
         </nav>
@@ -620,7 +620,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		template: 
     		'<div class="qq-uploader">' + 
     		'<pre class="qq-upload-drop-area"><span>{dragZoneText}</span></pre>' + 
-    		'<div class="qq-upload-button action action-upload-image" style="width: auto;">上传试卷图片</div>' + 
+    		'<div class="qq-upload-button action action-upload-image" style="width: auto;">上传课程图片</div>' + 
     		'<span class="qq-drop-processing"><span>{dropProcessingText}</span>'+ 
     		'<span class="qq-drop-processing-spinner"></span></span>' + 
     		'<ul class="qq-upload-list" style="margin-top: 10px; text-align: center;display:none"></ul>' + 
@@ -649,9 +649,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var endtimedetail = $("#endtimedetail").val();
 			var starttimedetail = $("#starttimedetail").val();
 			var imgpath = $("#imgpath").val();
-			var data = {examId:courseId,describle:describle,starttimedetail:starttimedetail,endtimedetail:endtimedetail,imgpath:imgpath};
+			var data = {courseId:courseId,describle:describle,starttimedetail:starttimedetail,endtimedetail:endtimedetail,imgpath:imgpath};
 			$.ajax({
-				url:"cms/updateExam.action",
+				url:"cms/updatecourse.action",
 				type:"post",
 				data:data,
 				success:function(s){

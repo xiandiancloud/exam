@@ -15,7 +15,7 @@
 <html lang="zh-cn"><!--<![endif]-->
   <head>
   	<base href="<%=basePath%>">
-    <title>实验</title>
+    <title>试卷分类管理</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta content='text/html;charset=utf-8' http-equiv='content-type'>
     <meta content='Flat administration template for Twitter Bootstrap. Twitter Bootstrap 3 template with Ruby on Rails support.' name='description'>
@@ -54,8 +54,8 @@
                 <div class='col-sm-12'>
                   <div class='page-header'>
                     <h1 class='pull-left'>
-                      <i class='icon-cog'></i>
-                      <span>学校管理</span>
+                      <i class='icon-star'></i>
+                      <span>试卷分类管理</span>
                     </h1>
                   </div>
                 </div>
@@ -63,8 +63,8 @@
               <div class='row'>
               <div class='col-sm-12'>
                   <div class='box'>
-  <!--                   <div class='box-header'>
-                      <div class='title'>学校管理</div>
+<!--                     <div class='box-header'>
+                      <div class='title'>分类管理</div>
                     </div> -->
                     <div class='box-content'>
                       <div class='row'>
@@ -74,7 +74,7 @@
                               <div class='header'>
                                 <div class='icon-plus'></div>
                               </div>
-                              <div class='content'>增加学校</div>
+                              <div class='content'>增加分类</div>
                             </a>
                           </div>
                         </div>
@@ -88,7 +88,7 @@
                 <div class='col-sm-12'>
                   <div class='box bordered-box blue-border' style='margin-bottom:0;'>
                     <div class='box-header blue-background'>
-                      <div class='title'>所有学校</div>
+                      <div class='title'>Responsive table</div>
                       <div class='actions'>
                         <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
                         </a>
@@ -110,12 +110,12 @@
                               </tr>
                             </thead>
                             <tbody>
-	                            <c:forEach var="school" items="${schoollist}">
+                              <c:forEach var="category" items="${ecategorylist}">
 		                            <tr>
-	                                <td>${school.school_name}</td>
+	                                <td>${category.name}</td>
 	                                <td>
 	                                  <div class='text-center'>
-	                                    <a class='btn btn-danger btn-xs' href='admin/delschool.action?schoolId=${school.id}'>
+	                                    <a class='btn btn-danger btn-xs' href='admin/delecategory.action?categoryId=${category.id}'>
 	                                      <i class='icon-remove'></i>
 	                                    </a>
 	                                  </div>
@@ -132,11 +132,10 @@
               </div>
             </div>
           </div>
-		 <jsp:include page="footer.jsp"></jsp:include>
+		<jsp:include page="footer.jsp"></jsp:include>
         </div>
       </section>
     </div>
-    
     
     <div class="modal fade" id="myModal" data-backdrop="static">
 		<div class="modal-dialog">
@@ -145,7 +144,7 @@
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 					</button>
-					<h4 class="modal-title">增加学校</h4>
+					<h4 class="modal-title">增加分类</h4>
 				</div>
 				<div class="modal-body">
 					<form class="form-horizontal" role="form">
@@ -159,7 +158,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary"
-						onclick="addschool();">增加</button>
+						onclick="addcategory();">增加</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 				</div>
 			</div>
@@ -198,7 +197,7 @@
 			keyboard : false
 		});
 	}
-	function addschool() {
+	function addcategory() {
 		var name = $("#cname").val();
 		if (isNull(name))	
 		{					
@@ -209,7 +208,7 @@
 			name : name
 		};
 		$.ajax({
-			url : "admin/addschool.action",
+			url : "admin/addecategory.action",
 			type : "post",
 			data : data,
 			success : function(s) {

@@ -91,7 +91,7 @@ public class CmsUserController extends BaseController {
 	@RequestMapping("/tloginout")
 	public ModelAndView tloginout(HttpServletRequest request) {
 		setSessionUser(request, null);
-		String url = "redirect:/cms/totcourselist.action";
+		String url = "redirect:/cms/totexamlist.action";
 
 		return new ModelAndView(url);
 	}
@@ -134,7 +134,7 @@ public class CmsUserController extends BaseController {
 			request.getSession().removeAttribute(CommonConstant.CMS_LOGIN_TO_URL);
 			//如果当前会话中没有保存登录之前的请求URL，则直接跳转到主页
 			if(StringUtils.isEmpty(toUrl)){
-				toUrl = "cms/totcourselist.action";
+				toUrl = "cms/totexamlist.action";
 			}
 			String result = "{'sucess':'sucess','tocUrl':'"+toUrl+"'}";
 			out.write(result);

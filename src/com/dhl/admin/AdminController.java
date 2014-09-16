@@ -13,8 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Category;
+import com.dhl.domain.ECategory;
 import com.dhl.domain.School;
 import com.dhl.service.CategoryService;
+import com.dhl.service.ECategoryService;
 import com.dhl.service.SchoolService;
 import com.dhl.web.BaseController;
 
@@ -32,6 +34,8 @@ public class AdminController extends BaseController {
 	 */
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private ECategoryService ecategoryService;
 	@Autowired
 	private SchoolService schoolService;
 
@@ -52,6 +56,23 @@ public class AdminController extends BaseController {
 		return view;
 	}
 
+	/**
+	 * 管理员到试卷分类頁面
+	 * 
+	 * @param request
+	 * @param index
+	 * @return
+	 */
+	@RequestMapping("/examcategory")
+	public ModelAndView examcategory(HttpServletRequest request) {
+		ModelAndView view = new ModelAndView();
+
+		List<ECategory> categorylist = ecategoryService.getAllCategory();
+		view.addObject("ecategorylist", categorylist);
+		view.setViewName("/admin/ecategory");
+		return view;
+	}
+	
 	/**
 	 * 管理员到學校頁面
 	 * 
@@ -143,6 +164,35 @@ public class AdminController extends BaseController {
 	}
 
 	/**
+	 * 添加试卷分类
+	 * 
+	 * @param request
+	 * @param response
+	 * @param name
+	 */
+	@RequestMapping("/addecategory")
+	public void addecategory(HttpServletRequest request,
+			HttpServletResponse response, String name) {
+		String result = "{'sucess':'sucess','msg':'" + CommonConstant.ERROR_0
+				+ "'}";
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+			String str = ecategoryService.saveCategory(name);
+			if (CommonConstant.ERROR_2.equals(str)) {
+				result = "{'sucess':'sucess','msg':'" + str + "'}";
+				out.write(result);
+			} else {
+				result = "{'sucess':'fail','msg':'" + str + "'}";
+				out.write(result);
+			}
+		} catch (Exception e) {
+			if (out != null)
+				out.write(result);
+		}
+	}
+	
+	/**
 	 * 根据id删除分类
 	 * 
 	 * @param request
@@ -154,6 +204,21 @@ public class AdminController extends BaseController {
 			HttpServletResponse response, int categoryId) {
 		categoryService.remove(categoryId);
 		String url = "redirect:/admin/category.action";
+		return new ModelAndView(url);
+	}
+	
+	/**
+	 * 根据id删除试卷分类
+	 * 
+	 * @param request
+	 * @param response
+	 * @param categoryId
+	 */
+	@RequestMapping("/delecategory")
+	public ModelAndView delecategory(HttpServletRequest request,
+			HttpServletResponse response, int categoryId) {
+		ecategoryService.remove(categoryId);
+		String url = "redirect:/admin/examcategory.action";
 		return new ModelAndView(url);
 	}
 }

@@ -10,9 +10,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <base href="<%=basePath%>">
     
     <title>
-        日程 &amp; 细节设置 |
+        Course Updates |
         
-        先电云平台 |
+        IaaS |
         edX Studio
     </title>
     
@@ -37,15 +37,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link href="tcss/style-app.css" rel="stylesheet" type="text/css" />
     <link href="tcss/style-app-extend1.css" rel="stylesheet" type="text/css" />
     <link href="tcss/style-xmodule.css" rel="stylesheet" type="text/css" />
-	<link href="css/fineuploader.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-	<script type="text/javascript" src="js/index.js"></script>
-	<script type="text/javascript" src="js/jquery-ui.js"></script> 
-	<script src="js/fineuploader.js"></script>
-	<script src="js/common.js"></script>
-  <!-- dummy segment.io -->
+
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script> 
+ <!-- dummy segment.io -->
 <script type="text/javascript">
-  var course_location_analytics = "cetc/CS201/2014_T1";
+  var course_location_analytics = "Cetc55/Iaas-001/2014-01-01";
   var analytics = {
     "track": function() {}
   };
@@ -54,17 +52,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
     
-  
+<link rel="stylesheet" type="text/css" href="css/content-update/jquery.timepicker.css">
   
   
 
-  <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery" src="/static/10a0d74/js/vendor/jquery.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/models/course" src="/static/10a0d74/js/models/course.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="gettext" src="/i18n.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/sock" src="/static/10a0d74/js/sock.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="domReady" src="/static/10a0d74/js/vendor/domReady.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/models/settings/course_details" src="/static/10a0d74/js/models/settings/course_details.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/settings/main" src="/static/10a0d74/js/views/settings/main.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="underscore" src="/static/10a0d74/js/vendor/underscore-min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="tender" src="//edxedge.tenderapp.com/tender_widget.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="backbone" src="/static/10a0d74/js/vendor/backbone-min.js"></script><style type="text/css" charset="utf-8">#tender_window{ position: absolute; top: 20px; left: 10px; right: 10px; margin: auto; max-width:680px; height:715px; padding:3px; background:url(http://edxedge.tenderapp.com/images/widget/overlay_back.png); z-index:9999; }#tender_window iframe{ border:none; width:100%; height:100%; } #tender_window #tender_frame{ width:100%; height:100%; background:url(http://edxedge.tenderapp.com/images/widget/loader.gif) 50% 50% no-repeat #fff; } #tender_closer{ position:absolute; top:18px; right:18px; color:#fff; font-family:Helvetica, Arial, sans-serif; font-size:12px; font-weight:bold; text-decoration:none; border:none; } #tender_closer{ color: #80B3CC }#tender_toggler{ position:absolute; top:100px; right:0px; width:33px; height:105px; padding:3px 0 3px 3px; background:url(http://edxedge.tenderapp.com/images/widget/overlay_back.png); } #tender_toggler_link{ display:block; width:100%; height:100%; text-decoration:none; border:none; text-indent:-9999px; background: #006699 url(http://edxedge.tenderapp.com/images/widget/tab_text_right.gif) !important; } </style><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/base" src="/static/10a0d74/js/base.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="accessibility" src="/static/10a0d74/js/src/accessibility_tools.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="ieshim" src="/static/10a0d74/js/src/ie_shim.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/validation" src="/static/10a0d74/js/views/validation.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="tzAbbr" src="/static/10a0d74/js/vendor/tzAbbr.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/models/uploads" src="/static/10a0d74/js/models/uploads.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/uploads" src="/static/10a0d74/js/views/uploads.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/utils/change_on_enter" src="/static/10a0d74/js/utils/change_on_enter.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.timepicker" src="/static/10a0d74/js/vendor/timepicker/jquery.timepicker.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.smoothScroll" src="/static/10a0d74/js/vendor/jquery.smooth-scroll.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="coffee/src/ajax_prefix" src="/static/10a0d74/coffee/src/ajax_prefix.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="tooltip_manager" src="/static/10a0d74/js/src/tooltip_manager.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="codemirror" src="/static/10a0d74/js/vendor/codemirror-compressed.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.ui" src="/static/10a0d74/js/vendor/jquery-ui.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="date" src="/static/10a0d74/js/vendor/date.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/feedback_notification" src="/static/10a0d74/js/views/feedback_notification.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/feedback_prompt" src="/static/10a0d74/js/views/feedback_prompt.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/utils/date_utils" src="/static/10a0d74/js/utils/date_utils.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/utils/module" src="/static/10a0d74/js/utils/module.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/utils/handle_iframe_binding" src="/static/10a0d74/js/utils/handle_iframe_binding.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.leanModal" src="/static/10a0d74/js/vendor/jquery.leanModal.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="coffee/src/main" src="/static/10a0d74/coffee/src/main.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="coffee/src/logger" src="/static/10a0d74/coffee/src/logger.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="datepair" src="/static/10a0d74/js/vendor/timepicker/datepair.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="underscore.string" src="/static/10a0d74/js/vendor/underscore.string.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/feedback" src="/static/10a0d74/js/views/feedback.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.form" src="/static/10a0d74/js/vendor/jquery.form.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/utils/templates" src="/static/10a0d74/js/utils/templates.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/baseview" src="/static/10a0d74/js/views/baseview.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/feedback_alert" src="/static/10a0d74/js/views/feedback_alert.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.cookie" src="/static/10a0d74/js/vendor/jquery.cookie.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/utils/view_utils" src="/static/10a0d74/js/views/utils/view_utils.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/modals/base_modal" src="/static/10a0d74/js/views/modals/base_modal.js"></script></head>
+  <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery" src="/static/acf03d7/js/vendor/jquery.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/models/course" src="/static/acf03d7/js/models/course.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/sock" src="/static/acf03d7/js/sock.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="domReady" src="/static/acf03d7/js/vendor/domReady.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/collections/course_update" src="/static/acf03d7/js/collections/course_update.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/models/module_info" src="/static/acf03d7/js/models/module_info.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/models/course_info" src="/static/acf03d7/js/models/course_info.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/course_info_edit" src="/static/acf03d7/js/views/course_info_edit.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="gettext" src="/i18n.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="tender" src="//edxedge.tenderapp.com/tender_widget.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.smoothScroll" src="/static/acf03d7/js/vendor/jquery.smooth-scroll.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="underscore" src="/static/acf03d7/js/vendor/underscore-min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="backbone" src="/static/acf03d7/js/vendor/backbone-min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/models/course_update" src="/static/acf03d7/js/models/course_update.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/utils/module" src="/static/acf03d7/js/utils/module.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/baseview" src="/static/acf03d7/js/views/baseview.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/course_info_update" src="/static/acf03d7/js/views/course_info_update.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/course_info_handout" src="/static/acf03d7/js/views/course_info_handout.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/base" src="/static/acf03d7/js/base.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="accessibility" src="/static/acf03d7/js/src/accessibility_tools.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="ieshim" src="/static/acf03d7/js/src/ie_shim.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.ui" src="/static/acf03d7/js/vendor/jquery-ui.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="coffee/src/ajax_prefix" src="/static/acf03d7/coffee/src/ajax_prefix.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.timepicker" src="/static/acf03d7/js/vendor/timepicker/jquery.timepicker.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="tooltip_manager" src="/static/acf03d7/js/src/tooltip_manager.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/feedback_notification" src="/static/acf03d7/js/views/feedback_notification.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/feedback_prompt" src="/static/acf03d7/js/views/feedback_prompt.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/utils/date_utils" src="/static/acf03d7/js/utils/date_utils.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/utils/handle_iframe_binding" src="/static/acf03d7/js/utils/handle_iframe_binding.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.leanModal" src="/static/acf03d7/js/vendor/jquery.leanModal.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/utils/templates" src="/static/acf03d7/js/utils/templates.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/utils/view_utils" src="/static/acf03d7/js/views/utils/view_utils.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/course_info_helper" src="/static/acf03d7/js/views/course_info_helper.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/utils/modal" src="/static/acf03d7/js/utils/modal.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="coffee/src/main" src="/static/acf03d7/coffee/src/main.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="coffee/src/logger" src="/static/acf03d7/coffee/src/logger.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="datepair" src="/static/acf03d7/js/vendor/timepicker/datepair.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="underscore.string" src="/static/acf03d7/js/vendor/underscore.string.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/feedback" src="/static/acf03d7/js/views/feedback.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.form" src="/static/acf03d7/js/vendor/jquery.form.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="codemirror" src="/static/acf03d7/js/vendor/codemirror-compressed.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="date" src="/static/acf03d7/js/vendor/date.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.cookie" src="/static/acf03d7/js/vendor/jquery.cookie.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="utility" src="/static/acf03d7/js/src/utility.js"></script><style type="text/css" charset="utf-8">#tender_window{ position: absolute; top: 20px; left: 10px; right: 10px; margin: auto; max-width:680px; height:715px; padding:3px; background:url(http://edxedge.tenderapp.com/images/widget/overlay_back.png); z-index:9999; }#tender_window iframe{ border:none; width:100%; height:100%; } #tender_window #tender_frame{ width:100%; height:100%; background:url(http://edxedge.tenderapp.com/images/widget/loader.gif) 50% 50% no-repeat #fff; } #tender_closer{ position:absolute; top:18px; right:18px; color:#fff; font-family:Helvetica, Arial, sans-serif; font-size:12px; font-weight:bold; text-decoration:none; border:none; } #tender_closer{ color: #80B3CC }#tender_toggler{ position:absolute; top:100px; right:0px; width:33px; height:105px; padding:3px 0 3px 3px; background:url(http://edxedge.tenderapp.com/images/widget/overlay_back.png); } #tender_toggler_link{ display:block; width:100%; height:100%; text-decoration:none; border:none; text-indent:-9999px; background: #006699 url(http://edxedge.tenderapp.com/images/widget/tab_text_right.gif) !important; } </style></head>
 
-  <body class="is-signedin course schedule view-settings feature-upload hide-wip lang_zh-cn js">
-    <a class="nav-skip" href="#content">跳过本内容页</a>
+  <body class="is-signedin course course-info updates view-updates hide-wip lang_en js">
+    <a class="nav-skip" href="#content">Skip to this view's content</a>
 
     <script type="text/javascript">
-    window.baseUrl = "/static/10a0d74/";
+    window.baseUrl = "/static/acf03d7/";
     var require = {
         baseUrl: baseUrl,
         waitSeconds: 60,
@@ -108,27 +106,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             "URI": "js/vendor/URI.min",
             "ieshim": "js/src/ie_shim",
             "tooltip_manager": "js/src/tooltip_manager",
-            
-            // Files needed for Annotations feature
-            "annotator": "js/vendor/ova/annotator-full",
-            "annotator-harvardx": "js/vendor/ova/annotator-full-firebase-auth",
-            "video.dev": "js/vendor/ova/video.dev",
-            "vjs.youtube": 'js/vendor/ova/vjs.youtube',
-            "rangeslider": 'js/vendor/ova/rangeslider',
-            "share-annotator": 'js/vendor/ova/share-annotator',
-            "richText-annotator": 'js/vendor/ova/richText-annotator',
-            "reply-annotator": 'js/vendor/ova/reply-annotator',
-            "grouping-annotator": 'js/vendor/ova/grouping-annotator',
-            "tags-annotator": 'js/vendor/ova/tags-annotator',
-            "diacritic-annotator": 'js/vendor/ova/diacritic-annotator',
-            "flagging-annotator": 'js/vendor/ova/flagging-annotator',
-            "jquery-Watch": 'js/vendor/ova/jquery-Watch',
-            "openseadragon": 'js/vendor/ova/openseadragon',
-            "osda": 'js/vendor/ova/OpenSeaDragonAnnotation',
-            "ova": 'js/vendor/ova/ova',
-            "catch": 'js/vendor/ova/catch/js/catch',
-            "handlebars": 'js/vendor/ova/catch/js/handlebars-1.1.2',
-            // end of Annotation tool files
 
             // externally hosted files
             "tender": [
@@ -264,9 +241,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             "tooltip_manager": {
                 deps: ["jquery", "underscore"]
             },
-            "jquery.immediateDescendents": {
-                deps: ["jquery"]
-            },
             "xblock/core": {
                 exports: "XBlock",
                 deps: ["jquery", "jquery.immediateDescendents"]
@@ -282,54 +256,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             "coffee/src/logger": {
                 exports: "Logger",
                 deps: ["coffee/src/ajax_prefix"]
-            },
-
-            // the following are all needed for annotation tools
-            "video.dev": {
-                exports:"videojs"
-            },
-            "vjs.youtube": {
-                deps: ["video.dev"]
-            },
-            "rangeslider": {
-                deps: ["video.dev"]
-            },
-            "annotator": {
-                exports: "Annotator"
-            },
-            "annotator-harvardx":{
-                deps: ["annotator"]
-            },
-            "share-annotator": {
-                deps: ["annotator"]
-            },
-            "richText-annotator": {
-                deps: ["annotator", "tinymce"]
-            },
-            "reply-annotator": {
-                deps: ["annotator"]
-            },
-            "tags-annotator": {
-                deps: ["annotator"]
-            },
-            "diacritic-annotator": {
-                deps: ["annotator"]
-            },
-            "flagging-annotator": {
-                deps: ["annotator"]
-            },
-            "grouping-annotator": {
-                deps: ["annotator"]
-            },
-            "ova":{
-                exports: "ova",
-                deps: ["annotator", "annotator-harvardx", "video.dev", "vjs.youtube", "rangeslider", "share-annotator", "richText-annotator", "reply-annotator", "tags-annotator", "flagging-annotator", "grouping-annotator", "diacritic-annotator", "jquery-Watch", "catch", "handlebars", "URI"]
-            },
-            "osda":{
-                exports: "osda",
-                deps: ["annotator", "annotator-harvardx", "video.dev", "vjs.youtube", "rangeslider", "share-annotator", "richText-annotator", "reply-annotator", "tags-annotator", "flagging-annotator", "grouping-annotator", "diacritic-annotator", "openseadragon", "jquery-Watch", "catch", "handlebars", "URI"]
-            },
-            // end of annotation tool files
+            }
         },
         // load jquery and gettext automatically
         deps: ["jquery", "gettext"],
@@ -341,7 +268,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         }
     };
     </script>
-    <script type="text/javascript" src="/static/10a0d74/js/vendor/require.js"></script>
+    <script type="text/javascript" src="/static/acf03d7/js/vendor/require.js"></script>
 
     
 
@@ -349,11 +276,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <script type="text/javascript">
         require(['js/models/course'], function(Course) {
             window.course = new Course({
-                id: "cetc/CS201/2014_T1",
-                name: "先电云平台",
-                url_name: "2014_T1",
-                org: "cetc",
-                num: "CS201",
+                id: "Cetc55/Iaas-001/2014-01-01",
+                name: "IaaS",
+                url_name: "2014-01-01",
+                org: "Cetc55",
+                num: "Iaas-001",
                 revision: "None"
             });
         });
@@ -362,178 +289,67 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- view -->
     <div class="wrapper wrapper-view">
         
- <jsp:include page="ttheader.jsp"></jsp:include>
+        <jsp:include page="ttheader.jsp"></jsp:include>
 
       <div id="page-alert"></div>
 
       <div id="content">
       
-<div class="wrapper-mast wrapper">
-  <header class="mast has-subtitle">
-    <h1 class="page-header">
-      <small class="subtitle">设置</small>
-      <span class="sr">&gt; </span>日程 &amp; 细节
-    </h1>
-  </header>
-</div>
+  <div class="wrapper-mast wrapper">
+    <header class="mast has-actions has-subtitle">
+      <h1 class="page-header">
+        <small class="subtitle">Content</small>
+        <span class="sr">&gt; </span>Course Updates
+      </h1>
 
-<div class="wrapper-content wrapper">
-  <section class="content">
-    <article class="content-primary" role="main">
-      <form id="settings_details" class="settings-details" method="post" action="">
-        <section class="group-settings basic">
-          <header>
-            <h2 class="title-2">基本信息</h2>
-            <span class="tip">您试卷的具体细节</span>
-          </header>
+      <nav class="nav-actions">
+        <h3 class="sr">Page Actions</h3>
+        <ul>
+          <li class="nav-item">
+            <a href="#" class=" button new-button new-update-button"><i class="icon-plus"></i> New Update</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+  </div>
 
-          <ol class="list-input">
-            <li class="field text is-not-editable" id="field-course-organization">
-              <label for="course-organization">组织</label>
-              <input title="该字段已禁用：信息不可修改。" type="text" class="long" id="course-organization" readonly="" value="${exam.org}">
-            </li>
+  <div class="wrapper-content wrapper">
+    <section class="content">
+      <div class="introduction">
+        <p clas="copy">Use course updates to notify students of important dates or exams, highlight particular discussions in the forums, announce schedule changes, and respond to student questions. You add or edit updates in HTML.</p>
+      </div>
+    </section>
+  </div>
 
-            <li class="field text is-not-editable" id="field-course-number">
-              <label for="course-number">试卷代码</label>
-              <input title="该字段已禁用：信息不可修改。" type="text" class="short" id="course-number" readonly="" value="${exam.coursecode}">
-            </li>
+  <div class="main-wrapper">
+    <div class="inner-wrapper">
+      <div class="course-info-wrapper">
+        <div class="main-column window">
+          <article class="course-updates" id="course-update-view">
+            <ol class="update-list" id="course-update-list"></ol>
+          </article>
+        </div>
+        <div class="sidebar course-handouts" id="course-handouts-view"><a href="#" class="edit-button"><span class="edit-icon"></span>Edit</a>
 
-            <li class="field text is-not-editable" id="field-course-name">
-              <label for="course-name">开课时间</label>
-              <input title="该字段已禁用：信息不可修改。" type="text" class="long" id="course-name" readonly="" value="${exam.starttime}">
-            </li>
-          </ol>
+<h2 class="title">Course Handouts</h2>
 
-          
+  <div class="handouts-content"><ol></ol></div>
 
-        </section>
-
-        <hr class="divide">
-
-        <section class="group-settings schedule">
-          <header>
-            <h2 class="title-2">试卷时间表</h2>
-            <span class="tip">调整您的试卷可以浏览的日期</span>
-          </header>
-
-          <ol class="list-input">
-            <li class="field-group field-group-course-start" id="course-start">
-              <div class="field date" id="field-course-start-date">
-                <label for="course-start-date">试卷开始日期</label>
-                <input type="text" class="start-date date start datepicker hasDatepicker" id="starttimedetail" placeholder="YYYY-MM-DD" autocomplete="off" value="${exam.starttimedetail}">
-                <span class="tip tip-stacked">试卷开始的第一天</span>
-              </div>
-
-<!--               <div class="field time" id="field-course-start-time">
-                <label for="course-start-time">试卷开始时间</label>
-                <input type="text" class="time start timepicker ui-timepicker-input" id="course-start-time" value="" placeholder="HH:MM" autocomplete="off">
-                <span class="tip tip-stacked" id="timezone">(中国标准时间)</span>
-              </div> -->
-            </li>
-
-            <li class="field-group field-group-course-end" id="course-end">
-              <div class="field date" id="field-course-end-date">
-                <label for="course-end-date">试卷结束日期</label>
-                <input type="text" class="end-date date end hasDatepicker" id="endtimedetail" placeholder="YYYY-MM-DD" autocomplete="off" value="${exam.endtimedetail}">
-                <span class="tip tip-stacked">您试卷结束的最后一天</span>
-              </div>
-
-<!--               <div class="field time" id="field-course-end-time">
-                <label for="course-end-time">试卷结束时间</label>
-                <input type="text" class="time end ui-timepicker-input" id="course-end-time" value="" placeholder="HH:MM" autocomplete="off">
-                <span class="tip tip-stacked" id="timezone">(中国标准时间)</span>
-              </div> -->
-            </li>
-          </ol>
-
-          
-
-        </section>
-        <hr class="divide">
-            <section class="group-settings marketing">
-              <header>
-                <h2 class="title-2">介绍您的试卷</h2>
-                <span class="tip">提供给预期学生的信息</span>
-              </header>
-              <ol class="list-input">
-                <li class="field text" id="field-course-short-description">
-                  <label for="course-overview">试卷简介</label>
-                  <textarea class="text" id="describle"></textarea>
-                  <span class="tip tip-stacked">将在学生浏览试卷目录时出现。限制150个字符。</span>
-                </li>
-
-                
-
-                <li class="field image" id="field-course-image">
-                  <label>试卷图片</label>
-                  <div class="current current-course-image">
-                    <span class="wrapper-course-image">
-                      <img class="course-image" id="course-image" src="${exam.imgpath}" alt="试卷图片">
-                    </span>
-
-                    <span class="msg msg-help">
-                    该图片可以随您的其他<a href="/assets/cetc/CS201/2014_T1/">文件 &amp; 上传</a>共同管理
-                    </span>
-
-                  </div>
-
-                  <div class="wrapper-input">
-                    <div class="input">
-                      <input type="text" class="long new-course-image-url" id="imgpath" value="" placeholder="Your course image URL" autocomplete="off">
-                      <span class="tip tip-stacked">请为您的试卷图片提供一个有效的路径和名字（注意：仅支持JPEG和PNG格式）</span>
-                    </div>
-                    <!-- <button type="button" class="action action-upload-image">上传试卷图片</button> -->
-                    <div id="bootstrapped-fine-uploader"></div>
-                  </div>
-                </li>
-
-              </ol>
-            </section>
-
-            <hr class="divide">
-
-<!--             <section class="group-settings requirements">
-              <header>
-                <h2 class="title-2">要求</h2>
-                <span class="tip">对参加本门试卷的学生的期望</span>
-              </header>
-
-              <ol class="list-input">
-                <li class="field text" id="field-course-effort">
-                  <label for="course-effort">每周投入试卷学习的小时数</label>
-                  <input type="text" class="short time" id="course-effort" placeholder="HH:MM">
-                  <span class="tip tip-inline">在整个试卷上投入的时间</span>
-                </li>
-              </ol>
-            </section> -->
-            <ul class="course-actions">
-				<li class="action"><a href="javascript:void(0);" rel="external" onclick="updateCourse(${examId});"
-					class="button view-button view-live-button">保存</a></li>
-			</ul>
-      </form>
-    </article>
-    <aside class="content-supplementary" role="complimentary">
-     <div class="bit">
-        <h3 class="title-3">如何使用这些设置？</h3>
-        <p>您的试卷时间表决定何时学生可以注册和开始本门试卷。</p>
-
-        <p>本页面的其他信息将会出现在你试卷的关于页面上。这些信息包括试卷概要，试卷图片，介绍视频，以及预估的时间要求。学生们使用关于页面来选择要上的试卷。</p>
-     </div>
-
-     <div class="bit">
-          
-        <h3 class="title-3">试卷其他设置</h3>
-        <nav class="nav-related">
-          <ul>
-            <li class="nav-item"><a href="/settings/grading/cetc/CS201/2014_T1">评分</a></li>
-            <li class="nav-item"><a href="/course_team/cetc/CS201/2014_T1/">试卷团队</a></li>
-            <li class="nav-item"><a href="/settings/advanced/cetc/CS201/2014_T1">高级设置</a></li>
-          </ul>
-        </nav>
-     </div>
-    </aside>
-  </section>
-</div>
+<form class="edit-handouts-form" style="display: none;">
+  <div class="message message-status error" name="handout_html_error" id="handout_error">
+    There is invalid code in your content. Please check to make sure it is valid HTML.
+  </div>
+  <div class="row">
+    <textarea class="handouts-content-editor text-editor"></textarea>
+  </div>
+  <div class="row">
+    <a href="#" class="save-button">Save</a>
+    <a href="#" class="cancel-button">Cancel</a>
+  </div>
+</form></div>
+      </div>
+    </div>
+  </div>
 
       </div>
 
@@ -565,15 +381,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
       <ul class="list-actions">
           <li class="action-item js-help-pdf">
-            <a href="https://media.readthedocs.org/pdf/edx-partner-course-staff/latest/edx-partner-course-staff.pdf" target="_blank" rel="external" class="action action-primary" title="该链接将在新的浏览器窗口/标签打开">Building and Running an edX Course PDF</a>
+            <a href="https://media.readthedocs.org/pdf/edx-partner-course-staff/latest/edx-partner-course-staff.pdf" target="_blank" rel="external" class="action action-primary" title="This link will open in a new browser window/tab">Building and Running an edX Course PDF</a>
           </li>
 
         <li class="action-item">
-          <a href="http://help.edge.edx.org/" rel="external" class="action action-primary" title="该链接将在新的浏览器窗口/标签打开" target="_blank">edX Studio Author Support</a>
+          <a href="http://help.edge.edx.org/" rel="external" class="action action-primary" title="This link will open in a new browser window/tab" target="_blank">edX Studio Author Support</a>
           <span class="tip">edX Studio Author Support</span>
         </li>
         <li class="action-item">
-          <a href="https://edge.edx.org/courses/edX/edX101/How_to_Create_an_edX_Course/about" rel="external" class="action action-primary" title="该链接将在新的浏览器窗口/标签打开" target="_blank">注册edX101</a>
+          <a href="https://edge.edx.org/courses/edX/edX101/How_to_Create_an_edX_Course/about" rel="external" class="action action-primary" title="This link will open in a new browser window/tab" target="_blank">Enroll in edX101</a>
           <span class="tip">How to use edX Studio to build your course</span>
         </li>
       </ul>
@@ -589,7 +405,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <ul class="list-actions">
           <li class="action-item">
 
-            <a href="http://help.edge.edx.org/discussion/new" class="action action-primary show-tender" title="请使用工具Tender来分享您的反馈"><i class="icon-comments"></i>联系我们</a>
+            <a href="http://help.edge.edx.org/discussion/new" class="action action-primary show-tender" title="Use our feedback tool, Tender, to share your feedback"><i class="icon-comments"></i>Contact Us</a>
           </li>
         </ul>
       </div>
@@ -600,70 +416,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <jsp:include page="tfooter.jsp"></jsp:include>
 
       <script type="text/javascript">
-      $(document).ready(function(){
-    	    var desc = replaceTextarea2('${course.describle}');
-    	    $("#describle").html(desc);
-    		createUploader();
-    	});
-    	function createUploader() { 
-    		var uploader = new qq.FineUploader({ 
-    		element: document.getElementById('bootstrapped-fine-uploader'), 
-    		request: { 
-    		endpoint: 'cms/importCourseimg.action'
-    		}, 
-    		text: { 
-    		uploadButton: '<button class="btn btn-warning"><i class="icon-upload"></i>选择要导入的文件</button>' 
-    		}, 
-    		validation:{
-    			allowedExtensions: ['png','PNG','jpeg','JPEG','jpg','JPG']
-    		},
-    		template: 
-    		'<div class="qq-uploader">' + 
-    		'<pre class="qq-upload-drop-area"><span>{dragZoneText}</span></pre>' + 
-    		'<div class="qq-upload-button action action-upload-image" style="width: auto;">上传试卷图片</div>' + 
-    		'<span class="qq-drop-processing"><span>{dropProcessingText}</span>'+ 
-    		'<span class="qq-drop-processing-spinner"></span></span>' + 
-    		'<ul class="qq-upload-list" style="margin-top: 10px; text-align: center;display:none"></ul>' + 
-    		'</div>', 
-    		classes: { 
-    		success: 'alert alert-success', 
-    		fail: 'alert alert-error' 
-    		}, 
-    		callbacks:{
-    			onComplete: function(id,  fileName,  responseJSON){		
-    				if (responseJSON.success == "true")
-    				{
-    					alert("上传成功");
-    					$("#imgpath").attr("value",responseJSON.imgpath);
-    					$("#course-image").attr("src",responseJSON.imgpath);
-    				}
-    			}
-    		},
-    		debug: true 
-    		}); 
-      }
-      function updateCourse(courseId)
-		{
-			var describle = $("#describle").val();
-			describle = replaceTextarea1(describle);
-			var endtimedetail = $("#endtimedetail").val();
-			var starttimedetail = $("#starttimedetail").val();
-			var imgpath = $("#imgpath").val();
-			var data = {examId:courseId,describle:describle,starttimedetail:starttimedetail,endtimedetail:endtimedetail,imgpath:imgpath};
-			$.ajax({
-				url:"cms/updateExam.action",
-				type:"post",
-				data:data,
-				success:function(s){
-					var a=eval("("+s+")");	
-					if (a.sucess=="sucess")
-					{
-						alert("更新成功");
-					}
-				}
-			});
-		}
-      
 window.Tender = {
   hideToggle: true,
   title: '',
@@ -680,33 +432,27 @@ require(['tender']);
 
     <div id="page-prompt"></div>
     
-  <link rel="stylesheet" type="text/css" href="/static/10a0d74/js/vendor/timepicker/jquery.timepicker.css">
+  <script type="text/javascript" charset="utf-8">
+  
+require(["domReady!", "jquery", "js/collections/course_update", "js/models/module_info", "js/models/course_info", "js/views/course_info_edit"],
+  function(doc, $, CourseUpdateCollection, ModuleInfoModel, CourseInfoModel, CourseInfoEditView) {
+    var course_updates = new CourseUpdateCollection();
+    course_updates.url = '/course_info_update/Cetc55/Iaas-001/2014-01-01/';
+    course_updates.fetch({reset: true});
 
-  <script type="text/javascript">
-window.CMS = window.CMS || {};
-CMS.URL = CMS.URL || {};
-CMS.URL.UPLOAD_ASSET = '/assets/cetc/CS201/2014_T1/';
-
-require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/settings/main"],
-  function(doc, $, CourseDetailsModel, MainView) {
-    // highlighting labels when fields are focused in
-    $("form :input").focus(function() {
-      $("label[for='" + this.id + "']").addClass("is-focused");
-    }).blur(function() {
-      $("label").removeClass("is-focused");
+    var course_handouts = new ModuleInfoModel({
+        id: 'i4x://Cetc55/Iaas-001/course_info/handouts'
       });
-    var model = new CourseDetailsModel();
-    model.urlRoot = '/settings/details/cetc/CS201/2014_T1';
-    model.fetch({
-      success: function(model) {
-        var editor = new MainView({
-            el: $('.settings-details'),
-            model: model
-        });
-        editor.render();
-      },
-      reset: true
+
+    var editor = new CourseInfoEditView({
+      el: $('.main-wrapper'),
+      model : new CourseInfoModel({
+        updates : course_updates,
+        base_asset_url : '/c4x/Cetc55/Iaas-001/asset/',
+        handouts : course_handouts
+        })
     });
+    editor.render();
 });
   </script>
 
@@ -748,7 +494,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 		
 			<div id="djDebugVersionPanel" class="panelContent" style="display: none;">
 				<div class="djDebugPanelTitle">
-					<a href="" class="djDebugClose">关闭</a>
+					<a href="" class="djDebugClose">Close</a>
 					<h3>Versions</h3>
 				</div>
 				<div class="djDebugPanelContent">
@@ -820,7 +566,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 		
 			<div id="djDebugTimerPanel" class="panelContent" style="display: none;">
 				<div class="djDebugPanelTitle">
-					<a href="" class="djDebugClose">关闭</a>
+					<a href="" class="djDebugClose">Close</a>
 					<h3>Resource Usage</h3>
 				</div>
 				<div class="djDebugPanelContent">
@@ -834,34 +580,34 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 	<thead>
 		<tr>
 			<th>Resource</th>
-			<th>值</th>
+			<th>Value</th>
 		</tr>
 	</thead>
 	<tbody>
 		
 			<tr class="djDebugOdd">
 				<td>User CPU time</td>
-				<td>52.003 msec</td>
+				<td>12.000 msec</td>
 			</tr>
 		
 			<tr class="djDebugEven">
 				<td>System CPU time</td>
-				<td>0.000 msec</td>
+				<td>8.001 msec</td>
 			</tr>
 		
 			<tr class="djDebugOdd">
 				<td>Total CPU time</td>
-				<td>52.003 msec</td>
+				<td>20.001 msec</td>
 			</tr>
 		
 			<tr class="djDebugEven">
 				<td>Elapsed time</td>
-				<td>67.015 msec</td>
+				<td>21.825 msec</td>
 			</tr>
 		
 			<tr class="djDebugOdd">
 				<td>Context switches</td>
-				<td>9 voluntary, 8 involuntary</td>
+				<td>8 voluntary, 8 involuntary</td>
 			</tr>
 		
 	</tbody>
@@ -875,7 +621,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 		
 			<div id="djDebugSettingsVarsPanel" class="panelContent" style="display: none;">
 				<div class="djDebugPanelTitle">
-					<a href="" class="djDebugClose">关闭</a>
+					<a href="" class="djDebugClose">Close</a>
 					<h3>Settings from <code>cms.envs.devstack</code></h3>
 				</div>
 				<div class="djDebugPanelContent">
@@ -885,7 +631,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 	<thead>
 		<tr>
 			<th>Setting</th>
-			<th>值</th>
+			<th>Value</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -986,7 +732,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 		
 			<tr class="djDebugEven">
 				<td>LANGUAGE_CODE</td>
-				<td><code>u'zh-cn'</code></td>
+				<td><code>u'en'</code></td>
 			</tr>
 		
 			<tr class="djDebugOdd">
@@ -1026,7 +772,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 		
 			<tr class="djDebugEven">
 				<td>STATIC_ROOT</td>
-				<td><code>path(u'/edx/var/edxapp/staticfiles/10a0d74')</code></td>
+				<td><code>path(u'/edx/var/edxapp/staticfiles/acf03d7')</code></td>
 			</tr>
 		
 			<tr class="djDebugOdd">
@@ -1208,14 +954,14 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
                                     u'xmodule/modules/js/000-4b06b565ce07b7ec692a835beb968b0c.js',
                                     u'xmodule/modules/js/000-4e789164fb697a2e6e6180f9f8255659.js',
                                     u'xmodule/modules/js/000-53c44c016974a4e7b767192c8fa16fe0.js',
-                                    u'xmodule/modules/js/000-792e36034eefc6936a3c77b9fee85ced.js',
                                     u'xmodule/modules/js/000-c5eff3526bed9d24970f5ef629d53cef.js',
+                                    u'xmodule/modules/js/000-e2c8c1923afe3181bc3303bc662a409a.js',
                                     u'xmodule/modules/js/000-e54b5c7f7b657100c24d82263144a4fd.js',
                                     u'xmodule/modules/js/001-149e5f80fb129c93207c19c2cb17b45a.js',
                                     u'xmodule/modules/js/001-224d365aed3a968d6876b75a9e39d877.js',
                                     u'xmodule/modules/js/001-42a54bf42a889003f390bd8ac7fe77be.js',
                                     u'xmodule/modules/js/001-53c44c016974a4e7b767192c8fa16fe0.js',
-                                    u'xmodule/modules/js/001-671868a7e1fc0cd56c25e708428edc7b.js',
+                                    u'xmodule/modules/js/001-72c7856ac95c63cb8a2d71777e09eb37.js',
                                     u'xmodule/modules/js/001-831bfa7f0550106cead1942d7485d9b2.js',
                                     u'xmodule/modules/js/001-96d20c9f6be33c7f09c4fcf3d7e4633a.js',
                                     u'xmodule/modules/js/001-c3d14b8d25e6e22ebcc6603d2e75d212.js',
@@ -1421,11 +1167,6 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 			</tr>
 		
 			<tr class="djDebugEven">
-				<td>GEOIPV6_PATH</td>
-				<td><code>path(u'/edx/app/edxapp/edx-platform/common/static/data/geoip/GeoIPv6.dat')</code></td>
-			</tr>
-		
-			<tr class="djDebugOdd">
 				<td>MIDDLEWARE_CLASSES</td>
 				<td><code>('request_cache.middleware.RequestCache',
  'django.middleware.cache.UpdateCacheMiddleware',
@@ -1450,103 +1191,103 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
  'debug_toolbar.middleware.DebugToolbarMiddleware')</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>USE_I18N</td>
 				<td><code>True</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>THOUSAND_SEPARATOR</td>
 				<td><code>','</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>SECRET_KEY</td>
 				<td><code>u'********************'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>LANGUAGE_COOKIE_NAME</td>
 				<td><code>'django_language'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>DEFAULT_INDEX_TABLESPACE</td>
 				<td><code>''</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>THEME_NAME</td>
 				<td><code>u''</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>DEBUG_TOOLBAR_MONGO_STACKTRACES</td>
 				<td><code>False</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>LOGGING_CONFIG</td>
 				<td><code>'django.utils.log.dictConfig'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>GITHUB_REPO_ROOT</td>
 				<td><code>u'/edx/var/edxapp/data'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>SEGMENT_IO_KEY</td>
 				<td><code>u'********************'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>BROKER_POOL_LIMIT</td>
 				<td><code>0</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>TEMPLATE_LOADERS</td>
 				<td><code>('django.template.loaders.filesystem.Loader',
  'django.template.loaders.app_directories.Loader')</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>LMS_BASE</td>
 				<td><code>'localhost:8000'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>FORCE_SCRIPT_NAME</td>
 				<td><code>None</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>LOG_DIR</td>
 				<td><code>u'/edx/var/logs/edx'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>COMMON_ROOT</td>
 				<td><code>path(u'/edx/app/edxapp/edx-platform/common')</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>X_FRAME_OPTIONS</td>
 				<td><code>'ALLOW'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>CSRF_COOKIE_NAME</td>
 				<td><code>'csrftoken'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>CELERY_DEFAULT_EXCHANGE</td>
 				<td><code>'edx.cms.core'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>ALL_LANGUAGES</td>
 				<td><code>([u'aa', u'Afar'],
  [u'ab', u'Abkhazian'],
@@ -1734,57 +1475,57 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
  [u'zu', u'Zulu'])</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>CELERY_DEFAULT_ROUTING_KEY</td>
 				<td><code>u'********************'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>USE_X_FORWARDED_HOST</td>
 				<td><code>False</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>CELERY_ALWAYS_EAGER</td>
 				<td><code>True</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>SIGNING_BACKEND</td>
 				<td><code>'django.core.signing.TimestampSigner'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>CELERY_BROKER_HOSTNAME</td>
 				<td><code>u'localhost'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>SESSION_COOKIE_SECURE</td>
 				<td><code>False</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>EVENT_TRACKING_PROCESSORS</td>
 				<td><code>[{'ENGINE': 'track.shim.LegacyFieldMappingProcessor'}]</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>CSRF_COOKIE_DOMAIN</td>
 				<td><code>None</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>FILE_CHARSET</td>
 				<td><code>'utf-8'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>DEBUG</td>
 				<td><code>True</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>DOC_STORE_CONFIG</td>
 				<td><code>{u'collection': u'modulestore',
  u'db': u'edxapp',
@@ -1794,27 +1535,27 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
  u'user': u'edxapp'}</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>CELERY_QUEUE_HA_POLICY</td>
 				<td><code>'all'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>SESSION_FILE_PATH</td>
 				<td><code>None</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>AWS_ACCESS_KEY_ID</td>
 				<td><code>u'********************'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>CELERY_BROKER_USER</td>
 				<td><code>u'celery'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>INSTALLED_APPS</td>
 				<td><code>('django.contrib.auth',
  'django.contrib.contenttypes',
@@ -1848,7 +1589,6 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
  'embargo',
  'monitoring',
  'course_action_state',
- 'edx_jsme',
  'submissions',
  'openassessment',
  'openassessment.assessment',
@@ -1859,7 +1599,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
  'debug_toolbar_mongo')</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>ENV_FEATURES</td>
 				<td><code>{u'AUTH_USE_OPENID_PROVIDER': True,
  u'AUTOMATIC_AUTH_FOR_TESTING': False,
@@ -1873,49 +1613,49 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
  u'USE_CUSTOM_THEME': False}</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>BROKER_CONNECTION_TIMEOUT</td>
 				<td><code>1</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>DEFAULT_PRIORITY_QUEUE</td>
 				<td><code>'edx.cms.core.default'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>SUBDOMAIN_BRANDING</td>
 				<td><code>{}</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>PASSWORD_DICTIONARY</td>
 				<td><code>u'********************'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>STATICFILES_DIRS</td>
 				<td><code>[path(u'/edx/app/edxapp/edx-platform/common/static'),
  path(u'/edx/app/edxapp/edx-platform/cms/static'),
  path(u'/edx/app/edxapp/edx-platform/lms/static')]</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>MAX_FAILED_LOGIN_ATTEMPTS_LOCKOUT_PERIOD_SECS</td>
 				<td><code>900</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>PREPEND_WWW</td>
 				<td><code>False</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>SECURE_PROXY_SSL_HEADER</td>
 				<td><code>None</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>MAKO_TEMPLATES</td>
 				<td><code>{'lms.main': [path(u'/edx/app/edxapp/edx-platform/lms/templates'),
               path(u'/edx/app/edxapp/edx-platform/common/templates'),
@@ -1927,67 +1667,67 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
           path(u'/edx/app/edxapp/edx-platform/common/djangoapps/pipeline_js/templates')]}</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>SESSION_COOKIE_HTTPONLY</td>
 				<td><code>True</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>AWS_SECRET_ACCESS_KEY</td>
 				<td><code>u'********************'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>DEBUG_PROPAGATE_EXCEPTIONS</td>
 				<td><code>False</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>CELERYD_PREFETCH_MULTIPLIER</td>
 				<td><code>1</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>WIKI_ENABLED</td>
 				<td><code>True</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>MEDIA_URL</td>
 				<td><code>''</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>ENV_TOKENS</td>
 				<td><code>u'********************'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>TRANSACTIONS_MANAGED</td>
 				<td><code>False</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>EMAIL_FILE_PATH</td>
 				<td><code>None</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>LMS_ROOT</td>
 				<td><code>path(u'/edx/app/edxapp/edx-platform/lms')</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>MONTH_DAY_FORMAT</td>
 				<td><code>'F j'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>EDXMKTG_COOKIE_NAME</td>
 				<td><code>'edxloggedin'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>FEATURES</td>
 				<td><code>{'ADVANCED_SECURITY': False,
  'ALLOW_ALL_ADVANCED_COMPONENTS': True,
@@ -2024,38 +1764,38 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
  'USE_MICROSITES': False}</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>COURSE_KEY_PATTERN</td>
 				<td><code>u'********************'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>TRACKING_BACKENDS</td>
 				<td><code>{'logger': {'ENGINE': 'track.backends.logger.LoggerBackend',
             'OPTIONS': {'name': 'tracking'}}}</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>LOW_PRIORITY_QUEUE</td>
 				<td><code>'edx.cms.core.low'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>ENV_ROOT</td>
 				<td><code>path(u'/edx/app/edxapp')</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>CELERY_IGNORE_RESULT</td>
 				<td><code>False</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>GEOIP_PATH</td>
 				<td><code>path(u'/edx/app/edxapp/edx-platform/common/static/data/geoip/GeoIP.dat')</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>DATE_INPUT_FORMATS</td>
 				<td><code>('%Y-%m-%d',
  '%m/%d/%Y',
@@ -2070,169 +1810,169 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
  '%d %B, %Y')</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>ASSET_IGNORE_REGEX</td>
 				<td><code>'(^\\._.*$)|(^\\.DS_Store$)|(^.*~$)'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>CELERY_BROKER_VHOST</td>
 				<td><code>''</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>AUTHENTICATION_BACKENDS</td>
 				<td><code>('ratelimitbackend.backends.RateLimitModelBackend',)</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>CONFIG_PREFIX</td>
 				<td><code>'cms.'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>QUEUE_VARIANT</td>
 				<td><code>'cms.'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>STATICFILES_URL</td>
-				<td><code>'/static/10a0d74/'</code></td>
+				<td><code>'/static/acf03d7/'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>PASSWORD_RESET_TIMEOUT_DAYS</td>
 				<td><code>u'********************'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>CACHE_MIDDLEWARE_ALIAS</td>
 				<td><code>'default'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>SESSION_SAVE_EVERY_REQUEST</td>
 				<td><code>False</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>ADMIN_MEDIA_PREFIX</td>
 				<td><code>'/static/admin/'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>NUMBER_GROUPING</td>
 				<td><code>0</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>SESSION_ENGINE</td>
 				<td><code>'django.contrib.sessions.backends.cache'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>DEFAULT_FILE_STORAGE</td>
 				<td><code>'django.core.files.storage.FileSystemStorage'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>CSRF_FAILURE_VIEW</td>
 				<td><code>'django.views.csrf.csrf_failure'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>CSRF_COOKIE_PATH</td>
 				<td><code>'/'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>LOGIN_REDIRECT_URL</td>
 				<td><code>'/signin'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>CELERY_TASK_SERIALIZER</td>
 				<td><code>'json'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>XBLOCK_MIXINS</td>
 				<td><code>(&lt;class 'lms.lib.xblock.mixin.LmsBlockMixin'&gt;,
  &lt;class 'xmodule.modulestore.inheritance.InheritanceMixin'&gt;,
  &lt;class 'xmodule.x_module.XModuleMixin'&gt;)</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>ENABLE_JASMINE</td>
 				<td><code>False</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>PROJECT_ROOT</td>
 				<td><code>path(u'/edx/app/edxapp/edx-platform/cms')</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>STATIC_URL_BASE</td>
 				<td><code>u'/static/'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>DECIMAL_SEPARATOR</td>
 				<td><code>'.'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>CELERY_SEND_EVENTS</td>
 				<td><code>True</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>SERVICE_VARIANT</td>
 				<td><code>'cms'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>LOCALE_PATHS</td>
 				<td><code>(path(u'/edx/app/edxapp/edx-platform/conf/locale'),)</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>PIPELINE_CSS_COMPRESSOR</td>
 				<td><code>None</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>TEMPLATE_STRING_IF_INVALID</td>
 				<td><code>''</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>OPENID_DOMAIN_PREFIX</td>
 				<td><code>'openid:'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>TRACKING_IGNORE_URL_PATTERNS</td>
 				<td><code>['^/event', '^/login', '^/heartbeat']</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>COMMENTS_ALLOW_PROFANITIES</td>
 				<td><code>False</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>LOGOUT_URL</td>
 				<td><code>'/accounts/logout/'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>EMAIL_USE_TLS</td>
 				<td><code>False</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>ADVANCED_COMPONENT_TYPES</td>
 				<td><code>['annotatable',
  'textannotation',
@@ -2251,32 +1991,32 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
  'notes']</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>CELERY_BROKER_TRANSPORT</td>
 				<td><code>u'amqp'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>CELERY_BROKER_PASSWORD</td>
 				<td><code>u'********************'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>ASSET_KEY_PATTERN</td>
 				<td><code>u'********************'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>EMAIL_HOST</td>
 				<td><code>'localhost'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>DATE_FORMAT</td>
 				<td><code>'N j, Y'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>OPTIONAL_APPS</td>
 				<td><code>('edx_jsdraw',
  'mentoring',
@@ -2288,7 +2028,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
  'openassessment.xblock')</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>MODULESTORE</td>
 				<td><code>{'default': {'ENGINE': 'xmodule.modulestore.mixed.MixedModuleStore',
              'OPTIONS': {'mappings': {},
@@ -2345,47 +2085,47 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
                                                   u'user': u'edxapp'}}]}}}</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>MEDIA_ROOT</td>
 				<td><code>'/edx/var/edxapp/uploads'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>DEFAULT_EXCEPTION_REPORTER_FILTER</td>
 				<td><code>'django.views.debug.SafeExceptionReporterFilter'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>ADMINS</td>
 				<td><code>()</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>FORMAT_MODULE_PATH</td>
 				<td><code>None</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>DEFAULT_FROM_EMAIL</td>
 				<td><code>u'registration@example.com'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>VIRTUAL_UNIVERSITIES</td>
 				<td><code>[]</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>BROKER_HEARTBEAT_CHECKRATE</td>
 				<td><code>2</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>DATETIME_FORMAT</td>
 				<td><code>'N j, Y, P'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>TEMPLATE_DIRS</td>
 				<td><code>[path(u'/edx/app/edxapp/edx-platform/cms/templates'),
  path(u'/edx/app/edxapp/edx-platform/common/templates'),
@@ -2393,12 +2133,12 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
  path(u'/edx/app/edxapp/edx-platform/common/djangoapps/pipeline_js/templates')]</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>STATIC_ROOT_BASE</td>
 				<td><code>u'/edx/var/edxapp/staticfiles'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>PIPELINE_CSS</td>
 				<td><code>{'style-app': {'output_filename': 'css/cms-style-app.css',
                'source_filenames': ['sass/style-app.css']},
@@ -2420,58 +2160,45 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
  'style-vendor-tinymce-skin': {'output_filename': 'css/cms-style-vendor-tinymce-skin.css',
                                'source_filenames': ['js/vendor/tinymce/js/tinymce/skins/studio-tmce4/skin.min.css']},
  'style-xmodule': {'output_filename': 'css/cms-style-xmodule.css',
-                   'source_filenames': ['sass/style-xmodule.css']},
- 'style-xmodule-annotations': {'output_filename': 'css/cms-style-xmodule-annotations.css',
-                               'source_filenames': ['css/vendor/ova/annotator.css',
-                                                    'css/vendor/ova/edx-annotator.css',
-                                                    'css/vendor/ova/video-js.min.css',
-                                                    'css/vendor/ova/rangeslider.css',
-                                                    'css/vendor/ova/share-annotator.css',
-                                                    'css/vendor/ova/richText-annotator.css',
-                                                    'css/vendor/ova/tags-annotator.css',
-                                                    'css/vendor/ova/flagging-annotator.css',
-                                                    'css/vendor/ova/diacritic-annotator.css',
-                                                    'css/vendor/ova/grouping-annotator.css',
-                                                    'css/vendor/ova/ova.css',
-                                                    'js/vendor/ova/catch/css/main.css']}}</code></td>
+                   'source_filenames': ['sass/style-xmodule.css']}}</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>MAKO_MODULE_DIR</td>
 				<td><code>'/tmp/mako_cms'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>SITE_ID</td>
 				<td><code>1</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>DISALLOWED_USER_AGENTS</td>
 				<td><code>()</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>ALLOWED_INCLUDE_ROOTS</td>
 				<td><code>()</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>PASSWORD_MAX_LENGTH</td>
 				<td><code>u'********************'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>XBLOCK_SELECT_FUNCTION</td>
 				<td><code>''</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>LANGUAGES_BIDI</td>
 				<td><code>('he', 'ar', 'fa')</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>LOGGING</td>
 				<td><code>{'disable_existing_loggers': False,
  'filters': {'require_debug_false': {'()': 'django.utils.log.RequireDebugFalse'}},
@@ -2481,7 +2208,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
  'handlers': {'console': {'class': 'logging.StreamHandler',
                           'formatter': 'standard',
                           'level': 'INFO',
-                          'stream': &lt;open file '&lt;stderr&gt;', mode 'w' at 0x7fa2e4b47270&gt;},
+                          'stream': &lt;open file '&lt;stderr&gt;', mode 'w' at 0x7f3d758f4270&gt;},
               'local': {'address': '/dev/log',
                         'class': 'logging.handlers.SysLogHandler',
                         'facility': 16,
@@ -2510,62 +2237,62 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
  'version': 1}</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>SHORT_DATE_FORMAT</td>
 				<td><code>'m/d/Y'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>ADVANCED_SECURITY_CONFIG</td>
 				<td><code>{}</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>TEST_RUNNER</td>
 				<td><code>'django.test.simple.DjangoTestSuiteRunner'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>CACHE_MIDDLEWARE_KEY_PREFIX</td>
 				<td><code>u'********************'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>STATICFILES_ROOT</td>
-				<td><code>path(u'/edx/var/edxapp/staticfiles/10a0d74')</code></td>
+				<td><code>path(u'/edx/var/edxapp/staticfiles/acf03d7')</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>SOUTH_MIGRATION_MODULES</td>
 				<td><code>{'djcelery': 'ignore'}</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>DEFAULT_FEEDBACK_EMAIL</td>
 				<td><code>u'feedback@example.com'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>CELERY_MESSAGE_COMPRESSION</td>
 				<td><code>'gzip'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>MANAGERS</td>
 				<td><code>()</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>EMAIL_BACKEND</td>
 				<td><code>'django.core.mail.backends.console.EmailBackend'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>DEFAULT_TABLESPACE</td>
 				<td><code>''</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>TEMPLATE_CONTEXT_PROCESSORS</td>
 				<td><code>('django.core.context_processors.request',
  'django.core.context_processors.static',
@@ -2577,52 +2304,52 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
  'contentstore.context_processors.doc_url')</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>CELERY_QUEUES</td>
 				<td><code>{'edx.cms.core.default': {}, 'edx.cms.core.high': {}, 'edx.cms.core.low': {}}</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>DATADOG</td>
 				<td><code>{}</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>SITE_NAME</td>
 				<td><code>u'localhost'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>PASSWORD_DICTIONARY_EDIT_DISTANCE_THRESHOLD</td>
 				<td><code>u'********************'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>STATICFILES_EXCLUDED_APPS</td>
 				<td><code>()</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>SESSION_COOKIE_AGE</td>
 				<td><code>1209600</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>SETTINGS_MODULE</td>
 				<td><code>'cms.envs.devstack'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>USE_ETAGS</td>
 				<td><code>False</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>ADVANCED_PROBLEM_TYPES</td>
 				<td><code>[{'boilerplate_name': None, 'component': 'openassessment'}]</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>LANGUAGES</td>
 				<td><code>(('en', u'English'),
  ('eo', u'Dummy Language (Esperanto)'),
@@ -2708,98 +2435,98 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
  ('zh-tw', u'\u4e2d\u6587 (\u53f0\u7063)'))</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>CELERY_CACHE_BACKEND</td>
 				<td><code>'celery'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>COURSE_ID_PATTERN</td>
-				<td><code>'(?P&lt;course_id&gt;[^/+]+(/|\\+)[^/+]+(/|\\+)[^/]+)'</code></td>
+				<td><code>'(?P&lt;course_id&gt;(?:[^/]+/[^/]+/[^/]+)|(?:[^/]+))'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>INTERNAL_IPS</td>
 				<td><code>('127.0.0.1',)</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>STATIC_URL</td>
-				<td><code>'/static/10a0d74/'</code></td>
+				<td><code>'/static/acf03d7/'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>HTTPS</td>
 				<td><code>'on'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>USAGE_KEY_PATTERN</td>
 				<td><code>u'********************'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>EMAIL_PORT</td>
 				<td><code>25</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>USE_TZ</td>
 				<td><code>True</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>SHORT_DATETIME_FORMAT</td>
 				<td><code>'m/d/Y P'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>CELERY_RESULT_BACKEND</td>
 				<td><code>'cache'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>PASSWORD_HASHERS</td>
 				<td><code>u'********************'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>FILE_UPLOAD_MAX_MEMORY_SIZE</td>
 				<td><code>2621440</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>ABSOLUTE_URL_OVERRIDES</td>
 				<td><code>{}</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>BUGS_EMAIL</td>
 				<td><code>'bugs@example.com'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>SHIBBOLETH_DOMAIN_PREFIX</td>
 				<td><code>'shib:'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>CACHE_MIDDLEWARE_SECONDS</td>
 				<td><code>600</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>EMBARGO_SITE_REDIRECT_URL</td>
 				<td><code>None</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>DEBUG_TOOLBAR_CONFIG</td>
 				<td><code>{'INTERCEPT_REDIRECTS': False,
- 'SHOW_TOOLBAR_CALLBACK': &lt;function &lt;lambda&gt; at 0x1d97cf8&gt;}</code></td>
+ 'SHOW_TOOLBAR_CALLBACK': &lt;function &lt;lambda&gt; at 0x2927a28&gt;}</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>DATETIME_INPUT_FORMATS</td>
 				<td><code>('%Y-%m-%d %H:%M:%S',
  '%Y-%m-%d %H:%M:%S.%f',
@@ -2815,32 +2542,32 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
  '%m/%d/%y')</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>COURSES_WITH_UNSAFE_CODE</td>
 				<td><code>[]</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>TECH_SUPPORT_EMAIL</td>
 				<td><code>u'technical@example.com'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>AUTH_TOKENS</td>
 				<td><code>u'********************'</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>TIME_ZONE</td>
 				<td><code>u'America/New_York'</code></td>
 			</tr>
 		
-			<tr class="djDebugEven">
+			<tr class="djDebugOdd">
 				<td>EMAIL_HOST_USER</td>
 				<td><code>''</code></td>
 			</tr>
 		
-			<tr class="djDebugOdd">
+			<tr class="djDebugEven">
 				<td>PROFANITIES_LIST</td>
 				<td><code>u'********************'</code></td>
 			</tr>
@@ -2856,7 +2583,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 		
 			<div id="djDebugHeaderPanel" class="panelContent" style="display: none;">
 				<div class="djDebugPanelTitle">
-					<a href="" class="djDebugClose">关闭</a>
+					<a href="" class="djDebugClose">Close</a>
 					<h3>HTTP Headers</h3>
 				</div>
 				<div class="djDebugPanelContent">
@@ -2866,7 +2593,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 	<thead>
 		<tr>
 			<th>Key</th>
-			<th>值</th>
+			<th>Value</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -2893,7 +2620,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 		
 			<tr class="djDebugOdd">
 				<td>HTTP_REFERER</td>
-				<td>http://192.168.1.112:8001/course/cetc/CS201/2014_T1</td>
+				<td>http://192.168.1.101:8001/signin?next=/course_info/Cetc55/Iaas-001/2014-01-01</td>
 			</tr>
 		
 			<tr class="djDebugEven">
@@ -2913,7 +2640,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 		
 			<tr class="djDebugOdd">
 				<td>HTTP_ACCEPT_LANGUAGE</td>
-				<td>zh-CN;q=1.0</td>
+				<td>en;q=0.6</td>
 			</tr>
 		
 			<tr class="djDebugEven">
@@ -2928,7 +2655,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 		
 			<tr class="djDebugEven">
 				<td>HTTP_HOST</td>
-				<td>192.168.1.112:8001</td>
+				<td>192.168.1.101:8001</td>
 			</tr>
 		
 			<tr class="djDebugOdd">
@@ -2967,7 +2694,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 		
 			<div id="djDebugRequestVarsPanel" class="panelContent" style="display: none;">
 				<div class="djDebugPanelTitle">
-					<a href="" class="djDebugClose">关闭</a>
+					<a href="" class="djDebugClose">Close</a>
 					<h3>Request Vars</h3>
 				</div>
 				<div class="djDebugPanelContent">
@@ -2985,12 +2712,12 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 	</thead>
 	<tbody>
 		<tr>
-			<td>contentstore.views.course.settings_handler</td>
+			<td>contentstore.views.course.course_info_handler</td>
 			<td>None</td>
 			<td>
 			
 				
-					course_key_string=cetc/CS201/2014_T1
+					course_key_string=Cetc55/Iaas-001/2014-01-01
 				
 			
 			</td>
@@ -3008,7 +2735,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 		<thead>
 			<tr>
 				<th>Variable</th>
-				<th>值</th>
+				<th>Value</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -3020,27 +2747,27 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 			
 				<tr class="djDebugEven">
 					<td>__utmz</td>
-					<td>22864507.1408090052.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)</td>
+					<td>123129419.1407984672.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)</td>
 				</tr>
 			
 				<tr class="djDebugOdd">
-					<td>sessionid</td>
-					<td>373ae123b4f1bf0d9125bbfc1bc62ec5</td>
-				</tr>
-			
-				<tr class="djDebugEven">
 					<td>djdt</td>
 					<td>hide</td>
 				</tr>
 			
+				<tr class="djDebugEven">
+					<td>sessionid</td>
+					<td>916fb5bf03eb2eb6ce72d1992023808c</td>
+				</tr>
+			
 				<tr class="djDebugOdd">
 					<td>csrftoken</td>
-					<td>u2xtXT83RmxyYsahITu1jhjgq7FFn3Qc</td>
+					<td>4e3CalsAFZlCech6ROTZ7VkTrAG3Hsbw</td>
 				</tr>
 			
 				<tr class="djDebugEven">
 					<td>__utma</td>
-					<td>22864507.1660172898.1408090052.1408090052.1408090052.1</td>
+					<td>123129419.1920341866.1407984672.1407984672.1408087749.2</td>
 				</tr>
 			
 		</tbody>
@@ -3057,7 +2784,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 		<thead>
 			<tr>
 				<th>Variable</th>
-				<th>值</th>
+				<th>Value</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -3099,7 +2826,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 		
 			<div id="djDebugSQLPanel" class="panelContent" style="display: none;">
 				<div class="djDebugPanelTitle">
-					<a href="" class="djDebugClose">关闭</a>
+					<a href="" class="djDebugClose">Close</a>
 					<h3>SQL Queries from 0 connections</h3>
 				</div>
 				<div class="djDebugPanelContent">
@@ -3124,7 +2851,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 		
 			<div id="djDebugSignalsPanel" class="panelContent" style="display: none;">
 				<div class="djDebugPanelTitle">
-					<a href="" class="djDebugClose">关闭</a>
+					<a href="" class="djDebugClose">Close</a>
 					<h3>Signals</h3>
 				</div>
 				<div class="djDebugPanelContent">
@@ -3223,7 +2950,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 		
 			<div id="djDebugLoggingPanel" class="panelContent" style="display: none;">
 				<div class="djDebugPanelTitle">
-					<a href="" class="djDebugClose">关闭</a>
+					<a href="" class="djDebugClose">Close</a>
 					<h3>Log Messages</h3>
 				</div>
 				<div class="djDebugPanelContent">
@@ -3233,42 +2960,34 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 	<table>
 		<thead>
 			<tr>
-				<th>级别</th>
-				<th>时间</th>
+				<th>Level</th>
+				<th>Time</th>
 				<th>Channel</th>
 				<th>Message</th>
-				<th>所在地</th>
+				<th>Location</th>
 			</tr>
 		</thead>
 		<tbody>
 			
 				<tr class="djDebugOdd">
 					<td>DEBUG</td>
-					<td>10:44:15 08/24/2014</td>
-					<td>contentstore.context_processors</td>
-					<td>Didn't find a configuration option for 'locales' section and 'zh-cn' option</td>
-					<td>/edx/app/edxapp/edx-platform/cms/djangoapps/contentstore/context_processors.py:53</td>
+					<td>01:57:24 08/24/2014</td>
+					<td>stevedore.extension</td>
+					<td>found extension EntryPoint.parse('block-v1 = opaque_keys.edx.locator:BlockUsageLocator')</td>
+					<td>/edx/app/edxapp/venvs/edxapp/local/lib/python2.7/site-packages/stevedore/extension.py:156</td>
 				</tr>
 			
 				<tr class="djDebugEven">
-					<td>DEBUG</td>
-					<td>10:44:15 08/24/2014</td>
-					<td>contentstore.context_processors</td>
-					<td>Didn't find a configuration option for 'locales' section and 'zh-cn' option</td>
-					<td>/edx/app/edxapp/edx-platform/cms/djangoapps/contentstore/context_processors.py:53</td>
-				</tr>
-			
-				<tr class="djDebugOdd">
 					<td>WARNING</td>
-					<td>10:44:15 08/24/2014</td>
+					<td>01:57:24 08/24/2014</td>
 					<td>edxmako.shortcuts</td>
 					<td>Cannot find corresponding link for name: TOS</td>
 					<td>/edx/app/edxapp/edx-platform/common/djangoapps/edxmako/shortcuts.py:56</td>
 				</tr>
 			
-				<tr class="djDebugEven">
+				<tr class="djDebugOdd">
 					<td>WARNING</td>
-					<td>10:44:15 08/24/2014</td>
+					<td>01:57:24 08/24/2014</td>
 					<td>edxmako.shortcuts</td>
 					<td>Cannot find corresponding link for name: PRIVACY</td>
 					<td>/edx/app/edxapp/edx-platform/common/djangoapps/edxmako/shortcuts.py:56</td>
@@ -3288,5 +3007,5 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 </div>
 
 
-<div><div id="tender_toggler" style="display: none;"><a href="#" id="tender_toggler_link">Help &amp; Support</a></div></div><div id="reader-feedback" class="sr" style="display:none" aria-hidden="false" aria-atomic="true" aria-live="assertive"></div><div class="tooltip" style="display: none; opacity: 0;"></div><div id="lean_overlay"></div><div id="lean_overlay"></div><div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="Prev"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a><div class="ui-datepicker-title"><span class="ui-datepicker-month">August</span>&nbsp;<span class="ui-datepicker-year">2014</span></div></div><table class="ui-datepicker-calendar"><thead><tr><th class="ui-datepicker-week-end"><span title="Sunday">Su</span></th><th><span title="Monday">Mo</span></th><th><span title="Tuesday">Tu</span></th><th><span title="Wednesday">We</span></th><th><span title="Thursday">Th</span></th><th><span title="Friday">Fr</span></th><th class="ui-datepicker-week-end"><span title="Saturday">Sa</span></th></tr></thead><tbody><tr><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">1</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">2</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">3</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">4</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">5</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">6</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">7</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">8</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">9</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">10</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">11</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">12</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">13</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">14</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">15</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">16</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">17</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">18</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">19</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">20</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">21</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">22</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">23</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">24</a></td><td class=" ui-datepicker-days-cell-over  ui-datepicker-current-day ui-datepicker-today" data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default ui-state-highlight ui-state-active ui-state-hover" href="#">25</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">26</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">27</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">28</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">29</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">30</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">31</a></td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td></tr></tbody></table></div></body>
+<div><div id="tender_toggler" style="display: none;"><a href="#" id="tender_toggler_link">Help &amp; Support</a></div></div><div id="reader-feedback" class="sr" style="display:none" aria-hidden="false" aria-atomic="true" aria-live="assertive"></div><div class="tooltip" style="display: none; opacity: 0;"></div><div id="lean_overlay"></div><div id="lean_overlay"></div></body>
 </html>

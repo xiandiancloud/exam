@@ -12,7 +12,7 @@
 <head>
 
 <base href="<%=basePath%>">
-<title>问题</title>
+<title>实验</title>
 
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="path_prefix" content="">
@@ -79,17 +79,17 @@ function savever(name)
 {
 	var sequenticalId = parseInt("${sequentialId}");
 	var verticalId = parseInt("${verticalId}");
-	var examId = parseInt("${examId}");
+	var courseId = parseInt("${courseId}");
 	var data = {sequenticalId:sequenticalId,verticalId:verticalId,name:name};
 	$.ajax({
-		url:"cms/createExamVertical.action",
+		url:"cms/createVertical.action",
 		type:"post",
 		data:data,
 		success:function(s){
 			var a=eval("("+s+")");	
 			if (a.sucess=="sucess")
 			{
-				location.href = "cms/totexamtrain.action?examId="+examId+"&sequentialId="+sequenticalId+"&verticalId="+a.verticalId;
+				location.href = "cms/tottrain.action?courseId="+courseId+"&sequentialId="+sequenticalId+"&verticalId="+a.verticalId;
 			}
 		}
 	});

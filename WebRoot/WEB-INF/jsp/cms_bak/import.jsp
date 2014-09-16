@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -10,7 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <base href="<%=basePath%>">
     
     <title>
-        日程 &amp; 细节设置 |
+        课程导入 |
         
         先电云平台 |
         edX Studio
@@ -37,12 +38,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link href="tcss/style-app.css" rel="stylesheet" type="text/css" />
     <link href="tcss/style-app-extend1.css" rel="stylesheet" type="text/css" />
     <link href="tcss/style-xmodule.css" rel="stylesheet" type="text/css" />
-	<link href="css/fineuploader.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-	<script type="text/javascript" src="js/index.js"></script>
-	<script type="text/javascript" src="js/jquery-ui.js"></script> 
-	<script src="js/fineuploader.js"></script>
-	<script src="js/common.js"></script>
+
+<link href="css/fineuploader.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script> 
+<script src="js/fineuploader.js"></script>
   <!-- dummy segment.io -->
 <script type="text/javascript">
   var course_location_analytics = "cetc/CS201/2014_T1";
@@ -54,13 +56,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
     
-  
-  
-  
+  <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery" src="/static/10a0d74/js/vendor/jquery.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/models/course" src="/static/10a0d74/js/models/course.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="gettext" src="/i18n.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/sock" src="/static/10a0d74/js/sock.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/import" src="/static/10a0d74/js/views/import.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="tender" src="//edxedge.tenderapp.com/tender_widget.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.iframe-transport" src="/static/10a0d74/js/vendor/jQuery-File-Upload/js/jquery.iframe-transport.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="underscore" src="/static/10a0d74/js/vendor/underscore-min.js"></script><style type="text/css" charset="utf-8">#tender_window{ position: absolute; top: 20px; left: 10px; right: 10px; margin: auto; max-width:680px; height:715px; padding:3px; background:url(http://edxedge.tenderapp.com/images/widget/overlay_back.png); z-index:9999; }#tender_window iframe{ border:none; width:100%; height:100%; } #tender_window #tender_frame{ width:100%; height:100%; background:url(http://edxedge.tenderapp.com/images/widget/loader.gif) 50% 50% no-repeat #fff; } #tender_closer{ position:absolute; top:18px; right:18px; color:#fff; font-family:Helvetica, Arial, sans-serif; font-size:12px; font-weight:bold; text-decoration:none; border:none; } #tender_closer{ color: #80B3CC }#tender_toggler{ position:absolute; top:100px; right:0px; width:33px; height:105px; padding:3px 0 3px 3px; background:url(http://edxedge.tenderapp.com/images/widget/overlay_back.png); } #tender_toggler_link{ display:block; width:100%; height:100%; text-decoration:none; border:none; text-indent:-9999px; background: #006699 url(http://edxedge.tenderapp.com/images/widget/tab_text_right.gif) !important; } </style><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="domReady" src="/static/10a0d74/js/vendor/domReady.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="backbone" src="/static/10a0d74/js/vendor/backbone-min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/base" src="/static/10a0d74/js/base.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="accessibility" src="/static/10a0d74/js/src/accessibility_tools.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="ieshim" src="/static/10a0d74/js/src/ie_shim.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.fileupload" src="/static/10a0d74/js/vendor/jQuery-File-Upload/js/jquery.fileupload.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.smoothScroll" src="/static/10a0d74/js/vendor/jquery.smooth-scroll.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="coffee/src/ajax_prefix" src="/static/10a0d74/coffee/src/ajax_prefix.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.timepicker" src="/static/10a0d74/js/vendor/timepicker/jquery.timepicker.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="tooltip_manager" src="/static/10a0d74/js/src/tooltip_manager.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/feedback_notification" src="/static/10a0d74/js/views/feedback_notification.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/feedback_prompt" src="/static/10a0d74/js/views/feedback_prompt.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/utils/date_utils" src="/static/10a0d74/js/utils/date_utils.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/utils/module" src="/static/10a0d74/js/utils/module.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/utils/handle_iframe_binding" src="/static/10a0d74/js/utils/handle_iframe_binding.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.leanModal" src="/static/10a0d74/js/vendor/jquery.leanModal.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.ui" src="/static/10a0d74/js/vendor/jquery-ui.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.form" src="/static/10a0d74/js/vendor/jquery.form.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="underscore.string" src="/static/10a0d74/js/vendor/underscore.string.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/feedback" src="/static/10a0d74/js/views/feedback.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="coffee/src/main" src="/static/10a0d74/coffee/src/main.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="coffee/src/logger" src="/static/10a0d74/coffee/src/logger.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="datepair" src="/static/10a0d74/js/vendor/timepicker/datepair.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="date" src="/static/10a0d74/js/vendor/date.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/utils/templates" src="/static/10a0d74/js/utils/templates.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.cookie" src="/static/10a0d74/js/vendor/jquery.cookie.js"></script></head>
 
-  <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery" src="/static/10a0d74/js/vendor/jquery.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/models/course" src="/static/10a0d74/js/models/course.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="gettext" src="/i18n.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/sock" src="/static/10a0d74/js/sock.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="domReady" src="/static/10a0d74/js/vendor/domReady.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/models/settings/course_details" src="/static/10a0d74/js/models/settings/course_details.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/settings/main" src="/static/10a0d74/js/views/settings/main.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="underscore" src="/static/10a0d74/js/vendor/underscore-min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="tender" src="//edxedge.tenderapp.com/tender_widget.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="backbone" src="/static/10a0d74/js/vendor/backbone-min.js"></script><style type="text/css" charset="utf-8">#tender_window{ position: absolute; top: 20px; left: 10px; right: 10px; margin: auto; max-width:680px; height:715px; padding:3px; background:url(http://edxedge.tenderapp.com/images/widget/overlay_back.png); z-index:9999; }#tender_window iframe{ border:none; width:100%; height:100%; } #tender_window #tender_frame{ width:100%; height:100%; background:url(http://edxedge.tenderapp.com/images/widget/loader.gif) 50% 50% no-repeat #fff; } #tender_closer{ position:absolute; top:18px; right:18px; color:#fff; font-family:Helvetica, Arial, sans-serif; font-size:12px; font-weight:bold; text-decoration:none; border:none; } #tender_closer{ color: #80B3CC }#tender_toggler{ position:absolute; top:100px; right:0px; width:33px; height:105px; padding:3px 0 3px 3px; background:url(http://edxedge.tenderapp.com/images/widget/overlay_back.png); } #tender_toggler_link{ display:block; width:100%; height:100%; text-decoration:none; border:none; text-indent:-9999px; background: #006699 url(http://edxedge.tenderapp.com/images/widget/tab_text_right.gif) !important; } </style><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/base" src="/static/10a0d74/js/base.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="accessibility" src="/static/10a0d74/js/src/accessibility_tools.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="ieshim" src="/static/10a0d74/js/src/ie_shim.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/validation" src="/static/10a0d74/js/views/validation.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="tzAbbr" src="/static/10a0d74/js/vendor/tzAbbr.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/models/uploads" src="/static/10a0d74/js/models/uploads.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/uploads" src="/static/10a0d74/js/views/uploads.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/utils/change_on_enter" src="/static/10a0d74/js/utils/change_on_enter.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.timepicker" src="/static/10a0d74/js/vendor/timepicker/jquery.timepicker.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.smoothScroll" src="/static/10a0d74/js/vendor/jquery.smooth-scroll.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="coffee/src/ajax_prefix" src="/static/10a0d74/coffee/src/ajax_prefix.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="tooltip_manager" src="/static/10a0d74/js/src/tooltip_manager.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="codemirror" src="/static/10a0d74/js/vendor/codemirror-compressed.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.ui" src="/static/10a0d74/js/vendor/jquery-ui.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="date" src="/static/10a0d74/js/vendor/date.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/feedback_notification" src="/static/10a0d74/js/views/feedback_notification.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/feedback_prompt" src="/static/10a0d74/js/views/feedback_prompt.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/utils/date_utils" src="/static/10a0d74/js/utils/date_utils.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/utils/module" src="/static/10a0d74/js/utils/module.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/utils/handle_iframe_binding" src="/static/10a0d74/js/utils/handle_iframe_binding.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.leanModal" src="/static/10a0d74/js/vendor/jquery.leanModal.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="coffee/src/main" src="/static/10a0d74/coffee/src/main.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="coffee/src/logger" src="/static/10a0d74/coffee/src/logger.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="datepair" src="/static/10a0d74/js/vendor/timepicker/datepair.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="underscore.string" src="/static/10a0d74/js/vendor/underscore.string.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/feedback" src="/static/10a0d74/js/views/feedback.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.form" src="/static/10a0d74/js/vendor/jquery.form.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/utils/templates" src="/static/10a0d74/js/utils/templates.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/baseview" src="/static/10a0d74/js/views/baseview.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/feedback_alert" src="/static/10a0d74/js/views/feedback_alert.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery.cookie" src="/static/10a0d74/js/vendor/jquery.cookie.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/utils/view_utils" src="/static/10a0d74/js/views/utils/view_utils.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="js/views/modals/base_modal" src="/static/10a0d74/js/views/modals/base_modal.js"></script></head>
-
-  <body class="is-signedin course schedule view-settings feature-upload hide-wip lang_zh-cn js">
+  <body class="is-signedin course tools view-import hide-wip lang_zh-cn js">
     <a class="nav-skip" href="#content">跳过本内容页</a>
 
     <script type="text/javascript">
@@ -362,7 +360,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- view -->
     <div class="wrapper wrapper-view">
         
- <jsp:include page="ttheader.jsp"></jsp:include>
+        
+<jsp:include page="ttheader.jsp"></jsp:include>
 
       <div id="page-alert"></div>
 
@@ -371,8 +370,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="wrapper-mast wrapper">
   <header class="mast has-subtitle">
     <h1 class="page-header">
-      <small class="subtitle">设置</small>
-      <span class="sr">&gt; </span>日程 &amp; 细节
+      <small class="subtitle">工具</small>
+      <span class="sr">&gt; </span>课程导入
     </h1>
   </header>
 </div>
@@ -380,157 +379,124 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="wrapper-content wrapper">
   <section class="content">
     <article class="content-primary" role="main">
-      <form id="settings_details" class="settings-details" method="post" action="">
-        <section class="group-settings basic">
-          <header>
-            <h2 class="title-2">基本信息</h2>
-            <span class="tip">您试卷的具体细节</span>
-          </header>
 
-          <ol class="list-input">
-            <li class="field text is-not-editable" id="field-course-organization">
-              <label for="course-organization">组织</label>
-              <input title="该字段已禁用：信息不可修改。" type="text" class="long" id="course-organization" readonly="" value="${exam.org}">
+      <div class="introduction">
+          <p>在继续前请确保你想要导入一门课程。当前课程的所有内容会被导入的内容所取代。<strong> 课程导入无法撤销 </strong>。我们建议先将当前课程导出，这样你可以有个备份。</p>
+          <p>你将要导入的课程必须为.tar.gz格式的文件( 即一个采用GNU zip压缩后的.tar文件)。这个.tar.gz文件必须包含一个course.xml文件。另外也可能包含其他文件。</p>
+          <p>导入过程有五步。在前两步中，你必须停留在当前页面。而在解压步骤结束后你可以离开当前页面。不过，我们建议在导入操作结束前你都不要对课程做任何更改调整。</p>
+      </div>
+
+      <form id="fileupload" method="post" enctype="multipart/form-data" class="import-form">
+
+        <h2 class="title">选择一个.tar.gz 文件以覆盖当前课程内容</h2>
+
+        <p class="error-block"></p>
+
+		
+        <!-- <a href="javascript:void(0);" class="action action-choose-file choose-file-button">
+         <i class="icon-upload"></i>
+          <span class="copy">选择要导入的文件</span>
+        </a> -->
+		<div id="bootstrapped-fine-uploader"></div>
+        <div class="wrapper wrapper-file-name file-name-block">
+            <h3 class="title">
+              <span class="label">选中的文件：</span>
+              <span class="file-name"></span>
+            </h3>
+
+          <input type="file" name="course-data" class="file-input">
+
+          <input type="submit" value="用上面的课程替换我的课程" class="submit-button">
+        </div>
+
+        <div class="wrapper wrapper-status is-hidden">
+          <h3 class="title">课程导入状态</h3>
+
+          <ol class="status-progress list-progress">
+            <li class="item-progresspoint item-progresspoint-upload is-complete">
+              <span class="deco status-visual">
+                <i class="icon-cog"></i>
+                <i class="icon-warning-sign"></i>
+              </span>
+
+              <div class="status-detail">
+                <h3 class="title">上传中</h3>
+                <p class="copy">正在传输你的文件至服务器</p>
+              </div>
             </li>
 
-            <li class="field text is-not-editable" id="field-course-number">
-              <label for="course-number">试卷代码</label>
-              <input title="该字段已禁用：信息不可修改。" type="text" class="short" id="course-number" readonly="" value="${exam.coursecode}">
+            <li class="item-progresspoint item-progresspoint-unpack is-started">
+              <span class="deco status-visual">
+                <i class="icon-cog icon-spin"></i>
+                <i class="icon-warning-sign"></i>
+              </span>
+
+              <div class="status-detail">
+                <h3 class="title">解压中</h3>
+                <p class="copy">展开预定义的目录/文件结构(您现在可以安全地离开这个页面了，但在内容导入完成之前请尽量避免不必要的修改)</p>
+              </div>
             </li>
 
-            <li class="field text is-not-editable" id="field-course-name">
-              <label for="course-name">开课时间</label>
-              <input title="该字段已禁用：信息不可修改。" type="text" class="long" id="course-name" readonly="" value="${exam.starttime}">
+
+            <li class="item-progresspoint item-progresspoint-verify is-not-started">
+              <span class="deco status-visual">
+                <i class="icon-cog"></i>
+                <i class="icon-warning-sign"></i>
+              </span>
+
+              <div class="status-detail">
+                <h3 class="title">检验中</h3>
+                <p class="copy">复查语义、语法和必要数据</p>
+              </div>
+            </li>
+
+            <li class="item-progresspoint item-progresspoint-import is-not-started">
+              <span class="deco status-visual">
+                <i class="icon-cog"></i>
+                <i class="icon-warning-sign"></i>
+              </span>
+
+              <div class="status-detail">
+                <h3 class="title">课程更新中</h3>
+                <p class="copy">整合你导入的内容到课程，对大的课程这可能花费较多时间。</p>
+              </div>
+            </li>
+            <li class="item-progresspoint item-progresspoint-success has-actions is-not-started">
+              <span class="deco status-visual">
+                <i class="icon-check"></i>
+              </span>
+
+              <div class="status-detail">
+                <h3 class="title">成功</h3>
+                <p class="copy">你导入的内容已经被整合进课程</p>
+
+                <ul class="list-actions">
+                  <li class="item-action">
+                    <a href="/course/cetc/CS201/2014_T1" class="action action-primary">显示更新后的课程大纲</a>
+                  </li>
+                </ul>
+              </div>
             </li>
           </ol>
-
-          
-
-        </section>
-
-        <hr class="divide">
-
-        <section class="group-settings schedule">
-          <header>
-            <h2 class="title-2">试卷时间表</h2>
-            <span class="tip">调整您的试卷可以浏览的日期</span>
-          </header>
-
-          <ol class="list-input">
-            <li class="field-group field-group-course-start" id="course-start">
-              <div class="field date" id="field-course-start-date">
-                <label for="course-start-date">试卷开始日期</label>
-                <input type="text" class="start-date date start datepicker hasDatepicker" id="starttimedetail" placeholder="YYYY-MM-DD" autocomplete="off" value="${exam.starttimedetail}">
-                <span class="tip tip-stacked">试卷开始的第一天</span>
-              </div>
-
-<!--               <div class="field time" id="field-course-start-time">
-                <label for="course-start-time">试卷开始时间</label>
-                <input type="text" class="time start timepicker ui-timepicker-input" id="course-start-time" value="" placeholder="HH:MM" autocomplete="off">
-                <span class="tip tip-stacked" id="timezone">(中国标准时间)</span>
-              </div> -->
-            </li>
-
-            <li class="field-group field-group-course-end" id="course-end">
-              <div class="field date" id="field-course-end-date">
-                <label for="course-end-date">试卷结束日期</label>
-                <input type="text" class="end-date date end hasDatepicker" id="endtimedetail" placeholder="YYYY-MM-DD" autocomplete="off" value="${exam.endtimedetail}">
-                <span class="tip tip-stacked">您试卷结束的最后一天</span>
-              </div>
-
-<!--               <div class="field time" id="field-course-end-time">
-                <label for="course-end-time">试卷结束时间</label>
-                <input type="text" class="time end ui-timepicker-input" id="course-end-time" value="" placeholder="HH:MM" autocomplete="off">
-                <span class="tip tip-stacked" id="timezone">(中国标准时间)</span>
-              </div> -->
-            </li>
-          </ol>
-
-          
-
-        </section>
-        <hr class="divide">
-            <section class="group-settings marketing">
-              <header>
-                <h2 class="title-2">介绍您的试卷</h2>
-                <span class="tip">提供给预期学生的信息</span>
-              </header>
-              <ol class="list-input">
-                <li class="field text" id="field-course-short-description">
-                  <label for="course-overview">试卷简介</label>
-                  <textarea class="text" id="describle"></textarea>
-                  <span class="tip tip-stacked">将在学生浏览试卷目录时出现。限制150个字符。</span>
-                </li>
-
-                
-
-                <li class="field image" id="field-course-image">
-                  <label>试卷图片</label>
-                  <div class="current current-course-image">
-                    <span class="wrapper-course-image">
-                      <img class="course-image" id="course-image" src="${exam.imgpath}" alt="试卷图片">
-                    </span>
-
-                    <span class="msg msg-help">
-                    该图片可以随您的其他<a href="/assets/cetc/CS201/2014_T1/">文件 &amp; 上传</a>共同管理
-                    </span>
-
-                  </div>
-
-                  <div class="wrapper-input">
-                    <div class="input">
-                      <input type="text" class="long new-course-image-url" id="imgpath" value="" placeholder="Your course image URL" autocomplete="off">
-                      <span class="tip tip-stacked">请为您的试卷图片提供一个有效的路径和名字（注意：仅支持JPEG和PNG格式）</span>
-                    </div>
-                    <!-- <button type="button" class="action action-upload-image">上传试卷图片</button> -->
-                    <div id="bootstrapped-fine-uploader"></div>
-                  </div>
-                </li>
-
-              </ol>
-            </section>
-
-            <hr class="divide">
-
-<!--             <section class="group-settings requirements">
-              <header>
-                <h2 class="title-2">要求</h2>
-                <span class="tip">对参加本门试卷的学生的期望</span>
-              </header>
-
-              <ol class="list-input">
-                <li class="field text" id="field-course-effort">
-                  <label for="course-effort">每周投入试卷学习的小时数</label>
-                  <input type="text" class="short time" id="course-effort" placeholder="HH:MM">
-                  <span class="tip tip-inline">在整个试卷上投入的时间</span>
-                </li>
-              </ol>
-            </section> -->
-            <ul class="course-actions">
-				<li class="action"><a href="javascript:void(0);" rel="external" onclick="updateCourse(${examId});"
-					class="button view-button view-live-button">保存</a></li>
-			</ul>
+        </div>
       </form>
     </article>
+
     <aside class="content-supplementary" role="complimentary">
-     <div class="bit">
-        <h3 class="title-3">如何使用这些设置？</h3>
-        <p>您的试卷时间表决定何时学生可以注册和开始本门试卷。</p>
+      <div class="bit">
+        <h3 class="title-3">为什么导入课程？</h3>
+        <p>您或者想为现有课程创建新版本，或完全替换一个现有课程，或您已在Studio之外创建了课程。</p>
+      </div>
 
-        <p>本页面的其他信息将会出现在你试卷的关于页面上。这些信息包括试卷概要，试卷图片，介绍视频，以及预估的时间要求。学生们使用关于页面来选择要上的试卷。</p>
-     </div>
+      <div class="bit">
+        <h3 class="title-3">哪些内容被导入了？</h3>
+        <p>只有课程内容和结构(包括章，节，单元)被导入了。其它数据，包括学生数据，分数信息，讨论数据，课程设置的课程团队信息，将沿用当前课程。</p>
+      </div>
 
-     <div class="bit">
-          
-        <h3 class="title-3">试卷其他设置</h3>
-        <nav class="nav-related">
-          <ul>
-            <li class="nav-item"><a href="/settings/grading/cetc/CS201/2014_T1">评分</a></li>
-            <li class="nav-item"><a href="/course_team/cetc/CS201/2014_T1/">试卷团队</a></li>
-            <li class="nav-item"><a href="/settings/advanced/cetc/CS201/2014_T1">高级设置</a></li>
-          </ul>
-        </nav>
-     </div>
+      <div class="bit">
+        <h3 class="title-3">注意：导入发生于课程进行中</h3>
+        <p>如果您在课程进行中执行了导入，并更改了任意问题组件的URL名字(或url名字节点) ，与此问题组件相关的学生数据将可能丢失。这些数据包括学生问题得分。</p>
+      </div>
     </aside>
   </section>
 </div>
@@ -600,70 +566,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <jsp:include page="tfooter.jsp"></jsp:include>
 
       <script type="text/javascript">
-      $(document).ready(function(){
-    	    var desc = replaceTextarea2('${course.describle}');
-    	    $("#describle").html(desc);
-    		createUploader();
-    	});
-    	function createUploader() { 
-    		var uploader = new qq.FineUploader({ 
-    		element: document.getElementById('bootstrapped-fine-uploader'), 
-    		request: { 
-    		endpoint: 'cms/importCourseimg.action'
-    		}, 
-    		text: { 
-    		uploadButton: '<button class="btn btn-warning"><i class="icon-upload"></i>选择要导入的文件</button>' 
-    		}, 
-    		validation:{
-    			allowedExtensions: ['png','PNG','jpeg','JPEG','jpg','JPG']
-    		},
-    		template: 
-    		'<div class="qq-uploader">' + 
-    		'<pre class="qq-upload-drop-area"><span>{dragZoneText}</span></pre>' + 
-    		'<div class="qq-upload-button action action-upload-image" style="width: auto;">上传试卷图片</div>' + 
-    		'<span class="qq-drop-processing"><span>{dropProcessingText}</span>'+ 
-    		'<span class="qq-drop-processing-spinner"></span></span>' + 
-    		'<ul class="qq-upload-list" style="margin-top: 10px; text-align: center;display:none"></ul>' + 
-    		'</div>', 
-    		classes: { 
-    		success: 'alert alert-success', 
-    		fail: 'alert alert-error' 
-    		}, 
-    		callbacks:{
-    			onComplete: function(id,  fileName,  responseJSON){		
-    				if (responseJSON.success == "true")
-    				{
-    					alert("上传成功");
-    					$("#imgpath").attr("value",responseJSON.imgpath);
-    					$("#course-image").attr("src",responseJSON.imgpath);
-    				}
-    			}
-    		},
-    		debug: true 
-    		}); 
-      }
-      function updateCourse(courseId)
-		{
-			var describle = $("#describle").val();
-			describle = replaceTextarea1(describle);
-			var endtimedetail = $("#endtimedetail").val();
-			var starttimedetail = $("#starttimedetail").val();
-			var imgpath = $("#imgpath").val();
-			var data = {examId:courseId,describle:describle,starttimedetail:starttimedetail,endtimedetail:endtimedetail,imgpath:imgpath};
-			$.ajax({
-				url:"cms/updateExam.action",
-				type:"post",
-				data:data,
-				success:function(s){
-					var a=eval("("+s+")");	
-					if (a.sucess=="sucess")
-					{
-						alert("更新成功");
-					}
-				}
-			});
-		}
-      
 window.Tender = {
   hideToggle: true,
   title: '',
@@ -680,35 +582,115 @@ require(['tender']);
 
     <div id="page-prompt"></div>
     
-  <link rel="stylesheet" type="text/css" href="/static/10a0d74/js/vendor/timepicker/jquery.timepicker.css">
+<script>
+require(
+        ["js/views/import", "jquery", "gettext", "jquery.fileupload"],
+        function(CourseImport, $, gettext) {
 
-  <script type="text/javascript">
-window.CMS = window.CMS || {};
-CMS.URL = CMS.URL || {};
-CMS.URL.UPLOAD_ASSET = '/assets/cetc/CS201/2014_T1/';
+var file;
+var bar = $('.progress-bar');
+var fill = $('.progress-fill');
+var percent = $('.percent');
+var status = $('#status');
+var statusBlock = $('.status-block');
+var submitBtn = $('.submit-button');
+var chooseBtn = $('.choose-file-button');
 
-require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/settings/main"],
-  function(doc, $, CourseDetailsModel, MainView) {
-    // highlighting labels when fields are focused in
-    $("form :input").focus(function() {
-      $("label[for='" + this.id + "']").addClass("is-focused");
-    }).blur(function() {
-      $("label").removeClass("is-focused");
-      });
-    var model = new CourseDetailsModel();
-    model.urlRoot = '/settings/details/cetc/CS201/2014_T1';
-    model.fetch({
-      success: function(model) {
-        var editor = new MainView({
-            el: $('.settings-details'),
-            model: model
-        });
-        editor.render();
-      },
-      reset: true
-    });
+var allStats = $('#status-infos');
+
+var feedbackUrl = "/import_status/cetc/CS201/2014_T1/fillerName";
+
+var defaults = [
+    "在文件上传发生错误\n",
+    "在文件解压发生错误\n",
+    "在验证您提交的文件时发现错误\n",
+    "在导入新课程到数据库时发生错误\n"
+];
+
+$('#fileupload').fileupload({
+
+    dataType: 'json',
+    type: 'POST',
+
+    maxChunkSize: 20 * 1000000, // 20 MB
+
+    autoUpload: false,
+
+    add: function(e, data) {
+        CourseImport.clearImportDisplay();
+        submitBtn.unbind('click');
+        file = data.files[0];
+        if (file.name.match(/tar\.gz$/)) {
+            submitBtn.click(function(e){
+                e.preventDefault();
+                submitBtn.hide();
+                data.submit().complete(function(result, textStatus, xhr) {
+                    CourseImport.stopGetStatus = true;
+                    window.onbeforeunload = null;
+                    if (xhr.status != 200) {
+                        if (!result.responseText) {
+                            alert(gettext("Your browser has timed out, but the server is still processing your import. Please wait 5 minutes and verify that the new content has appeared."));
+                            return;
+                        }
+                        var serverMsg = $.parseJSON(result.responseText);
+                        var errMsg = serverMsg.hasOwnProperty("ErrMsg") ?  serverMsg.ErrMsg : "" ;
+                        if (serverMsg.hasOwnProperty("Stage")) {
+                            var stage = serverMsg.Stage;
+                            CourseImport.stageError(stage, defaults[stage] + errMsg);
+                        }
+                        else {
+                            alert("导入失败。\n\n" + errMsg);
+                        }
+                        chooseBtn.html("选择新文件").show();
+                        bar.hide();
+                    }
+                    chooseBtn.html("选择新文件").show();
+                    bar.hide();
+                });
+            });
+        } else {
+            data.files = [];
+        }
+    },
+
+    progressall: function(e, data){
+        var doneAt;
+        var percentInt = data.loaded / data.total * 100
+        var percentVal = parseInt(percentInt, 10) + "%";
+        // Firefox makes ProgressEvent.loaded equal ProgressEvent.total only
+        // after receiving a response from the server (see Mozilla bug 637002),
+        // so for Firefox we jump the gun a little.
+        if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+            doneAt = 95;
+        } else {
+            doneAt = 99;
+        }
+        if (percentInt >= doneAt) {
+            bar.hide();
+            CourseImport.startServerFeedback(feedbackUrl.replace("fillerName", file.name));
+        } else {
+            bar.show();
+            fill.width(percentVal);
+            percent.html(percentVal);
+        }
+    },
+    done: function(e, data){
+        bar.hide();
+        window.onbeforeunload = null;
+        CourseImport.displayFinishedImport();
+    },
+    start: function(e) {
+        window.onbeforeunload = function() {
+            return "导入进行中，离开当前页面将会中断导入过程。";
+        }
+    },
+    sequentialUploads: true,
+    notifyOnError: false
+
 });
-  </script>
+
+}); // end define()
+</script>
 
     <div class="modal-cover"></div>
   
@@ -841,27 +823,27 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 		
 			<tr class="djDebugOdd">
 				<td>User CPU time</td>
-				<td>52.003 msec</td>
+				<td>28.002 msec</td>
 			</tr>
 		
 			<tr class="djDebugEven">
 				<td>System CPU time</td>
-				<td>0.000 msec</td>
+				<td>16.001 msec</td>
 			</tr>
 		
 			<tr class="djDebugOdd">
 				<td>Total CPU time</td>
-				<td>52.003 msec</td>
+				<td>44.003 msec</td>
 			</tr>
 		
 			<tr class="djDebugEven">
 				<td>Elapsed time</td>
-				<td>67.015 msec</td>
+				<td>62.910 msec</td>
 			</tr>
 		
 			<tr class="djDebugOdd">
 				<td>Context switches</td>
-				<td>9 voluntary, 8 involuntary</td>
+				<td>38 voluntary, 11 involuntary</td>
 			</tr>
 		
 	</tbody>
@@ -2893,7 +2875,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 		
 			<tr class="djDebugOdd">
 				<td>HTTP_REFERER</td>
-				<td>http://192.168.1.112:8001/course/cetc/CS201/2014_T1</td>
+				<td>http://192.168.1.112:8001/course_team/cetc/CS201/2014_T1/</td>
 			</tr>
 		
 			<tr class="djDebugEven">
@@ -2985,7 +2967,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 	</thead>
 	<tbody>
 		<tr>
-			<td>contentstore.views.course.settings_handler</td>
+			<td>contentstore.views.import_export.import_handler</td>
 			<td>None</td>
 			<td>
 			
@@ -3244,7 +3226,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 			
 				<tr class="djDebugOdd">
 					<td>DEBUG</td>
-					<td>10:44:15 08/24/2014</td>
+					<td>11:43:56 08/24/2014</td>
 					<td>contentstore.context_processors</td>
 					<td>Didn't find a configuration option for 'locales' section and 'zh-cn' option</td>
 					<td>/edx/app/edxapp/edx-platform/cms/djangoapps/contentstore/context_processors.py:53</td>
@@ -3252,7 +3234,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 			
 				<tr class="djDebugEven">
 					<td>DEBUG</td>
-					<td>10:44:15 08/24/2014</td>
+					<td>11:43:56 08/24/2014</td>
 					<td>contentstore.context_processors</td>
 					<td>Didn't find a configuration option for 'locales' section and 'zh-cn' option</td>
 					<td>/edx/app/edxapp/edx-platform/cms/djangoapps/contentstore/context_processors.py:53</td>
@@ -3260,7 +3242,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 			
 				<tr class="djDebugOdd">
 					<td>WARNING</td>
-					<td>10:44:15 08/24/2014</td>
+					<td>11:43:56 08/24/2014</td>
 					<td>edxmako.shortcuts</td>
 					<td>Cannot find corresponding link for name: TOS</td>
 					<td>/edx/app/edxapp/edx-platform/common/djangoapps/edxmako/shortcuts.py:56</td>
@@ -3268,7 +3250,7 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 			
 				<tr class="djDebugEven">
 					<td>WARNING</td>
-					<td>10:44:15 08/24/2014</td>
+					<td>11:43:56 08/24/2014</td>
 					<td>edxmako.shortcuts</td>
 					<td>Cannot find corresponding link for name: PRIVACY</td>
 					<td>/edx/app/edxapp/edx-platform/common/djangoapps/edxmako/shortcuts.py:56</td>
@@ -3288,5 +3270,46 @@ require(["domReady!", "jquery", "js/models/settings/course_details", "js/views/s
 </div>
 
 
-<div><div id="tender_toggler" style="display: none;"><a href="#" id="tender_toggler_link">Help &amp; Support</a></div></div><div id="reader-feedback" class="sr" style="display:none" aria-hidden="false" aria-atomic="true" aria-live="assertive"></div><div class="tooltip" style="display: none; opacity: 0;"></div><div id="lean_overlay"></div><div id="lean_overlay"></div><div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="Prev"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a><div class="ui-datepicker-title"><span class="ui-datepicker-month">August</span>&nbsp;<span class="ui-datepicker-year">2014</span></div></div><table class="ui-datepicker-calendar"><thead><tr><th class="ui-datepicker-week-end"><span title="Sunday">Su</span></th><th><span title="Monday">Mo</span></th><th><span title="Tuesday">Tu</span></th><th><span title="Wednesday">We</span></th><th><span title="Thursday">Th</span></th><th><span title="Friday">Fr</span></th><th class="ui-datepicker-week-end"><span title="Saturday">Sa</span></th></tr></thead><tbody><tr><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">1</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">2</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">3</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">4</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">5</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">6</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">7</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">8</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">9</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">10</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">11</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">12</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">13</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">14</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">15</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">16</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">17</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">18</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">19</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">20</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">21</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">22</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">23</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">24</a></td><td class=" ui-datepicker-days-cell-over  ui-datepicker-current-day ui-datepicker-today" data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default ui-state-highlight ui-state-active ui-state-hover" href="#">25</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">26</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">27</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">28</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">29</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">30</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="7" data-year="2014"><a class="ui-state-default" href="#">31</a></td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td></tr></tbody></table></div></body>
+<div><div id="tender_toggler" style="display: none;"><a href="#" id="tender_toggler_link">Help &amp; Support</a></div></div><div id="reader-feedback" class="sr" style="display:none" aria-hidden="false" aria-atomic="true" aria-live="assertive"></div><div class="tooltip" style="display: none; opacity: 0;"></div><div id="lean_overlay"></div><div id="lean_overlay"></div></body>
+<script>
+$(document).ready(function(){
+	createUploader();
+});
+function createUploader() { 
+	var uploader = new qq.FineUploader({ 
+	element: document.getElementById('bootstrapped-fine-uploader'), 
+	request: { 
+	endpoint: 'cms/importCourse.action?courseId='+${courseId} 
+	}, 
+	text: { 
+	uploadButton: '<button class="btn btn-warning"><i class="icon-upload"></i>选择要导入的文件</button>' 
+	}, 
+	validation:{
+		allowedExtensions: ['tar.gz']
+	},
+	template: 
+	'<div class="qq-uploader">' + 
+	'<pre class="qq-upload-drop-area"><span>{dragZoneText}</span></pre>' + 
+	'<div class="qq-upload-button action action-choose-file choose-file-button" style="width: auto;">选择要导入的文件</div>' + 
+	'<span class="qq-drop-processing"><span>{dropProcessingText}</span>'+ 
+	'<span class="qq-drop-processing-spinner"></span></span>' + 
+	'<ul class="qq-upload-list" style="margin-top: 10px; text-align: center;display:none"></ul>' + 
+	'</div>', 
+	classes: { 
+	success: 'alert alert-success', 
+	fail: 'alert alert-error' 
+	}, 
+	callbacks:{
+		onComplete: function(id,  fileName,  responseJSON){		
+			if (responseJSON.success == "true")
+			{
+				alert("导入成功");
+			}
+		}
+	},
+	debug: true 
+	}); 
+	}
+
+</script>
 </html>
