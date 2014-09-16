@@ -121,16 +121,6 @@ public class ExamController extends BaseController {
 		return view;
 	}
 
-	@RequestMapping("/totcompetion")
-	public ModelAndView totcompetion(HttpServletRequest request) {
-		ModelAndView view = new ModelAndView();
-//		view.addObject("examId", examId);
-//		Exam course = examService.get(examId);
-//		view.addObject("exam", course);
-		view.setViewName("/cms/competion");
-		return view;
-	}
-	
 	/**
 	 * 跳转到老师登陆页面
 	 * 

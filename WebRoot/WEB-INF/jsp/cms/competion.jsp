@@ -89,7 +89,8 @@
 										<p>
 											<strong>赛项名称</strong>
 										</p>
-										<input class='form-control' id='full-name' type='text'>
+										<input type="hidden" class='form-control' id='competionId'>
+										<input class='form-control' id='name' type='text'>
 									</div>
 								</div>
 								<hr class='hr-normal'>
@@ -98,9 +99,7 @@
 										<p>
 											<strong>举办方</strong>
 										</p>
-										<select class='select2 form-control'>
-											<option value='NJ'>南京第五十五所技术开发有限公司</option>
-											<option value='WX'>南京第五十五所技术开发有限公司无锡分公司</option>
+										<select class='select2 form-control' id="school">
 										</select>
 									</div>
 								</div>
@@ -112,7 +111,7 @@
 										</p>
 										<div>
 											<div class='datepicker input-group'>
-												<input class='form-control' data-format='yyyy-MM-dd' placeholder='Select datepicker' type='text'> 
+												<input class='form-control' data-format='yyyy-MM-dd' placeholder='Select datepicker' type='text' id="starttime"> 
 												<span class='input-group-addon'> 
 													<span data-date-icon='icon-calendar' data-time-icon='icon-time'></span>
 												</span>
@@ -125,7 +124,7 @@
 										</p>
 										<div>
 											<div class='datepicker input-group'>
-												<input class='form-control' data-format='yyyy-MM-dd' placeholder='Select datepicker' type='text'> 
+												<input class='form-control' data-format='yyyy-MM-dd' placeholder='Select datepicker' type='text' id="endtime"> 
 												<span class='input-group-addon'> 
 													<span data-date-icon='icon-calendar' data-time-icon='icon-time'></span>
 												</span>
@@ -141,7 +140,7 @@
 										</p>
 										<div>
 											<div class='datepicker input-group' >
-												<input class='form-control' data-format='yyyy-MM-dd' placeholder='Select datepicker' type='text'> 
+												<input class='form-control' data-format='yyyy-MM-dd' placeholder='Select datepicker' type='text' id="wstarttime"> 
 												<span class='input-group-addon'> 
 													<span data-date-icon='icon-calendar' data-time-icon='icon-time'></span>
 												</span>
@@ -154,7 +153,7 @@
 										</p>
 										<div>
 											<div class='datepicker input-group' >
-												<input class='form-control' data-format='yyyy-MM-dd' placeholder='Select datepicker' type='text'> 
+												<input class='form-control' data-format='yyyy-MM-dd' placeholder='Select datepicker' type='text' id="wendtime"> 
 												<span class='input-group-addon'> 
 													<span data-date-icon='icon-calendar' data-time-icon='icon-time'></span>
 												</span>
@@ -170,7 +169,7 @@
 										</p>
 										<div>
 											<div class='datetimepicker input-group' id='datetimepicker'>
-												<input class='form-control' data-format='yyyy-MM-dd HH:mm:ss' placeholder='Select timepicker' type='text'> 
+												<input class='form-control' data-format='yyyy-MM-dd HH:mm:ss' placeholder='Select timepicker' type='text' id="examstarttime"> 
 												<span class='input-group-addon'> 
 													<span data-date-icon='icon-calendar' data-time-icon='icon-time'></span>
 												</span>
@@ -183,7 +182,7 @@
 										</p>
 										<div>
 											<div class='datetimepicker input-group' id='datetimepicker'>
-												<input class='form-control' data-format='yyyy-MM-dd HH:mm:ss' placeholder='Select timepicker' type='text'> 
+												<input class='form-control' data-format='yyyy-MM-dd HH:mm:ss' placeholder='Select timepicker' type='text' id="examendtime"> 
 												<span class='input-group-addon'> 
 													<span data-date-icon='icon-calendar' data-time-icon='icon-time'></span>
 												</span>
@@ -197,7 +196,7 @@
 										<p>
 											<strong>是否公开</strong>
 										</p>
-										<select class='select2 form-control'>
+										<select class='select2 form-control' id="type">
 											<option value='DV'>开发竞赛</option>
 											<option value='SP'>指定竞赛</option>
 										</select>
@@ -209,13 +208,13 @@
 										<p>
 											<strong>考卷总分</strong>
 										</p>
-										<input class='form-control' id='full-name' type='text'>
+										<input class='form-control' id='score' type='text'>
 									</div>
 									<div class='col-sm-6'>
 										<p>
 											<strong>考卷及格分</strong>
 										</p>
-										<input class='form-control' id='full-name' type='text'>
+										<input class='form-control' id='passscore' type='text'>
 									</div>									
 								</div>
 								<hr class='hr-normal'>
@@ -224,16 +223,20 @@
 										<p>
 											<strong>描述</strong>
 										</p>
-										<textarea class='form-control' id='inputTextArea1' placeholder='Textarea' rows='3'></textarea>
+										<textarea class='form-control' id='describle' placeholder='Textarea' rows='3'></textarea>
 									</div>
 								</div>
 								<hr class='hr-normal'>
                           		<div class='row'>
                             		<div class='col-sm-10 col-sm-offset-5'>
-                              			<div class='btn btn-primary'>
+                              			<a href="javascript:void(0);" class='btn btn-primary' onclick="createcompetion();" id="savebutton">
                                 		<i class='icon-save'></i>
-                                		Save
-                              			</div>
+                                		保存
+                              			</a>
+                              			<a href="javascript:void(0);" class='btn btn-primary none' onclick="updatecompetion();" id="updatebutton">
+                                		<i class='icon-edit'></i>
+                                		编辑
+                              			</a>
                             		</div>
                           		</div>
 							</div>
@@ -490,7 +493,7 @@
     <script src="assets/javascripts/plugins/flot/flot.resize.js" type="text/javascript"></script>
     <script src="assets/javascripts/plugins/sparklines/jquery.sparkline.min.js" type="text/javascript"></script>
     <script src="assets/javascripts/plugins/flot/flot.pie.js" type="text/javascript"></script>
-    
+    <script src="js/common.js"></script>
     <script type="text/javascript">
       /* var data, dataset, gd, options, previousLabel, previousPoint, showTooltip, ticks;
       var blue, data, datareal, getRandomData, green, i, newOrders, options, orange, orders, placeholder, plot, purple, randNumber, randSmallerNumber, red, series, totalPoints, update, updateInterval;
@@ -558,90 +561,75 @@
     <script type="text/javascript">
 	$(function() {
 		//$('.progress-bar').css({'width':'80%'}).find('span').html('80%');
-		var courseId = parseInt("${course.id}");
-		var data = {
-			courseId : courseId
-		};
-		$.ajax({
-			url : "lms/condition.action",
-			type : "post",
-			data : data,
-			success : function(s) {
-				var a = eval("(" + s + ")");
-				if ("sucess" == a.sucess) {
-					var complete = a.complete;
-					$("#alltext").html(a.allcounts);
-					$("#protext").html(a.counts);
-
-					$("#dotime").html(stotime(a.dotime));
-					$('.progress-bar').css({
-						'width' : complete
-					}).find('span').html(complete);
-				}
-			}
-		});
+		initschool();
 	});
-	function stotime(s) {
-		var t;
-		if (s > -1) {
-			hour = Math.floor(s / 3600);
-			min = Math.floor(s / 60) % 60;
-			sec = s % 60;
-			day = parseInt(hour / 24);
-			if (day > 0) {
-				hour = hour - 24 * day;
-				t = day + "天 " + hour + ":";
-			} else
-				t = hour + ":";
-			if (min < 10) {
-				t += "0";
+	
+	function initschool()
+	{
+		$.ajax({
+			url : "cms/getAllSchool.action",
+			type : "post",
+			success : function(s) {
+				var a = eval("(" + s + ")");
+				var tmp = '';
+				var row = a.rows;
+				for ( var i = 0; i < row.length; i++) {
+					var school = row[i];
+					var name = school.name;
+					tmp += '<option value='+school.id+'>'+name+'</option>';
+				}
+				$("#school").html(tmp);
 			}
-			t += min + ":";
-			if (sec < 10) {
-				t += "0";
-			}
-			t += sec;
+		});
+	}
+	function createcompetion()
+	{
+		var name = $("#name").attr("value");
+		var starttime = $("#starttime").attr("value");
+		var endtime = $("#endtime").attr("value");
+		var wstarttime = $("#wstarttime").attr("value");
+		var wendtime = $("#wendtime").attr("value");
+		var examstarttime = $("#examstarttime").attr("value");
+		var examendtime = $("#examendtime").attr("value");
+		var type = $("#type").attr("value");
+		var score = $("#score").attr("value");
+		var passscore = $("#passscore").attr("value");
+		var describle = $("#describle").attr("value");
+		var schoolId = $("#school").val();
+		if (isNull(name))	
+		{
+			alert("名称不能为空");
+			return ;
 		}
-		return t;
-	}
-	function fcourse()
-	{
-		var courseId = parseInt("${course.id}");
-		var data = {
-			courseId : courseId
-		};
+		if (isNull(schoolId))	
+		{
+			alert("举办方不能为空");
+			return ;
+		}
+		if (isNull(type))	
+		{
+			alert("是否公开不能为空");
+			return ;
+		}
+		var data={name:name,starttime:starttime,endtime:endtime,wstarttime:wstarttime,wendtime:wendtime,examstarttime:examstarttime,examendtime:examendtime,type:type,score:score,passscore:passscore,describle:describle,schoolId:schoolId};
 		$.ajax({
-			url : "lms/fcourse.action",
+			url : "cms/createcompetion.action",
 			type : "post",
-			data : data,
-			success : function(s) {
-				var a = eval("(" + s + ")");
-				
-				if ("sucess" == a.sucess)
-				{
-					location.href="";
-				}
-			}
-		});
-	}
-	function acourse()
-	{
-		var courseId = parseInt("${course.id}");
-		var data = {
-			courseId : courseId
-		};
-		$.ajax({
-			url : "lms/acourse.action",
-			type : "post",
-			data : data,
+			data :data,
 			success : function(s) {
 				var a = eval("(" + s + ")");
 				if ("sucess" == a.sucess)
 				{
-					location.href="lms/tocourse.action?courseId="+courseId;
+					$("#savebutton").hide();
+					$("#updatebutton").show();
+					$("#competionId").attr("value",a.competionId);
 				}
 			}
 		});
+	}
+	function updatecompetion()
+	{
+		
 	}
 	</script>
 </body>

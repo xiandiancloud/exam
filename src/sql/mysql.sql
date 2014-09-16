@@ -43,6 +43,37 @@ create table t_examcategory
    UNIQUE KEY (name)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+/*竞赛定义*/
+drop table if exists t_competion;
+create table t_competion
+(
+   id                  int not null AUTO_INCREMENT,
+   name                varchar(255) not null,   
+   describle           varchar(1000) default null,   
+   starttime           varchar(255) not null,
+   endtime             varchar(255) not null,
+   wstarttime          varchar(255) not null,
+   wendtime            varchar(255) not null,
+   examstarttime       varchar(255) not null,
+   examendtime         varchar(255) not null,
+   type                varchar(255) not null,
+   score               varchar(255) not null,
+   passscore           varchar(255) not null,
+   primary key (id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+/*竞赛的举办方定义*/
+drop table if exists t_competion_school;
+create table t_competion_school
+(
+   id                  int not null AUTO_INCREMENT,
+   competionId         int(10) not null,
+   schoolId            int(10) not null,
+   primary key (id),
+   CONSTRAINT receivet_competion_school_1 FOREIGN KEY (competionId) REFERENCES t_competion (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_competion_school_2 FOREIGN KEY (schoolId) REFERENCES auth_school (id) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
 /*实验课程定义*/
 drop table if exists t_course;
 create table t_course

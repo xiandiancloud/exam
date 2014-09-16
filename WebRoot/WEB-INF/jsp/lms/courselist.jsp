@@ -283,7 +283,7 @@
 								
 							
 								tmp +='<div class="brand vertical col-sm-3">'+
-									'<a href="lms/getCourse.action?courseId='+id+'"><img src="'+imgpath+'" /><div class="info">'+desc+'</div><h3>'+name+'</h3></a>'+
+									'<a href="lms/toexamintroduce.action?courseId='+id+'"><img src="'+imgpath+'" /><div class="info">'+desc+'</div><h3>'+name+'</h3></a>'+
 								'</div>';
 							}
 							tmp += '</div>';

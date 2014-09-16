@@ -245,7 +245,7 @@
 																				<div class="unit-header">
 																					<h3 class="unit-header-details">
 																						<span class="unit-title item-title"> <a
-																							href="cms/tottrain.action?courseId=${courseId}&sequentialId=${sequential.id}&verticalId=${vertical.id}">${vertical.name}</a>
+																							href="cms/totexamtrain.action?examId=${examId}&sequentialId=${sequential.id}&verticalId=${vertical.id}">${vertical.name}</a>
 																						</span>
 																					</h3>
 
