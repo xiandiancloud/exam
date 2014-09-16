@@ -107,46 +107,27 @@
 								<div class='tabbable'>
 									<ul class='nav nav-tabs nav-tabs-simple'>
 										<li class='active'><a class='green-border'
-											data-toggle='tab' href='#tabsimple1'>我参加的试卷</a></li>
-										<li><a class='green-border' data-toggle='tab'
-											href='#tabsimple2'>我定义的试卷 </a></li>
+											data-toggle='tab' href='#tabsimple1'>竞赛列表 </a></li>
+										<!-- <li><a class='green-border' data-toggle='tab'
+											href='#tabsimple2'>已完成的 </a></li> -->
 									</ul>
 									<div class='tab-content'>
 										<div class='tab-pane active' id='tabsimple1'>
 											<!-- <p>I'm in Section 1.</p> -->
-											<c:forEach var="se" items="${sexamlist}">
+											<c:forEach var="uc" items="${uclist}">
 											<div class="row">
 												<div class="col-sm-12">
 													<div class="box ">
 														<div class="box-content">
 															<p>
-																<strong>${se.exam.name}</strong>
+																<strong>${uc.competion.name}</strong>
 															</p>
 															<hr class="hr-normal">
-															<div class="pull-left">${se.exam.describle}</div>
+															<div class="pull-left">${uc.competion.describle}</div>
 															<div class="pull-right">
 																<a href="#" class="btn">查看分析</a> <a href="#" class="btn">再做一次</a>
 															</div>
 															<div class="clearfix"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-											</c:forEach>
-										</div>
-										<div class='tab-pane' id='tabsimple2'>
-										   <c:forEach var="te" items="${texamlist}">
-											<div class="row">
-												<div class="col-sm-12">
-													<div class="box bordered-box blue-border box-nomargin">
-														<div class="box-content">
-															<p>
-																<strong>${te.exam.name}</strong>
-															</p>
-
-															<hr class="hr-normal">
-
-															<p>${te.exam.describle}</p>
 														</div>
 													</div>
 												</div>

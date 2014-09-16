@@ -3,10 +3,13 @@ package com.dhl.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dhl.cons.CommonConstant;
 import com.dhl.dao.CompetionDao;
 import com.dhl.dao.CompetionSchoolDao;
+import com.dhl.dao.UserCompetionDao;
 import com.dhl.domain.Competion;
 import com.dhl.domain.CompetionSchool;
+import com.dhl.domain.UserCompetion;
 
 /**
  * 竞赛
@@ -16,6 +19,8 @@ public class CompetionService {
 
 	@Autowired
 	private CompetionDao competionDao;
+	@Autowired
+	private UserCompetionDao userCompetionDao;
 	@Autowired
 	private CompetionSchoolDao competionSchoolDao;
 	
@@ -40,7 +45,7 @@ public class CompetionService {
 	public Competion createCompetion(String name, String starttime,
 			String endtime, String wstarttime, String wendtime,
 			String examstarttime, String examendtime, String type,
-			String score, String passscore, String describle, String schoolId)
+			String score, String passscore, String describle, String schoolId,int userId)
 	{
 		Competion c = new Competion();
 		c.setName(name);
@@ -60,6 +65,13 @@ public class CompetionService {
 		cs.setCompetionId(c.getId());
 		cs.setSchoolId(Integer.parseInt(schoolId));
 		competionSchoolDao.save(cs);
+		
+		UserCompetion uc = new UserCompetion();
+		uc.setUserId(userId);
+		uc.setCompetion(c);
+		uc.setJob(CommonConstant.CROLE_1);
+		userCompetionDao.save(uc);
+		
 		return c;
 	}
 	

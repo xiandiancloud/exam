@@ -36,6 +36,11 @@ public class CommonConstant
    public static final String ROLE_C = "裁判";
    public static final String ROLE_A = "管理员";
    
+   //竞赛对应的4种角色关系-------角色对应的所有的都是老师
+   public static final String CROLE_1 = "创建者";
+   public static final String CROLE_2 = "主裁判";
+   public static final String CROLE_3 = "命题裁判";
+   public static final String CROLE_4 = "判分裁判";
    //错误提示
    public static final String ERROR_0 = "后台异常，请联系系统管理员";
    public static final String ERROR_1 = "学校已经存在";

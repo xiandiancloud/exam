@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.domain.Competion;
+import com.dhl.domain.User;
 import com.dhl.service.CompetionService;
 import com.dhl.web.BaseController;
 
@@ -58,13 +59,16 @@ public class CompetionController extends BaseController {
 			String score, String passscore, String describle, String schoolId) {
 		try {
 			PrintWriter out = response.getWriter();
-
+			User user = getSessionUser(request);
+			if (user != null)
+			{
 			Competion c = competionService.createCompetion(name, starttime, endtime,
 					wstarttime, wendtime, examstarttime, examendtime, type,
-					score, passscore, describle, schoolId);
+					score, passscore, describle, schoolId,user.getId());
 
 			String str = "{'sucess':'sucess','competionId':'"+c.getId()+"'}";
 			out.write(str);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -11,14 +11,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * 学生课程
+ * 学生试卷
  * @author dhl
  *
  */
 
 @Entity
-@Table(name= "t_user_course")
-public class UserCourse extends BaseDomain {
+@Table(name= "t_user_exam")
+public class UserExam extends BaseDomain {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,12 +27,12 @@ public class UserCourse extends BaseDomain {
 	private int userId;
 //	private int courseId;
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "courseId")
-	private Course course;
+	@JoinColumn(name = "examId")
+	private Exam exam;
 	private int docounts;
-	private int state;//1：完成课程0：在上课
+	private int state;
 	private String usetime;
-	private int activestate;//0:默认，最近操作就set为1
+	private int activestate;
 	public int getActivestate() {
 		return activestate;
 	}
@@ -63,16 +63,16 @@ public class UserCourse extends BaseDomain {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public Course getCourse() {
-		return course;
-	}
-	public void setCourse(Course course) {
-		this.course = course;
-	}
 	public int getState() {
 		return state;
 	}
 	public void setState(int state) {
 		this.state = state;
+	}
+	public Exam getExam() {
+		return exam;
+	}
+	public void setExam(Exam exam) {
+		this.exam = exam;
 	}
 }
