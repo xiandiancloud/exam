@@ -185,7 +185,11 @@
 									<hr class="hr-normal">
 									<p>我的竞赛</p>
 									<hr class="hr-normal">
-									<p>增加竞赛</p>
+									<!-- <p>增加竞赛</p> -->
+									<a href="cms/totcompetion.action" class='btn btn-primary' onclick="createcompetion();" id="savebutton">
+                                		<i class='icon-add'></i>
+                                		增加竞赛
+                              			</a>
 								</div>
 							</div>
 						</div>
