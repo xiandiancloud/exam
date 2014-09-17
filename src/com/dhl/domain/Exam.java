@@ -35,6 +35,15 @@ public class Exam extends BaseDomain {
 	private String org;
 	private String coursecode;
 	private String rank;
+	private int lockexam;//1:试卷锁定
+
+	public int getLockexam() {
+		return lockexam;
+	}
+
+	public void setLockexam(int lockexam) {
+		this.lockexam = lockexam;
+	}
 
 	public String getRank() {
 		return rank;

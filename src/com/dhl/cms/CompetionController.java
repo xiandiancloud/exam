@@ -11,11 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Competion;
+import com.dhl.domain.CompetionExam;
 import com.dhl.domain.User;
 import com.dhl.domain.UserCompetion;
 import com.dhl.service.CompetionService;
+import com.dhl.service.ExamService;
 import com.dhl.service.UserCompetionService;
 import com.dhl.web.BaseController;
 
@@ -33,7 +34,9 @@ public class CompetionController extends BaseController {
 	private CompetionService competionService;
 	@Autowired
 	private UserCompetionService usercompetionService;
-
+	@Autowired
+	private ExamService examService;
+	
 	/**
 	 * 跳转到竞赛页面
 	 * 
@@ -61,6 +64,17 @@ public class CompetionController extends BaseController {
 		view.addObject("judgmentlist", uclist);
 		// Exam course = examService.get(examId);
 		// view.addObject("exam", course);
+		
+		List<CompetionExam> celist = competionService.getCompetionExam(competionId);
+		for (CompetionExam ce:celist)
+		{
+			if (ce.getSelectexam() == 1)
+			{
+				view.addObject("sexam", ce);
+			}
+		}
+		view.addObject("celist", celist);
+		
 		view.setViewName("/cms/competion");
 		return view;
 	}
@@ -114,6 +128,162 @@ public class CompetionController extends BaseController {
 			out.write(str);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 删除竞赛裁判
+	 * @param request
+	 * @param response
+	 * @param competionId
+	 * @param userId
+	 */
+	@RequestMapping("/delcompetionjudgment")
+	public void delcompetionjudgment(HttpServletRequest request,HttpServletResponse response,String competionId,String userId) {
+		try {
+			PrintWriter out = response.getWriter();
+			usercompetionService.removeCompetionjudgment(Integer.parseInt(competionId), Integer.parseInt(userId));
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 竞赛创建试卷
+	 * @param request
+	 * @param name
+	 * @return
+	 */
+	@RequestMapping("/addexam")
+	public void addexam(HttpServletRequest request,
+			HttpServletResponse response,int userId,int competionId, String name) {
+		try {
+			PrintWriter out = response.getWriter();
+			examService.createExam(name, userId, competionId);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 竞赛删除试卷
+	 * @param request
+	 * @param name
+	 * @return
+	 */
+	@RequestMapping("/deleteexam")
+	public void deleteexam(HttpServletRequest request,
+			HttpServletResponse response,int competionId, int examId) {
+		try {
+			PrintWriter out = response.getWriter();
+			examService.removeExam(competionId,examId);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 竞赛选择试卷
+	 * @param request
+	 * @param name
+	 * @return
+	 */
+	@RequestMapping("/selectexam")
+	public void selectexam(HttpServletRequest request,
+			HttpServletResponse response,int competionId, int examId) {
+		try {
+			PrintWriter out = response.getWriter();
+			String time = examService.selectexam(competionId,examId);
+			String str = "{'sucess':'sucess','time':'"+time+"'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 得到可以命题的老师
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/getCompetionMjudgment")
+	public void getCompetionMjudgment(HttpServletRequest request,HttpServletResponse response,int competionId) {
+		
+		try {
+			PrintWriter out = response.getWriter();
+			List<UserCompetion> uclist = usercompetionService.getCompetionMjudgment(competionId);
+			String str = getMjudgment(uclist);
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 锁定竞赛下的所有试卷
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/lockallexam")
+	public void lockallexam(HttpServletRequest request,HttpServletResponse response,int competionId) {
+		
+		try {
+			PrintWriter out = response.getWriter();
+			competionService.lockallexam(competionId);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 解锁竞赛下的所有试卷
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/unlockallexam")
+	public void unlockallexam(HttpServletRequest request,HttpServletResponse response,int competionId,int examId) {
+		
+		try {
+			PrintWriter out = response.getWriter();
+			competionService.unlockallexam(competionId,examId);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * @param list
+	 * @return
+	 */
+	private String getMjudgment(List<UserCompetion> list) {
+		StringBuffer buffer = new StringBuffer();
+		int count = list.size();
+		buffer.append("{\"total\":" + count + ",\"rows\":[");
+		for (int i = 0; i < count; i++) {
+			UserCompetion p = list.get(i);
+			buffer.append("{");
+			buffer.append("\"id\":");
+			buffer.append("\"" + p.getUser().getId() + "\"");
+			buffer.append(",\"name\":");
+			buffer.append("\"" + p.getUser().getUsername() + "\"");
+			buffer.append("},");
+		}
+		if (count > 0) {
+			String str = buffer.substring(0, buffer.length() - 1) + "]}";
+			str = str.replaceAll("null", "");
+			return str;
+		} else {
+			String str = buffer.toString() + "]}";
+			str = str.replaceAll("null", "");
+			return str;
 		}
 	}
 }

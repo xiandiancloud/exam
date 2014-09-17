@@ -1,6 +1,7 @@
 package com.dhl.service;
 
 import java.io.File;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dhl.dao.ChapterDao;
+import com.dhl.dao.CompetionExamDao;
 import com.dhl.dao.ECategoryDao;
 import com.dhl.dao.ExamCategoryDao;
 import com.dhl.dao.ExamDao;
@@ -24,6 +26,7 @@ import com.dhl.dao.UserTrainDao;
 import com.dhl.dao.VerticalDao;
 import com.dhl.dao.VerticalTrainDao;
 import com.dhl.domain.Chapter;
+import com.dhl.domain.CompetionExam;
 import com.dhl.domain.Course;
 import com.dhl.domain.ECategory;
 import com.dhl.domain.Exam;
@@ -63,7 +66,9 @@ public class ExamService {
 	private UserCourseDao userCourseDao;
 	@Autowired
 	private TeacherExamDao teacherExamDao;
-
+	@Autowired
+	private CompetionExamDao competionExamDao;
+	
 	/**
 	 * 根据试卷id取得分类
 	 * 
@@ -159,6 +164,50 @@ public class ExamService {
 
 	}
 
+	/**
+	 * 竞赛创建试卷
+	 * @param name
+	 * @param userId
+	 * @param competionId
+	 */
+	public void createExam(String name,int userId, int competionId) {
+		Exam c = new Exam();
+		c.setName(name);
+		save(c);
+		
+		CompetionExam ce = new CompetionExam();
+		ce.setCompetionId(competionId);
+		ce.setExam(c);
+		competionExamDao.save(ce);
+		
+		TeacherExam tc = new TeacherExam();
+		tc.setExam(c);
+		tc.setUserId(userId);
+		teacherExamDao.save(tc);
+
+	}
+	
+	/**
+	 * 删除竞赛试卷
+	 * @param name
+	 * @param userId
+	 * @param competionId
+	 */
+	public void removeExam(int competionId,int examId) {
+		CompetionExam ce = competionExamDao.getCompetionExam(competionId, examId);
+		competionExamDao.remove(ce);
+	}
+	
+	public String selectexam(int competionId,int examId)
+	{
+		competionExamDao.resetCompetionExam(competionId);
+		CompetionExam ce = competionExamDao.getCompetionExam(competionId, examId);
+		ce.setSelectexam(1);
+		String time = UtilTools.timeTostrHMS(new Date());
+		ce.setSelecttime(time);
+		competionExamDao.update(ce);
+		return time;
+	}
 	/**
 	 * 更新试卷日程，细节等
 	 * 

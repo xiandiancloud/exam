@@ -121,8 +121,23 @@ create table t_exam
    org                 varchar(255) default null,
    coursecode          varchar(255) default null,
    rank                varchar(255) default null,
+   lockexam            int(10) default 0,
    primary key (id),
    UNIQUE KEY (name)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+/*竞赛下的试卷定义*/
+drop table if exists t_competion_exam;
+create table t_competion_exam
+(
+   id                  int not null AUTO_INCREMENT,
+   competionId         int(10) not null,
+   examId              int(10) not null,
+   selectexam          int(10) defautl 0,
+   selecttime          varchar(255) default null,
+   primary key (id),
+   CONSTRAINT receivet_competion_exam_1 FOREIGN KEY (competionId) REFERENCES t_competion (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_competion_exam_2 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*课程属于分类定义*/

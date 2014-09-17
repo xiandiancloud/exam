@@ -111,7 +111,7 @@
 										</p>
 										<div>
 											<div class='datepicker input-group'>
-												<input class='form-control' data-format='yyyy-MM-dd' placeholder='Select datepicker' type='text' id="starttime"> 
+												<input class='form-control' data-format='yyyy-MM-dd' placeholder='Select datepicker' type='text' id="starttime" value="${competion.starttime}"> 
 												<span class='input-group-addon'> 
 													<span data-date-icon='icon-calendar' data-time-icon='icon-time'></span>
 												</span>
@@ -124,7 +124,7 @@
 										</p>
 										<div>
 											<div class='datepicker input-group'>
-												<input class='form-control' data-format='yyyy-MM-dd' placeholder='Select datepicker' type='text' id="endtime"> 
+												<input class='form-control' data-format='yyyy-MM-dd' placeholder='Select datepicker' type='text' id="endtime" value="${competion.endtime}"> 
 												<span class='input-group-addon'> 
 													<span data-date-icon='icon-calendar' data-time-icon='icon-time'></span>
 												</span>
@@ -140,7 +140,7 @@
 										</p>
 										<div>
 											<div class='datepicker input-group' >
-												<input class='form-control' data-format='yyyy-MM-dd' placeholder='Select datepicker' type='text' id="wstarttime"> 
+												<input class='form-control' data-format='yyyy-MM-dd' placeholder='Select datepicker' type='text' id="wstarttime" value="${competion.wstarttime}"> 
 												<span class='input-group-addon'> 
 													<span data-date-icon='icon-calendar' data-time-icon='icon-time'></span>
 												</span>
@@ -153,7 +153,7 @@
 										</p>
 										<div>
 											<div class='datepicker input-group' >
-												<input class='form-control' data-format='yyyy-MM-dd' placeholder='Select datepicker' type='text' id="wendtime"> 
+												<input class='form-control' data-format='yyyy-MM-dd' placeholder='Select datepicker' type='text' id="wendtime" value="${competion.wendtime}"> 
 												<span class='input-group-addon'> 
 													<span data-date-icon='icon-calendar' data-time-icon='icon-time'></span>
 												</span>
@@ -169,7 +169,7 @@
 										</p>
 										<div>
 											<div class='datetimepicker input-group' id='datetimepicker'>
-												<input class='form-control' data-format='yyyy-MM-dd HH:mm:ss' placeholder='Select timepicker' type='text' id="examstarttime"> 
+												<input class='form-control' data-format='yyyy-MM-dd HH:mm:ss' placeholder='Select timepicker' type='text' id="examstarttime" value="${competion.examstarttime}"> 
 												<span class='input-group-addon'> 
 													<span data-date-icon='icon-calendar' data-time-icon='icon-time'></span>
 												</span>
@@ -182,7 +182,7 @@
 										</p>
 										<div>
 											<div class='datetimepicker input-group' id='datetimepicker'>
-												<input class='form-control' data-format='yyyy-MM-dd HH:mm:ss' placeholder='Select timepicker' type='text' id="examendtime"> 
+												<input class='form-control' data-format='yyyy-MM-dd HH:mm:ss' placeholder='Select timepicker' type='text' id="examendtime" value="${competion.examendtime}"> 
 												<span class='input-group-addon'> 
 													<span data-date-icon='icon-calendar' data-time-icon='icon-time'></span>
 												</span>
@@ -196,7 +196,7 @@
 										<p>
 											<strong>是否公开</strong>
 										</p>
-										<select class='select2 form-control' id="type">
+										<select class='select2 form-control' id="type" value="${competion.type}">
 											<option value='DV'>开发竞赛</option>
 											<option value='SP'>指定竞赛</option>
 										</select>
@@ -208,13 +208,13 @@
 										<p>
 											<strong>考卷总分</strong>
 										</p>
-										<input class='form-control' id='score' type='text'>
+										<input class='form-control' id='score' type='text'value="${competion.score}" >
 									</div>
 									<div class='col-sm-6'>
 										<p>
 											<strong>考卷及格分</strong>
 										</p>
-										<input class='form-control' id='passscore' type='text'>
+										<input class='form-control' id='passscore' type='text' value="${competion.passscore}">
 									</div>									
 								</div>
 								<hr class='hr-normal'>
@@ -278,10 +278,10 @@
 				                                </td>
 				                                <td>
 				                                  <div class='text-right'>
-				                                    <a class='btn btn-success btn-xs' href='#'>
+				                                    <!-- <a class='btn btn-success btn-xs' href='#'>
 				                                      <i class='icon-ok'></i>
-				                                    </a>
-				                                    <a class='btn btn-danger btn-xs' href='#'>
+				                                    </a> -->
+				                                    <a class='btn btn-danger btn-xs' href='javascript:void(0);' onclick="deljudgment(${judgment.competion.id},${judgment.user.id});">
 				                                      <i class='icon-remove'></i>
 				                                    </a>
 				                                  </div>
@@ -322,77 +322,50 @@
 								<div class="row">
 									<div class="col-sm-12">
 										<div class="box">
-											<table class="table table-hover" >
-												<tbody>
-													<tr>
-														<td >
-															<input class='form-control' type='text'>
-														</td>
-														<td >
-															<label>张一卷</label>
-														</td>
-														<td >
-															<label>2小时30分</label>
-														</td>
-														<td>
-															<div class="text-center">已完成</div>
-														</td>
-														<td>
-															<div class="text-right">
-                                    							<a href="#" class="btn btn-success btn-xs">
-                                      								<i class="icon-ok"></i>
-                                    							</a>
-                                    							<a href="#" class="btn btn-danger btn-xs">
-                                      								<i class="icon-remove"></i>
-                                    							</a>
-                                  							</div>
-														</td>
-													</tr>
-													<tr>
-														<td>Coca cola 0.5l</td>
-														<td>
-															<div class="text-center">10</div>
-														</td>
-														<td>
-															<div class="text-right">
-                                    							<a href="#" class="btn btn-success btn-xs">
-                                      								<i class="icon-ok"></i>
-                                    							</a>
-                                    							<a href="#" class="btn btn-danger btn-xs">
-                                      								<i class="icon-remove"></i>
-                                    							</a>
-                                  							</div>														
-                                  						</td>
-													</tr>
-													<tr>
-														<td>Lorem ipsum</td>
-														<td>
-															<div class="text-center">1</div>
-														</td>
-														<td>
-															<div class="text-right">
-                                    							<a href="#" class="btn btn-success btn-xs">
-                                      								<i class="icon-ok"></i>
-                                    							</a>
-                                    							<a href="#" class="btn btn-danger btn-xs">
-                                      								<i class="icon-remove"></i>
-                                    							</a>
-                                  							</div>
-														</td>
-													</tr>
-												</tbody>
-											</table>
+											<table class='table table-hover table-striped' style='margin-bottom:0;'>
+				                            <thead>
+				                              <tr>
+				                                <th>试卷名</th>
+				                                <th>命卷人</th>
+				                                <th>时间</th>
+				                                <th>状态</th>
+				                                <th></th>
+				                              </tr>
+				                            </thead>
+				                            <tbody>
+				                            <c:forEach var="ce" items="${celist}">
+				                              <tr>
+				                                <td><c:if test="${ce.exam.lockexam == 1}"><i class='icon-lock'></i></c:if>${ce.exam.name}</td>
+				                                <td></td>
+				                                <td></td>
+				                                <td>
+				                                  <span class='label label-important'></span>
+				                                </td>
+				                                <td>
+				                                  <div class='text-right'>
+				                                     <a class='btn btn-danger btn-xs' href='javascript:void(0);' onclick="unlockallexam(${ce.competionId},${ce.exam.id});">
+				                                      <i class='icon-unlock'></i>
+				                                    </a>
+				                                    <a class='btn btn-danger btn-xs' href='javascript:void(0);' onclick="deleteexam(${ce.competionId},${ce.exam.id});">
+				                                      <i class='icon-remove'></i>
+				                                    </a>
+				                                  </div>
+				                                </td>
+				                              </tr>
+				                              </c:forEach>
+				                            </tbody>
+				                          </table>
 											<hr class="hr-normal">
 											<div class='row'>
                           						<div class='col-md-10 col-md-offset-5'>
-                            						<button class='btn green-background' style="color: #eeeeee;" type='submit'>
+                            						<a href="javascript:void(0);" onclick="showexamdialog();" class='btn btn-success'>
                               							<i class="icon-plus"></i>
                               							增加试卷
-                            						</button>
-                            						<button class='btn red-background' style="color: #eeeeee;" type='submit'>
+                            						</a>
+                            						<a href="javascript:void(0);" onclick="lockallexam();" class="btn btn-danger">
                             							<i class='icon-lock'></i>
                             							锁定
-                            						</button>
+                            						</a>
                           						</div>
                         					</div>               
 										</div>
@@ -418,73 +391,63 @@
 								<div class="row">
 									<div class="col-sm-12">
 										<div class="box">
-											<table class="table table-hover" >
-												<tbody>
-													<tr>
-														<td >
-															<input class='form-control' type='text'>
-														</td>
-														<td >
-															<label>张一卷</label>
-														</td>
-														<td >
-															<label>2小时30分</label>
-														</td>
-														<td>
-															<div class="text-center">已完成</div>
-														</td>
-														<td>
-															<div class="text-right">
-                                    							<a href="#" class="btn btn-success btn-xs">
-                                      								<i class="icon-ok"></i>
-                                    							</a>
-                                    							<a href="#" class="btn btn-danger btn-xs">
-                                      								<i class="icon-remove"></i>
-                                    							</a>
-                                  							</div>
-														</td>
-													</tr>
-													<tr>
-														<td>Coca cola 0.5l</td>
-														<td>
-															<div class="text-center">10</div>
-														</td>
-														<td>
-															<div class="text-right">
-                                    							<a href="#" class="btn btn-success btn-xs">
-                                      								<i class="icon-ok"></i>
-                                    							</a>
-                                    							<a href="#" class="btn btn-danger btn-xs">
-                                      								<i class="icon-remove"></i>
-                                    							</a>
-                                  							</div>														
-                                  						</td>
-													</tr>
-													<tr>
-														<td>Lorem ipsum</td>
-														<td>
-															<div class="text-center">1</div>
-														</td>
-														<td>
-															<div class="text-right">
-                                    							<a href="#" class="btn btn-success btn-xs">
-                                      								<i class="icon-ok"></i>
-                                    							</a>
-                                    							<a href="#" class="btn btn-danger btn-xs">
-                                      								<i class="icon-remove"></i>
-                                    							</a>
-                                  							</div>
-														</td>
-													</tr>
-												</tbody>
-											</table>
+										 <div class='row'>
+                          						<div class='col-sm-12'>
+                          						<table><tr>
+                          						<td>选用试卷</td>
+                          						<td width="400px;">
+                          						<select class='select2 form-control' id="selectexam" onclick="selectexam();">
+                          							<c:forEach var="ce" items="${celist}">
+													<option value='${ce.exam.id}' <c:if test="${sexam.id == ce.id}">selected="selected"</c:if>>${ce.exam.name}</option>
+													</c:forEach>
+												</select>
+                          						</td>
+                          						<td id="selectexamtime">&nbsp;&nbsp;${sexam.selecttime}&nbsp;&nbsp;完成选题</td>
+                          						</tr></table>
+                          						
+                          						</div>
+                        					</div>  
+                        					<hr class="hr-normal">
+											<table class='table table-hover table-striped' style='margin-bottom:0;'>
+				                            <thead>
+				                              <tr>
+				                                <th>考名</th>
+				                                <th>姓名</th>
+				                                <th>时间</th>
+				                                <th>状态</th>
+				                                <th></th>
+				                              </tr>
+				                            </thead>
+				                            <tbody>
+				                            <c:forEach var="ce" items="${celist}">
+				                              <tr>
+				                                <td><c:if test="${ce.exam.lockexam == 1}"><i class='icon-lock'></i></c:if>${ce.exam.name}</td>
+				                                <td></td>
+				                                <td></td>
+				                                <td>
+				                                  <span class='label label-important'></span>
+				                                </td>
+				                                <td>
+				                                  <div class='text-right'>
+				                                     <a class='btn btn-danger btn-xs' href='javascript:void(0);' onclick="unlockallexam(${ce.competionId},${ce.exam.id});">
+				                                      <i class='icon-unlock'></i>
+				                                    </a>
+				                                    <a class='btn btn-danger btn-xs' href='javascript:void(0);' onclick="deleteexam(${ce.competionId},${ce.exam.id});">
+				                                      <i class='icon-remove'></i>
+				                                    </a>
+				                                  </div>
+				                                </td>
+				                              </tr>
+				                              </c:forEach>
+				                            </tbody>
+				                          </table>
 											<hr class="hr-normal">
 											<div class='row'>
                           						<div class='col-md-10 col-md-offset-4'>
-                            						<button class='btn green-background' style="color: #eeeeee;" type='submit'>
+                          						   <a href="javascript:void(0);" onclick="showexamdialog();" class='btn btn-success'>
                               							<i class="icon-plus"></i>
                               							增加考生
-                            						</button>
+                            						</a>
                             						<button class='btn red-background' style="color: #eeeeee;" type='submit'>
                             							<i class='icon-time'></i>
                             							考试开始
@@ -561,13 +524,53 @@
 								</div>
                           </div>
                           <div class='modal-footer'>
-                            <button class='btn btn-default' data-dismiss='modal' type='button'>Close</button>
+                            <button class='btn btn-default' data-dismiss='modal' type='button'>关闭</button>
                             <button class='btn btn-primary' type='button' onclick="addcompetionjudgment();">确定</button>
                           </div>
                         </div>
                       </div>
                     </div>
-        
+      <div class='modal fade' id='modal-example2' tabindex='-1'>
+                      <div class='modal-dialog'>
+                        <div class='modal-content'>
+                          <div class='modal-header'>
+                            <button aria-hidden='true' class='close' data-dismiss='modal' type='button'>×</button>
+                            <h4 class='modal-title' id='myModalLabel'>增加试卷</h4>
+                          </div>
+                          <div class='modal-body'>
+                            	<div class='row'>
+									<div class='col-sm-12'>
+										<p>
+											<strong>试卷名</strong>
+										</p>
+										<input class='form-control' type='text' id="model2name">
+									</div>
+								</div>
+								<div class='row'>
+									<div class='col-sm-12'>
+										<p>
+											<strong>命题裁判</strong>
+										</p>
+										<select class='select2 form-control' id="model2user">
+										</select>
+									</div>
+								</div>
+<!-- 								<div class='row'>
+									<div class='col-sm-12'>
+										<p>
+											<strong>考试时间</strong>
+										</p>
+										<input class='form-control' type='text' id="model2time">
+									</div>
+								</div> -->
+                          </div>
+                          <div class='modal-footer'>
+                            <button class='btn btn-default' data-dismiss='modal' type='button'>关闭</button>
+                            <button class='btn btn-primary' type='button' onclick="addexam();">确定</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>  
     <script src="assets/javascripts/jquery/jquery.min.js" type="text/javascript"></script>
 
     <script src="assets/javascripts/jquery/jquery.mobile.custom.min.js" type="text/javascript"></script>
@@ -746,7 +749,43 @@
 	{
 		
 	}
-	
+	function showexamdialog()
+	{
+		var competionId = parseInt($("#competionId").attr("value"));
+		$.ajax({
+			url : "cms/getCompetionMjudgment.action?competionId="+competionId,
+			type : "post",
+			success : function(s) {
+				var a = eval("(" + s + ")");
+				var tmp = '';
+				var row = a.rows;
+				for ( var i = 0; i < row.length; i++) {
+					var school = row[i];
+					var name = school.name;
+					tmp += '<option value='+school.id+'>'+name+'</option>';
+				}
+				$("#model2user").html(tmp);
+				$("#modal-example2").modal('show');
+			}
+		});
+	}
+	function deljudgment(competionId,userId)
+	{
+		var data={competionId:competionId,userId:userId};
+		$.ajax({
+			url : "cms/delcompetionjudgment.action",
+			type : "post",
+			data :data,
+			success : function(s) {
+				var a = eval("(" + s + ")");
+				if ("sucess" == a.sucess)
+				{
+					location.reload();
+				}
+			}
+		});
+	}
+	//增加裁判
 	function addcompetionjudgment()
 	{
 		var userId = parseInt($("#selectuser").attr("value"));;
@@ -762,6 +801,94 @@
 				if ("sucess" == a.sucess)
 				{
 					$("#modal-example").modal('hide');
+					location.reload();
+				}
+			}
+		});
+	}
+	//增加竞赛试卷------同时将试卷指定给出卷裁判
+	function addexam()
+	{
+		var userId = parseInt($("#model2user").attr("value"));;
+		var competionId = parseInt($("#competionId").attr("value"));
+		var name = $("#model2name").attr("value");;
+		var data={userId:userId,competionId:competionId,name:name};
+		$.ajax({
+			url : "cms/addexam.action",
+			type : "post",
+			data :data,
+			success : function(s) {
+				var a = eval("(" + s + ")");
+				if ("sucess" == a.sucess)
+				{
+					$("#modal-example").modal('hide');
+					location.reload();
+				}
+			}
+		});
+	}
+	function lockallexam()
+	{
+		var competionId = parseInt($("#competionId").attr("value"));
+		var data={competionId:competionId};
+		$.ajax({
+			url : "cms/lockallexam.action",
+			type : "post",
+			data :data,
+			success : function(s) {
+				var a = eval("(" + s + ")");
+				if ("sucess" == a.sucess)
+				{
+					location.reload();
+				}
+			}
+		});
+	}
+	function unlockallexam(competionId,examId)
+	{
+		var data={competionId:competionId,examId:examId};
+		$.ajax({
+			url : "cms/unlockallexam.action",
+			type : "post",
+			data :data,
+			success : function(s) {
+				var a = eval("(" + s + ")");
+				if ("sucess" == a.sucess)
+				{
+					location.reload();
+				}
+			}
+		});
+	}
+	function deleteexam(competionId,examId)
+	{
+		var data={competionId:competionId,examId:examId};
+		$.ajax({
+			url : "cms/deleteexam.action",
+			type : "post",
+			data :data,
+			success : function(s) {
+				var a = eval("(" + s + ")");
+				if ("sucess" == a.sucess)
+				{
+					location.reload();
+				}
+			}
+		});
+	}
+	function selectexam()
+	{
+		var competionId = parseInt($("#competionId").attr("value"));
+		var examId = parseInt($("#selectexam").attr("value"));
+		var data={competionId:competionId,examId:examId};
+		$.ajax({
+			url : "cms/selectexam.action",
+			type : "post",
+			data :data,
+			success : function(s) {
+				var a = eval("(" + s + ")");
+				if ("sucess" == a.sucess)
+				{
 					location.reload();
 				}
 			}

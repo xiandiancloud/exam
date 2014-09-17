@@ -64,4 +64,20 @@ public class UserCompetionService {
 	public List<UserCompetion> getCompetionjudgment(int competionId) {
 		return userCompetionDao.getCompetionjudgment(competionId);
 	}
+	
+	/**
+	 * 得到竞赛的命题裁判
+	 * @return
+	 */
+	public List<UserCompetion> getCompetionMjudgment(int competionId) {
+		return userCompetionDao.getCompetionMjudgment(competionId);
+	}
+	
+	/**
+	 * 删除竞赛的裁判
+	 * @return
+	 */
+	public void removeCompetionjudgment(int competionId,int userId) {
+		userCompetionDao.removeCompetionjudgment(competionId, userId);
+	}
 }

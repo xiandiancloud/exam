@@ -1,14 +1,20 @@
 package com.dhl.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dhl.cons.CommonConstant;
 import com.dhl.dao.CompetionDao;
+import com.dhl.dao.CompetionExamDao;
 import com.dhl.dao.CompetionSchoolDao;
+import com.dhl.dao.ExamDao;
 import com.dhl.dao.UserCompetionDao;
 import com.dhl.domain.Competion;
+import com.dhl.domain.CompetionExam;
 import com.dhl.domain.CompetionSchool;
+import com.dhl.domain.Exam;
 import com.dhl.domain.User;
 import com.dhl.domain.UserCompetion;
 
@@ -21,13 +27,54 @@ public class CompetionService {
 	@Autowired
 	private CompetionDao competionDao;
 	@Autowired
+	private CompetionExamDao competionExamDao;
+	@Autowired
 	private UserCompetionDao userCompetionDao;
 	@Autowired
 	private CompetionSchoolDao competionSchoolDao;
+	@Autowired
+	private ExamDao examDao;
 	
 	public Competion get(int id)
 	{
 		return competionDao.get(id);
+	}
+	
+	/**
+	 * 锁定竞赛下的所有试卷
+	 */
+	public void lockallexam(int competionId)
+	{
+		List<CompetionExam> list = getCompetionExam(competionId);
+		
+		for (CompetionExam ce:list)
+		{
+			Exam exam = ce.getExam();
+			exam.setLockexam(1);
+			examDao.update(exam);
+		}
+	}
+	
+	public void unlockallexam(int competionId,int examId)
+	{
+		CompetionExam ce = competionExamDao.getCompetionExam(competionId,examId);
+		
+		if (ce != null)
+		{
+			Exam exam = ce.getExam();
+			exam.setLockexam(0);
+			examDao.update(exam);
+		}
+	}
+	
+	/**
+	 * 得到竞赛下的对应的试卷
+	 * @param competionId
+	 * @return
+	 */
+	public List<CompetionExam> getCompetionExam(int competionId)
+	{
+		return competionExamDao.getCompetionExam(competionId);
 	}
 	
 	/**
@@ -41,6 +88,7 @@ public class CompetionService {
 		save(c);
 		return c;
 	}
+	
 	
 	/**
 	 * 保存竞赛

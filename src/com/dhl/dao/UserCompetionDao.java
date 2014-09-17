@@ -27,4 +27,16 @@ public class UserCompetionDao extends BaseDao<UserCompetion> {
 				+ CommonConstant.CROLE_4 + "')";
 		return find(hql);
 	}
+	
+	public List<UserCompetion> getCompetionMjudgment(int competionId) {
+		String hql = "from UserCompetion where competionId = "+competionId+" and job = '"
+				+ CommonConstant.CROLE_3 + "'";
+		return find(hql);
+	}
+	
+	public void removeCompetionjudgment(int competionId,int userId)
+	{
+		String hql = "delete from UserCompetion where userId="+userId+" and competionId="+competionId;
+		this.getSession().createQuery(hql).executeUpdate();
+	}
 }
