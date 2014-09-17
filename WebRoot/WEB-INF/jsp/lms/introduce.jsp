@@ -71,132 +71,86 @@
       <script src="assets/javascripts/ie/html5shiv.js" type="text/javascript"></script>
       <script src="assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
     <![endif]-->
+
+
+<style type="text/css">
+
+
+
+</style>
 </head>
 <body class='contrast-red fixed-header'>
 	<jsp:include page="header.jsp"></jsp:include>
+
 	<div id='wrapper'>
-
-		<div class='container'>
-			<div class='row' id='content-wrapper'>
+		<div class="mask"></div>
+		
+		
+		<div class='container mask'>
+			<div class='row' id='content-wrapper' style="text-align:center">
 				<div class='col-xs-12'>
-					<!-- 					<div class='alert alert-info alert-dismissable'>
-						<a class='close' data-dismiss='alert' href='#'>&times;</a> Welcome
-						to <strong>Flatty (v2.2)</strong> - I hope you'll like it. Don't
-						forget - you can change theme color in top right corner <i
-							class='icon-cog'></i> if you want.
-					</div> -->
-
 					<div class='row'>
-						<div class='col-sm-3 box'>
-							<div class='box-content'>
-								<div style="text-align:center">
-									<img src="http://placehold.it/250x150&amp">
-									<!-- <img src="http://placehold.it/140x70/dce1e5/143249"> -->
-								</div>
-								<div style="text-align:center">
-									<a class="btn btn-link"> 你的名字 </a>
-								</div>
-								<div style="text-align:center">
-									<a class="btn btn-link"> 关注0 </a> <a class="btn btn-link">
-										粉丝0 </a>
-								</div>
-							</div>
+						<div class='col-sm-12' style="height:100px"></div>
+					</div>
+					<div class='row'>
+						<div class='col-sm-3'></div>
+						<div class='col-sm-6'>
+							<p>
+								<strong style="font-size: 20px;">本试卷共有4个部分，41道题，总时限为150分钟</strong> <br />
+								各个部分不分别记时，但都给了参考时限，供答题时参考
+							</p>
 						</div>
-						<div class='col-sm-9' style='margin-bottom: 0'>
-							<div class='box-content'>
-								<div class='tabbable'>
-									<ul class='nav nav-tabs nav-tabs-simple'>
-										<li class='active'><a class='green-border'
-											data-toggle='tab' href='#tabsimple1'> 做题历史记录 </a></li>
-										<li><a class='green-border' data-toggle='tab'
-											href='#tabsimple2'> 错题本 </a></li>
-										<li><a class='green-border' data-toggle='tab'
-											href='#tabsimple3'> 收藏的题目 </a></li>
+					</div>
+					<div class='row'>
+						<div class='col-sm-12' style="height:20px"></div>
+					</div>
+					<div class='row'>
+						<div class='col-sm-3'></div>
+						<div class='col-sm-6'>
+							<div class='box'>
+								<div class="menu_2012509">
+									<ul>
+										<li class="line"><a href="#"><i class='icon-calendar'></i>41题</a></li>
+										<li class="line"><a href="#"><i class='icon-smile'></i>45分</a></li>
+										<li><a href="#"><i class='icon-time'></i>150分钟</a></li>
 									</ul>
-									<div class='tab-content'>
-										<div class='tab-pane active' id='tabsimple1'>
-											<!-- <p>I'm in Section 1.</p> -->
-											<div class="row">
-												<div class="col-sm-12">
-													<div class="box ">
-														<div class="box-content">
-															<p>
-																<strong>大学英语四六级</strong>
-															</p>
-															<hr class="hr-normal">
-															<div class="pull-left">2012年全国大学生英语六级考试</div>
-															<div class="pull-right">
-																<a href="#" class="btn">查看分析</a> <a href="#" class="btn">再做一次</a>
-															</div>
-															<div class="clearfix"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class='tab-pane' id='tabsimple2'>
-											<div class="row">
-												<div class="col-sm-12">
-													<div class="box bordered-box blue-border box-nomargin">
-														<div class="box-content">
-															<p>
-																<strong>HEX2</strong>
-															</p>
-
-															<hr class="hr-normal">
-
-															<p>I'm in Section 2.</p>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class='tab-pane' id='tabsimple3'>
-											<div class="row">
-												<div class="col-sm-12">
-													<div class="box bordered-box blue-border box-nomargin">
-														<div class="box-content">
-															<p>
-																<strong>HEX</strong>
-															</p>
-
-															<hr class="hr-normal">
-
-															<p>I'm in Section 3.</p>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class='row'>
-						<div class='col-sm-3 box'>
-							<div class="box bordered-box blue-border box-nomargin">
-								<div class="box-header green-background">
-									<i class="icon-book"></i> 我的题库
-								</div>
-								<div class="box-content">
-									<p>我的考卷</p>
-
-									<hr class="hr-normal">
-									<p>我的竞赛</p>
-									<hr class="hr-normal">
-									<p>增加竞赛</p>
+						<div class='col-sm-12' style="height:20px"></div>
+					</div>
+					<div class='row'>
+						<div class='col-sm-3'></div>
+						<div class='col-sm-6'>
+							<p class="text-left">再开始答题前，请考生关注下列事项：</p>
+							<p class="text-left">一、本试题卷分析题中的一道小题可以选用中文或英文解答，请仔细阅读答题要求。如果使用英文解答，须全部使用英文。</p>
+							<p class="text-left">二、<a>本试题卷使用的现值及终值系数表点此查看。</a></p>
+						</div>
+					</div>
+					<div class='row'>
+						<div class='col-sm-12' style="height:100px"></div>
+					</div>
+					<div class='row'>
+						<div class='col-sm-4'></div>
+						<div class='col-sm-4'>
+							<div class='box'>
+								<div class='box-content' style="padding:0">
+									<a class="btn btn-success btn-block btn-lg" href="/grid.html">立即开始</a>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
+		
 	</div>
 
+
 	<jsp:include page="footer.jsp"></jsp:include>
+	
 	<!-- / jquery [required] -->
 	<script src="assets/javascripts/jquery/jquery.min.js"
 		type="text/javascript"></script>
@@ -210,18 +164,13 @@
 	<script src="assets/javascripts/jquery/jquery-ui.min.js"
 		type="text/javascript"></script>
 	<!-- / jQuery UI Touch Punch -->
-	<script
-		src="assets/javascripts/plugins/jquery_ui_touch_punch/jquery.ui.touch-punch.min.js"
-		type="text/javascript"></script>
+	<script src="assets/javascripts/plugins/jquery_ui_touch_punch/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
 	<!-- / bootstrap [required] -->
-	<script src="assets/javascripts/bootstrap/bootstrap.js"
-		type="text/javascript"></script>
+	<script src="assets/javascripts/bootstrap/bootstrap.js" type="text/javascript"></script>
 	<!-- / modernizr -->
-	<script src="assets/javascripts/plugins/modernizr/modernizr.min.js"
-		type="text/javascript"></script>
+	<script src="assets/javascripts/plugins/modernizr/modernizr.min.js" type="text/javascript"></script>
 	<!-- / retina -->
-	<script src="assets/javascripts/plugins/retina/retina.js"
-		type="text/javascript"></script>
+	<script src="assets/javascripts/plugins/retina/retina.js" type="text/javascript"></script>
 	<!-- / theme file [required] -->
 	<script src="assets/javascripts/theme.js" type="text/javascript"></script>
 	<!-- / demo file [not required!] -->
@@ -231,8 +180,16 @@
 	<!-- / END - page related files and scripts [optional] -->
 	<script src="js/common.js" type="text/javascript"></script>
 	<script src="js/holder.js" type="text/javascript"></script>
-	<script>
-		
-	</script>
+	
+<!-- 	<script type="text/javascript">  
+    	//兼容火狐、IE8
+    window.onload = showMask();   
+    function showMask(){  
+        $(".mask").css("height",$(".container").height());  
+        $(".mask").css("width",$(".container").width());  
+        $(".mask").show();  
+    }   
+	</script> -->
+
 </body>
 </html>

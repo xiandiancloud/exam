@@ -21,6 +21,17 @@ create table t_roleuser
   CONSTRAINT receivet_roleuser_ibfk_2 FOREIGN KEY (roleId) REFERENCES t_role (id) ON DELETE CASCADE
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+drop table if exists t_school_user;
+create table t_school_user
+(
+  id        int not null AUTO_INCREMENT,
+  userId    int(20) not null,
+  schoolId  int(20) not null,
+  primary key (id),
+  CONSTRAINT receivet_school_user_ibfk_1 FOREIGN KEY (userId) REFERENCES auth_user (id) ON DELETE CASCADE,
+  CONSTRAINT receivet_school_user_ibfk_2 FOREIGN KEY (schoolId) REFERENCES auth_school (id) ON DELETE CASCADE
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
 /*实验课程定义分类*/
 drop table if exists t_coursecategory;
 create table t_coursecategory

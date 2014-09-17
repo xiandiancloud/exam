@@ -30,6 +30,7 @@
     <link href="assets/stylesheets/plugins/bootstrap_switch/bootstrap-switch.css" media="all" rel="stylesheet" type="text/css" />
     <link href="assets/stylesheets/plugins/common/bootstrap-wysihtml5.css" media="all" rel="stylesheet" type="text/css" />
     <!-- / END - page related stylesheets [optional] -->
+    <link href="assets/stylesheets/plugins/dynatree/ui.dynatree.css" media="screen" rel="stylesheet" type="text/css" />
     <!-- / bootstrap [required] -->
     <link href="assets/stylesheets/bootstrap/bootstrap.css" media="all" rel="stylesheet" type="text/css" />
     <!-- / theme file [required] -->
@@ -444,7 +445,7 @@
 											<hr class="hr-normal">
 											<div class='row'>
                           						<div class='col-md-10 col-md-offset-4'>
-                          						   <a href="javascript:void(0);" onclick="showexamdialog();" class='btn btn-success'>
+                          						   <a href="javascript:void(0);" onclick="showuserdialog();" class='btn btn-success'>
                               							<i class="icon-plus"></i>
                               							增加考生
                             						</a>
@@ -555,14 +556,6 @@
 										</select>
 									</div>
 								</div>
-<!-- 								<div class='row'>
-									<div class='col-sm-12'>
-										<p>
-											<strong>考试时间</strong>
-										</p>
-										<input class='form-control' type='text' id="model2time">
-									</div>
-								</div> -->
                           </div>
                           <div class='modal-footer'>
                             <button class='btn btn-default' data-dismiss='modal' type='button'>关闭</button>
@@ -571,6 +564,89 @@
                         </div>
                       </div>
                     </div>  
+       <div class='modal fade' id='modal-example3' tabindex='-1'>
+               <div class='modal-dialog'>
+                 <div class='modal-content'>
+                   <div class='modal-header'>
+                     <button aria-hidden='true' class='close' data-dismiss='modal' type='button'>×</button>
+                     <h4 class='modal-title' id='myModalLabel'>选择考生</h4>
+                   </div>
+                   <div class='modal-body'>
+                     	<div class='row'>
+						<div class='col-sm-12'>
+							<div id="tree2"><ul id='tree2-treeData'>
+			                      <li id='tree2id1' title='Look, a tool tip!'>
+			                        item1 with key and tooltip
+			                      </li>
+			                      <li id='tree2id2'>
+			                        item2
+			                      </li>
+			                      <li class='folder' id='tree2id3'>
+			                        Folder with some children
+			                        <ul>
+			                          <li id='tree2id2.1'>
+			                            Sub-item 3.1
+			                            <ul>
+			                              <li id='tree2id3.1.1'>
+			                                Sub-item 3.1.1
+			                              </li>
+			                              <li id='tree2id3.1.2'>
+			                                Sub-item 3.1.2
+			                              </li>
+			                            </ul>
+			                          </li>
+			                          <li id='tree2id3.2'>
+			                            Sub-item 3.2
+			                            <ul>
+			                              <li id='tree2id3.2.1'>
+			                                Sub-item 3.2.1
+			                              </li>
+			                              <li id='tree2id3.2.2'>
+			                                Sub-item 3.2.2
+			                              </li>
+			                            </ul>
+			                          </li>
+			                        </ul>
+			                      </li>
+			                      <li class='expanded' id='tree2id4'>
+			                        Document with some children (expanded on init)
+			                        <ul>
+			                          <li id='tree2id4.1'>
+			                            Sub-item 4.1 (active and focus on init)
+			                            <ul>
+			                              <li id='tree2id4.1.1'>
+			                                Sub-item 4.1.1
+			                              </li>
+			                              <li id='tree2id4.1.2'>
+			                                Sub-item 4.1.2
+			                              </li>
+			                            </ul>
+			                          </li>
+			                          <li id='tree2id4.2'>
+			                            Sub-item 4.2
+			                            <ul>
+			                              <li id='tree2id4.2.1'>
+			                                Sub-item 4.2.1
+			                              </li>
+			                              <li id='tree2id4.2.2'>
+			                                Sub-item 4.2.2
+			                              </li>
+			                            </ul>
+			                          </li>
+			                        </ul>
+			                      </li>
+			                    </ul>
+			                    </div>
+						</div>
+						</div>
+                   </div>
+                   <div class='modal-footer'>
+                     <button class='btn btn-default' data-dismiss='modal' type='button'>关闭</button>
+                     <button class='btn btn-primary' type='button' onclick="addexam();">确定</button>
+                   </div>
+                 </div>
+               </div>
+    </div>  
     <script src="assets/javascripts/jquery/jquery.min.js" type="text/javascript"></script>
 
     <script src="assets/javascripts/jquery/jquery.mobile.custom.min.js" type="text/javascript"></script>
@@ -596,6 +672,7 @@
     <script src="assets/javascripts/plugins/flot/flot.resize.js" type="text/javascript"></script>
     <script src="assets/javascripts/plugins/sparklines/jquery.sparkline.min.js" type="text/javascript"></script>
     <script src="assets/javascripts/plugins/flot/flot.pie.js" type="text/javascript"></script>
+    <script src="assets/javascripts/plugins/dynatree/jquery.dynatree.min.js" type="text/javascript"></script>
     <script src="js/common.js"></script>
     <script type="text/javascript">
       /* var data, dataset, gd, options, previousLabel, previousPoint, showTooltip, ticks;
@@ -665,6 +742,32 @@
 	$(function() {
 		//$('.progress-bar').css({'width':'80%'}).find('span').html('80%');
 		initschool();
+		$("#modal-example3").modal('show');
+        $("#tree2").dynatree({
+            checkbox: true,
+            selectMode: 2,
+            onSelect: function(select, node) {
+              var selKeys, selNodes;
+              selNodes = node.tree.getSelectedNodes();
+              selKeys = $.map(selNodes, function(node) {
+                return "[" + node.data.key + "]: '" + node.data.title + "'";
+              });
+              return $("#echoSelection2").text(selKeys.join(", "));
+            },
+            onClick: function(node, event) {
+              if (node.getEventTargetType(event) === "title") {
+                return node.toggleSelect();
+              }
+            },
+            onKeydown: function(node, event) {
+              if (event.which === 32) {
+                node.toggleSelect();
+                return false;
+              }
+            },
+            idPrefix: "dynatree-Cb2-"
+          });
+        
 	});
 	
 	function initschool()
