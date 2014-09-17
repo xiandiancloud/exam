@@ -16,7 +16,7 @@
 <!--<![endif]-->
 <head>
 <base href="<%=basePath%>">
-<title>我的云课堂</title>
+<title>开始考试</title>
 <meta
 	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
 	name='viewport'>
@@ -103,7 +103,6 @@
 							</div>
 						</div>
 					</div>
-					
 					<div class='row'>
 						<div class='col-sm-12 box'>
 							<div class="box bordered-box blue-border box-nomargin">
@@ -136,29 +135,45 @@
 								<div class='tabbable'>
 									<ul class='nav nav-tabs nav-tabs-simple'>
 										<li class='active'><a class='green-border'
-											data-toggle='tab' href='#tabsimple1'>竞赛列表 </a></li>
-										<!-- <li><a class='green-border' data-toggle='tab'
-											href='#tabsimple2'>已完成的 </a></li> -->
+											data-toggle='tab' href='#tabsimple1'>我参加的试卷</a></li>
+										<li><a class='green-border' data-toggle='tab'
+											href='#tabsimple2'>我定义的试卷 </a></li>
 									</ul>
 									<div class='tab-content'>
 										<div class='tab-pane active' id='tabsimple1'>
 											<!-- <p>I'm in Section 1.</p> -->
-											<c:forEach var="uc" items="${uclist}">
+											<c:forEach var="se" items="${sexamlist}">
 												<div class="row">
 													<div class="col-sm-12">
 														<div class="box ">
 															<div class="box-content">
 																<p>
-																	<strong>${uc.competion.name}</strong>
+																	<strong>${se.exam.name}</strong>
 																</p>
 																<hr class="hr-normal">
-																<div class="pull-left">${uc.competion.describle}</div>
+																<div class="pull-left">${se.exam.describle}</div>
 																<div class="pull-right">
-																	<a
-																		href="cms/totcompetion.action?competionId=${uc.competion.id}"
-																		class="btn">编辑</a>
+																	<a href="#" class="btn">查看分析</a> <a href="#"
+																		class="btn">再做一次</a>
 																</div>
 																<div class="clearfix"></div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</c:forEach>
+										</div>
+										<div class='tab-pane' id='tabsimple2'>
+											<c:forEach var="te" items="${texamlist}">
+												<div class="row">
+													<div class="col-sm-12">
+														<div class="box bordered-box blue-border box-nomargin">
+															<div class="box-content">
+																<p>
+																	<strong>${te.exam.name}</strong>
+																</p>
+																<hr class="hr-normal">
+																<p>${te.exam.describle}</p>
 															</div>
 														</div>
 													</div>

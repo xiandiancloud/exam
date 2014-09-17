@@ -78,7 +78,7 @@
 
 		<div class='container'>
 			<div class='row' id='content-wrapper'>
-				<div class='col-xs-3'>
+				<div class='col-xs-12'>
 					<!-- 					<div class='alert alert-info alert-dismissable'>
 						<a class='close' data-dismiss='alert' href='#'>&times;</a> Welcome
 						to <strong>Flatty (v2.2)</strong> - I hope you'll like it. Don't
@@ -87,7 +87,7 @@
 					</div> -->
 
 					<div class='row'>
-						<div class='col-sm-12 box'>
+						<div class='col-sm-3 box'>
 							<div class='box-content'>
 								<div style="text-align:center">
 									<img src="http://placehold.it/250x150&amp">
@@ -102,10 +102,64 @@
 								</div>
 							</div>
 						</div>
+						<div class='col-sm-9' style='margin-bottom: 0'>
+							<div class='box-content'>
+								<div class='tabbable'>
+									<ul class='nav nav-tabs nav-tabs-simple'>
+										<li class='active'><a class='green-border'
+											data-toggle='tab' href='#tabsimple1'>我参加的试卷</a></li>
+										<li><a class='green-border' data-toggle='tab'
+											href='#tabsimple2'>我定义的试卷 </a></li>
+									</ul>
+									<div class='tab-content'>
+										<div class='tab-pane active' id='tabsimple1'>
+											<!-- <p>I'm in Section 1.</p> -->
+											<c:forEach var="se" items="${sexamlist}">
+											<div class="row">
+												<div class="col-sm-12">
+													<div class="box ">
+														<div class="box-content">
+															<p>
+																<strong>${se.exam.name}</strong>
+															</p>
+															<hr class="hr-normal">
+															<div class="pull-left">${se.exam.describle}</div>
+															<div class="pull-right">
+																<a href="#" class="btn">查看分析</a> <a href="#" class="btn">再做一次</a>
+															</div>
+															<div class="clearfix"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+											</c:forEach>
+										</div>
+										<div class='tab-pane' id='tabsimple2'>
+										   <c:forEach var="te" items="${texamlist}">
+											<div class="row">
+												<div class="col-sm-12">
+													<div class="box bordered-box blue-border box-nomargin">
+														<div class="box-content">
+															<p>
+																<strong>${te.exam.name}</strong>
+															</p>
+
+															<hr class="hr-normal">
+
+															<p>${te.exam.describle}</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											</c:forEach>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-					
 					<div class='row'>
-						<div class='col-sm-12 box'>
+						<div class='col-sm-3 box'>
 							<div class="box bordered-box blue-border box-nomargin">
 								<div class="box-header green-background">
 									<i class="icon-book"></i> 我的题库
@@ -121,7 +175,7 @@
 									<a href="cms" class='btn btn-success'> <i
 										class='icon-add'></i> 增加试卷
 									</a>
-									<a href="cms/totcompetion.action?competionId=-1" class='btn btn-primary'> <i
+									<a href="cms/totcompetion.action" class='btn btn-primary'> <i
 										class='icon-add'></i> 增加竞赛
 									</a>
 								</div>
@@ -129,48 +183,7 @@
 						</div>
 					</div>
 				</div>
-				<div class='col-xs-9'>
-					<div class='row'>
-						<div class='col-sm-12' style='margin-bottom: 0'>
-							<div class='box-content'>
-								<div class='tabbable'>
-									<ul class='nav nav-tabs nav-tabs-simple'>
-										<li class='active'><a class='green-border'
-											data-toggle='tab' href='#tabsimple1'>竞赛列表 </a></li>
-										<!-- <li><a class='green-border' data-toggle='tab'
-											href='#tabsimple2'>已完成的 </a></li> -->
-									</ul>
-									<div class='tab-content'>
-										<div class='tab-pane active' id='tabsimple1'>
-											<!-- <p>I'm in Section 1.</p> -->
-											<c:forEach var="uc" items="${uclist}">
-												<div class="row">
-													<div class="col-sm-12">
-														<div class="box ">
-															<div class="box-content">
-																<p>
-																	<strong>${uc.competion.name}</strong>
-																</p>
-																<hr class="hr-normal">
-																<div class="pull-left">${uc.competion.describle}</div>
-																<div class="pull-right">
-																	<a
-																		href="cms/totcompetion.action?competionId=${uc.competion.id}"
-																		class="btn">编辑</a>
-																</div>
-																<div class="clearfix"></div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</c:forEach>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+
 			</div>
 		</div>
 	</div>

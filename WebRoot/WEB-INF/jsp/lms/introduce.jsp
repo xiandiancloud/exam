@@ -86,7 +86,7 @@
 		<div class="mask"></div>
 		
 		
-		<div class='container mask'>
+		<div class='container'>
 			<div class='row' id='content-wrapper' style="text-align:center">
 				<div class='col-xs-12'>
 					<div class='row'>
@@ -137,7 +137,7 @@
 						<div class='col-sm-4'>
 							<div class='box'>
 								<div class='box-content' style="padding:0">
-									<a class="btn btn-success btn-block btn-lg" href="/grid.html">立即开始</a>
+									<a class="btn btn-success btn-block btn-lg" href="lms/tostartexam.action">立即开始</a>
 								</div>
 							</div>
 						</div>

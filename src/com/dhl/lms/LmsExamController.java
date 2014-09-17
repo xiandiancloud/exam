@@ -44,10 +44,8 @@ public class LmsExamController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/toexamintroduce")
-	public ModelAndView toexamintroduce(HttpServletRequest request) {
+	public ModelAndView toexamintroduce(HttpServletRequest request,int examId) {
 		ModelAndView view = new ModelAndView();
-		
-		
 		
 		view.setViewName("/lms/introduce");
 		return view;
