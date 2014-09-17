@@ -9,6 +9,7 @@ import com.dhl.dao.CompetionSchoolDao;
 import com.dhl.dao.UserCompetionDao;
 import com.dhl.domain.Competion;
 import com.dhl.domain.CompetionSchool;
+import com.dhl.domain.User;
 import com.dhl.domain.UserCompetion;
 
 /**
@@ -24,8 +25,13 @@ public class CompetionService {
 	@Autowired
 	private CompetionSchoolDao competionSchoolDao;
 	
+	public Competion get(int id)
+	{
+		return competionDao.get(id);
+	}
+	
 	/**
-	 * 保存章节
+	 * 保存竞赛
 	 * @param name
 	 * @param courseId
 	 * @return
@@ -45,7 +51,7 @@ public class CompetionService {
 	public Competion createCompetion(String name, String starttime,
 			String endtime, String wstarttime, String wendtime,
 			String examstarttime, String examendtime, String type,
-			String score, String passscore, String describle, String schoolId,int userId)
+			String score, String passscore, String describle, String schoolId,User user)
 	{
 		Competion c = new Competion();
 		c.setName(name);
@@ -67,7 +73,7 @@ public class CompetionService {
 		competionSchoolDao.save(cs);
 		
 		UserCompetion uc = new UserCompetion();
-		uc.setUserId(userId);
+		uc.setUser(user);
 		uc.setCompetion(c);
 		uc.setJob(CommonConstant.CROLE_1);
 		userCompetionDao.save(uc);

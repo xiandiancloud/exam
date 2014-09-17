@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dhl.cons.CommonConstant;
 import com.dhl.dao.RoleDao;
 import com.dhl.dao.UserDao;
 import com.dhl.dao.UserProfileDao;
@@ -169,6 +170,15 @@ public class UserService {
 	 */
 	public List<User> getAllUsers(){
 		return userDao.loadAll();
+	}
+	
+	/**
+	 * 获取所有老师
+	 * @return 所有用户
+	 */
+	public List<UserRole> getAllTeacher(){
+		Role role = roleDao.getRoleByname(CommonConstant.ROLE_T);
+		return userRoleDao.getUserRoleByRoleId(role.getId());
 	}
 	
 	/*public Page getPage(int pageNo,int pageSize)

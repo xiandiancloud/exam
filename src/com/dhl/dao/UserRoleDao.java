@@ -18,4 +18,10 @@ public class UserRoleDao extends BaseDao<UserRole> {
 			return users.get(0);
 		}
 	}
+	
+	public List<UserRole> getUserRoleByRoleId(int roleId)
+	{
+		String hql = "from UserRole where roleId = "+roleId;
+		return find(hql);
+	}
 }

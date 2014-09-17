@@ -24,6 +24,7 @@ import com.dhl.domain.School;
 import com.dhl.domain.Sequential;
 import com.dhl.domain.TeacherCourse;
 import com.dhl.domain.User;
+import com.dhl.domain.UserRole;
 import com.dhl.domain.Vertical;
 import com.dhl.domain.VerticalTrain;
 import com.dhl.service.CategoryService;

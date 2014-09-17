@@ -26,6 +26,7 @@ import com.dhl.domain.Role;
 import com.dhl.domain.School;
 import com.dhl.domain.TeacherExam;
 import com.dhl.domain.User;
+import com.dhl.domain.UserRole;
 import com.dhl.service.ECategoryService;
 import com.dhl.service.ExamChapterService;
 import com.dhl.service.ExamQuestionService;
@@ -520,7 +521,54 @@ public class ExamController extends BaseController {
 	}
 	
 	//--------------------------------------------------------------------------------------
+	/**
+	 * 所有老师
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/getAllTeacher")
+	public void getAllTeacher(HttpServletRequest request,HttpServletResponse response) {
+		
+		try {
+			PrintWriter out = response.getWriter();
+			List<UserRole> school = userService.getAllTeacher();
+			String str = getTeacherStr(school);
+			out.write(str);
+			// }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
+	/**
+	 * 有性能问题再修改
+	 * @param list
+	 * @return
+	 */
+	private String getTeacherStr(List<UserRole> list) {
+		StringBuffer buffer = new StringBuffer();
+		int count = list.size();
+		buffer.append("{\"total\":" + count + ",\"rows\":[");
+		for (int i = 0; i < count; i++) {
+			UserRole p = list.get(i);
+			User user = userService.getUserById(p.getUserId());
+			buffer.append("{");
+			buffer.append("\"id\":");
+			buffer.append("\"" + user.getId() + "\"");
+			buffer.append(",\"name\":");
+			buffer.append("\"" + user.getUsername() + "\"");
+			buffer.append("},");
+		}
+		if (count > 0) {
+			String str = buffer.substring(0, buffer.length() - 1) + "]}";
+			str = str.replaceAll("null", "");
+			return str;
+		} else {
+			String str = buffer.toString() + "]}";
+			str = str.replaceAll("null", "");
+			return str;
+		}
+	}
 	/**
 	 * 所有学校
 	 * 

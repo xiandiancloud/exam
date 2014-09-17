@@ -89,8 +89,8 @@
 										<p>
 											<strong>赛项名称</strong>
 										</p>
-										<input type="hidden" class='form-control' id='competionId'>
-										<input class='form-control' id='name' type='text'>
+										<input type="hidden" class='form-control' id='competionId' value="${competion.id}">
+										<input class='form-control' id='name' type='text' value="${competion.name}">
 									</div>
 								</div>
 								<hr class='hr-normal'>
@@ -223,19 +223,19 @@
 										<p>
 											<strong>描述</strong>
 										</p>
-										<textarea class='form-control' id='describle' placeholder='Textarea' rows='3'></textarea>
+										<textarea class='form-control' id='describle' placeholder='Textarea' rows='3'>${competion.describle}</textarea>
 									</div>
 								</div>
 								<hr class='hr-normal'>
                           		<div class='row'>
                             		<div class='col-sm-10 col-sm-offset-5'>
-                              			<a href="javascript:void(0);" class='btn btn-primary' onclick="createcompetion();" id="savebutton">
+                              			<a href="javascript:void(0);" class='btn btn-success' onclick="createcompetion();" id="savebutton">
                                 		<i class='icon-save'></i>
-                                		保存
+                                		保存赛事
                               			</a>
-                              			<a href="javascript:void(0);" class='btn btn-primary none' onclick="updatecompetion();" id="updatebutton">
+                              			<a href="javascript:void(0);" class='btn btn-success none' onclick="updatecompetion();" id="updatebutton">
                                 		<i class='icon-edit'></i>
-                                		编辑
+                                		编辑赛事
                               			</a>
                             		</div>
                           		</div>
@@ -243,7 +243,69 @@
 						</div>
 					</div>
 				</div>
-
+				<div class='row'>
+					<div class='col-sm-12'>
+						<div class='box bordered-box red-background'>
+							<div class='box-header red-background'>
+								<div class='title'>定义裁判</div>
+								<div class='actions'>
+									<a class="btn box-remove btn-xs btn-link" href="#"><i
+										class='icon-remove'></i> </a> <a
+										class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+									</a>
+								</div>
+							</div>
+							<div class='box-content'>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="box">
+										 <table class='table table-hover table-striped' style='margin-bottom:0;'>
+				                            <thead>
+				                              <tr>
+				                                <th>姓名</th>
+				                                <th>邮箱</th>
+				                                <th>职务</th>
+				                                <th></th>
+				                              </tr>
+				                            </thead>
+				                            <tbody>
+				                            <c:forEach var="judgment" items="${judgmentlist}">
+				                              <tr>
+				                                <td>${judgment.user.username}</td>
+				                                <td>${judgment.user.email}</td>
+				                                <td>
+				                                  <span class='label label-important'>${judgment.job}</span>
+				                                </td>
+				                                <td>
+				                                  <div class='text-right'>
+				                                    <a class='btn btn-success btn-xs' href='#'>
+				                                      <i class='icon-ok'></i>
+				                                    </a>
+				                                    <a class='btn btn-danger btn-xs' href='#'>
+				                                      <i class='icon-remove'></i>
+				                                    </a>
+				                                  </div>
+				                                </td>
+				                              </tr>
+				                              </c:forEach>
+				                            </tbody>
+				                          </table>
+											<hr class="hr-normal">
+											<div class='row'>
+                          						<div class='col-md-10 col-md-offset-5'>
+                            						<a href="#modal-example" data-toggle='modal' class='btn btn-success'>
+                              							<i class="icon-plus"></i>
+                              							增加裁判
+                            						</a>
+                          						</div>
+                        					</div>               
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+					</div>
 				<div class='row'>
 					<div class='col-sm-12'>
 						<div class='box bordered-box red-background'>
@@ -467,7 +529,45 @@
 			</div>
 		</div>
 	<jsp:include page="footer.jsp"></jsp:include>
-	        
+	
+<div class='modal fade' id='modal-example' tabindex='-1'>
+                      <div class='modal-dialog'>
+                        <div class='modal-content'>
+                          <div class='modal-header'>
+                            <button aria-hidden='true' class='close' data-dismiss='modal' type='button'>×</button>
+                            <h4 class='modal-title' id='myModalLabel'>选择裁判</h4>
+                          </div>
+                          <div class='modal-body'>
+                            	<div class='row'>
+									<div class='col-sm-12'>
+										<p>
+											<strong>职务</strong>
+										</p>
+										<select class='select2 form-control' id="selectjob">
+											<option value='主裁判'>主裁判</option>
+											<option value='命题裁判'>命题裁判</option>
+											<option value='判分裁判'>判分裁判</option>
+										</select>
+									</div>
+								</div>
+								<div class='row'>
+									<div class='col-sm-12'>
+										<p>
+											<strong>裁判</strong>
+										</p>
+										<select class='select2 form-control' id="selectuser">
+										</select>
+									</div>
+								</div>
+                          </div>
+                          <div class='modal-footer'>
+                            <button class='btn btn-default' data-dismiss='modal' type='button'>Close</button>
+                            <button class='btn btn-primary' type='button' onclick="addcompetionjudgment();">确定</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+        
     <script src="assets/javascripts/jquery/jquery.min.js" type="text/javascript"></script>
 
     <script src="assets/javascripts/jquery/jquery.mobile.custom.min.js" type="text/javascript"></script>
@@ -581,6 +681,21 @@
 				$("#school").html(tmp);
 			}
 		});
+		$.ajax({
+			url : "cms/getAllTeacher.action",
+			type : "post",
+			success : function(s) {
+				var a = eval("(" + s + ")");
+				var tmp = '';
+				var row = a.rows;
+				for ( var i = 0; i < row.length; i++) {
+					var school = row[i];
+					var name = school.name;
+					tmp += '<option value='+school.id+'>'+name+'</option>';
+				}
+				$("#selectuser").html(tmp);
+			}
+		});
 	}
 	function createcompetion()
 	{
@@ -630,6 +745,27 @@
 	function updatecompetion()
 	{
 		
+	}
+	
+	function addcompetionjudgment()
+	{
+		var userId = parseInt($("#selectuser").attr("value"));;
+		var competionId = parseInt($("#competionId").attr("value"));
+		var job = $("#selectjob").attr("value");;
+		var data={userId:userId,competionId:competionId,job:job};
+		$.ajax({
+			url : "cms/addcompetionjudgment.action",
+			type : "post",
+			data :data,
+			success : function(s) {
+				var a = eval("(" + s + ")");
+				if ("sucess" == a.sucess)
+				{
+					$("#modal-example").modal('hide');
+					location.reload();
+				}
+			}
+		});
 	}
 	</script>
 </body>

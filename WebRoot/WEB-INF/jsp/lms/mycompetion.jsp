@@ -125,7 +125,7 @@
 															<hr class="hr-normal">
 															<div class="pull-left">${uc.competion.describle}</div>
 															<div class="pull-right">
-																<a href="#" class="btn">查看分析</a> <a href="#" class="btn">再做一次</a>
+																<a href="cms/totcompetion.action?competionId=${uc.competion.id}" class="btn">编辑</a>
 															</div>
 															<div class="clearfix"></div>
 														</div>
