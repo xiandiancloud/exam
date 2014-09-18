@@ -15,17 +15,31 @@ import com.dhl.domain.ExamQuestion;
 public class ExamQuestionService {
 	
 	@Autowired
-	private ExamQuestionDao verticalTrainDao;
+	private ExamQuestionDao examQuestionDao;
 
 	// @Autowired
 	// private TrainDao trainDao;
 	
+	public ExamQuestion get(int id)
+	{
+		return examQuestionDao.get(id);
+	}
+	
+	public void update(ExamQuestion eq)
+	{
+		examQuestionDao.update(eq);
+	}
 	public List<ExamQuestion> getVerticalTrainList(int verticalId){
-		return verticalTrainDao.getVerticalTrainList(verticalId);
+		return examQuestionDao.getVerticalTrainList(verticalId);
     }
 	
 	public List<ExamQuestion> getAllTrainByCourseId(int examId)
 	{
-		return verticalTrainDao.getAllTrainByCourseId(examId);
+		return examQuestionDao.getAllTrainByCourseId(examId);
+	}
+	
+	public void remove(int id)
+	{
+		examQuestionDao.remove(get(id));
 	}
 }

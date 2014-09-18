@@ -34,6 +34,15 @@ public class UserService {
 	private UserRoleDao userRoleDao;
 	
 	/**
+	 * 根据学校名取得学生人员
+	 * @param school_name
+	 * @return
+	 */
+	public List<UserProfile> getUserBySchoolName(String school_name)
+	{
+		return userProfileDao.getUserBySchoolName(school_name);
+	}
+	/**
 	 * 保存用户
 	 * @param user
 	 */

@@ -36,6 +36,14 @@ public class Exam extends BaseDomain {
 	private String coursecode;
 	private String rank;
 	private int lockexam;//1:试卷锁定
+	private int isnormal;//0:普通试卷 1：竞赛试卷
+	public int getIsnormal() {
+		return isnormal;
+	}
+
+	public void setIsnormal(int isnormal) {
+		this.isnormal = isnormal;
+	}
 
 	public int getLockexam() {
 		return lockexam;

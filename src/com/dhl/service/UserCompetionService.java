@@ -23,6 +23,10 @@ public class UserCompetionService {
 	@Autowired
 	private UserDao userDao;
 	
+	public UserCompetion get(int id)
+	{
+		return userCompetionDao.get(id);
+	}
 	/**
 	 * 保存竞赛相关的用户
 	 * @param userId
@@ -36,6 +40,22 @@ public class UserCompetionService {
 		uc.setCompetion(competionDao.get(competionId));
 		uc.setJob(job);
 		userCompetionDao.save(uc);
+	}
+	
+	public void remove(int id)
+	{
+		userCompetionDao.remove(get(id));
+	}
+	
+	/**
+	 * 删除竞赛相关的用户
+	 * @param userId
+	 * @param competionId
+	 * @param job
+	 */
+	public void removeCompetionUser(int userId,int competionId)
+	{
+		userCompetionDao.removeCompetionjudgment(competionId, userId);
 	}
 	
 	/**
@@ -63,6 +83,14 @@ public class UserCompetionService {
 	 */
 	public List<UserCompetion> getCompetionjudgment(int competionId) {
 		return userCompetionDao.getCompetionjudgment(competionId);
+	}
+	
+	/**
+	 * 得到竞赛的学生
+	 * @return
+	 */
+	public List<UserCompetion> getCompetionStudent(int competionId) {
+		return userCompetionDao.getCompetionStudent(competionId);
 	}
 	
 	/**

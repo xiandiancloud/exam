@@ -22,6 +22,10 @@
             <bean class="com.dhl.lms.LmsLoginInterceptor"></bean>  
         </mvc:interceptor>  
         <mvc:interceptor>  
+            <mvc:mapping path="/lms/*examing*"/>  
+            <bean class="com.dhl.lms.LmsHavingExamInterceptor"></bean>  
+        </mvc:interceptor>  
+        <mvc:interceptor>  
             <mvc:mapping path="/cms/*"/>  
             <bean class="com.dhl.cms.CmsLoginInterceptor"></bean>  
         </mvc:interceptor>  

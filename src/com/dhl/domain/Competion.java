@@ -31,6 +31,13 @@ public class Competion extends BaseDomain {
 	private String type;
 	private String score;
 	private String passscore;
+	private int isstart;//竞赛是否开始
+	public int getIsstart() {
+		return isstart;
+	}
+	public void setIsstart(int isstart) {
+		this.isstart = isstart;
+	}
 	public int getId() {
 		return id;
 	}

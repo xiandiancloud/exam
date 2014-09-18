@@ -35,6 +35,11 @@ public class CompetionService {
 	@Autowired
 	private ExamDao examDao;
 	
+	/**
+	 * 取得竞赛
+	 * @param id
+	 * @return
+	 */
 	public Competion get(int id)
 	{
 		return competionDao.get(id);
@@ -85,10 +90,20 @@ public class CompetionService {
 	 */
 	public Competion save(Competion c)
 	{
-		save(c);
+		competionDao.save(c);
 		return c;
 	}
 	
+	/**
+	 * 更新竞赛
+	 * @param name
+	 * @param courseId
+	 * @return
+	 */
+	public void update(Competion c)
+	{
+		competionDao.update(c);
+	}
 	
 	/**
 	 * 保存竞赛

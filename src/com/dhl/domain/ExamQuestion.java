@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * @author dhl
@@ -35,6 +36,15 @@ public class ExamQuestion extends BaseDomain {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "courseId")
 	private Course course;
+	@Transient
+	private String htmlcontent;
+	
+	public String getHtmlcontent() {
+		return htmlcontent;
+	}
+	public void setHtmlcontent(String htmlcontent) {
+		this.htmlcontent = htmlcontent;
+	}
 	public int getId() {
 		return id;
 	}

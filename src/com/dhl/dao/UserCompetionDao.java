@@ -28,6 +28,12 @@ public class UserCompetionDao extends BaseDao<UserCompetion> {
 		return find(hql);
 	}
 	
+	public List<UserCompetion> getCompetionStudent(int competionId) {
+		String hql = "from UserCompetion where competionId = "+competionId+" and job = '"
+				+ CommonConstant.CROLE_5 + "'";
+		return find(hql);
+	}
+	
 	public List<UserCompetion> getCompetionMjudgment(int competionId) {
 		String hql = "from UserCompetion where competionId = "+competionId+" and job = '"
 				+ CommonConstant.CROLE_3 + "'";

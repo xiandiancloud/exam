@@ -26,6 +26,7 @@ import com.dhl.domain.Role;
 import com.dhl.domain.School;
 import com.dhl.domain.TeacherExam;
 import com.dhl.domain.User;
+import com.dhl.domain.UserProfile;
 import com.dhl.domain.UserRole;
 import com.dhl.service.ECategoryService;
 import com.dhl.service.ExamChapterService;
@@ -513,11 +514,90 @@ public class ExamController extends BaseController {
 		view.addObject("verticalId", verticalId);
 
 		List<ExamQuestion> vt = examquestionService.getVerticalTrainList(verticalId);
+		for (ExamQuestion eq:vt)
+		{
+			String content = eq.getQuestion().getContent();
+			content = changetohtml(content);
+			eq.setHtmlcontent(content);
+		}
 		view.addObject("vtlist", vt);
 		ExamVertical vertical = examverticalService.get(verticalId);
 		view.addObject("vertical", vertical);
 		view.setViewName("/cms/unit");
 		return view;
+	}
+	
+	private String changetohtml(String content)
+	{
+		content = "<input type='text' value='111'>";
+		return content;
+	}
+	/**
+	 * 创建试卷单元下面的问题
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/createExamQuestion")
+	public void createExamQuestion(HttpServletRequest request,
+			HttpServletResponse response,int id, String content,int examId,
+			int everticalId) {
+
+		try {
+			PrintWriter out = response.getWriter();
+			if (id > 0)
+			{
+				examService.updateExamQuestion(id,content);
+			}
+			else
+			{
+				examService.save(content, examId, everticalId);
+			}
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 创建试卷单元下面的问题
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/delExamQuestion")
+	public void delExamQuestion(HttpServletRequest request,
+			HttpServletResponse response, int id) {
+
+		try {
+			PrintWriter out = response.getWriter();
+			examquestionService.remove(id);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 根据id得到试卷单元下面的问题
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/getExamQuestion")
+	public void getExamQuestion(HttpServletRequest request,
+			HttpServletResponse response, int id) {
+
+		try {
+			PrintWriter out = response.getWriter();
+			ExamQuestion eq = examquestionService.get(id);
+			String str = "{'sucess':'sucess','eq':'"+eq.getQuestion().getContent()+"'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	//--------------------------------------------------------------------------------------
@@ -590,6 +670,7 @@ public class ExamController extends BaseController {
 		}
 	}
 
+	//性能发现问题再解决
 	private String getSchoolStr(List<School> list) {
 		StringBuffer buffer = new StringBuffer();
 		int count = list.size();
@@ -599,8 +680,11 @@ public class ExamController extends BaseController {
 			buffer.append("{");
 			buffer.append("\"id\":");
 			buffer.append("\"" + p.getId() + "\"");
+			String sn = p.getSchool_name();
+			List<UserProfile> uplist = userService.getUserBySchoolName(sn);
+			buffer.append(",\"user\":"+getUserStr(uplist));
 			buffer.append(",\"name\":");
-			buffer.append("\"" + p.getSchool_name() + "\"");
+			buffer.append("\"" +sn+ "\"");
 			buffer.append("},");
 		}
 		if (count > 0) {
@@ -613,7 +697,36 @@ public class ExamController extends BaseController {
 			return str;
 		}
 	}
-
+	private String getUserStr(List<UserProfile> list) {
+		StringBuffer buffer = new StringBuffer();
+		int count = list.size();
+		buffer.append("[");
+		
+		for (int i = 0; i < count; i++) {
+			UserProfile p = list.get(i);
+			int userId = p.getUser_id();
+			Role r = userService.getUserRoleByuserId(userId);
+			if (CommonConstant.ROLE_S.equals(r.getRoleName()))
+			{
+				buffer.append("{");
+				buffer.append("\"id\":");
+				buffer.append("\"" + userId + "\"");
+				buffer.append(",\"name\":");
+				buffer.append("\"" +p.getName()+ "\"");
+				buffer.append("},");
+			}
+		}
+		if (count > 0 && buffer.toString().length() > 1) {
+			String str = buffer.substring(0, buffer.length() - 1) + "]";
+			str = str.replaceAll("null", "");
+			return str;
+		} else {
+			String str = buffer.toString() + "]";
+			str = str.replaceAll("null", "");
+			return str;
+		}
+	}
+	
 	/**
 	 * 创建实验
 	 * 

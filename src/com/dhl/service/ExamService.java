@@ -17,7 +17,10 @@ import com.dhl.dao.CompetionExamDao;
 import com.dhl.dao.ECategoryDao;
 import com.dhl.dao.ExamCategoryDao;
 import com.dhl.dao.ExamDao;
+import com.dhl.dao.ExamQuestionDao;
+import com.dhl.dao.ExamVerticalDao;
 import com.dhl.dao.Page;
+import com.dhl.dao.QuestionDao;
 import com.dhl.dao.SequentialDao;
 import com.dhl.dao.TeacherExamDao;
 import com.dhl.dao.TrainDao;
@@ -31,6 +34,8 @@ import com.dhl.domain.Course;
 import com.dhl.domain.ECategory;
 import com.dhl.domain.Exam;
 import com.dhl.domain.ExamCategory;
+import com.dhl.domain.ExamQuestion;
+import com.dhl.domain.Question;
 import com.dhl.domain.Sequential;
 import com.dhl.domain.TeacherExam;
 import com.dhl.domain.Train;
@@ -46,6 +51,8 @@ public class ExamService {
 
 	@Autowired
 	private ExamDao examDao;
+	@Autowired
+	private ExamVerticalDao examVerticalDao;
 	@Autowired
 	private ECategoryDao ecategoryDao;
 	@Autowired
@@ -68,6 +75,10 @@ public class ExamService {
 	private TeacherExamDao teacherExamDao;
 	@Autowired
 	private CompetionExamDao competionExamDao;
+	@Autowired
+	private QuestionDao questionDao;
+	@Autowired
+	private ExamQuestionDao examquestionDao;
 	
 	/**
 	 * 根据试卷id取得分类
@@ -101,6 +112,45 @@ public class ExamService {
 		return course;
 	}
 
+	/**
+	 * 保存试卷下单元下的问题
+	 * @param content
+	 * @param examId
+	 * @param everticalId
+	 * @return
+	 */
+	public String save(String content, int examId, int everticalId) {
+
+		Question q = new Question();
+		q.setContent(content);
+		questionDao.save(q);
+		
+		ExamQuestion vt = new ExamQuestion();
+		vt.setExam(examDao.get(examId));
+		vt.setExamVertical(examVerticalDao.get(everticalId));
+		vt.setQuestion(q);
+		examquestionDao.save(vt);
+		return null;
+	}
+	
+	/**
+	 * 更新试卷下单元下的问题
+	 * @param content
+	 * @param examId
+	 * @param everticalId
+	 * @return
+	 */
+	public String updateExamQuestion(int id,String content) {
+
+		ExamQuestion eq = examquestionDao.get(id);
+		Question q = eq.getQuestion();
+		q.setContent(content);
+		questionDao.update(q);
+		eq.setQuestion(q);
+		examquestionDao.update(eq);
+		return null;
+	}
+	
 	/**
 	 * 取得所有的试卷
 	 * 
@@ -173,6 +223,7 @@ public class ExamService {
 	public void createExam(String name,int userId, int competionId) {
 		Exam c = new Exam();
 		c.setName(name);
+		c.setIsnormal(1);
 		save(c);
 		
 		CompetionExam ce = new CompetionExam();

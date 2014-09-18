@@ -70,6 +70,7 @@ create table t_competion
    type                varchar(255) not null,
    score               varchar(255) not null,
    passscore           varchar(255) not null,
+   isstart             int(10) default 0,
    primary key (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -133,6 +134,7 @@ create table t_exam
    coursecode          varchar(255) default null,
    rank                varchar(255) default null,
    lockexam            int(10) default 0,
+   isnormal            int(10) default 0,
    primary key (id),
    UNIQUE KEY (name)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

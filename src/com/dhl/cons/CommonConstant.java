@@ -41,6 +41,7 @@ public class CommonConstant
    public static final String CROLE_2 = "主裁判";
    public static final String CROLE_3 = "命题裁判";
    public static final String CROLE_4 = "判分裁判";
+   public static final String CROLE_5 = "考生";
    //错误提示
    public static final String ERROR_0 = "后台异常，请联系系统管理员";
    public static final String ERROR_1 = "学校已经存在";

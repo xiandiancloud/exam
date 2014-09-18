@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Competion;
 import com.dhl.domain.CompetionExam;
 import com.dhl.domain.User;
@@ -59,12 +60,13 @@ public class CompetionController extends BaseController {
 		
 		Competion competion = competionService.get(competionId);
 		view.addObject("competion", competion);
-		
+		//竞赛裁判
 		List<UserCompetion> uclist = usercompetionService.getCompetionjudgment(competionId);
 		view.addObject("judgmentlist", uclist);
 		// Exam course = examService.get(examId);
 		// view.addObject("exam", course);
 		
+		//竞赛试卷
 		List<CompetionExam> celist = competionService.getCompetionExam(competionId);
 		for (CompetionExam ce:celist)
 		{
@@ -74,7 +76,10 @@ public class CompetionController extends BaseController {
 			}
 		}
 		view.addObject("celist", celist);
-		
+		//竞赛学生
+		List<UserCompetion> ucslist = usercompetionService.getCompetionStudent(competionId);
+		view.addObject("studentlist", ucslist);
+				
 		view.setViewName("/cms/competion");
 		return view;
 	}
@@ -284,6 +289,99 @@ public class CompetionController extends BaseController {
 			String str = buffer.toString() + "]}";
 			str = str.replaceAll("null", "");
 			return str;
+		}
+	}
+	
+	/**
+	 * 增加竞赛学生
+	 * @param request
+	 * @param name
+	 * @return
+	 */
+	@RequestMapping("/addcompetionuser")
+	public void addcompetionuser(HttpServletRequest request,
+			HttpServletResponse response,String users,int competionId) {
+		try {
+			PrintWriter out = response.getWriter();
+			if (users != null)
+			{
+				String[] strs = users.split(",");
+				//性能有问题再修改统一提交
+				int len = strs.length;
+				for (int i=0;i<len;i++)
+				{
+					usercompetionService.save(Integer.parseInt(strs[0]), competionId, CommonConstant.CROLE_5);
+				}
+			}
+			//examService.createExam(name, userId, competionId);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 删除竞赛学生
+	 * @param request
+	 * @param name
+	 * @return
+	 */
+	@RequestMapping("/delcompetionuser")
+	public void delcompetionuser(HttpServletRequest request,
+			HttpServletResponse response,int id) {
+		try {
+			PrintWriter out = response.getWriter();
+			usercompetionService.remove(id);
+			//examService.createExam(name, userId, competionId);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 开始竞赛
+	 * @param request
+	 * @param name
+	 * @return
+	 */
+	@RequestMapping("/startcompetion")
+	public void startcompetion(HttpServletRequest request,
+			HttpServletResponse response,int competionId) {
+		try {
+			PrintWriter out = response.getWriter();
+			Competion cp = competionService.get(competionId);
+			cp.setIsstart(1);
+			competionService.update(cp);
+			//examService.createExam(name, userId, competionId);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 结束竞赛
+	 * @param request
+	 * @param name
+	 * @return
+	 */
+	@RequestMapping("/endcompetion")
+	public void endcompetion(HttpServletRequest request,
+			HttpServletResponse response,int competionId) {
+		try {
+			PrintWriter out = response.getWriter();
+			Competion cp = competionService.get(competionId);
+			cp.setIsstart(0);
+			competionService.update(cp);
+			//examService.createExam(name, userId, competionId);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

@@ -412,7 +412,6 @@
 											<table class='table table-hover table-striped' style='margin-bottom:0;'>
 				                            <thead>
 				                              <tr>
-				                                <th>考名</th>
 				                                <th>姓名</th>
 				                                <th>时间</th>
 				                                <th>状态</th>
@@ -420,20 +419,19 @@
 				                              </tr>
 				                            </thead>
 				                            <tbody>
-				                            <c:forEach var="ce" items="${celist}">
+				                            <c:forEach var="student" items="${studentlist}">
 				                              <tr>
-				                                <td><c:if test="${ce.exam.lockexam == 1}"><i class='icon-lock'></i></c:if>${ce.exam.name}</td>
-				                                <td></td>
+				                                <td>${student.user.username}</td>
 				                                <td></td>
 				                                <td>
 				                                  <span class='label label-important'></span>
 				                                </td>
 				                                <td>
 				                                  <div class='text-right'>
-				                                     <a class='btn btn-danger btn-xs' href='javascript:void(0);' onclick="unlockallexam(${ce.competionId},${ce.exam.id});">
+				                               <%--       <a class='btn btn-danger btn-xs' href='javascript:void(0);' onclick="unlockallexam(${ce.competionId},${ce.exam.id});">
 				                                      <i class='icon-unlock'></i>
-				                                    </a>
-				                                    <a class='btn btn-danger btn-xs' href='javascript:void(0);' onclick="deleteexam(${ce.competionId},${ce.exam.id});">
+				                                    </a> --%>
+				                                    <a class='btn btn-danger btn-xs' href='javascript:void(0);' onclick="delcompetionuser(${student.id});">
 				                                      <i class='icon-remove'></i>
 				                                    </a>
 				                                  </div>
@@ -449,18 +447,18 @@
                               							<i class="icon-plus"></i>
                               							增加考生
                             						</a>
-                            						<button class='btn red-background' style="color: #eeeeee;" type='submit'>
+                            						<a class='btn red-background' onclick="startcompetion();" style="color: #eeeeee;">
                             							<i class='icon-time'></i>
                             							考试开始
-                            						</button>
-                            						<button class='btn red-background' style="color: #eeeeee;" type='submit'>
+                            						</a>
+                            						<a class='btn red-background' onclick="endcompetion();" style="color: #eeeeee;">
                             							<i class='icon-lock'></i>
                             							考试结束
-                            						</button>
-                            						<button class='btn green-background' style="color: #eeeeee;" type='submit'>
+                            						</a>
+                            						<a class='btn btn-success'>
                             							<i class='icon-plus'></i>
                             							数据导出
-                            						</button>
+                            						</a>
                           						</div>
                         					</div>               
 										</div>
@@ -574,75 +572,27 @@
                    <div class='modal-body'>
                      	<div class='row'>
 						<div class='col-sm-12'>
-							<div id="tree2"><ul id='tree2-treeData'>
-			                      <li id='tree2id1' title='Look, a tool tip!'>
-			                        item1 with key and tooltip
-			                      </li>
-			                      <li id='tree2id2'>
-			                        item2
-			                      </li>
-			                      <li class='folder' id='tree2id3'>
+							<div id="tree2">
+								<ul id='tree2-treeData'>
+			                      <!-- <li class='expanded' id='tree2id3'>
 			                        Folder with some children
 			                        <ul>
 			                          <li id='tree2id2.1'>
 			                            Sub-item 3.1
-			                            <ul>
-			                              <li id='tree2id3.1.1'>
-			                                Sub-item 3.1.1
-			                              </li>
-			                              <li id='tree2id3.1.2'>
-			                                Sub-item 3.1.2
-			                              </li>
-			                            </ul>
 			                          </li>
 			                          <li id='tree2id3.2'>
 			                            Sub-item 3.2
-			                            <ul>
-			                              <li id='tree2id3.2.1'>
-			                                Sub-item 3.2.1
-			                              </li>
-			                              <li id='tree2id3.2.2'>
-			                                Sub-item 3.2.2
-			                              </li>
-			                            </ul>
 			                          </li>
 			                        </ul>
-			                      </li>
-			                      <li class='expanded' id='tree2id4'>
-			                        Document with some children (expanded on init)
-			                        <ul>
-			                          <li id='tree2id4.1'>
-			                            Sub-item 4.1 (active and focus on init)
-			                            <ul>
-			                              <li id='tree2id4.1.1'>
-			                                Sub-item 4.1.1
-			                              </li>
-			                              <li id='tree2id4.1.2'>
-			                                Sub-item 4.1.2
-			                              </li>
-			                            </ul>
-			                          </li>
-			                          <li id='tree2id4.2'>
-			                            Sub-item 4.2
-			                            <ul>
-			                              <li id='tree2id4.2.1'>
-			                                Sub-item 4.2.1
-			                              </li>
-			                              <li id='tree2id4.2.2'>
-			                                Sub-item 4.2.2
-			                              </li>
-			                            </ul>
-			                          </li>
-			                        </ul>
-			                      </li>
+			                      </li> -->
 			                    </ul>
-			                    </div>
+			               </div>
 						</div>
 						</div>
                    </div>
                    <div class='modal-footer'>
                      <button class='btn btn-default' data-dismiss='modal' type='button'>关闭</button>
-                     <button class='btn btn-primary' type='button' onclick="addexam();">确定</button>
+                     <button class='btn btn-primary' type='button' onclick="adduser();">确定</button>
                    </div>
                  </div>
                </div>
@@ -742,32 +692,6 @@
 	$(function() {
 		//$('.progress-bar').css({'width':'80%'}).find('span').html('80%');
 		initschool();
-		$("#modal-example3").modal('show');
-        $("#tree2").dynatree({
-            checkbox: true,
-            selectMode: 2,
-            onSelect: function(select, node) {
-              var selKeys, selNodes;
-              selNodes = node.tree.getSelectedNodes();
-              selKeys = $.map(selNodes, function(node) {
-                return "[" + node.data.key + "]: '" + node.data.title + "'";
-              });
-              return $("#echoSelection2").text(selKeys.join(", "));
-            },
-            onClick: function(node, event) {
-              if (node.getEventTargetType(event) === "title") {
-                return node.toggleSelect();
-              }
-            },
-            onKeydown: function(node, event) {
-              if (event.which === 32) {
-                node.toggleSelect();
-                return false;
-              }
-            },
-            idPrefix: "dynatree-Cb2-"
-          });
-        
 	});
 	
 	function initschool()
@@ -778,13 +702,47 @@
 			success : function(s) {
 				var a = eval("(" + s + ")");
 				var tmp = '';
+				var treetmp = '';
 				var row = a.rows;
 				for ( var i = 0; i < row.length; i++) {
 					var school = row[i];
 					var name = school.name;
 					tmp += '<option value='+school.id+'>'+name+'</option>';
+					var userlist = school.user;
+					treetmp += "<li class='expanded folder' id='"+school.id+"'>"+
+					name+
+			        getuserlist(userlist)+
+			      "</li>";
+			      
 				}
 				$("#school").html(tmp);
+				$("#tree2-treeData").html(treetmp);
+				$("#tree2").dynatree({
+		            checkbox: true,
+		            selectMode: 3,
+		            onSelect: function(select, node) {
+		              var selKeys, selNodes;
+		              selNodes = node.tree.getSelectedNodes();
+		              selKeys = $.map(selNodes, function(node) {
+		                return "[" + node.data.key + "]: '" + node.data.title + "'";
+		              });
+		              //console.log('11111',node.data.isFolder); 
+		              //alert('11111'+node.data.isFolder);
+		              return $("#echoSelection2").text(selKeys.join(", "));
+		            },
+		            onClick: function(node, event) {
+		              if (node.getEventTargetType(event) === "title") {
+		                return node.toggleSelect();
+		              }
+		            },
+		            onKeydown: function(node, event) {
+		              if (event.which === 32) {
+		                node.toggleSelect();
+		                return false;
+		              }
+		            },
+		            idPrefix: "dynatree-Cb2-"
+		          });
 			}
 		});
 		$.ajax({
@@ -802,6 +760,23 @@
 				$("#selectuser").html(tmp);
 			}
 		});
+	}
+	function getuserlist(row)
+	{
+		var len = row.length;
+		if (len < 1)
+		{
+			return "";
+		}
+		var tmp = "<ul>";
+		for ( var i = 0; i < len; i++) {
+			var school = row[i];
+			tmp += "<li id='"+school.id+"'>"+
+	            school.name+
+	          "</li>";
+		}
+		tmp += "</ul>";
+		return tmp;
 	}
 	function createcompetion()
 	{
@@ -852,6 +827,10 @@
 	{
 		
 	}
+	function showuserdialog()
+	{
+		$("#modal-example3").modal('show');
+	}
 	function showexamdialog()
 	{
 		var competionId = parseInt($("#competionId").attr("value"));
@@ -888,6 +867,56 @@
 			}
 		});
 	}
+	function delcompetionuser(id)
+	{
+		var data={id:id};
+		$.ajax({
+			url : "cms/delcompetionuser.action",
+			type : "post",
+			data :data,
+			success : function(s) {
+				var a = eval("(" + s + ")");
+				if ("sucess" == a.sucess)
+				{
+					location.reload();
+				}
+			}
+		});
+	}
+	function startcompetion()
+	{
+		var competionId = parseInt($("#competionId").attr("value"));
+		var data={competionId:competionId};
+		$.ajax({
+			url : "cms/startcompetion.action",
+			type : "post",
+			data :data,
+			success : function(s) {
+				var a = eval("(" + s + ")");
+				if ("sucess" == a.sucess)
+				{
+					alert("可以开始竞赛");
+				}
+			}
+		});
+	}
+	function endcompetion()
+	{
+		var competionId = parseInt($("#competionId").attr("value"));
+		var data={competionId:competionId};
+		$.ajax({
+			url : "cms/endcompetion.action",
+			type : "post",
+			data :data,
+			success : function(s) {
+				var a = eval("(" + s + ")");
+				if ("sucess" == a.sucess)
+				{
+					alert("竞赛结束");
+				}
+			}
+		});
+	}
 	//增加裁判
 	function addcompetionjudgment()
 	{
@@ -904,6 +933,47 @@
 				if ("sucess" == a.sucess)
 				{
 					$("#modal-example").modal('hide');
+					location.reload();
+				}
+			}
+		});
+	}
+	function adduser()
+	{
+		var competionId = parseInt($("#competionId").attr("value"));
+		//var tree1 = $("#tree2").dynatree("getTree");
+		//alert("----"+tree1.serializeArray());
+		//console.log('11111',tree1.serializeArray());
+		//var selectnodes = $("#tree2").getSelectedNodes();
+		var nodes = $("#tree2").dynatree("getSelectedNodes");
+		//alert(nodes);
+		//console.log('11111',nodes); 
+		//var a = eval("(" + $(nodes) + ")");
+		//alert(a);
+		//console.log('22222',$(nodes));
+		var userlist = "";
+		$.each(nodes,function(index,node){
+			//alert(node.data.title);
+			if (!node.data.isFolder)
+			{
+				//alert("222222222"+node.data.key);
+				userlist += node.data.key +",";
+			}
+		});
+		var len = userlist.length;
+		if(len > 0)
+		{
+			userlist = userlist.substr(0, len-1);
+		}
+		var data={users:userlist,competionId:competionId};
+		$.ajax({
+			url : "cms/addcompetionuser.action",
+			type : "post",
+			data :data,
+			success : function(s) {
+				var a = eval("(" + s + ")");
+				if ("sucess" == a.sucess)
+				{
 					location.reload();
 				}
 			}
