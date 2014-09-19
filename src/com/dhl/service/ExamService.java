@@ -25,6 +25,7 @@ import com.dhl.dao.SequentialDao;
 import com.dhl.dao.TeacherExamDao;
 import com.dhl.dao.TrainDao;
 import com.dhl.dao.UserCourseDao;
+import com.dhl.dao.UserDao;
 import com.dhl.dao.UserTrainDao;
 import com.dhl.dao.VerticalDao;
 import com.dhl.dao.VerticalTrainDao;
@@ -67,6 +68,8 @@ public class ExamService {
 	private VerticalTrainDao vtDao;
 	@Autowired
 	private TrainDao trainDao;
+	@Autowired
+	private UserDao userDao;
 	@Autowired
 	private UserTrainDao utDao;
 	@Autowired
@@ -158,8 +161,8 @@ public class ExamService {
 	 * @param pageSize
 	 * @return 返回试卷的分页对象
 	 */
-	public Page getAllCourse(int pageNo, int pageSize) {
-		return examDao.getAllCourse(pageNo, pageSize);
+	public Page getAllExamnotcompetion(int pageNo, int pageSize) {
+		return examDao.getAllExamnotcompetion(pageNo, pageSize);
 	}
 
 	/**
@@ -209,7 +212,7 @@ public class ExamService {
 		examCategoryDao.save(cc);
 		TeacherExam tc = new TeacherExam();
 		tc.setExam(c);
-		tc.setUserId(userId);
+		tc.setUser(userDao.get(userId));
 		teacherExamDao.save(tc);
 
 	}
@@ -233,7 +236,7 @@ public class ExamService {
 		
 		TeacherExam tc = new TeacherExam();
 		tc.setExam(c);
-		tc.setUserId(userId);
+		tc.setUser(userDao.get(userId));
 		teacherExamDao.save(tc);
 
 	}

@@ -33,9 +33,9 @@ public class ExamQuestionService {
 		return examQuestionDao.getVerticalTrainList(verticalId);
     }
 	
-	public List<ExamQuestion> getAllTrainByCourseId(int examId)
+	public List<ExamQuestion> getAllTrainByExamId(int examId)
 	{
-		return examQuestionDao.getAllTrainByCourseId(examId);
+		return examQuestionDao.getAllTrainByExamId(examId);
 	}
 	
 	public void remove(int id)

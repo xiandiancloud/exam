@@ -35,8 +35,8 @@ public class UserExamService {
 		return userExamDao.getUserCourse(userId, examId);
 	}
 	
-	public UserExam getUserRecentlyCourse(int userId) {
-		return userExamDao.getUserRecentlyCourse(userId);
+	public UserExam getUserRecentlyExam(int userId) {
+		return userExamDao.getUserRecentlyExam(userId);
 	}
 	
 	/**

@@ -13,7 +13,7 @@
 				         <span class="icon-bar"></span>
 				         <span class="icon-bar"></span>
 				      </button>
-					<a class='navbar-brand' href='lms/getAllCategory.action'> <img
+					<a class='navbar-brand' href='lms/getteamCategory.action'> <img
 						width="51" height="48" class="logo" src="images/logo.png" /><a
 						class='navbar-brand'><img width="160" height="30"
 							class="logo" alt="Flatty" src="images/logo-lab.png" />
@@ -22,10 +22,10 @@
 				<div class="collapse navbar-collapse" id="example-navbar-collapse">
 					<!--向左对齐-->
 					<ul class="nav navbar-nav navbar-left pleft15">
-						<li><a href="lms/getAllCategory.action">首页</a></li>
-						<li><a href="lms/courselist.action">题库</a></li>
+						<li><a href="lms/getteamCategory.action">首页</a></li>
+						<li><a href="lms/examlist.action?currentpage=1">题库</a></li>
 						<!-- <li><a href="cms/totcompetion.action">竞赛</a></li> -->
-						<li><a href="lms/mycourse.action">我的云课堂</a></li>
+						<li><a href="lms/myexam.action">我的云课堂</a></li>
 					</ul>
 					<!--向右对齐-->
 					<ul class="nav navbar-nav navbar-right">
@@ -43,7 +43,7 @@
 										class='caret'></b>
 								</a>
 									<ul class='dropdown-menu'>
-										<li><a href='lms/mycourse.action'> <i
+										<li><a href='lms/myexam.action'> <i
 												class='icon-signout'></i> 我的云课堂
 										</a></li>
 										<li><a href='lms/setting.action?index=1'> <i

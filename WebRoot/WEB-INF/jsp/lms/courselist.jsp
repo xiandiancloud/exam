@@ -104,7 +104,7 @@
 					<div class="col-xs-12 clear"></div>
 					<div class="col-xs-12 center">
 						<a href="#" id="hrefcourse">
-							<button type="button" class="btn btn-success btn-lg">继续学习</button>
+							<button type="button" class="btn btn-danger btn-lg">继续考试</button>
 						</a>
 					</div>
 					<div class="col-xs-12 center">
@@ -256,7 +256,7 @@
 			};
 			$
 					.ajax({
-						url : "lms/getCourseByCategoryId.action",
+						url : "lms/getexamByCategoryId.action",
 						type : "post",
 						data : data,
 						success : function(s) {

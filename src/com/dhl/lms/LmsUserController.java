@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.cons.CommonConstant;
+import com.dhl.domain.Role;
 import com.dhl.domain.UCEnvironment;
 import com.dhl.domain.User;
 import com.dhl.domain.UserCourse;
@@ -113,7 +114,7 @@ public class LmsUserController extends BaseController {
 	@RequestMapping("/loginout")
 	public ModelAndView loginout(HttpServletRequest request) {
 		setSessionUser(request, null);
-		String url = "redirect:/lms/getAllCategory.action";
+		String url = "redirect:/lms/getteamCategory.action";
 
 		return new ModelAndView(url);
 	}
@@ -144,13 +145,15 @@ public class LmsUserController extends BaseController {
 				out.write(result);
 				return;
 			}
+			Role role = userService.getUserRoleByuserId(user.getId());
+			user.setRole(role);
 			setSessionUser(request, user);
 			String toUrl = (String) request.getSession().getAttribute(
 					CommonConstant.LOGIN_TO_URL);
 			request.getSession().removeAttribute(CommonConstant.LOGIN_TO_URL);
 			// 如果当前会话中没有保存登录之前的请求URL，则直接跳转到主页
 			if (StringUtils.isEmpty(toUrl)) {
-				toUrl = "lms/getAllCategory.action";
+				toUrl = "lms/getteamCategory.action";
 			}
 			String result = "{'sucess':'sucess','toUrl':'" + toUrl + "'}";
 			out.write(result);

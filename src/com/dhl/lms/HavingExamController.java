@@ -39,6 +39,17 @@ public class HavingExamController extends BaseController {
 		return false;
 	}
 	
+	//判断是否有权限去判分
+	private boolean isHavingPf(Exam exam)
+	{
+		int isnormal = exam.getIsnormal();
+		if (isnormal == 1)
+		{
+			
+		}
+		return false;
+	}
+	
 	/**
 	 * 跳转到学生考试试卷页面
 	 * 

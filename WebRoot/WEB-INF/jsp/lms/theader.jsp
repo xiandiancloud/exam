@@ -10,7 +10,7 @@
           <i class='icon-reorder'></i>
         </a>
         <ul class='nav navbar-left'>
-		        <li class=""><a href="lms/getAllCategory.action">首页</a></li>
+		        <li class=""><a href="lms/getteamCategory.action">首页</a></li>
 				<li class=""><a href="lms/mycourse.action">我的云课堂</a></li>
         </ul>
         <ul class='nav'>

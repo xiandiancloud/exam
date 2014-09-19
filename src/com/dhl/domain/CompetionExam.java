@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * @author dhl
@@ -29,7 +30,16 @@ public class CompetionExam {
 	
 	private int selectexam;//1:选择试卷 0：没有选择
 	private String selecttime;
-	
+	@Transient
+	private String examuser;//出卷人
+	public String getExamuser() {
+		return examuser;
+	}
+
+	public void setExamuser(String examuser) {
+		this.examuser = examuser;
+	}
+
 	public int getSelectexam() {
 		return selectexam;
 	}

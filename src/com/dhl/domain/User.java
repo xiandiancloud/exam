@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * @author dhl
@@ -32,6 +33,14 @@ public class User extends BaseDomain {
 	private int is_superuser;
 	private Date last_login;
 	private Date date_joined;
+	@Transient
+	private Role role;//用户对应的角色
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
+	}
 	public int getId() {
 		return id;
 	}

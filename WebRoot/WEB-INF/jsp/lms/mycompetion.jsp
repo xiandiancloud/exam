@@ -118,12 +118,14 @@
 									</a>
 									<hr class="hr-normal">
 									<!-- <p>增加竞赛</p> -->
+									<c:if test="${USER_CONTEXT.role.roleName=='老师'}">
 									<a href="cms" class='btn btn-success'> <i
 										class='icon-add'></i> 增加试卷
 									</a>
 									<a href="cms/totcompetion.action?competionId=-1" class='btn btn-primary'> <i
 										class='icon-add'></i> 增加竞赛
 									</a>
+									</c:if>
 								</div>
 							</div>
 						</div>
@@ -148,15 +150,37 @@
 													<div class="col-sm-12">
 														<div class="box ">
 															<div class="box-content">
-																<p>
+													 			<p>
 																	<strong>${uc.competion.name}</strong>
 																</p>
 																<hr class="hr-normal">
 																<div class="pull-left">${uc.competion.describle}</div>
 																<div class="pull-right">
-																	<a
+																   <a>${uc.job}</a>
+																   <c:if test="${uc.job=='主裁判'}">
+																   <a
 																		href="cms/totcompetion.action?competionId=${uc.competion.id}"
 																		class="btn">编辑</a>
+																	</c:if>
+																	<c:if test="${uc.job=='创建者'}">
+																   <a
+																		href="cms/totcompetion.action?competionId=${uc.competion.id}"
+																		class="btn">编辑</a>
+																	</c:if>
+																	<c:if test="${uc.job=='命题裁判'}">
+																   <a
+																		href="cms/totcompetionmt.action?competionId=${uc.competion.id}"
+																		class="btn">命题</a>
+																	</c:if>
+																	<c:if test="${uc.job=='判分裁判'}">
+																   <a
+																		href="cms/totcompetionpf.action?competionId=${uc.competion.id}"
+																		class="btn">判分</a>
+																	</c:if>
+																	<c:if test="${uc.job=='考生'}">
+																   <a href="javascript:void(0);" onclick="starttocompetion(${uc.competion.id});"
+																		class="btn">竞赛</a>
+																	</c:if>
 																</div>
 																<div class="clearfix"></div>
 															</div>
@@ -211,7 +235,26 @@
 	<script src="js/common.js" type="text/javascript"></script>
 	<script src="js/holder.js" type="text/javascript"></script>
 	<script>
-		
+		function starttocompetion(competionId)
+		{
+			var data={competionId:competionId};
+			$.ajax({
+				url : "lms/isstartcompetion.action",
+				type : "post",
+				data :data,
+				success : function(s) {
+					var a = eval("(" + s + ")");
+					if ("sucess" == a.sucess)
+					{
+						location.href = "lms/toexamintroduce.action?examId="+a.examId;
+					}
+					else
+					{
+						alert(a.msg);
+					}
+				}
+			});
+		}
 	</script>
 </body>
 </html>

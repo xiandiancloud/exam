@@ -26,8 +26,8 @@ public class LmsLoginInterceptor implements HandlerInterceptor {
 	private static final String FILTERED_REQUEST = "@@session_context_filtered_request";
 
 	private static final String[] INHERENT_ESCAPE_URIS = {
-		"/getAllCategory.action", "getCourse.action", "/tologin.action",
-		"/login.action", "getCourseByCategoryId.action",
+		"/getAllCategory.action", "getCourse.action", "/tologin.action","getteamCategory.action",
+		"/login.action", "getCourseByCategoryId.action","getexamByCategoryId.action","examlist.action",
 		"recentcourse.action", "toregeister.action","regeister.action", "getAllSchool.action",
 		"/bbb.action" };
 

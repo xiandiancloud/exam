@@ -107,23 +107,8 @@
                       		<span>${exam.name}</span>
                     	</h1>
                  	</div>
-<!-- 					<div class='row'>
-						<div class='col-xs-12'>
-							<div class="pull-left">
-								<ul class="breadcrumb">
-									<li>
-										<a href="index.html"> <i class="icon-bar-chart"></i></a>
-									</li>
-									<li class="separator"><i class="icon-angle-right"></i></li>
-									<li>试题</li>
-									<li class="separator"><i class="icon-angle-right"></i></li>
-									<li class="active">第一部分</li>
-								</ul>
-							</div>
-						</div>
-					</div> -->
-					
-					<%-- <c:forEach var="chapter" items="${exam.examchapters}">
+                 	
+                 	<c:forEach var="chapter" items="${exam.examchapters}">
                  	${chapter.name}>>
 	                 	<c:forEach var="sequential" items="${chapter.esequentials}">
 	                 	${sequential.name}>></br>
@@ -135,48 +120,22 @@
 			                 	</c:forEach>
 		                 	</c:forEach>
 	                 	</c:forEach>
-                 	</c:forEach> --%>
-                 	
+                 	</c:forEach>
 					<div class='row'>
-					<div class='col-sm-12 box box-nomargin'>
-					<div class='box-content'>
-                    <div class='dd dd-nestable'>
-                    <c:forEach var="chapter" items="${exam.examchapters}">
-                      <ol class='dd-list'>
-                        <li class='dd-item' data-id='2'>
-                          <div class='dd-handle'>
-                            <i class='icon-backward text-purple'></i>
-                            ${chapter.name}
-                          </div>
-                          <c:forEach var="sequential" items="${chapter.esequentials}">
-                          <ol class='dd-list'>
-                            <li class='dd-item' data-id='3'>
-                              <div class='dd-handle'>
-                                <i class='icon-camera-retro text-orange'></i>
-                                ${sequential.name}
-                              </div>
-                              <c:forEach var="vertical" items="${sequential.examVerticals}">
-                              <ol class='dd-list'>
-                                <li class='dd-item' data-id='4'>
-                                  <div class='dd-handle'>${vertical.name}</div>
-                                  <c:forEach var="examq" items="${vertical.examQuestion}">
-			                 		<div class="test">${examq.question.content}</div>
-			                 		<div class="clear"></div>
-			                 	</c:forEach>
-                                </li>
-                              </ol>
-                              </c:forEach>
-                            </li>
-                          </ol>
-                          </c:forEach>
-                        </li>
-                      </ol>
-                      </c:forEach>
-                    </div>
-                  </div>
-                  </div>
-                  </div>
-                  
+						<div class='col-xs-12'>
+							<div class="pull-left">
+								<ul class="breadcrumb">
+									<!-- <li>
+										<a href="index.html"> <i class="icon-bar-chart"></i></a>
+									</li>
+									<li class="separator"><i class="icon-angle-right"></i></li> -->
+									<li>试题</li>
+									<li class="separator"><i class="icon-angle-right"></i></li>
+									<li class="active">第一部分</li>
+								</ul>
+							</div>
+						</div>
+					</div>
 					<hr class='hr-normal'>
 					<div class='row'>
 						<div class='col-xs-12'>
@@ -330,7 +289,7 @@
 								<div class='box-content'>
 									<div class='row'>
 										<div class='col-sm-12'>
-											<div id="timer" class="pull-left" style="color:green;font-family:courier;font-size:150%"></div>
+											<div class="pull-left">时间</div>
 											<div class="pull-right">
 												<a class="btn">暂停</a> 
 												<a class="btn">下次再做</a>
@@ -388,29 +347,9 @@
     <!-- / demo file [not required!] -->
     <script src="assets/javascripts/demo.js" type="text/javascript"></script>
     <!-- / START - page related files and scripts [optional] -->
-    <script src="assets/javascripts/plugins/nestable/jquery.nestable.js" type="text/javascript"></script>
+    
     <!-- / END - page related files and scripts [optional] -->
 	<script src="js/common.js" type="text/javascript"></script>
 	<script src="js/holder.js" type="text/javascript"></script>
-
-	<script type="text/javascript">   
-		//一个小时，按秒计算，可以自己调整时间
-		var maxtime = 60 * 60;
-		function CountDown() {
-			if (maxtime >= 0) {
-				minutes = Math.floor(maxtime / 60);
-				seconds = Math.floor(maxtime % 60);
-				msg = minutes + ":" + seconds ;
-				$("#timer").html(msg);
-				if (maxtime == 5 * 60)
-					alert('注意，还有5分钟!');
-				--maxtime;
-			} else {
-				clearInterval(timer);
-				alert("时间到，结束!");
-			}
-		}
-		timer = setInterval("CountDown()", 1000);
-	</script>
-</body>
+  </body>
 </html>

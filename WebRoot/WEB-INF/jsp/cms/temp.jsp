@@ -433,10 +433,10 @@
 		$(function() {
 		});
 		
-		function publish(courseId,type,msg)
+		function publish(examId,type,msg)
 		{
 			$.ajax({
-				url:"cms/publicCourse.action?courseId="+courseId+"&type="+type,
+				url:"cms/publicExam.action?examId="+examId+"&type="+type,
 				type:"post",
 				success:function(s){
 					var a=eval("("+s+")");	

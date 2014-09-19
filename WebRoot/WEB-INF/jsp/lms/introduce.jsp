@@ -137,7 +137,7 @@
 						<div class='col-sm-4'>
 							<div class='box'>
 								<div class='box-content' style="padding:0">
-									<a class="btn btn-success btn-block btn-lg" href="lms/toexamingtostartexam.action">立即开始</a>
+									<a class="btn btn-success btn-block btn-lg" href="lms/toexamingtostartexam.action?examId=${examId}">立即开始</a>
 								</div>
 							</div>
 						</div>

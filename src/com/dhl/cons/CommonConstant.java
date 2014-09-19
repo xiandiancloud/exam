@@ -29,7 +29,7 @@ public class CommonConstant
     */
    //public static final int PAGE_SIZE = 10;
    public static final int SYS_PAGE_SIZE = 8;
-  
+   public static final int EXAMLIST_PAGE_SIZE = 15;
    //系统4种角色
    public static final String ROLE_S = "学生";
    public static final String ROLE_T = "老师";

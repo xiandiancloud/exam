@@ -30,9 +30,11 @@ public class UserExam extends BaseDomain {
 	@JoinColumn(name = "examId")
 	private Exam exam;
 	private int docounts;
-	private int state;//1：完成课程0：在上课
+	private int state;//1：完成试卷0：没有完成
 	private String usetime;
 	private int activestate;//0:默认，最近操作就set为1
+	
+	
 	public int getActivestate() {
 		return activestate;
 	}

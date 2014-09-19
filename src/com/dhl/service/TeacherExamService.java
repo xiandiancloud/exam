@@ -39,4 +39,14 @@ public class TeacherExamService {
 	{
 		return teacherExamDao.getMyTCourse(userId);
 	}
+	
+	/**
+	 * 根据试卷id得到出卷老师，限制一个人
+	 * @param examId
+	 * @return
+	 */
+	public TeacherExam getTeacherExamByExamId(int examId)
+	{
+		return teacherExamDao.getTeacherExamByExamId(examId);
+	}
 }

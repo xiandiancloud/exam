@@ -24,7 +24,10 @@ public class TeacherExam extends BaseDomain {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-	private int userId;
+//	private int userId;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "userId")
+	private User user;
 	// private int courseId;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "examId")
@@ -45,12 +48,18 @@ public class TeacherExam extends BaseDomain {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public User getUser() {
+		return user;
+	}
 
-	public int getUserId() {
+	public void setUser(User user) {
+		this.user = user;
+	}
+	/*public int getUserId() {
 		return userId;
 	}
 
 	public void setUserId(int userId) {
 		this.userId = userId;
-	}
+	}*/
 }

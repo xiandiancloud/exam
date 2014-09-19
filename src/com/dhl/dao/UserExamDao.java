@@ -15,7 +15,7 @@ public class UserExamDao extends BaseDao<UserExam> {
 	}
 	
 	public UserExam getUserCourse(int userId, int courseId) {
-		String hql = "from UserExam where courseId = " + courseId
+		String hql = "from UserExam where examId = " + courseId
 				+ " and userId = " + userId;
 		List<UserExam> list = find(hql);
 		if (list.size() == 0) {
@@ -26,7 +26,7 @@ public class UserExamDao extends BaseDao<UserExam> {
 		}
 	}
 
-	public UserExam getUserRecentlyCourse(int userId) {
+	public UserExam getUserRecentlyExam(int userId) {
 		String hql = "from UserExam where activestate = 1 and userId = " + userId;
 		List<UserExam> list = find(hql);
 		if (list.size() == 0) {

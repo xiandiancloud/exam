@@ -117,12 +117,14 @@
 									</a>
 									<hr class="hr-normal">
 									<!-- <p>增加竞赛</p> -->
+									<c:if test="${USER_CONTEXT.role.roleName=='老师'}">
 									<a href="cms" class='btn btn-success'> <i
 										class='icon-add'></i> 增加试卷
 									</a>
 									<a href="cms/totcompetion.action?competionId=-1" class='btn btn-primary'> <i
 										class='icon-add'></i> 增加竞赛
 									</a>
+									</c:if>
 								</div>
 							</div>
 						</div>
@@ -136,8 +138,10 @@
 									<ul class='nav nav-tabs nav-tabs-simple'>
 										<li class='active'><a class='green-border'
 											data-toggle='tab' href='#tabsimple1'>我参加的试卷</a></li>
+											<c:if test="${USER_CONTEXT.role.roleName=='老师'}">
 										<li><a class='green-border' data-toggle='tab'
 											href='#tabsimple2'>我定义的试卷 </a></li>
+											</c:if>
 									</ul>
 									<div class='tab-content'>
 										<div class='tab-pane active' id='tabsimple1'>
@@ -153,8 +157,9 @@
 																<hr class="hr-normal">
 																<div class="pull-left">${se.exam.describle}</div>
 																<div class="pull-right">
-																	<a href="#" class="btn">查看分析</a> <a href="#"
-																		class="btn">再做一次</a>
+																	<a href="#" class="btn  btn-success">查看分析</a> 
+																	<c:if test="${se.state == 1}"></i><a href="#"	class="btn btn-danger">再做一次</a></c:if>
+																	<c:if test="${se.state == 0}"><a href="lms/toexamintroduce.action?examId=${se.exam.id}"	class="btn  btn-danger">进入考试</a></c:if>
 																</div>
 																<div class="clearfix"></div>
 															</div>
@@ -173,7 +178,11 @@
 																	<strong>${te.exam.name}</strong>
 																</p>
 																<hr class="hr-normal">
-																<p>${te.exam.describle}</p>
+																<div class="pull-left">${te.exam.describle}</div>
+																<div class="pull-right">
+																	<a href="cms/totexam.action?examId=${te.exam.id}" class="btn  btn-success">编辑</a> 
+																</div>
+																<div class="clearfix"></div>
 															</div>
 														</div>
 													</div>

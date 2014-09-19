@@ -1,6 +1,7 @@
 package com.dhl.cms;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,10 +15,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Competion;
 import com.dhl.domain.CompetionExam;
+import com.dhl.domain.CompetionSchool;
+import com.dhl.domain.TeacherExam;
 import com.dhl.domain.User;
 import com.dhl.domain.UserCompetion;
 import com.dhl.service.CompetionService;
 import com.dhl.service.ExamService;
+import com.dhl.service.TeacherExamService;
 import com.dhl.service.UserCompetionService;
 import com.dhl.web.BaseController;
 
@@ -37,7 +41,8 @@ public class CompetionController extends BaseController {
 	private UserCompetionService usercompetionService;
 	@Autowired
 	private ExamService examService;
-	
+	@Autowired
+	private TeacherExamService teacherExamService;
 	/**
 	 * 跳转到竞赛页面
 	 * 
@@ -54,6 +59,12 @@ public class CompetionController extends BaseController {
 //		return view;
 //	}
 
+	/**
+	 * 到竞赛页面
+	 * @param request
+	 * @param competionId
+	 * @return
+	 */
 	@RequestMapping("/totcompetion")
 	public ModelAndView totcompetion(HttpServletRequest request,int competionId) {
 		ModelAndView view = new ModelAndView();
@@ -65,11 +76,12 @@ public class CompetionController extends BaseController {
 		view.addObject("judgmentlist", uclist);
 		// Exam course = examService.get(examId);
 		// view.addObject("exam", course);
-		
 		//竞赛试卷
 		List<CompetionExam> celist = competionService.getCompetionExam(competionId);
 		for (CompetionExam ce:celist)
 		{
+			TeacherExam te = teacherExamService.getTeacherExamByExamId(ce.getExam().getId());
+			ce.setExamuser(te.getUser().getUsername());
 			if (ce.getSelectexam() == 1)
 			{
 				view.addObject("sexam", ce);
@@ -84,6 +96,58 @@ public class CompetionController extends BaseController {
 		return view;
 	}
 	
+	/**
+	 * 到竞赛的命卷页面
+	 * @param request
+	 * @param competionId
+	 * @return
+	 */
+	@RequestMapping("/totcompetionmt")
+	public ModelAndView totcompetionmt(HttpServletRequest request,int competionId) {
+		ModelAndView view = new ModelAndView();
+		
+		Competion competion = competionService.get(competionId);
+		view.addObject("competion", competion);
+		//竞赛试卷
+		List<CompetionExam> list = competionService.getCompetionExam(competionId);
+		List<CompetionExam> celist = new ArrayList();
+		User user = getSessionUser(request);
+		for (CompetionExam ce:list)
+		{
+			TeacherExam te = teacherExamService.getTeacherExamByExamId(ce.getExam().getId());
+			ce.setExamuser(te.getUser().getUsername());
+			if (user.getId() == te.getUser().getId())
+			{
+				celist.add(ce);
+			}
+		}
+		view.addObject("celist", celist);
+				
+		view.setViewName("/cms/competionmt");
+		return view;
+	}
+	
+	/**
+	 * 到竞赛的评分页面
+	 * @param request
+	 * @param competionId
+	 * @return
+	 */
+	@RequestMapping("/totcompetionpf")
+	public ModelAndView totcompetionpf(HttpServletRequest request,int competionId) {
+		ModelAndView view = new ModelAndView();
+		
+		Competion competion = competionService.get(competionId);
+		view.addObject("competion", competion);
+		//竞赛学生
+		List<UserCompetion> ucslist = usercompetionService.getCompetionStudent(competionId);
+		view.addObject("studentlist", ucslist);
+		
+		CompetionExam ce = competionService.getCompetionSelectExam(competionId);
+		view.addObject("ceexam", ce);
+		view.setViewName("/cms/competionpf");
+		return view;
+	}
 	/**
 	 * 创建竞赛
 	 * 
@@ -379,6 +443,26 @@ public class CompetionController extends BaseController {
 			competionService.update(cp);
 			//examService.createExam(name, userId, competionId);
 			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 得到竞赛的举办学校
+	 * @param request
+	 * @param response
+	 * @param competionId
+	 */
+	@RequestMapping("/getExamSchool")
+	public void getExamSchool(HttpServletRequest request,
+			HttpServletResponse response,int competionId) {
+		try {
+			PrintWriter out = response.getWriter();
+			CompetionSchool cp = competionService.getCompetionSchool(competionId);
+			//examService.createExam(name, userId, competionId);
+			String str = "{'sucess':'sucess','schoolId':"+cp.getSchoolId()+"}";
 			out.write(str);
 		} catch (Exception e) {
 			e.printStackTrace();

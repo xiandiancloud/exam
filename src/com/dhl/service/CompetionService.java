@@ -83,6 +83,16 @@ public class CompetionService {
 	}
 	
 	/**
+	 * 得到竞赛下的对应选中的试卷
+	 * @param competionId
+	 * @return
+	 */
+	public CompetionExam getCompetionSelectExam(int competionId)
+	{
+		return competionExamDao.getCompetionSelectExam(competionId);
+	}
+	
+	/**
 	 * 保存竞赛
 	 * @param name
 	 * @param courseId
@@ -144,4 +154,13 @@ public class CompetionService {
 		return c;
 	}
 	
+	/**
+	 * 得到竞赛的举办学校
+	 * @param competionId
+	 * @return
+	 */
+	public CompetionSchool getCompetionSchool(int competionId)
+	{
+		return competionSchoolDao.getCompetionSchool(competionId);
+	}
 }

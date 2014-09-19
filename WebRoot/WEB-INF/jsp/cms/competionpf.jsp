@@ -75,7 +75,7 @@
 					<div class='col-sm-12'>
 						<div class='box bordered-box'>
 							<div class='box-header red-background'>
-								<div class='title'>定义赛事</div>
+								<div class='title'>赛事介绍</div>
 								<div class='actions'>
 									<a class="btn box-remove btn-xs btn-link" href="#">
 										<i class='icon-remove'></i> 
@@ -227,19 +227,6 @@
 										<textarea class='form-control' id='describle' placeholder='Textarea' rows='3'>${competion.describle}</textarea>
 									</div>
 								</div>
-								<hr class='hr-normal'>
-                          		<div class='row'>
-                            		<div class='col-sm-10 col-sm-offset-5'>
-                              			<a href="javascript:void(0);" class='btn btn-success' onclick="createcompetion();" id="savebutton">
-                                		<i class='icon-save'></i>
-                                		保存赛事
-                              			</a>
-                              			<a href="javascript:void(0);" class='btn btn-success none' onclick="updatecompetion();" id="updatebutton">
-                                		<i class='icon-edit'></i>
-                                		编辑赛事
-                              			</a>
-                            		</div>
-                          		</div>
 							</div>
 						</div>
 					</div>
@@ -248,7 +235,7 @@
 					<div class='col-sm-12'>
 						<div class='box bordered-box red-background'>
 							<div class='box-header red-background'>
-								<div class='title'>定义裁判</div>
+								<div class='title'>试卷判分</div>
 								<div class='actions'>
 									<a class="btn box-remove btn-xs btn-link" href="#"><i
 										class='icon-remove'></i> </a> <a
@@ -260,158 +247,6 @@
 								<div class="row">
 									<div class="col-sm-12">
 										<div class="box">
-										 <table class='table table-hover table-striped' style='margin-bottom:0;'>
-				                            <thead>
-				                              <tr>
-				                                <th>姓名</th>
-				                                <th>邮箱</th>
-				                                <th>职务</th>
-				                                <th></th>
-				                              </tr>
-				                            </thead>
-				                            <tbody>
-				                            <c:forEach var="judgment" items="${judgmentlist}">
-				                              <tr>
-				                                <td>${judgment.user.username}</td>
-				                                <td>${judgment.user.email}</td>
-				                                <td>
-				                                  <span class='label label-important'>${judgment.job}</span>
-				                                </td>
-				                                <td>
-				                                  <div class='text-right'>
-				                                    <!-- <a class='btn btn-success btn-xs' href='#'>
-				                                      <i class='icon-ok'></i>
-				                                    </a> -->
-				                                    <a class='btn btn-danger btn-xs' href='javascript:void(0);' onclick="deljudgment(${judgment.competion.id},${judgment.user.id});">
-				                                      <i class='icon-remove'></i>
-				                                    </a>
-				                                  </div>
-				                                </td>
-				                              </tr>
-				                              </c:forEach>
-				                            </tbody>
-				                          </table>
-											<hr class="hr-normal">
-											<div class='row'>
-                          						<div class='col-md-10 col-md-offset-5'>
-                            						<a href="#modal-example" data-toggle='modal' class='btn btn-success'>
-                              							<i class="icon-plus"></i>
-                              							增加裁判
-                            						</a>
-                          						</div>
-                        					</div>               
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						</div>
-					</div>
-				<div class='row'>
-					<div class='col-sm-12'>
-						<div class='box bordered-box red-background'>
-							<div class='box-header red-background'>
-								<div class='title'>定义试卷</div>
-								<div class='actions'>
-									<a class="btn box-remove btn-xs btn-link" href="#"><i
-										class='icon-remove'></i> </a> <a
-										class="btn box-collapse btn-xs btn-link" href="#"><i></i>
-									</a>
-								</div>
-							</div>
-							<div class='box-content'>
-								<div class="row">
-									<div class="col-sm-12">
-										<div class="box">
-											<table class='table table-hover table-striped' style='margin-bottom:0;'>
-				                            <thead>
-				                              <tr>
-				                                <th>试卷名</th>
-				                                <th>命卷人</th>
-				                                <th>时间</th>
-				                                <th>状态</th>
-				                                <th></th>
-				                              </tr>
-				                            </thead>
-				                            <tbody>
-				                            <c:forEach var="ce" items="${celist}">
-				                              <tr>
-				                                <td><c:if test="${ce.exam.lockexam == 1}"><i class='icon-lock'></i></c:if>${ce.exam.name}</td>
-				                                <td>${ce.examuser}</td>
-				                                <td></td>
-				                                <td>
-				                                  <span class='label label-important'>
-				                                  <c:if test="${ce.exam.publish == 0}">在出卷中</c:if>
-				                                  <c:if test="${ce.exam.publish == 1}">已经发布</c:if>
-				                                  </span>
-				                                </td>
-				                                <td>
-				                                  <div class='text-right'>
-				                                     <a class='btn btn-danger btn-xs' href='javascript:void(0);' onclick="unlockallexam(${ce.competionId},${ce.exam.id});">
-				                                      <i class='icon-unlock'></i>
-				                                    </a>
-				                                    <a class='btn btn-danger btn-xs' href='javascript:void(0);' onclick="deleteexam(${ce.competionId},${ce.exam.id});">
-				                                      <i class='icon-remove'></i>
-				                                    </a>
-				                                  </div>
-				                                </td>
-				                              </tr>
-				                              </c:forEach>
-				                            </tbody>
-				                          </table>
-											<hr class="hr-normal">
-											<div class='row'>
-                          						<div class='col-md-10 col-md-offset-5'>
-                            						<a href="javascript:void(0);" onclick="showexamdialog();" class='btn btn-success'>
-                              							<i class="icon-plus"></i>
-                              							增加试卷
-                            						</a>
-                            						<a href="javascript:void(0);" onclick="lockallexam();" class="btn btn-danger">
-                            							<i class='icon-lock'></i>
-                            							锁定
-                            						</a>
-                          						</div>
-                        					</div>               
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						</div>
-					</div>
-					<div class='row'>
-					<div class='col-sm-12'>
-						<div class='box bordered-box red-background'>
-							<div class='box-header red-background'>
-								<div class='title'>分发试卷</div>
-								<div class='actions'>
-									<a class="btn box-remove btn-xs btn-link" href="#"><i
-										class='icon-remove'></i> </a> <a
-										class="btn box-collapse btn-xs btn-link" href="#"><i></i>
-									</a>
-								</div>
-							</div>
-							<div class='box-content'>
-								<div class="row">
-									<div class="col-sm-12">
-										<div class="box">
-										 <div class='row'>
-                          						<div class='col-sm-12'>
-                          						<table><tr>
-                          						<td>选用试卷</td>
-                          						<td width="400px;">
-                          						<select class='select2 form-control' id="selectexam" onclick="selectexam();">
-                          							<c:forEach var="ce" items="${celist}">
-													<option value='${ce.exam.id}' <c:if test="${sexam.id == ce.id}">selected="selected"</c:if>>${ce.exam.name}</option>
-													</c:forEach>
-												</select>
-                          						</td>
-                          						<td id="selectexamtime">&nbsp;&nbsp;${sexam.selecttime}&nbsp;&nbsp;完成选题</td>
-                          						</tr></table>
-                          						
-                          						</div>
-                        					</div>  
-                        					<hr class="hr-normal">
 											<table class='table table-hover table-striped' style='margin-bottom:0;'>
 				                            <thead>
 				                              <tr>
@@ -434,8 +269,8 @@
 				                               <%--       <a class='btn btn-danger btn-xs' href='javascript:void(0);' onclick="unlockallexam(${ce.competionId},${ce.exam.id});">
 				                                      <i class='icon-unlock'></i>
 				                                    </a> --%>
-				                                    <a class='btn btn-danger btn-xs' href='javascript:void(0);' onclick="delcompetionuser(${student.id});">
-				                                      <i class='icon-remove'></i>
+				                                    <a class='btn btn-danger btn-xs' href='lms/toexamingtostartexam.action?examId=${ceexam.exam.id}'>
+				                                      <i class='icon-ok'></i>判卷
 				                                    </a>
 				                                  </div>
 				                                </td>
@@ -443,27 +278,6 @@
 				                              </c:forEach>
 				                            </tbody>
 				                          </table>
-											<hr class="hr-normal">
-											<div class='row'>
-                          						<div class='col-md-10 col-md-offset-4'>
-                          						   <a href="javascript:void(0);" onclick="showuserdialog();" class='btn btn-success'>
-                              							<i class="icon-plus"></i>
-                              							增加考生
-                            						</a>
-                            						<a class='btn red-background' onclick="startcompetion();" style="color: #eeeeee;">
-                            							<i class='icon-time'></i>
-                            							考试开始
-                            						</a>
-                            						<a class='btn red-background' onclick="endcompetion();" style="color: #eeeeee;">
-                            							<i class='icon-lock'></i>
-                            							考试结束
-                            						</a>
-                            						<a class='btn btn-success'>
-                            							<i class='icon-plus'></i>
-                            							数据导出
-                            						</a>
-                          						</div>
-                        					</div>               
 										</div>
 									</div>
 								</div>

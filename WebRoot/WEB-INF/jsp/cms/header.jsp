@@ -22,8 +22,8 @@
 				<div class="collapse navbar-collapse" id="example-navbar-collapse">
 					<!--向左对齐-->
 					<ul class="nav navbar-nav navbar-left pleft15">
-						<li><a href="lms/getAllCategory.action">首页</a></li>
-						<li><a href="lms/courselist.action">题库</a></li>
+						<li><a href="lms/getteamCategory.action">首页</a></li>
+						<li><a href="lms/examlist.action?currentpage=1">题库</a></li>
 						<!-- <li><a href="cms/totcompetion.action">竞赛</a></li> -->
 						<li><a href="lms/mycourse.action">我的云课堂</a></li>
 					</ul>

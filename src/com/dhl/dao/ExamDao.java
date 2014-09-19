@@ -14,8 +14,8 @@ public class ExamDao extends BaseDao<Exam> {
     	return find(hql);
 	}
 	
-	public Page getAllCourse(int pageNo,int pageSize){
-		String hql = "from Exam";
+	public Page getAllExamnotcompetion(int pageNo,int pageSize){
+		String hql = "from Exam where isnormal=0";
 //    	return find(hql);
 		return pagedQuery(hql, pageNo, pageSize);
 		

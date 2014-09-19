@@ -17,7 +17,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>学堂在线</title>
+<title>题库</title>
 
 <meta
 	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
@@ -107,20 +107,21 @@
 
 				</div>
 				<div class="clear"></div>
+				<c:forEach var="exam" items="${examlist}">
 				<div class="row wback nospace">
 					<div class="col-sm-3 courseh">
-						<a> <img src="" alt="..." width="100%" height="150px;"
+						<a> <img src="${exam.imgpath}" alt="..." width="100%" height="150px;"
 							class="img-rounded">
 						</a>
 					</div>
 					<div class="col-sm-7">
 						<p>
 							<a>
-								<h1>1111</h1>
+								<h1>${exam.name}</h1>
 							</a>
 						</p>
 						<p>
-							<a> 2222</a>
+							<a> ${exam.describle}</a>
 						</p>
 					</div>
 					<div class="col-sm-2">
@@ -129,8 +130,8 @@
 							<div class="subwrap">
 								<div class="content">
 									<p>
-										<a href="lms/getCourse.action?courseId=1"><button
-												type="button" class="btn btn-success">进入学习</button> </a>
+										<a href="lms/toexamintroduce.action?examId=${exam.id}"><button
+												type="button" class="btn btn-success">进入考试</button> </a>
 
 									</p>
 								</div>
@@ -139,12 +140,14 @@
 
 					</div>
 				</div>
+				<div class="h5"></div>
+				</c:forEach>
 				<div class="clear"></div>
 			</div>
 		</section>
 	</div>
 
-	<div id="pagination" class="center"></div>
+	<ul id="pagination" class="center"></ul>
 
 	<jsp:include page="footer.jsp"></jsp:include>
 
@@ -189,16 +192,18 @@
 			initlist();
 		});
 		function initlist() {
-			var totalPages = 2;
-			currentPage = 1;
-			totalPages = 2;
+			var totalpage = "${totalpage}";
+			totalpage = parseInt(totalpage);
+			var currentpage = "${currentpage}";
+			currentpage = parseInt(currentpage);
+			//alert(totalpage+"  ,   "+currentpage);
 			$
 					.jqPaginator(
 							'#pagination',
 							{
-								totalPages : totalPages,
-								visiblePages : 4,
-								currentPage : currentPage,
+								totalPages : totalpage,
+								visiblePages : 5,
+								currentPage : currentpage,
 
 								wrapper : '<ul class="pagination lastspan"></ul>',
 								/* 		 first : '<li class="first"><a href="javascript:void(0);">首页</a></li>',
@@ -207,11 +212,29 @@
 								/*  last : '<li class="last"><a href="javascript:void(0);">尾页</a></li>', */
 								page : '<li class="page"><a href="javascript:void(0);">{{page}}</a></li>',
 								onPageChange : function(num) {
-									currentPage = num;
-									resetTrain(num);
-									timeservice(0);
+									if (currentpage != num)
+									{
+										location.href="lms/examlist.action?currentpage="+num;
+									}
+									//currentpage = num;						
+									//location.href="lms/examlist.action?currentpage="+currentpage;
+									//pageexamlist(currentpage);
 								}
 							});
+		}
+		
+		function pageexamlist(currentpage)
+		{
+			$.ajax({
+				url : "lms/examlist2.action?currentpage="+currentpage,
+				type : "post",
+				success : function(s) {
+					var a = eval("(" + s + ")");
+					if ("sucess" == a.sucess) {
+						
+					}
+				}
+			});
 		}
 	</script>
 </body>

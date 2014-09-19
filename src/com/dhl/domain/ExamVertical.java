@@ -37,16 +37,17 @@ public class ExamVertical extends BaseDomain {
 //	@Transient
 //	private List<Train> trainList;
 
-	@OneToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER,mappedBy = "vertical")
+	@OneToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER,mappedBy = "examVertical")
 	@OrderBy(value="id ASC")
-	private Set<VerticalTrain> verticalTrains;
+	private Set<ExamQuestion> examQuestion;
 
-	public Set<VerticalTrain> getVerticalTrains() {
-		return verticalTrains;
+
+	public Set<ExamQuestion> getExamQuestion() {
+		return examQuestion;
 	}
 
-	public void setVerticalTrains(Set<VerticalTrain> verticalTrains) {
-		this.verticalTrains = verticalTrains;
+	public void setExamQuestion(Set<ExamQuestion> examQuestion) {
+		this.examQuestion = examQuestion;
 	}
 
 	public int getId() {

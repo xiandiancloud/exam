@@ -29,4 +29,15 @@ public class CompetionExamDao extends BaseDao<CompetionExam> {
 		String hql = "update CompetionExam set selectexam = 0 where competionId = "+competionId;
 		this.getSession().createQuery(hql).executeUpdate();
 	}
+	public CompetionExam getCompetionSelectExam(int competionId)
+	{
+		String hql = "from CompetionExam where competionId = "+competionId+" and selectexam=1";
+		List<CompetionExam> list = find(hql);
+    	if (list.size() == 0) {
+			return null;
+		}else{
+		
+			return list.get(0);
+		}
+	}
 }

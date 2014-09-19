@@ -8,9 +8,9 @@ import com.dhl.domain.ExamCategory;
 @Repository
 public class ExamCategoryDao extends BaseDao<ExamCategory> {
 	
-	public Page getCourseByCategoryId(int categoryId,int pageNo,int pageSize)
+	public Page getExamByCategoryId(int categoryId,int pageNo,int pageSize)
 	{
-		String hql = "from ExamCategory where exam.publish = 1 and ecategory.id = "+categoryId;
+		String hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and ecategory.id = "+categoryId;
 		return pagedQuery(hql, pageNo, pageSize);
 	}
 	

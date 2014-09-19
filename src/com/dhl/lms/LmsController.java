@@ -119,17 +119,17 @@ public class LmsController extends BaseController {
 		}
 	}
 
-	/**
-	 * 跳转到学生首页
-	 * 
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping("/lms")
-	public ModelAndView cms(HttpServletRequest request) {
-		String url = "redirect:/lms/getAllCategory.action";
-		return new ModelAndView(url);
-	}
+//	/**
+//	 * 跳转到学生首页
+//	 * 
+//	 * @param request
+//	 * @return
+//	 */
+//	@RequestMapping("/lms")
+//	public ModelAndView cms(HttpServletRequest request) {
+//		String url = "redirect:/lms/getAllCategory.action";
+//		return new ModelAndView(url);
+//	}
 
 	@RequestMapping("/getAllCategory")
 	public ModelAndView getAllCategory(HttpServletRequest request) {
