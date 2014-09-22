@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -141,26 +142,27 @@
 					<div class='col-sm-12 box box-nomargin'>
 					<div class='box-content'>
                     <div class='dd dd-nestable'>
-                    <c:forEach var="chapter" items="${exam.examchapters}">
+                    <c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
                       <ol class='dd-list'>
                         <li class='dd-item' data-id='2'>
                           <div class='dd-handle'>
                             <i class='icon-backward text-purple'></i>
                             ${chapter.name}
                           </div>
-                          <c:forEach var="sequential" items="${chapter.esequentials}">
+                          <c:forEach var="sequential" items="${chapter.esequentials}" varStatus="j">
                           <ol class='dd-list'>
                             <li class='dd-item' data-id='3'>
                               <div class='dd-handle'>
                                 <i class='icon-camera-retro text-orange'></i>
                                 ${sequential.name}
                               </div>
-                              <c:forEach var="vertical" items="${sequential.examVerticals}">
+                              <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
                               <ol class='dd-list'>
                                 <li class='dd-item' data-id='4'>
                                   <div class='dd-handle'>${vertical.name}</div>
-                                  <c:forEach var="examq" items="${vertical.examQuestion}">
-			                 		<div class="test">${examq.question.content}</div>
+                                  <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
+                                     序号：${l.index+1+k.index*(fn:length(sequential.examVerticals)+1)+j.index*(fn:length(chapter.esequentials)+1)+i.index*(fn:length(exam.examchapters)+1)}  
+			                 		<div class="test">${examq.htmlcontent}</div>
 			                 		<div class="clear"></div>
 			                 	</c:forEach>
                                 </li>

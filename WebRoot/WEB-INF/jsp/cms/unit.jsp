@@ -60,7 +60,7 @@ $(function additem(){
 		$(".xml-box").insert({"text":"dropdown-button"});
 	});
 	$(".explanation-button").click(function(){
-		$(".xml-box").insert({"text":"explanation-button"});
+		$(".xml-box").insert({"text":"[问题解释]\n问题解释内容 \n[问题解释]"});
 	});
 	
 });
@@ -119,9 +119,9 @@ function showcheckbox(type){
 		'[x] 选项内容\r'+
 		'[ ] 选项内容\r'+
 		'[x] 选项内容\r'+
-		'[explanation]\r'+
-		'问题解释\r'+
-		'[explanation]';
+		'[问题解释]\r'+
+		'问题解释内容\r'+
+		'[问题解释]';
 	}
 	else if (type ==2)//单选
 	{
@@ -129,17 +129,17 @@ function showcheckbox(type){
 		'( ) 选项内容\r'+
 		'( ) 选项内容\r'+
 		'(x) 选项内容\r'+
-		'[explanation]\r'+
-		'问题解释\r'+
-		'[explanation]';
+		'[问题解释]\r'+
+		'问题解释内容\r'+
+		'[问题解释]';
 	}
 	else if (type == 3)
 	{
 		tmp  = '>>问题题目请在这儿修改<<\r'+
 		'= 答案在这儿修改\r'+
-		'[explanation]\r'+
-		'问题解释\r'+
-		'[explanation]';
+		'[问题解释]\r'+
+		'问题解释内容\r'+
+		'[问题解释]';
 	}
 	$("#lowedittextarea").attr("value",tmp);
 	showeditor();

@@ -38,6 +38,7 @@ import com.dhl.service.SchoolService;
 import com.dhl.service.TeacherExamService;
 import com.dhl.service.TrainService;
 import com.dhl.service.UserService;
+import com.dhl.util.ParseQuestion;
 import com.dhl.web.BaseController;
 
 /**
@@ -529,8 +530,7 @@ public class ExamController extends BaseController {
 	
 	private String changetohtml(String content)
 	{
-		content = "<input type='text' value='111'>";
-		return content;
+		return ParseQuestion.changetohtml(content);
 	}
 	/**
 	 * 创建试卷单元下面的问题

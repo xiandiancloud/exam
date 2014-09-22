@@ -53,12 +53,27 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String aaa = "shell/fsafasfaaa.sh";
-		String[] strs = aaa.split("/");
-		System.out.println(strs[1]);
 		
-		int[] value = null;
-		System.out.println("int[] ----------"+value);
+		
+		for (int i=0;i<3;i++)
+		{
+			for (int j=0;j<3;j++)
+			{
+				for (int k=0;k<3;k++)
+				{
+					for (int l=0;l<3;l++)
+					{
+						System.out.println("index == "+(l+1+k*3+j*9+i*27));
+					}
+				}
+			}
+		}
+//		String aaa = "shell/fsafasfaaa.sh";
+//		String[] strs = aaa.split("/");
+//		System.out.println(strs[1]);
+//		
+//		int[] value = null;
+//		System.out.println("int[] ----------"+value);
 //		File file = new File("D:\\work\\apache-tomcat-6.0.20\\webapps\\train\\export\\2014-07-15\\static");
 //		if (!file.exists())
 //			file.mkdir();

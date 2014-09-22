@@ -167,8 +167,8 @@
       });
 
       // replace explanations
-      xml = xml.replace(/\[explanation\]\n?([^\]]*)\[\/?explanation\]/gmi, function(match, p1) {
-          var selectString = '<solution>\n<div class="detailed-solution">\nExplanation\n\n' + p1 + '\n</div>\n</solution>';
+      xml = xml.replace(/\[问题解释\]\n?([^\]]*)\[\/?问题解释\]/gmi, function(match, p1) {
+          var selectString = '<solution>\n<div class="detailed-solution">\n问题解释\n\n' + p1 + '\n</div>\n</solution>';
 
           return selectString;
       });
