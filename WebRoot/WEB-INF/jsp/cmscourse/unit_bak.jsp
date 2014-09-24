@@ -1682,7 +1682,7 @@ img.MathJax_strut {
 										    </div>
 										 </header>
 										    <article class="xblock-render">
-										    实验题目：</br>${vt.train.conContent}
+										    ${vt.train.conContent}
 										    </article>
 										
 										    </section>

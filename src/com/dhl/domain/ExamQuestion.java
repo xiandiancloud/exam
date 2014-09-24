@@ -1,5 +1,7 @@
 package com.dhl.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,17 +36,30 @@ public class ExamQuestion extends BaseDomain {
 	@JoinColumn(name = "questionId")
 	private Question question;
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "courseId")
-	private Course course;
+	@JoinColumn(name = "trainId")
+	private Train train;
+	public Train getTrain() {
+		return train;
+	}
+	public void setTrain(Train train) {
+		this.train = train;
+	}
 	@Transient
-	private String htmlcontent;
+	private List<QuestionData> qdlist;
+	public List<QuestionData> getQdlist() {
+		return qdlist;
+	}
+	public void setQdlist(List<QuestionData> qdlist) {
+		this.qdlist = qdlist;
+	}
+	/*private String htmlcontent;
 	
 	public String getHtmlcontent() {
 		return htmlcontent;
 	}
 	public void setHtmlcontent(String htmlcontent) {
 		this.htmlcontent = htmlcontent;
-	}
+	}*/
 	public int getId() {
 		return id;
 	}
@@ -68,11 +83,5 @@ public class ExamQuestion extends BaseDomain {
 	}
 	public void setQuestion(Question question) {
 		this.question = question;
-	}
-	public Course getCourse() {
-		return course;
-	}
-	public void setCourse(Course course) {
-		this.course = course;
 	}
 }

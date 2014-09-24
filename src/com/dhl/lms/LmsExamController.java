@@ -1,8 +1,10 @@
 package com.dhl.lms;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,12 +21,16 @@ import com.dhl.domain.CompetionExam;
 import com.dhl.domain.ECategory;
 import com.dhl.domain.Exam;
 import com.dhl.domain.ExamCategory;
+import com.dhl.domain.ExamChapter;
 import com.dhl.domain.ExamQuestion;
+import com.dhl.domain.ExamSequential;
+import com.dhl.domain.ExamVertical;
+import com.dhl.domain.Question;
 import com.dhl.domain.TeacherExam;
+import com.dhl.domain.Train;
 import com.dhl.domain.User;
 import com.dhl.domain.UserCompetion;
 import com.dhl.domain.UserExam;
-import com.dhl.domain.UserTrain;
 import com.dhl.service.CompetionService;
 import com.dhl.service.ECategoryService;
 import com.dhl.service.ExamCategoryService;
@@ -33,6 +39,7 @@ import com.dhl.service.ExamService;
 import com.dhl.service.TeacherExamService;
 import com.dhl.service.UserCompetionService;
 import com.dhl.service.UserExamService;
+import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
 
 /**
@@ -112,7 +119,12 @@ public class LmsExamController extends BaseController {
 			buffer.append(",\"name\":");
 			buffer.append("\"" + p.getExam().getName() + "\"");
 			buffer.append(",\"imgpath\":");
-			buffer.append("\"" + p.getExam().getImgpath() + "\"");
+			String img = p.getExam().getImgpath();
+			if (img == null || img.length() < 1)
+			{
+				img = "images/exam.jpg";
+			}
+			buffer.append("\"" + img + "\"");
 			buffer.append(",\"desc\":");
 			buffer.append("\"" + p.getExam().getDescrible() + "\"");
 			buffer.append("},");
@@ -137,6 +149,62 @@ public class LmsExamController extends BaseController {
 	public ModelAndView toexamintroduce(HttpServletRequest request,int examId) {
 		ModelAndView view = new ModelAndView();
 		view.addObject("examId", examId);
+		Exam exam = examService.get(examId);
+		String s = exam.getStarttimedetail();
+		String e = exam.getEndtimedetail();
+		if ("".equals(s) || "".equals(3))
+		{
+			view.addObject("mm", "无限制");
+		}
+		else
+		{
+			long startT = UtilTools.fromDateStringToLong(s);
+			long endT = UtilTools.fromDateStringToLong(e);
+			long ss=(startT-endT)/(1000); //共计秒数
+			int mm = (int)ss/60;   //共计分钟数
+			view.addObject("mm", mm);
+		}
+		int size = exam.getExamchapters().size();
+		int index = 0;
+		int score = 0;
+		Set<ExamChapter> chapterset = exam.getExamchapters();
+		Iterator it = chapterset.iterator();
+		List<Train> tlist = new ArrayList();
+		while (it.hasNext()) {
+			ExamChapter chapter = (ExamChapter) it.next();
+			Set<ExamSequential> sequentialset = chapter.getEsequentials();
+			Iterator it2 = sequentialset.iterator();
+
+			while (it2.hasNext()) {
+				ExamSequential sequential = (ExamSequential) it2.next();
+				Set<ExamVertical> verticalset = sequential.getExamVerticals();
+				Iterator it3 = verticalset.iterator();
+				while (it3.hasNext()) {
+					ExamVertical vertical = (ExamVertical) it3.next();
+					Set<ExamQuestion> vt = vertical.getExamQuestion();//examquestionService.getVerticalTrainList(vertical.getId());
+					for (ExamQuestion eq:vt)
+					{
+						index ++;
+						Question q = eq.getQuestion();
+						if (q != null)
+						{
+							
+						}
+						else
+						{
+							Train train = eq.getTrain();
+							if (train != null)
+							{
+								score += train.getScore();
+							}
+						}
+					}
+				}
+			}
+		}
+		view.addObject("score", score);
+		view.addObject("size", size);
+		view.addObject("index", index);
 		view.setViewName("/lms/introduce");
 		return view;
 	}

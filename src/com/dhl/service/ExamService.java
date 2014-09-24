@@ -6,11 +6,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
+import net.sf.json.JSONObject;
+
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import ch.ethz.ssh2.Connection;
+import ch.ethz.ssh2.SCPClient;
+import ch.ethz.ssh2.Session;
 
 import com.dhl.dao.ChapterDao;
 import com.dhl.dao.CompetionExamDao;
@@ -82,6 +88,64 @@ public class ExamService {
 	private QuestionDao questionDao;
 	@Autowired
 	private ExamQuestionDao examquestionDao;
+	
+	/**
+	 * 备份实训
+	 * @param trainstr
+	 * @param examId
+	 * @param everticalId
+	 */
+	public void copyTrain(String trainstr,int examId,int everticalId)
+	{
+		JSONObject jsonObject = JSONObject.fromObject(trainstr);
+		//原创文件的相对路径
+		String conShell = (String)jsonObject.get("conShell");
+		//到实训系统远程下载检测脚本		
+		String ip = UtilTools.getConfig().getProperty("TRAINHOST_IP");
+		String userName = UtilTools.getConfig().getProperty("TRAINHOST_USERNAME");
+		String passWord = UtilTools.getConfig().getProperty("TRAINHOST_PASSWORD");
+		String remoteFile = UtilTools.getConfig().getProperty("TRAINHOST_REMOTEFILE");
+		String localFile = UtilTools.getConfig().getProperty("TRAINHOST_LOCALFILE");
+		try {
+			Connection conn = UtilTools.getConnection(ip, userName, passWord);
+//			Session ssh = conn.openSession();
+			SCPClient scpClient = conn.createSCPClient();
+			scpClient.get(remoteFile+conShell, localFile);
+			conn.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//
+		Train t = new Train();
+		
+		String name = (String)jsonObject.get("name");
+		String codenum = (String)jsonObject.get("codenum");
+		String envname = (String)jsonObject.get("envname");
+		String conContent = (String)jsonObject.get("conContent");
+		
+		String conAnswer = (String)jsonObject.get("conAnswer");
+		String score = (String)jsonObject.get("score");
+		String scoretag = (String)jsonObject.get("scoretag");
+		
+		t.setName(name);
+		t.setCodenum(codenum);
+		t.setEnvname(envname);
+		t.setConContent(conContent);
+		t.setConShell(conShell);
+		t.setConAnswer(conAnswer);
+		t.setScore(Integer.parseInt(score));
+		t.setScoretag(scoretag);
+		trainDao.save(t);
+		
+		//保存考试系统下单元下对应的课程
+        ExamQuestion eq = new ExamQuestion();
+        eq.setTrain(t);
+        eq.setExam(examDao.get(examId));
+        eq.setExamVertical(examVerticalDao.get(everticalId));
+        examquestionDao.save(eq);
+	}
 	
 	/**
 	 * 根据试卷id取得分类

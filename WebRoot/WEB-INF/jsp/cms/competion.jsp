@@ -698,24 +698,32 @@
 	});
 	function selectschool()
 	{
-		var competionId = parseInt($("#competionId").attr("value"));
-		var data={competionId:competionId};
-		$.ajax({
-			url : "cms/getExamSchool.action",
-			type : "post",
-			data:data,
-			success : function(s) {
-				var a = eval("(" + s + ")");
-				if ("sucess" == a.sucess)
-				{
-					//$("#school").attr("value",a.schoolId);
-					//alert(a.schoolId);
-					$("#school").val(a.schoolId);
-					// $("#school").find("option[value="+a.schoolId+"]").attr("selected","selected");
-					//$("#school").find("option").eq(a.schoolId).attr("selected","selected");
+		var id = $("#competionId").attr("value");
+		if (id)
+		{
+			var competionId = parseInt(id);
+			var data={competionId:competionId};
+			$.ajax({
+				url : "cms/getExamSchool.action",
+				type : "post",
+				data:data,
+				success : function(s) {
+					var a = eval("(" + s + ")");
+					if ("sucess" == a.sucess)
+					{
+						$("#school").val(a.schoolId);
+					}
 				}
-			}
-		});
+			});
+			$("#savebutton").hide();
+			$("#updatebutton").show();
+		}
+		else
+		{
+			$("#savebutton").show();
+			$("#updatebutton").hide();
+		}
+		
 	}
 	function initschool()
 	{
@@ -850,7 +858,47 @@
 	}
 	function updatecompetion()
 	{
-		
+		var competionId = $("#competionId").attr("value");
+		var name = $("#name").attr("value");
+		var starttime = $("#starttime").attr("value");
+		var endtime = $("#endtime").attr("value");
+		var wstarttime = $("#wstarttime").attr("value");
+		var wendtime = $("#wendtime").attr("value");
+		var examstarttime = $("#examstarttime").attr("value");
+		var examendtime = $("#examendtime").attr("value");
+		var type = $("#type").attr("value");
+		var score = $("#score").attr("value");
+		var passscore = $("#passscore").attr("value");
+		var describle = $("#describle").attr("value");
+		var schoolId = $("#school").val();
+		if (isNull(name))	
+		{
+			alert("名称不能为空");
+			return ;
+		}
+		if (isNull(schoolId))	
+		{
+			alert("举办方不能为空");
+			return ;
+		}
+		if (isNull(type))	
+		{
+			alert("是否公开不能为空");
+			return ;
+		}
+		var data={competionId:competionId,name:name,starttime:starttime,endtime:endtime,wstarttime:wstarttime,wendtime:wendtime,examstarttime:examstarttime,examendtime:examendtime,type:type,score:score,passscore:passscore,describle:describle,schoolId:schoolId};
+		$.ajax({
+			url : "cms/updatecompetion.action",
+			type : "post",
+			data :data,
+			success : function(s) {
+				var a = eval("(" + s + ")");
+				if ("sucess" == a.sucess)
+				{
+					alert("更新成功");
+				}
+			}
+		});
 	}
 	function showuserdialog()
 	{

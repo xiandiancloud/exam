@@ -110,7 +110,7 @@
 				<c:forEach var="exam" items="${examlist}">
 				<div class="row wback nospace">
 					<div class="col-sm-3 courseh">
-						<a> <img src="${exam.imgpath}" alt="..." width="100%" height="150px;"
+						<a> <img src="${(empty exam.imgpath)?'images/exam.jpg':exam.imgpath}" alt="..." width="100%" height="150px;"
 							class="img-rounded">
 						</a>
 					</div>
@@ -216,9 +216,6 @@
 									{
 										location.href="lms/examlist.action?currentpage="+num;
 									}
-									//currentpage = num;						
-									//location.href="lms/examlist.action?currentpage="+currentpage;
-									//pageexamlist(currentpage);
 								}
 							});
 		}

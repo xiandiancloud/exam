@@ -19,6 +19,12 @@ public class ExamQuestionDao extends BaseDao<ExamQuestion> {
     	return find(hql);
 	}
 	
+	public List<ExamQuestion> getExamQuestionByexamIdAcoursename(int examId,String name)
+	{
+		String hql = "from ExamQuestion where examId = "+examId+" and course.name="+name;
+    	return find(hql);
+	}
+	
 	public void removeVTByCourseId(int examId)
 	{
 		String hql = "delete from ExamQuestion where examId = "+examId;

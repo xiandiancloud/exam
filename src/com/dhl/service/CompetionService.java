@@ -148,10 +148,34 @@ public class CompetionService {
 		UserCompetion uc = new UserCompetion();
 		uc.setUser(user);
 		uc.setCompetion(c);
-		uc.setJob(CommonConstant.CROLE_1);
+		uc.setJob(CommonConstant.CROLE_2);
 		userCompetionDao.save(uc);
 		
 		return c;
+	}
+	
+	public void updateCompetion(int id,String name, String starttime,
+			String endtime, String wstarttime, String wendtime,
+			String examstarttime, String examendtime, String type,
+			String score, String passscore, String describle, String schoolId)
+	{
+		Competion c = get(id);
+		c.setName(name);
+		c.setDescrible(describle);
+		c.setStarttime(examstarttime);
+		c.setEndtime(examendtime);
+		c.setWstarttime(wstarttime);
+		c.setWendtime(wendtime);
+		c.setExamstarttime(examstarttime);
+		c.setExamendtime(examendtime);
+		c.setScore(passscore);
+		c.setPassscore(passscore);
+		c.setType(type);
+		competionDao.update(c);
+		
+		CompetionSchool cs = competionSchoolDao.getCompetionSchool(id);
+		cs.setSchoolId(Integer.parseInt(schoolId));
+		competionSchoolDao.update(cs);
 	}
 	
 	/**

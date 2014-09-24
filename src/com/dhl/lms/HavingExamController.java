@@ -17,6 +17,7 @@ import com.dhl.domain.ExamChapter;
 import com.dhl.domain.ExamQuestion;
 import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
+import com.dhl.domain.Question;
 import com.dhl.domain.Train;
 import com.dhl.domain.User;
 import com.dhl.domain.UserExam;
@@ -98,9 +99,13 @@ public class HavingExamController extends BaseController {
 					Set<ExamQuestion> vt = vertical.getExamQuestion();//examquestionService.getVerticalTrainList(vertical.getId());
 					for (ExamQuestion eq:vt)
 					{
-						String content = eq.getQuestion().getContent();
-						content = changetohtml(content);
-						eq.setHtmlcontent(content);
+						Question q = eq.getQuestion();
+						if (q != null)
+						{
+							String content = q.getContent();
+							content = changetohtml(content);
+							eq.setHtmlcontent(content);
+						}
 					}
 //					Set<VerticalTrain> verticalTrainset = vertical
 //							.getVerticalTrains();

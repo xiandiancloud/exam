@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -471,15 +472,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <img class="course-image" id="course-image" src="${exam.imgpath}" alt="试卷图片">
                     </span>
 
-                    <span class="msg msg-help">
-                    该图片可以随您的其他<a href="/assets/cetc/CS201/2014_T1/">文件 &amp; 上传</a>共同管理
-                    </span>
+<!--                     <span class="msg msg-help">
+                    该图片可以随您的其他<a href="#">文件 &amp; 上传</a>共同管理
+                    </span> -->
 
                   </div>
 
                   <div class="wrapper-input">
                     <div class="input">
-                      <input type="text" class="long new-course-image-url" id="imgpath" value="" placeholder="Your course image URL" autocomplete="off">
+                      <input type="text" class="long new-course-image-url" id="imgpath" value="${exam.imgpath}" placeholder="试卷图片路径" autocomplete="off">
                       <span class="tip tip-stacked">请为您的试卷图片提供一个有效的路径和名字（注意：仅支持JPEG和PNG格式）</span>
                     </div>
                     <!-- <button type="button" class="action action-upload-image">上传试卷图片</button> -->

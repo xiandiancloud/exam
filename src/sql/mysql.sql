@@ -114,8 +114,7 @@ create table t_course
    org                 varchar(255) default null,
    coursecode          varchar(255) default null,
    rank                varchar(255) default null,
-   primary key (id),
-   UNIQUE KEY (name)
+   primary key (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*试卷定义*/
@@ -258,9 +257,7 @@ create table t_train
    conAnswer           varchar(3000) default null,
    score               int(10) not null,
    scoretag            varchar(255) default null,
-   primary key (id),
-   UNIQUE KEY (name),
-   UNIQUE KEY (codenum)
+   primary key (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*试卷问题定义*/
@@ -295,12 +292,12 @@ create table t_exam_question
    examId              int(10) not null,
    everticalId         int(10) not null,
    questionId          int(10) default null,
-   courseId            int(10) default null,
+   trainId             int(10) default null,
    primary key (id),
    CONSTRAINT receivet_exam_question_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE,
    CONSTRAINT receivet_exam_question_2 FOREIGN KEY (everticalId) REFERENCES t_evertical (id) ON DELETE CASCADE,
-   CONSTRAINT receivet_exam_question_3 FOREIGN KEY (questionId) REFERENCES t_question (id),
-   CONSTRAINT receivet_exam_question_4 FOREIGN KEY (courseId) REFERENCES t_course (id)
+   CONSTRAINT receivet_exam_question_3 FOREIGN KEY (questionId) REFERENCES t_question (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_exam_question_4 FOREIGN KEY (trainId) REFERENCES t_train (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 drop table if exists user_train;

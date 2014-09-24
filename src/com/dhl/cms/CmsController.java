@@ -15,16 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Category;
 import com.dhl.domain.Chapter;
 import com.dhl.domain.Course;
-import com.dhl.domain.Role;
-import com.dhl.domain.School;
 import com.dhl.domain.Sequential;
 import com.dhl.domain.TeacherCourse;
+import com.dhl.domain.Train;
 import com.dhl.domain.User;
-import com.dhl.domain.UserRole;
 import com.dhl.domain.Vertical;
 import com.dhl.domain.VerticalTrain;
 import com.dhl.service.CategoryService;
@@ -46,7 +43,7 @@ import com.dhl.web.BaseController;
  * @since
  */
 @Controller
-@RequestMapping("/cms22")
+@RequestMapping("/cms")
 public class CmsController extends BaseController {
 	// 课程
 	@Autowired
@@ -75,78 +72,78 @@ public class CmsController extends BaseController {
 
 	
 	
-	/**
-	 * 所有学校
-	 * 
-	 * @param request
-	 * @param index
-	 * @return
-	 */
-	@RequestMapping("/getAllSchool")
-	public void getAllSchool(HttpServletRequest request,HttpServletResponse response) {
-		
-		try {
-			PrintWriter out = response.getWriter();
-			List<School> school = schoolService.getAllSchool();
-			String str = getSchoolStr(school);
-			out.write(str);
-			// }
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private String getSchoolStr(List<School> list) {
-		StringBuffer buffer = new StringBuffer();
-		int count = list.size();
-		buffer.append("{\"total\":" + count + ",\"rows\":[");
-		for (int i = 0; i < count; i++) {
-			School p = list.get(i);
-			buffer.append("{");
-			buffer.append("\"id\":");
-			buffer.append("\"" + p.getId() + "\"");
-			buffer.append(",\"name\":");
-			buffer.append("\"" + p.getSchool_name() + "\"");
-			buffer.append("},");
-		}
-		if (count > 0) {
-			String str = buffer.substring(0, buffer.length() - 1) + "]}";
-			str = str.replaceAll("null", "");
-			return str;
-		} else {
-			String str = buffer.toString() + "]}";
-			str = str.replaceAll("null", "");
-			return str;
-		}
-	}
-	
-	
-	/**
-	 * 跳转到老师课程页面
-	 * 
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping("/cms")
-	public ModelAndView cms(HttpServletRequest request) {
-
-		User user = getSessionUser(request);
-		if (user == null) {
-			String url = "redirect:/cms/totlogin.action";
-			return new ModelAndView(url);
-		}
-		Role role = userService.getUserRoleByuserId(user.getId());
-		if (!CommonConstant.ROLE_T.equals(role.getRoleName())) {
-			String url = "redirect:/cms/totlogin.action";
-			return new ModelAndView(url);
-		}
-		ModelAndView view = new ModelAndView();
-		List<TeacherCourse> tcourselist = teacherCourseService
-				.getMyTCourse(user.getId());
-		view.addObject("tcourselist", tcourselist);
-		view.setViewName("/cms/tcourselist");
-		return view;
-	}
+//	/**
+//	 * 所有学校
+//	 * 
+//	 * @param request
+//	 * @param index
+//	 * @return
+//	 */
+//	@RequestMapping("/getAllSchool")
+//	public void getAllSchool(HttpServletRequest request,HttpServletResponse response) {
+//		
+//		try {
+//			PrintWriter out = response.getWriter();
+//			List<School> school = schoolService.getAllSchool();
+//			String str = getSchoolStr(school);
+//			out.write(str);
+//			// }
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	private String getSchoolStr(List<School> list) {
+//		StringBuffer buffer = new StringBuffer();
+//		int count = list.size();
+//		buffer.append("{\"total\":" + count + ",\"rows\":[");
+//		for (int i = 0; i < count; i++) {
+//			School p = list.get(i);
+//			buffer.append("{");
+//			buffer.append("\"id\":");
+//			buffer.append("\"" + p.getId() + "\"");
+//			buffer.append(",\"name\":");
+//			buffer.append("\"" + p.getSchool_name() + "\"");
+//			buffer.append("},");
+//		}
+//		if (count > 0) {
+//			String str = buffer.substring(0, buffer.length() - 1) + "]}";
+//			str = str.replaceAll("null", "");
+//			return str;
+//		} else {
+//			String str = buffer.toString() + "]}";
+//			str = str.replaceAll("null", "");
+//			return str;
+//		}
+//	}
+//	
+//	
+//	/**
+//	 * 跳转到老师课程页面
+//	 * 
+//	 * @param request
+//	 * @return
+//	 */
+//	@RequestMapping("/cms")
+//	public ModelAndView cms(HttpServletRequest request) {
+//
+//		User user = getSessionUser(request);
+//		if (user == null) {
+//			String url = "redirect:/cms/totlogin.action";
+//			return new ModelAndView(url);
+//		}
+//		Role role = userService.getUserRoleByuserId(user.getId());
+//		if (!CommonConstant.ROLE_T.equals(role.getRoleName())) {
+//			String url = "redirect:/cms/totlogin.action";
+//			return new ModelAndView(url);
+//		}
+//		ModelAndView view = new ModelAndView();
+//		List<TeacherCourse> tcourselist = teacherCourseService
+//				.getMyTCourse(user.getId());
+//		view.addObject("tcourselist", tcourselist);
+//		view.setViewName("/cms/tcourselist");
+//		return view;
+//	}
 
 	/**
 	 * 跳转到老师课程页面
@@ -161,35 +158,35 @@ public class CmsController extends BaseController {
 		List<TeacherCourse> tcourselist = teacherCourseService
 				.getMyTCourse(user.getId());
 		view.addObject("tcourselist", tcourselist);
-		view.setViewName("/cms/tcourselist");
+		view.setViewName("/cmscourse/tcourselist");
 		return view;
 	}
 
-	/**
-	 * 跳转到老师登陆页面
-	 * 
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping("/totlogin")
-	public ModelAndView totlogin(HttpServletRequest request) {
-		ModelAndView view = new ModelAndView();
-		view.setViewName("/cms/signin");
-		return view;
-	}
-
-	/**
-	 * 跳转到老师注册页面
-	 * 
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping("/totregeister")
-	public ModelAndView totregeister(HttpServletRequest request) {
-		ModelAndView view = new ModelAndView();
-		view.setViewName("/cms/signup");
-		return view;
-	}
+//	/**
+//	 * 跳转到老师登陆页面
+//	 * 
+//	 * @param request
+//	 * @return
+//	 */
+//	@RequestMapping("/totlogin")
+//	public ModelAndView totlogin(HttpServletRequest request) {
+//		ModelAndView view = new ModelAndView();
+//		view.setViewName("/cmscourse/signin");
+//		return view;
+//	}
+//
+//	/**
+//	 * 跳转到老师注册页面
+//	 * 
+//	 * @param request
+//	 * @return
+//	 */
+//	@RequestMapping("/totregeister")
+//	public ModelAndView totregeister(HttpServletRequest request) {
+//		ModelAndView view = new ModelAndView();
+//		view.setViewName("/cmscourse/signup");
+//		return view;
+//	}
 
 	/**
 	 * 跳转到老师课程页面
@@ -203,7 +200,7 @@ public class CmsController extends BaseController {
 		view.addObject("courseId", courseId);
 		Course course = courseService.get(courseId);
 		view.addObject("course", course);
-		view.setViewName("/cms/temp");
+		view.setViewName("/cmscourse/temp");
 		return view;
 	}
 
@@ -219,7 +216,7 @@ public class CmsController extends BaseController {
 		view.addObject("courseId", courseId);
 		Course course = courseService.get(courseId);
 		view.addObject("course", course);
-		view.setViewName("/cms/update");
+		view.setViewName("/cmscourse/update");
 		return view;
 	}
 
@@ -235,7 +232,7 @@ public class CmsController extends BaseController {
 		view.addObject("courseId", courseId);
 		Course course = courseService.get(courseId);
 		view.addObject("course", course);
-		view.setViewName("/cms/team");
+		view.setViewName("/cmscourse/team");
 		return view;
 	}
 
@@ -251,7 +248,7 @@ public class CmsController extends BaseController {
 		view.addObject("courseId", courseId);
 		Course course = courseService.get(courseId);
 		view.addObject("course", course);
-		view.setViewName("/cms/schedule");
+		view.setViewName("/cmscourse/schedule");
 		return view;
 	}
 
@@ -276,7 +273,7 @@ public class CmsController extends BaseController {
 		view.addObject("vtlist", vt);
 		Vertical vertical = verticalService.get(verticalId);
 		view.addObject("vertical", vertical);
-		view.setViewName("/cms/unit");
+		view.setViewName("/cmscourse/unit");
 		return view;
 	}
 
@@ -569,6 +566,52 @@ public class CmsController extends BaseController {
 		}
 	}
 
+	/**
+	 * 得到实验
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/getTrain")
+	public void getTrain(HttpServletRequest request,
+			HttpServletResponse response,int trainId) {
+
+		try {
+			PrintWriter out = response.getWriter();
+			Train t = trainService.get(trainId);
+    		
+			String str = "{'sucess':'sucess','name':'"+t.getName()+"','codenum':'"+t.getCodenum()
+					+"','envname':'"+t.getEnvname()+"','conContent':'"+t.getConContent()+"','conShell':'"
+					+t.getConShell()+"','conAnswer':'"+t.getConAnswer()+"','score':'"+t.getScore()+"'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 更新实验
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/updateTrain")
+	public void updateTrain(HttpServletRequest request,
+			HttpServletResponse response,int trainId, String name, String codenum,
+			String envname, String conContent, String conShell,
+			String conAnswer, int score, String scoretag) {
+
+		try {
+			PrintWriter out = response.getWriter();
+			trainService.update(trainId,name, codenum, envname, conContent,
+					conShell, conAnswer, score, scoretag);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@RequestMapping("/uploadshell")
 	public void uploadshell(HttpServletRequest request,
 			HttpServletResponse response,

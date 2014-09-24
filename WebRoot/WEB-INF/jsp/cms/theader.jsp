@@ -5,7 +5,7 @@
 
 		<div class="wrapper wrapper-l">
 			<h1 class="branding">
-				<a href="cms/totcourselist.action"><img src="" alt="edX Studio" /></a>
+				<a href="cms/totexamlist.action"><img src="" alt="edX Studio" /></a>
 			</h1>
 
 		</div>
@@ -53,7 +53,7 @@
 								<div class="wrapper wrapper-nav-sub">
 									<div class="nav-sub">
 										<ul>
-											<li class="nav-item nav-account-dashboard"><a href="cms/totcourselist.action">我的课程</a>
+											<li class="nav-item nav-account-dashboard"><a href="cms/totexamlist.action">我的试卷</a>
 											</li>
 											<li class="nav-item nav-account-signout"><a
 												class="action action-signout" href="cms/tloginout.action">退出</a></li>

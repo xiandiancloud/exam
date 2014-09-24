@@ -1,18 +1,21 @@
 package com.dhl.cms;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.cons.CommonConstant;
@@ -22,12 +25,17 @@ import com.dhl.domain.ExamChapter;
 import com.dhl.domain.ExamQuestion;
 import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
+import com.dhl.domain.Question;
+import com.dhl.domain.QuestionData;
+import com.dhl.domain.RestTrain;
 import com.dhl.domain.Role;
 import com.dhl.domain.School;
 import com.dhl.domain.TeacherExam;
+import com.dhl.domain.Train;
 import com.dhl.domain.User;
 import com.dhl.domain.UserProfile;
 import com.dhl.domain.UserRole;
+import com.dhl.service.CourseService;
 import com.dhl.service.ECategoryService;
 import com.dhl.service.ExamChapterService;
 import com.dhl.service.ExamQuestionService;
@@ -39,6 +47,7 @@ import com.dhl.service.TeacherExamService;
 import com.dhl.service.TrainService;
 import com.dhl.service.UserService;
 import com.dhl.util.ParseQuestion;
+import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
 
 /**
@@ -80,6 +89,30 @@ public class ExamController extends BaseController {
 	@Autowired
 	private SchoolService schoolService;
 
+	//定义单元内容的时候取实训系统的课程
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	@Autowired
+	private CourseService courseService;
+	
+	
+	//判断是否是竞赛试卷，并且试卷锁定
+	private boolean examPermission(Exam exam)
+	{
+		int isnormal = exam.getIsnormal();
+		if (isnormal == 1)
+		{
+			int lock = exam.getLockexam();
+			if (lock == 1)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
 	/**
 	 * 跳转到老师试卷页面
 	 * 
@@ -253,6 +286,13 @@ public class ExamController extends BaseController {
 		ModelAndView view = new ModelAndView();
 		view.addObject("examId", examId);
 		Exam course = examService.get(examId);
+		
+		boolean flag = examPermission(course);
+		if (flag)
+		{
+			view.setViewName("/cms/nopermisson");
+			return view;
+		}
 		view.addObject("exam", course);
 		view.setViewName("/cms/temp");
 		return view;
@@ -517,21 +557,126 @@ public class ExamController extends BaseController {
 		List<ExamQuestion> vt = examquestionService.getVerticalTrainList(verticalId);
 		for (ExamQuestion eq:vt)
 		{
-			String content = eq.getQuestion().getContent();
-			content = changetohtml(content);
-			eq.setHtmlcontent(content);
+			Question q = eq.getQuestion();
+			if (q != null)
+			{
+				String content = q.getContent();
+				List<QuestionData> qtlist = changetohtml(content);
+//				eq.setHtmlcontent(content);
+//				List<QuestionData> qtlist = new ArrayList();
+//				
+//				QuestionData qd = new QuestionData();
+//				qd.setAnswer("111111");
+//				List<String> qs = new ArrayList();
+//				qs.add("content111--------");
+//				qs.add("content222--------");
+//				qd.setContent(qs);
+//				qd.setScore(100);
+//				qd.setTitle("问题标题测试---------");
+//				qd.setId(q.getId());
+//				qd.setType(2);
+//				qd.setExplain("解释--------");
+//				qtlist.add(qd);
+				
+				
+				eq.setQdlist(qtlist);
+			}
 		}
 		view.addObject("vtlist", vt);
 		ExamVertical vertical = examverticalService.get(verticalId);
 		view.addObject("vertical", vertical);
+		
+		//取得实训课程列表
+		RestTrain rs = new RestTrain();
+		HttpEntity<RestTrain> entity = new HttpEntity<RestTrain>(rs);
+
+		String resturl = UtilTools.getConfig().getProperty("REST_URL_COURSELIST");
+		ResponseEntity<RestTrain> res = restTemplate.postForEntity(resturl,
+				entity, RestTrain.class);
+		RestTrain e = res.getBody();
+		String courseList = e.getCourselist();
+		JSONArray jsonArray = JSONArray.fromObject(courseList);
+		List<Train> courselists = new ArrayList<Train>();
+		for (Object obj : jsonArray)  
+        {  
+            JSONObject jsonObject = (JSONObject) obj;  
+        	Train c = new Train();
+            int id = Integer.parseInt((String)jsonObject.get("id"));
+            String name = (String)jsonObject.get("name");
+            c.setId(id);
+            c.setName(name);
+            courselists.add(c);
+        }  
+		view.addObject("trainlist", courselists);
+		
 		view.setViewName("/cms/unit");
 		return view;
 	}
 	
-	private String changetohtml(String content)
+	private List<QuestionData> changetohtml(String content)
 	{
-		return ParseQuestion.changetohtml(content);
+		return null;//ParseQuestion.changetohtml(content);
 	}
+	
+	/**
+	 * 复制实训系统的课程
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/copycourse")
+	public void copycourse(HttpServletRequest request,
+			HttpServletResponse response,int courseId,int examId,int everticalId) {
+
+		try {
+			PrintWriter out = response.getWriter();
+			
+			RestTrain rs = new RestTrain();
+			rs.setCourseId(courseId);
+			HttpEntity<RestTrain> entity = new HttpEntity<RestTrain>(rs);
+
+			String resturl = UtilTools.getConfig().getProperty("REST_URL_COURSE");
+			ResponseEntity<RestTrain> res = restTemplate.postForEntity(resturl,
+					entity, RestTrain.class);
+			RestTrain e = res.getBody();
+			User user = getSessionUser(request);
+			courseService.copyCourse(e.getCourse(),user.getId(),examId,everticalId);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 复制实训系统的实验
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/copytrain")
+	public void copytrain(HttpServletRequest request,
+			HttpServletResponse response,int tainId,int examId,int everticalId) {
+
+		try {
+			PrintWriter out = response.getWriter();
+			
+			RestTrain rs = new RestTrain();
+			rs.setCourseId(tainId);
+			HttpEntity<RestTrain> entity = new HttpEntity<RestTrain>(rs);
+
+			String resturl = UtilTools.getConfig().getProperty("REST_URL_COURSE");
+			ResponseEntity<RestTrain> res = restTemplate.postForEntity(resturl,
+					entity, RestTrain.class);
+			RestTrain e = res.getBody();
+//			User user = getSessionUser(request);
+//			courseService.copyCourse(e.getCourse(),user.getId(),examId,everticalId);
+			examService.copyTrain(e.getCourse(),examId,everticalId);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * 创建试卷单元下面的问题
 	 * 
@@ -727,66 +872,66 @@ public class ExamController extends BaseController {
 		}
 	}
 	
-	/**
-	 * 创建实验
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	@RequestMapping("/createTrain")
-	public void createTrain(HttpServletRequest request,
-			HttpServletResponse response, String name, String codenum,
-			String envname, String conContent, String conShell,
-			String conAnswer, int score, String scoretag, int courseId,
-			int verticalId) {
+//	/**
+//	 * 创建实验
+//	 * 
+//	 * @param request
+//	 * @param response
+//	 */
+//	@RequestMapping("/createTrain")
+//	public void createTrain(HttpServletRequest request,
+//			HttpServletResponse response, String name, String codenum,
+//			String envname, String conContent, String conShell,
+//			String conAnswer, int score, String scoretag, int courseId,
+//			int verticalId) {
+//
+//		try {
+//			PrintWriter out = response.getWriter();
+//			String msg = trainService.save(name, codenum, envname, conContent,
+//					conShell, conAnswer, score, scoretag, courseId, verticalId);
+//			if (msg != null) {
+//				String str = "{'sucess':'fail','msg':'" + msg + "'}";
+//				out.write(str);
+//
+//			} else {
+//				String str = "{'sucess':'sucess'}";
+//				out.write(str);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
-		try {
-			PrintWriter out = response.getWriter();
-			String msg = trainService.save(name, codenum, envname, conContent,
-					conShell, conAnswer, score, scoretag, courseId, verticalId);
-			if (msg != null) {
-				String str = "{'sucess':'fail','msg':'" + msg + "'}";
-				out.write(str);
-
-			} else {
-				String str = "{'sucess':'sucess'}";
-				out.write(str);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	@RequestMapping("/uploadshell")
-	public void uploadshell(HttpServletRequest request,
-			HttpServletResponse response,
-			@RequestParam(value = "qqfile", required = true) MultipartFile file) {
-		response.setContentType("text/html");
-		PrintWriter out = null;
-		try {
-			out = response.getWriter();
-		} catch (IOException e1) {
-			out.print("{\"success\": \"false\"}");
-		}
-		try {
-			if (!file.isEmpty()) {
-				byte[] bytes = file.getBytes();
-				String upath = request.getSession().getServletContext()
-						.getRealPath("/");
-				String path = "shell/" + file.getOriginalFilename();
-				FileOutputStream fos = new FileOutputStream(upath + path);
-				fos.write(bytes);
-				fos.close();
-
-				out.print("{\"success\": \"true\"}");
-				// out.write("<script>parent.callback('sucess')</script>");
-			} else {
-				out.print("{\"success\": \"false\"}");
-			}
-		} catch (Exception e) {
-			out.print("{\"success\": \"false\"}");
-		}
-	}
+//	@RequestMapping("/uploadshell")
+//	public void uploadshell(HttpServletRequest request,
+//			HttpServletResponse response,
+//			@RequestParam(value = "qqfile", required = true) MultipartFile file) {
+//		response.setContentType("text/html");
+//		PrintWriter out = null;
+//		try {
+//			out = response.getWriter();
+//		} catch (IOException e1) {
+//			out.print("{\"success\": \"false\"}");
+//		}
+//		try {
+//			if (!file.isEmpty()) {
+//				byte[] bytes = file.getBytes();
+//				String upath = request.getSession().getServletContext()
+//						.getRealPath("/");
+//				String path = "shell/" + file.getOriginalFilename();
+//				FileOutputStream fos = new FileOutputStream(upath + path);
+//				fos.write(bytes);
+//				fos.close();
+//
+//				out.print("{\"success\": \"true\"}");
+//				// out.write("<script>parent.callback('sucess')</script>");
+//			} else {
+//				out.print("{\"success\": \"false\"}");
+//			}
+//		} catch (Exception e) {
+//			out.print("{\"success\": \"false\"}");
+//		}
+//	}
 
 	private String getProjectViewStr(List<ECategory> list) {
 		StringBuffer buffer = new StringBuffer();

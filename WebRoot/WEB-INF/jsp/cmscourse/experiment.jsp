@@ -185,7 +185,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                   </div>
                 </div>
-<!--                 <div class="col-sm-4" style="margin-bottom:40px;clear:left;padding-top:15px;">
+                <div class="col-sm-4" style="margin-bottom:40px;clear:left;padding-top:15px;">
                 <div>
                   <div style="float:left;text-align:right;margin-right:5px;width:50%;border:1px;font-size:14px;font-weight:bold;">
                   	<button id="savebutton" class="btn btn-primary" type="button" style="margin-right:20px;" onclick="savetrain();">
@@ -201,7 +201,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <button class="btn" type="submit" style="" onclick="hidetrain();">取消</button>
                   </div>
                  </div>
-                 </div> -->
+                 </div>
          </div>    
          <script>
     	$(function() {
@@ -243,38 +243,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	    	},
     	    	debug: true 
     	    	}); 
-    	}
-    	function inittrainbyid(id)
-    	{
-    		$("#savebutton").hide();
-			$("#editbutton").show();
-    		var data={trainId:id};
- 			$.ajax({
-				url:"cms/getTrain.action",
-				type:"post",
-				data:data,
-				success:function(s){
-					var a=eval("("+s+")");	
-					if (a.sucess=="sucess")
-					{
-						$("#vtrainid").attr("value",id);
-			    		$("#trainname").attr("value",a.name);
-			    		$("#codenum").attr("value",a.codenum);
-			    		
-			    		$("#envname").attr("value",a.envname);
-			    		conContent = replaceTextarea2(a.conContent);
-						$("#conContent").contents().find("#editor").html(conContent);
-						//conContent = replaceTextarea1(conContent);
-						$("#conShell").attr("value",a.conShell);
-						conAnswer = replaceTextarea2(a.conAnswer);
-						$("#conAnswer").contents().find("#editor").html(conAnswer);
-						//conAnswer = replaceTextarea1(conAnswer);
-						$("#score").attr("value",a.score);
-						//var scoretag = "";
-					}
-				}
-			});
-    		
     	}
     	function inittrain(id,name,codenum,envname,conContent,conShell,conAnswer,score,scoretag)
     	{
@@ -363,9 +331,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	}
     	function updatetrain()
     	{
-    		/* var sequenticalId = parseInt("${sequentialId}");
+    		var sequenticalId = parseInt("${sequentialId}");
 			var verticalId = parseInt("${verticalId}");
-			var courseId = parseInt("${courseId}");  */
+			var courseId = parseInt("${courseId}"); 
 			
     		var trainId = parseInt($("#vtrainid").val());
 			var name = $("#trainname").val();
@@ -405,8 +373,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					var a=eval("("+s+")");	
 					if (a.sucess=="sucess")
 					{
-						//location.href = "cms/tottrain.action?courseId="+courseId+"&sequentialId="+sequenticalId+"&verticalId="+verticalId;
-						location.reload();
+						location.href = "cms/tottrain.action?courseId="+courseId+"&sequentialId="+sequenticalId+"&verticalId="+verticalId;
 					}
 				}
 			});

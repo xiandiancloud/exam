@@ -180,6 +180,34 @@ public class CompetionController extends BaseController {
 	}
 
 	/**
+	 * 创建竞赛
+	 * 
+	 * @param request
+	 * @param name
+	 * @return
+	 */
+	@RequestMapping("/updatecompetion")
+	public void updatecompetion(HttpServletRequest request,
+			HttpServletResponse response,int competionId, String name, String starttime,
+			String endtime, String wstarttime, String wendtime,
+			String examstarttime, String examendtime, String type,
+			String score, String passscore, String describle, String schoolId) {
+		try {
+			PrintWriter out = response.getWriter();
+			competionService.updateCompetion(competionId,name, starttime,
+					endtime, wstarttime, wendtime, examstarttime,
+					examendtime, type, score, passscore, describle,
+					schoolId);
+
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	
+	/**
 	 * 增加竞赛裁判
 	 * 
 	 * @param request

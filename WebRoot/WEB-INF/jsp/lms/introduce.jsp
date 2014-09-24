@@ -96,7 +96,7 @@
 						<div class='col-sm-3'></div>
 						<div class='col-sm-6'>
 							<p>
-								<strong style="font-size: 20px;">本试卷共有4个部分，41道题，总时限为150分钟</strong> <br />
+								<strong style="font-size: 20px;">本试卷共有${size}个部分，${index }道题，总时限为${mm}分钟</strong> <br />
 								各个部分不分别记时，但都给了参考时限，供答题时参考
 							</p>
 						</div>
@@ -110,9 +110,9 @@
 							<div class='box'>
 								<div class="menu_2012509">
 									<ul>
-										<li class="line"><a href="#"><i class='icon-calendar'></i>41题</a></li>
-										<li class="line"><a href="#"><i class='icon-smile'></i>45分</a></li>
-										<li><a href="#"><i class='icon-time'></i>150分钟</a></li>
+										<li class="line"><a href="#"><i class='icon-calendar'></i>${index}题</a></li>
+										<li class="line"><a href="#"><i class='icon-smile'></i>${score}分</a></li>
+										<li><a href="#"><i class='icon-time'></i>${mm}分钟</a></li>
 									</ul>
 								</div>
 							</div>
