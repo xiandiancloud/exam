@@ -301,6 +301,7 @@ create table t_exam_question
    CONSTRAINT receivet_exam_question_4 FOREIGN KEY (trainId) REFERENCES t_train (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+/*用户实训的对应关系*/
 drop table if exists user_train;
 create table user_train
 (
@@ -309,6 +310,42 @@ create table user_train
    courseId            int(10) not null,
    trainId             int(10) not null,
    counts              int(10) default 0,
+   revalue             varchar(3000) default null,
+   result              varchar(255) default null,
+   primary key (id),
+   UNIQUE KEY (courseId,trainId),
+   CONSTRAINT receiveuser_train_ibfk_1 FOREIGN KEY (userId) REFERENCES auth_user (id) ON DELETE CASCADE,
+   CONSTRAINT receiveuser_train_ibfk_2 FOREIGN KEY (courseId) REFERENCES t_course (id),
+   CONSTRAINT receiveuser_train_ibfk_3 FOREIGN KEY (trainId) REFERENCES t_train (id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+/*考试系统下问题，实训的对应关系*/
+drop table if exists t_user_question;
+create table t_user_question
+(
+   id                  int not null AUTO_INCREMENT,
+   userId              int(10) not null,
+   examId              int(10) default 0,
+   trainId             int(10) default 0,
+   questionId          int(10) not null,
+   counts              int(10) default 0,
+   revalue             varchar(3000) default null,
+   result              varchar(255) default null,
+   primary key (id),
+   UNIQUE KEY (courseId,trainId),
+   CONSTRAINT receiveuser_train_ibfk_1 FOREIGN KEY (userId) REFERENCES auth_user (id) ON DELETE CASCADE,
+   CONSTRAINT receiveuser_train_ibfk_2 FOREIGN KEY (courseId) REFERENCES t_course (id),
+   CONSTRAINT receiveuser_train_ibfk_3 FOREIGN KEY (trainId) REFERENCES t_train (id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+/*考试系统下问题跟子问题的对应关系*/
+drop table if exists t_user_childquestion;
+create table t_user_childquestion
+(
+   id                  int not null AUTO_INCREMENT,
+   userquestionId      int(10) not null,
+   counts              int(10) default 0,
+   useranswer          varchar(1000) default null,
    revalue             varchar(3000) default null,
    result              varchar(255) default null,
    primary key (id),
