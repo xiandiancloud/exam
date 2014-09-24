@@ -20,6 +20,16 @@ public class Question extends BaseDomain {
 	@Column(name = "id")
 	private int id;
 	private String content;
+	//低级
+	private String lowcontent;
+	
+	public String getLowcontent() {
+		return lowcontent;
+	}
+
+	public void setLowcontent(String lowcontent) {
+		this.lowcontent = lowcontent;
+	}
 
 	public String getContent() {
 		return content;

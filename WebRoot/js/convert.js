@@ -1,5 +1,5 @@
 	onShowXMLButton = function(e) {
-       //if (this.confirmConversionToXml()) {
+       if (this.confirmConversionToXml()) {
 	    var ui = document.getElementById("lowedittextarea");
         var changeText=markdownToXml(ui.value);
 		var ui = document.getElementById("editor");
@@ -9,7 +9,7 @@
         var ui = document.getElementById("advanced_editor");
 		ui.style.display="block";
 		
-      //}
+      }
     };
 	
 	resetadvice = function(e) {
@@ -18,12 +18,11 @@
 	        var changeText=markdownToXml(ui.value);
 			var ui = document.getElementById("advanceedittextarea");
 			ui.value=changeText;
-			
 	      //}
 	    };
 	    
 	confirmConversionToXml = function() {
-      return confirm("If you use the Advanced Editor, this problem will be converted to XML and you will not be able to return to the Simple Editor Interface.\n\nProceed to the Advanced Editor and convert this problem to XML?");
+      return confirm("如果你采用高级编辑器，问题会采用XML的形式描述，以后将无法回到低级编辑器模式。你是否确定采用高级编辑器编辑问题？");
     };
 	markdownToXml = function(markdown) {
       var toXml;

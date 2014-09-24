@@ -678,13 +678,41 @@ public class ExamController extends BaseController {
 	}
 	
 	/**
-	 * 创建试卷单元下面的问题
+	 * 创建试卷单元下面的问题,确保低级，高级内容同时存在
 	 * 
 	 * @param request
 	 * @param response
 	 */
 	@RequestMapping("/createExamQuestion")
 	public void createExamQuestion(HttpServletRequest request,
+			HttpServletResponse response,int id, String content,String lowcontent,int examId,
+			int everticalId) {
+
+		try {
+			PrintWriter out = response.getWriter();
+			if (id > 0)
+			{
+				examService.updateExamQuestion(id,content,lowcontent);
+			}
+			else
+			{
+				examService.save(content,lowcontent, examId, everticalId);
+			}
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 创建试卷单元下面的高级问题,本质上跟问题一样，但这个要把低级内容删除
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/createadviceExamQuestion")
+	public void createadviceExamQuestion(HttpServletRequest request,
 			HttpServletResponse response,int id, String content,int examId,
 			int everticalId) {
 
@@ -692,7 +720,7 @@ public class ExamController extends BaseController {
 			PrintWriter out = response.getWriter();
 			if (id > 0)
 			{
-				examService.updateExamQuestion(id,content);
+				examService.updateAdviceExamQuestion(id,content);
 			}
 			else
 			{
@@ -738,7 +766,13 @@ public class ExamController extends BaseController {
 		try {
 			PrintWriter out = response.getWriter();
 			ExamQuestion eq = examquestionService.get(id);
-			String str = "{'sucess':'sucess','eq':'"+eq.getQuestion().getContent()+"'}";
+			Question q = eq.getQuestion();
+			String lowcontent = q.getLowcontent();
+			if (lowcontent == null)
+			{
+				lowcontent = "";
+			}
+			String str = "{'sucess':'sucess','advicecontent':'"+q.getContent()+"','lowcontent':'"+lowcontent+"'}";
 			out.write(str);
 		} catch (Exception e) {
 			e.printStackTrace();

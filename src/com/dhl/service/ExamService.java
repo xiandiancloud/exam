@@ -186,6 +186,28 @@ public class ExamService {
 	 * @param everticalId
 	 * @return
 	 */
+	public String save(String content,String lowcontent, int examId, int everticalId) {
+
+		Question q = new Question();
+		q.setContent(content);
+		q.setLowcontent(lowcontent);
+		questionDao.save(q);
+		
+		ExamQuestion vt = new ExamQuestion();
+		vt.setExam(examDao.get(examId));
+		vt.setExamVertical(examVerticalDao.get(everticalId));
+		vt.setQuestion(q);
+		examquestionDao.save(vt);
+		return null;
+	}
+	
+	/**
+	 * 保存试卷下单元下的高级问题
+	 * @param content
+	 * @param examId
+	 * @param everticalId
+	 * @return
+	 */
 	public String save(String content, int examId, int everticalId) {
 
 		Question q = new Question();
@@ -207,11 +229,31 @@ public class ExamService {
 	 * @param everticalId
 	 * @return
 	 */
-	public String updateExamQuestion(int id,String content) {
+	public String updateExamQuestion(int id,String content,String lowcontent) {
 
 		ExamQuestion eq = examquestionDao.get(id);
 		Question q = eq.getQuestion();
 		q.setContent(content);
+		q.setLowcontent(lowcontent);
+		questionDao.update(q);
+		eq.setQuestion(q);
+		examquestionDao.update(eq);
+		return null;
+	}
+	
+	/**
+	 * 更新试卷下单元下的高级问题
+	 * @param content
+	 * @param examId
+	 * @param everticalId
+	 * @return
+	 */
+	public String updateAdviceExamQuestion(int id,String content) {
+
+		ExamQuestion eq = examquestionDao.get(id);
+		Question q = eq.getQuestion();
+		q.setContent(content);
+		q.setLowcontent(null);
 		questionDao.update(q);
 		eq.setQuestion(q);
 		examquestionDao.update(eq);

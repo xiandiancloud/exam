@@ -117,7 +117,10 @@ function showeditor(){
 	$("#editinput").attr("value",-1);
 	$("#editor").show();
 }
-
+function showadvanceeditor(){
+	$("#editinput").attr("value",-1);
+	$("#advanced_editor").show();
+}
 function advanced_cancel(){
 	$("#advanced_editor").hide();
 	$("#component").show();
@@ -175,9 +178,33 @@ function savequestion()
 	var content = $("#advanceedittextarea").attr("value");
 	var id = $("#editinput").attr("value",id);
 	content = replaceTextarea1(content);
-	var data={id:id,content:content,examId:examId,everticalId:everticalId};
+	
+	var lowcontent = $("#lowedittextarea").attr("value");
+	lowcontent = replaceTextarea1(lowcontent);
+	var data={id:id,content:content,lowcontent:lowcontent,examId:examId,everticalId:everticalId};
 	$.ajax({
 		url : "cms/createExamQuestion.action",
+		type : "post",
+		data :data,
+		success : function(s) {
+			var a = eval("(" + s + ")");
+			if ("sucess" == a.sucess)
+			{
+				location.reload();
+			}
+		}
+	});
+}
+function saveadvicequestion()
+{
+	var everticalId = parseInt("${verticalId}");
+	var examId = parseInt("${examId}");
+	var content = $("#advanceedittextarea").attr("value");
+	var id = $("#editinput").attr("value",id);
+	content = replaceTextarea1(content);
+	var data={id:id,content:content,examId:examId,everticalId:everticalId};
+	$.ajax({
+		url : "cms/createadviceExamQuestion.action",
 		type : "post",
 		data :data,
 		success : function(s) {
@@ -251,14 +278,26 @@ function showquestiondialog(id)
 			var a=eval("("+s+")");	
 			if (a.sucess=="sucess")
 			{
-				alert("1111111");
-				//location.reload();
-				var con = a.eq;
-				con = replaceTextarea2(con);
-				
-				$("#lowedittextarea").attr("value",con);
-				showeditor();
+				if (a.lowcontent)
+				{
+					var con = a.advicecontent;
+					con = replaceTextarea2(con);
+					$("#advanceedittextarea").attr("value",con);
+					var lowcon = a.lowcontent;					
+					lowcon = replaceTextarea2(lowcon);
+					$("#lowedittextarea").attr("value",lowcon);
+					showeditor();
+				}
+				else
+				{
+					var con = a.advicecontent;
+					con = replaceTextarea2(con);
+					$("#advanceedittextarea").attr("value",con);
+					showadvanceeditor();
+				}
 				$("#editinput").attr("value",id);
+				//location.reload();
+				
 			}
 		}
 	});
@@ -299,58 +338,6 @@ function savever(name)
 	});
 } 
 </script>
-<script>
-
-
-    
-
-
-<link rel="stylesheet" type="text/css" href="css/unit-css/jquery.timepicker.css">
-
-  <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery" src="/static/acf03d7/js/vendor/jquery.min.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/models/course"
-	src="/static/acf03d7/js/models/course.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/sock"
-	src="/static/acf03d7/js/sock.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="domReady"
-	src="/static/acf03d7/js/vendor/domReady.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/models/xblock_info"
-	src="/static/acf03d7/js/models/xblock_info.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/views/pages/container"
-	src="/static/acf03d7/js/views/pages/container.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="js/collections/component_template"
-	src="/static/acf03d7/js/collections/component_template.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="xmodule"
-	src="/xmodule/xmodule.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="xblock/cms.runtime.v1"
-	src="/static/acf03d7/coffee/src/xblock/cms.runtime.v1.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="gettext" src="/i18n.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="tender"
-	src="//edxedge.tenderapp.com/tender_widget.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="coffee/src/ajax_prefix"
-	src="/static/acf03d7/coffee/src/ajax_prefix.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="underscore.string"
-	src="/static/acf03d7/js/vendor/underscore.string.min.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/utils/module"
-	src="/static/acf03d7/js/utils/module.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="js/models/component_template"
-	src="/static/acf03d7/js/models/component_template.js"></script>
 <style type="text/css" charset="utf-8">
 #tender_window {
 	position: absolute;
@@ -418,169 +405,6 @@ function savever(name)
 		!important;
 }
 </style>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="coffee/src/main"
-	src="/static/acf03d7/coffee/src/main.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/views/pages/base_page"
-	src="/static/acf03d7/js/views/pages/base_page.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/views/utils/view_utils"
-	src="/static/acf03d7/js/views/utils/view_utils.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/views/container"
-	src="/static/acf03d7/js/views/container.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/views/xblock"
-	src="/static/acf03d7/js/views/xblock.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="js/views/components/add_xblock"
-	src="/static/acf03d7/js/views/components/add_xblock.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="js/views/modals/edit_xblock"
-	src="/static/acf03d7/js/views/modals/edit_xblock.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="js/views/xblock_string_field_editor"
-	src="/static/acf03d7/js/views/xblock_string_field_editor.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="js/views/pages/container_subviews"
-	src="/static/acf03d7/js/views/pages/container_subviews.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/views/unit_outline"
-	src="/static/acf03d7/js/views/unit_outline.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="js/views/utils/xblock_utils"
-	src="/static/acf03d7/js/views/utils/xblock_utils.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="utility"
-	src="/static/acf03d7/js/src/utility.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/utils/modal"
-	src="/static/acf03d7/js/utils/modal.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="js/views/feedback_notification"
-	src="/static/acf03d7/js/views/feedback_notification.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="underscore"
-	src="/static/acf03d7/js/vendor/underscore-min.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/base"
-	src="/static/acf03d7/js/base.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="accessibility"
-	src="/static/acf03d7/js/src/accessibility_tools.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="ieshim"
-	src="/static/acf03d7/js/src/ie_shim.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="mathjax"
-	src="//edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/MathJax.js?config=TeX-MML-AM_HTMLorMML-full&amp;delayStartupUntil=configured"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="codemirror"
-	src="/static/acf03d7/js/vendor/codemirror-compressed.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="tinymce"
-	src="/static/acf03d7/js/vendor/tinymce/js/tinymce/tinymce.full.min.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="jquery.qtip"
-	src="/static/acf03d7/js/vendor/jquery.qtip.min.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="jquery.scrollTo"
-	src="/static/acf03d7/js/vendor/jquery.scrollTo-1.4.2-min.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="jquery.flot"
-	src="/static/acf03d7/js/vendor/flot/jquery.flot.min.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="jquery.cookie"
-	src="/static/acf03d7/js/vendor/jquery.cookie.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="URI"
-	src="/static/acf03d7/js/vendor/URI.min.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="jquery.smoothScroll"
-	src="/static/acf03d7/js/vendor/jquery.smooth-scroll.min.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="coffee/src/logger"
-	src="/static/acf03d7/coffee/src/logger.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="jquery.timepicker"
-	src="/static/acf03d7/js/vendor/timepicker/jquery.timepicker.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="jquery.immediateDescendents"
-	src="/static/acf03d7/coffee/src/jquery.immediateDescendents.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="jquery.ui"
-	src="/static/acf03d7/js/vendor/jquery-ui.min.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/views/baseview"
-	src="/static/acf03d7/js/views/baseview.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/views/feedback_prompt"
-	src="/static/acf03d7/js/views/feedback_prompt.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/views/feedback"
-	src="/static/acf03d7/js/views/feedback.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="js/views/components/add_xblock_button"
-	src="/static/acf03d7/js/views/components/add_xblock_button.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="js/views/components/add_xblock_menu"
-	src="/static/acf03d7/js/views/components/add_xblock_menu.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/views/modals/base_modal"
-	src="/static/acf03d7/js/views/modals/base_modal.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/views/xblock_editor"
-	src="/static/acf03d7/js/views/xblock_editor.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/views/xblock_outline"
-	src="/static/acf03d7/js/views/xblock_outline.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="backbone"
-	src="/static/acf03d7/js/vendor/backbone-min.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="tooltip_manager"
-	src="/static/acf03d7/js/src/tooltip_manager.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="xblock/core"
-	src="/static/acf03d7/coffee/src/xblock/core.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="jquery.tinymce"
-	src="/static/acf03d7/js/vendor/tinymce/js/tinymce/jquery.tinymce.min.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/utils/date_utils"
-	src="/static/acf03d7/js/utils/date_utils.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="js/utils/handle_iframe_binding"
-	src="/static/acf03d7/js/utils/handle_iframe_binding.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="jquery.leanModal"
-	src="/static/acf03d7/js/vendor/jquery.leanModal.min.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/utils/templates"
-	src="/static/acf03d7/js/utils/templates.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="xblock/runtime.v1"
-	src="/static/acf03d7/coffee/src/xblock/runtime.v1.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="datepair"
-	src="/static/acf03d7/js/vendor/timepicker/datepair.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/views/metadata"
-	src="/static/acf03d7/js/views/metadata.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/collections/metadata"
-	src="/static/acf03d7/js/collections/metadata.js"></script>
 <style type="text/css">
 .MathJax_Hover_Frame {
 	border-radius: .25em;
@@ -820,296 +644,6 @@ function savever(name)
 	font-style: italic
 }
 </style>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="jquery.form"
-	src="/static/acf03d7/js/vendor/jquery.form.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/descriptors/js/000-38c1026a572b76f052cb032657dc6d93.js"
-	src="/static/acf03d7/xmodule/descriptors/js/000-38c1026a572b76f052cb032657dc6d93.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/descriptors/js/000-5a624b61d868942153cefc31a9dc36c7.js"
-	src="/static/acf03d7/xmodule/descriptors/js/000-5a624b61d868942153cefc31a9dc36c7.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/descriptors/js/000-5b4f5d368b61e60c0ec0a96da354835b.js"
-	src="/static/acf03d7/xmodule/descriptors/js/000-5b4f5d368b61e60c0ec0a96da354835b.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/descriptors/js/000-6022911bfee6e7865b4457629ab2ff44.js"
-	src="/static/acf03d7/xmodule/descriptors/js/000-6022911bfee6e7865b4457629ab2ff44.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/descriptors/js/000-77e70463a4253744c48f1687383e259e.js"
-	src="/static/acf03d7/xmodule/descriptors/js/000-77e70463a4253744c48f1687383e259e.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/descriptors/js/000-79a64f2010d8b4cb8d0f0d6912c70c12.js"
-	src="/static/acf03d7/xmodule/descriptors/js/000-79a64f2010d8b4cb8d0f0d6912c70c12.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/descriptors/js/000-bb51a36b4a29ce38be91a5102d77ad3c.js"
-	src="/static/acf03d7/xmodule/descriptors/js/000-bb51a36b4a29ce38be91a5102d77ad3c.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/descriptors/js/000-bdf940d1aa93739db56b49bf7c25205e.js"
-	src="/static/acf03d7/xmodule/descriptors/js/000-bdf940d1aa93739db56b49bf7c25205e.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/descriptors/js/000-c7b679d67306eff79b26fa5916c22ebb.js"
-	src="/static/acf03d7/xmodule/descriptors/js/000-c7b679d67306eff79b26fa5916c22ebb.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/000-37c8e1c19b097587504b5f30c33aef11.js"
-	src="/static/acf03d7/xmodule/modules/js/000-37c8e1c19b097587504b5f30c33aef11.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/000-38c1026a572b76f052cb032657dc6d93.js"
-	src="/static/acf03d7/xmodule/modules/js/000-38c1026a572b76f052cb032657dc6d93.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/000-4b06b565ce07b7ec692a835beb968b0c.js"
-	src="/static/acf03d7/xmodule/modules/js/000-4b06b565ce07b7ec692a835beb968b0c.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/000-4e789164fb697a2e6e6180f9f8255659.js"
-	src="/static/acf03d7/xmodule/modules/js/000-4e789164fb697a2e6e6180f9f8255659.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/000-53c44c016974a4e7b767192c8fa16fe0.js"
-	src="/static/acf03d7/xmodule/modules/js/000-53c44c016974a4e7b767192c8fa16fe0.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/000-c5eff3526bed9d24970f5ef629d53cef.js"
-	src="/static/acf03d7/xmodule/modules/js/000-c5eff3526bed9d24970f5ef629d53cef.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/000-e2c8c1923afe3181bc3303bc662a409a.js"
-	src="/static/acf03d7/xmodule/modules/js/000-e2c8c1923afe3181bc3303bc662a409a.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/000-e54b5c7f7b657100c24d82263144a4fd.js"
-	src="/static/acf03d7/xmodule/modules/js/000-e54b5c7f7b657100c24d82263144a4fd.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/001-149e5f80fb129c93207c19c2cb17b45a.js"
-	src="/static/acf03d7/xmodule/modules/js/001-149e5f80fb129c93207c19c2cb17b45a.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/001-224d365aed3a968d6876b75a9e39d877.js"
-	src="/static/acf03d7/xmodule/modules/js/001-224d365aed3a968d6876b75a9e39d877.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/001-42a54bf42a889003f390bd8ac7fe77be.js"
-	src="/static/acf03d7/xmodule/modules/js/001-42a54bf42a889003f390bd8ac7fe77be.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/001-53c44c016974a4e7b767192c8fa16fe0.js"
-	src="/static/acf03d7/xmodule/modules/js/001-53c44c016974a4e7b767192c8fa16fe0.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/001-72c7856ac95c63cb8a2d71777e09eb37.js"
-	src="/static/acf03d7/xmodule/modules/js/001-72c7856ac95c63cb8a2d71777e09eb37.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/001-831bfa7f0550106cead1942d7485d9b2.js"
-	src="/static/acf03d7/xmodule/modules/js/001-831bfa7f0550106cead1942d7485d9b2.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/001-96d20c9f6be33c7f09c4fcf3d7e4633a.js"
-	src="/static/acf03d7/xmodule/modules/js/001-96d20c9f6be33c7f09c4fcf3d7e4633a.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/001-c3d14b8d25e6e22ebcc6603d2e75d212.js"
-	src="/static/acf03d7/xmodule/modules/js/001-c3d14b8d25e6e22ebcc6603d2e75d212.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/001-d1f81454cdec8eb05058f2be176cf63b.js"
-	src="/static/acf03d7/xmodule/modules/js/001-d1f81454cdec8eb05058f2be176cf63b.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/001-ea624e6d121e8f7d64e5f36605158596.js"
-	src="/static/acf03d7/xmodule/modules/js/001-ea624e6d121e8f7d64e5f36605158596.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/001-f78a251c463c5a6eb6b4ada613e6153e.js"
-	src="/static/acf03d7/xmodule/modules/js/001-f78a251c463c5a6eb6b4ada613e6153e.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/002-2efdc26d48edfbb30a54c2e5875ddef3.js"
-	src="/static/acf03d7/xmodule/modules/js/002-2efdc26d48edfbb30a54c2e5875ddef3.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/002-53c44c016974a4e7b767192c8fa16fe0.js"
-	src="/static/acf03d7/xmodule/modules/js/002-53c44c016974a4e7b767192c8fa16fe0.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/002-5df836f1bff325803db265b4e6bdd400.js"
-	src="/static/acf03d7/xmodule/modules/js/002-5df836f1bff325803db265b4e6bdd400.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/002-64f803bbfc8033bc9c4c434a59717369.js"
-	src="/static/acf03d7/xmodule/modules/js/002-64f803bbfc8033bc9c4c434a59717369.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/002-c69e953ceece62d29352ef33330b37ae.js"
-	src="/static/acf03d7/xmodule/modules/js/002-c69e953ceece62d29352ef33330b37ae.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/002-d33c65a4e461258e77ae8dc21df29a85.js"
-	src="/static/acf03d7/xmodule/modules/js/002-d33c65a4e461258e77ae8dc21df29a85.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/002-d7b3578319f397f236353b00a25ba14d.js"
-	src="/static/acf03d7/xmodule/modules/js/002-d7b3578319f397f236353b00a25ba14d.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/002-e8aaca26172f45bfdf948ac4325edd52.js"
-	src="/static/acf03d7/xmodule/modules/js/002-e8aaca26172f45bfdf948ac4325edd52.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/003-222009e8c24f5628677581995d2488d9.js"
-	src="/static/acf03d7/xmodule/modules/js/003-222009e8c24f5628677581995d2488d9.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/003-23394bdafb1e88a4de88e976222eb41e.js"
-	src="/static/acf03d7/xmodule/modules/js/003-23394bdafb1e88a4de88e976222eb41e.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/003-6e8bf396002ae78ecc4f7bd88b572323.js"
-	src="/static/acf03d7/xmodule/modules/js/003-6e8bf396002ae78ecc4f7bd88b572323.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/003-da1290f2b00e2c27e7305fcd42b548ae.js"
-	src="/static/acf03d7/xmodule/modules/js/003-da1290f2b00e2c27e7305fcd42b548ae.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/003-ebf95d0ad35d03ed815c71728e84dc68.js"
-	src="/static/acf03d7/xmodule/modules/js/003-ebf95d0ad35d03ed815c71728e84dc68.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/004-af44a8894b528bb391f901e7c7a32064.js"
-	src="/static/acf03d7/xmodule/modules/js/004-af44a8894b528bb391f901e7c7a32064.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/004-d46fc8abde5a36d4c0ea0cd6af12bcff.js"
-	src="/static/acf03d7/xmodule/modules/js/004-d46fc8abde5a36d4c0ea0cd6af12bcff.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/004-f713a3bce247ef33bf2fcd2af21cba8f.js"
-	src="/static/acf03d7/xmodule/modules/js/004-f713a3bce247ef33bf2fcd2af21cba8f.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/005-16a4ddfb11dad336032f6a3a88692a46.js"
-	src="/static/acf03d7/xmodule/modules/js/005-16a4ddfb11dad336032f6a3a88692a46.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/005-d5d57f05b365edd2e459922ac8a6bba3.js"
-	src="/static/acf03d7/xmodule/modules/js/005-d5d57f05b365edd2e459922ac8a6bba3.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/006-378ac9c882e0b09f6a3553b10c967967.js"
-	src="/static/acf03d7/xmodule/modules/js/006-378ac9c882e0b09f6a3553b10c967967.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/006-c048d2df9a279e40617f4b222e2f24c8.js"
-	src="/static/acf03d7/xmodule/modules/js/006-c048d2df9a279e40617f4b222e2f24c8.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/007-8786e4f817f86a276ee538eecc45f0e6.js"
-	src="/static/acf03d7/xmodule/modules/js/007-8786e4f817f86a276ee538eecc45f0e6.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/007-a3344151a7d92d40f881f592af41add9.js"
-	src="/static/acf03d7/xmodule/modules/js/007-a3344151a7d92d40f881f592af41add9.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/008-afc7413769330ed39dab7ea366492aac.js"
-	src="/static/acf03d7/xmodule/modules/js/008-afc7413769330ed39dab7ea366492aac.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/008-fd708bb4fac08ee85e47174ef0a31f6e.js"
-	src="/static/acf03d7/xmodule/modules/js/008-fd708bb4fac08ee85e47174ef0a31f6e.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/009-235d1ae2f2146ddcec4c4f5626df30c8.js"
-	src="/static/acf03d7/xmodule/modules/js/009-235d1ae2f2146ddcec4c4f5626df30c8.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/009-6099fb4c640ced238dd6a35ac69e95f0.js"
-	src="/static/acf03d7/xmodule/modules/js/009-6099fb4c640ced238dd6a35ac69e95f0.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/010-afb5ca5ed2190d549dd16231c8f2cab3.js"
-	src="/static/acf03d7/xmodule/modules/js/010-afb5ca5ed2190d549dd16231c8f2cab3.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/011-1dc143e7b45b9e03bd70bbbb68859d21.js"
-	src="/static/acf03d7/xmodule/modules/js/011-1dc143e7b45b9e03bd70bbbb68859d21.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/012-88decd25db3d55879f3ab14cfb27e269.js"
-	src="/static/acf03d7/xmodule/modules/js/012-88decd25db3d55879f3ab14cfb27e269.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/013-2840b06b336bec403b8ee961c659ba64.js"
-	src="/static/acf03d7/xmodule/modules/js/013-2840b06b336bec403b8ee961c659ba64.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/014-c20187b4b3360a37b63676caa0eaeeb7.js"
-	src="/static/acf03d7/xmodule/modules/js/014-c20187b4b3360a37b63676caa0eaeeb7.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/015-f84639f31755de1c4e87cf18d87f737a.js"
-	src="/static/acf03d7/xmodule/modules/js/015-f84639f31755de1c4e87cf18d87f737a.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/016-67bb3bc970776f28d9b2c352879d69ed.js"
-	src="/static/acf03d7/xmodule/modules/js/016-67bb3bc970776f28d9b2c352879d69ed.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/017-73ef5e3891bc49c3b858b02be34e00d0.js"
-	src="/static/acf03d7/xmodule/modules/js/017-73ef5e3891bc49c3b858b02be34e00d0.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/xmodule/modules/js/018-cfe75d3c5362edca25a83c237ba533b6.js"
-	src="/static/acf03d7/xmodule/modules/js/018-cfe75d3c5362edca25a83c237ba533b6.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/coffee/src/discussion/content.js"
-	src="/static/acf03d7/coffee/src/discussion/content.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/coffee/src/discussion/discussion.js"
-	src="/static/acf03d7/coffee/src/discussion/discussion.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/coffee/src/discussion/discussion_filter.js"
-	src="/static/acf03d7/coffee/src/discussion/discussion_filter.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/coffee/src/discussion/discussion_module_view.js"
-	src="/static/acf03d7/coffee/src/discussion/discussion_module_view.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/coffee/src/discussion/discussion_router.js"
-	src="/static/acf03d7/coffee/src/discussion/discussion_router.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/coffee/src/discussion/main.js"
-	src="/static/acf03d7/coffee/src/discussion/main.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/coffee/src/discussion/templates.js"
-	src="/static/acf03d7/coffee/src/discussion/templates.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="/static/acf03d7/coffee/src/discussion/utils.js"
-	src="/static/acf03d7/coffee/src/discussion/utils.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="jquery.inputnumber"
-	src="/static/acf03d7/js/vendor/html5-input-polyfills/number-polyfill.js"></script>
 <style type="text/css">
 DIV.MathJax_MathML {
 	text-align: center;
@@ -1218,43 +752,6 @@ div.MathJax_MathML {
 	font-weight: bold
 }
 
-@font-face /*1*/ {
-	font-family: MathJax_AMS-WEB;
-	src:
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/otf/MathJax_AMS-Regular.otf')
-}
-
-@font-face /*2*/ {
-	font-family: MathJax_Script-WEB;
-	src:
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/otf/MathJax_Script-Regular.otf')
-}
-
-@font-face /*3*/ {
-	font-family: MathJax_Fraktur-WEB;
-	src:
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/otf/MathJax_Fraktur-Regular.otf')
-}
-
-@font-face /*4*/ {
-	font-family: MathJax_Caligraphic-WEB;
-	src:
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/otf/MathJax_Caligraphic-Regular.otf')
-}
-
-@font-face /*5*/ {
-	font-family: MathJax_Fraktur-WEB;
-	font-weight: bold;
-	src:
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/otf/MathJax_Fraktur-Bold.otf')
-}
-
-@font-face /*6*/ {
-	font-family: MathJax_Caligraphic-WEB;
-	font-weight: bold;
-	src:
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/otf/MathJax_Caligraphic-Bold.otf')
-}
 </style>
 <script type="text/javascript" charset="utf-8" async=""
 	data-requirecontext="_" data-requiremodule="date"
@@ -1427,90 +924,6 @@ img.MathJax_strut {
 	filter: none;
 	opacity: 1;
 	background: transparent
-}
-
-@font-face {
-	font-family: MathJax_Main;
-	src:
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff')
-		format('woff'),
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/otf/MathJax_Main-Regular.otf')
-		format('opentype')
-}
-
-@font-face {
-	font-family: MathJax_Main;
-	src:
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/woff/MathJax_Main-Bold.woff')
-		format('woff'),
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/otf/MathJax_Main-Bold.otf')
-		format('opentype');
-	font-weight: bold
-}
-
-@font-face {
-	font-family: MathJax_Main;
-	src:
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/woff/MathJax_Main-Italic.woff')
-		format('woff'),
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/otf/MathJax_Main-Italic.otf')
-		format('opentype');
-	font-style: italic
-}
-
-@font-face {
-	font-family: MathJax_Math;
-	src:
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/woff/MathJax_Math-Italic.woff')
-		format('woff'),
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/otf/MathJax_Math-Italic.otf')
-		format('opentype');
-	font-style: italic
-}
-
-@font-face {
-	font-family: MathJax_Caligraphic;
-	src:
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/woff/MathJax_Caligraphic-Regular.woff')
-		format('woff'),
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/otf/MathJax_Caligraphic-Regular.otf')
-		format('opentype')
-}
-
-@font-face {
-	font-family: MathJax_Size1;
-	src:
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/woff/MathJax_Size1-Regular.woff')
-		format('woff'),
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/otf/MathJax_Size1-Regular.otf')
-		format('opentype')
-}
-
-@font-face {
-	font-family: MathJax_Size2;
-	src:
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/woff/MathJax_Size2-Regular.woff')
-		format('woff'),
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/otf/MathJax_Size2-Regular.otf')
-		format('opentype')
-}
-
-@font-face {
-	font-family: MathJax_Size3;
-	src:
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/woff/MathJax_Size3-Regular.woff')
-		format('woff'),
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/otf/MathJax_Size3-Regular.otf')
-		format('opentype')
-}
-
-@font-face {
-	font-family: MathJax_Size4;
-	src:
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/woff/MathJax_Size4-Regular.woff')
-		format('woff'),
-		url('http://edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/fonts/HTML-CSS/TeX/otf/MathJax_Size4-Regular.otf')
-		format('opentype')
 }
 
 .MathJax .noError {
@@ -5356,7 +4769,7 @@ require(['tender']);
                 <h3 class="sr">Actions</h3>
                 <ul>
     <li class="action-item">
-    <a href="javascript:void(0);" class="button action-primary action-save" onclick="savequestion();">保存</a>
+    <a href="javascript:void(0);" class="button action-primary action-save" onclick="saveadvicequestion();">保存</a>
 </li>
 
 
