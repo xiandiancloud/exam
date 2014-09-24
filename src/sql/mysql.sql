@@ -252,7 +252,7 @@ create table t_train
    name                varchar(255) not null,
    codenum             varchar(255) not null,
    envname             varchar(255) not null,    
-   conContent          varchar(3000) not null,
+   conContent          text not null,
    conShell            varchar(255) default null,
    conAnswer           varchar(3000) default null,
    score               int(10) not null,

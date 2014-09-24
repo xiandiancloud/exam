@@ -162,7 +162,50 @@
                                   <div class='dd-handle'>${vertical.name}</div>
                                   <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
                                      序号：${l.index+1+k.index*(fn:length(sequential.examVerticals)+1)+j.index*(fn:length(chapter.esequentials)+1)+i.index*(fn:length(exam.examchapters)+1)}  
-			                 		<div class="test">${examq.htmlcontent}</div>
+			                 		<div class="test">
+			                 		<c:forEach var="qd" items="${examq.qdlist}">
+			                 			<%-- html问题描述 --%>
+							   			<c:if test="${qd.type == 1}">
+							   				${qd.title}</br>
+							   				<c:forEach var="qdcontent" items="${qd.content}">
+							   					<label  for=""><input type="radio" name="" id="" aria-role="radio" aria-describedby="" value="${qdcontent}" aria-multiselectable="true"/>${qdcontent}</label>
+							   				</c:forEach>
+							   				</br>${qd.explain}
+							   			</c:if>
+							   		    <%-- 单选 --%>
+							   			<c:if test="${qd.type == 2}">
+							   				${qd.title}</br>
+							   				<c:forEach var="qdcontent" items="${qd.content}">
+							   					<label  for=""><input type="radio" name="" id="" aria-role="radio" aria-describedby="" value="${qdcontent}" aria-multiselectable="true"/>${qdcontent}</label>
+							   				</c:forEach>
+							   				</br>${qd.explain}
+							   			</c:if>
+							   			<%-- 多选 --%>
+							   			<c:if test="${qd.type == 3}">
+							   				${qd.title}</br>
+							   				<c:forEach var="qdcontent" items="${qd.content}">
+							   					<label  for=""><input type="radio" name="" id="" aria-role="radio" aria-describedby="" value="${qdcontent}" aria-multiselectable="true"/>${qdcontent}</label>
+							   				</c:forEach>
+							   				</br>${qd.explain}
+							   			</c:if>
+							   			<%-- 填空 --%>
+							   			<c:if test="${qd.type == 4}">
+							   				${qd.title}</br>
+							   				<c:forEach var="qdcontent" items="${qd.content}">
+							   					<label  for=""><input type="radio" name="" id="" aria-role="radio" aria-describedby="" value="${qdcontent}" aria-multiselectable="true"/>${qdcontent}</label>
+							   				</c:forEach>
+							   				</br>${qd.explain}
+							   			</c:if>
+							   			<%-- 多文本填空 --%>
+							   			<c:if test="${qd.type == 5}">
+							   				${qd.title}</br>
+							   				<c:forEach var="qdcontent" items="${qd.content}">
+							   					<label  for=""><input type="radio" name="" id="" aria-role="radio" aria-describedby="" value="${qdcontent}" aria-multiselectable="true"/>${qdcontent}</label>
+							   				</c:forEach>
+							   				</br>${qd.explain}
+							   			</c:if>
+			                 		</c:forEach>
+			                 		</div>
 			                 		<div class="clear"></div>
 			                 	</c:forEach>
                                 </li>

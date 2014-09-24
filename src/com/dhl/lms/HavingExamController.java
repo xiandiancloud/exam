@@ -18,13 +18,13 @@ import com.dhl.domain.ExamQuestion;
 import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Question;
+import com.dhl.domain.QuestionData;
 import com.dhl.domain.Train;
 import com.dhl.domain.User;
 import com.dhl.domain.UserExam;
 import com.dhl.service.ExamQuestionService;
 import com.dhl.service.ExamService;
 import com.dhl.service.UserExamService;
-import com.dhl.util.ParseQuestion;
 import com.dhl.web.BaseController;
 
 /**
@@ -65,9 +65,23 @@ public class HavingExamController extends BaseController {
 		return false;
 	}
 	
-	private String changetohtml(String content)
+	private List<QuestionData> changetohtml(String content)
 	{
-		return ParseQuestion.changetohtml(content);
+		List<QuestionData> qtlist = new ArrayList();
+//		
+		QuestionData qd = new QuestionData();
+		qd.setAnswer("111111");
+		List<String> qs = new ArrayList();
+		qs.add("content111--------");
+		qs.add("content222--------");
+		qd.setContent(qs);
+		qd.setScore(100);
+		qd.setTitle("问题标题测试---------");
+		qd.setId(1);
+		qd.setType(2);
+		qd.setExplain("解释--------");
+		qtlist.add(qd);
+		return qtlist;//ParseQuestion.changetohtml(content);
 	}
 	
 	/**
@@ -103,8 +117,10 @@ public class HavingExamController extends BaseController {
 						if (q != null)
 						{
 							String content = q.getContent();
-							content = changetohtml(content);
-							eq.setHtmlcontent(content);
+							List<QuestionData> qdlist = changetohtml(content);
+							eq.setQdlist(qdlist);
+//							eq.setHtmlcontent(content);
+							
 						}
 					}
 //					Set<VerticalTrain> verticalTrainset = vertical
