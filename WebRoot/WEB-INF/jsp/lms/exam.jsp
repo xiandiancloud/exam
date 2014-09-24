@@ -62,6 +62,7 @@
     	text-align: center;
     	width: 22px;
     	float:left;
+    	text-decoration:none;
 	}
 	.section .item.greater {
     	font-size: 11px;
@@ -127,12 +128,12 @@
 					<%-- <c:forEach var="chapter" items="${exam.examchapters}">
                  	${chapter.name}>>
 	                 	<c:forEach var="sequential" items="${chapter.esequentials}">
-	                 	${sequential.name}>></br>
+	                 	${sequential.name}>><br />
 		                 	<c:forEach var="vertical" items="${sequential.examVerticals}">
-		                 	${vertical.name}</br>
+		                 	${vertical.name}<br />
 			                 	<c:forEach var="examq" items="${vertical.examQuestion}">
 			                 	
-			                 	aaaaaaaaaaaaaaaa${examq.question.content}</br>
+			                 	aaaaaaaaaaaaaaaa${examq.question.content}<br />
 			                 	</c:forEach>
 		                 	</c:forEach>
 	                 	</c:forEach>
@@ -161,48 +162,117 @@
                                 <li class='dd-item' data-id='4'>
                                   <div class='dd-handle'>${vertical.name}</div>
                                   <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
-                                     序号：${l.index+1+k.index*(fn:length(sequential.examVerticals)+1)+j.index*(fn:length(chapter.esequentials)+1)+i.index*(fn:length(exam.examchapters)+1)}  
+                                   	  序号：${l.index+1+k.index*(fn:length(sequential.examVerticals)+1)+j.index*(fn:length(chapter.esequentials)+1)+i.index*(fn:length(exam.examchapters)+1)}  
 			                 		<div class="test">
 			                 		<c:forEach var="qd" items="${examq.qdlist}">
 			                 			<%-- html问题描述 --%>
 							   			<c:if test="${qd.type == 1}">
-							   				${qd.title}</br>
+							   				${qd.title}<br />
 							   				<c:forEach var="qdcontent" items="${qd.content}">
 							   					<label  for=""><input type="radio" name="" id="" aria-role="radio" aria-describedby="" value="${qdcontent}" aria-multiselectable="true"/>${qdcontent}</label>
 							   				</c:forEach>
-							   				</br>${qd.explain}
+							   				<br />${qd.explain}
 							   			</c:if>
 							   		    <%-- 单选 --%>
-							   			<c:if test="${qd.type == 2}">
-							   				${qd.title}</br>
-							   				<c:forEach var="qdcontent" items="${qd.content}">
-							   					<label  for=""><input type="radio" name="" id="" aria-role="radio" aria-describedby="" value="${qdcontent}" aria-multiselectable="true"/>${qdcontent}</label>
-							   				</c:forEach>
-							   				</br>${qd.explain}
-							   			</c:if>
+							   			<c:if test="${qd.type == 2}">																						
+											<div class='row'>
+												<div class='col-xs-12'>
+													<form class="form form-horizontal" method="post" action="#">
+														<div class='form-group'>
+															<span class='col-sm-12'>${qd.title}</span>
+														</div>
+														<hr class='hr-normal'>
+														<c:forEach var="qdcontent" items="${qd.content}">
+															<div class='form-group'>
+																<label class='radio-line'>
+																	<input type="radio" name="choice" id=""/>A.
+																</label> 
+																<label >${qdcontent}</label>																
+															</div>
+														</c:forEach>
+														<hr class='hr-normal'>
+														<div class='form-group'>
+															<label >正确答案：${qd.answer}</label>
+														</div>	
+													</form>
+												</div>
+											</div>
+										</c:if>
 							   			<%-- 多选 --%>
 							   			<c:if test="${qd.type == 3}">
-							   				${qd.title}</br>
+							   				<%-- ${qd.title}<br />
 							   				<c:forEach var="qdcontent" items="${qd.content}">
 							   					<label  for=""><input type="radio" name="" id="" aria-role="radio" aria-describedby="" value="${qdcontent}" aria-multiselectable="true"/>${qdcontent}</label>
 							   				</c:forEach>
-							   				</br>${qd.explain}
+							   				<br />${qd.explain} --%>
+							   				<div class='row'>
+												<div class='col-xs-12'>
+													<form class="form form-horizontal" method="post" action="#">
+														<div class='form-group'>
+															<span class='col-sm-12'>${qd.title}</span>
+														</div>
+														<hr class='hr-normal'>
+														<c:forEach var="qdcontent" items="${qd.content}">
+															<div class='form-group'>
+																<label class='checkbox-line'>
+																	<input type="checkbox" name="choice" />${qdcontent}
+																</label> 
+																<label>${qdcontent}</label>
+															</div>
+														</c:forEach>
+														<hr class='hr-normal'>
+														<div class='form-group'>
+															<label >正确答案：${qd.answer}</label>
+														</div>															
+													</form>
+												</div>
+											</div>
 							   			</c:if>
 							   			<%-- 填空 --%>
 							   			<c:if test="${qd.type == 4}">
-							   				${qd.title}</br>
+							   				<%-- ${qd.title}<br />
 							   				<c:forEach var="qdcontent" items="${qd.content}">
 							   					<label  for=""><input type="radio" name="" id="" aria-role="radio" aria-describedby="" value="${qdcontent}" aria-multiselectable="true"/>${qdcontent}</label>
 							   				</c:forEach>
-							   				</br>${qd.explain}
-							   			</c:if>
+							   				<br />${qd.explain} --%>
+											<div class='row'>
+												<div class='col-xs-12'>
+													<form class="form form-horizontal" method="post" action="#">
+														<div class='form-group'>
+															<span class='col-sm-12'>${qd.title}</span>
+														</div>
+														<hr class='hr-normal'>
+														<div class='form-group'>
+															<div class='col-sm-12'>
+																<input class='form-control' type="text" />
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+										</c:if>
 							   			<%-- 多文本填空 --%>
 							   			<c:if test="${qd.type == 5}">
-							   				${qd.title}</br>
+							   				<%-- ${qd.title}<br />
 							   				<c:forEach var="qdcontent" items="${qd.content}">
 							   					<label  for=""><input type="radio" name="" id="" aria-role="radio" aria-describedby="" value="${qdcontent}" aria-multiselectable="true"/>${qdcontent}</label>
 							   				</c:forEach>
-							   				</br>${qd.explain}
+							   				<br />${qd.explain} --%>
+							   				<div class='row'>
+												<div class='col-xs-12'>
+													<form class="form form-horizontal" method="post" action="#">
+														<div class='form-group'>
+															<span class='col-sm-12'>${qd.title}</span>
+														</div>
+														<hr class='hr-normal'>
+														<div class='form-group'>
+															<div class='col-sm-12'>
+																<textarea class='form-control' rows='3'></textarea>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
 							   			</c:if>
 			                 		</c:forEach>
 			                 		</div>
@@ -236,36 +306,51 @@
 								</div>
 								<hr class='hr-normal'>
 								<div class='form-group'>
-									<label class='col-sm-1'> A. </label> <label class='col-sm-10'>
-										科普文章对作家的依赖 </label>
+									<label class='radio-line'>
+										<input type='radio' name="choice"> A. 
+									</label>
+									<label >科普文章对作家的依赖 </label>
 								</div>
 								<div class='form-group'>
-									<label class='col-sm-1'> B. </label> <label class='col-sm-10'>
-										科学和文学的互相激励作用 </label>
+									<label class='radio-line'>
+										<input type='radio' name="choice"> B. 
+									</label>
+									<label >科普文章对作家的依赖 </label>
 								</div>
 								<div class='form-group'>
-									<label class='col-sm-1'> C. </label> <label class='col-sm-10'>
-										科学和文学互相依赖的关系 </label>
+									<label class='radio-line'>
+										<input type='radio' name="choice"> C. 
+									</label> 
+									<label >科普文章对作家的依赖 </label>
 								</div>
 								<div class='form-group'>
-									<label class='col-sm-1'> D. </label> <label class='col-sm-10'>
-										科学发展为文学提供了丰富的素材 </label>
+									<label class='radio-line'>
+										<input type='radio' name="choice"> D. 
+									</label>
+									<label >科普文章对作家的依赖 </label>
 								</div>
-
 								<hr class='hr-normal'>
 								<div class='form-group'>
+									<label >正确答案：B </label>
+								</div>
+
+<!-- 								<hr class='hr-normal'>
+								<div class='form-group'>
 									<div class='col-sm-12'>
-										<label class='radio radio-inline'> <input type='radio'
-											name="choice"> A
-										</label> <label class='radio radio-inline'> <input
-											type='radio' name="choice"> B
-										</label> <label class='radio radio-inline'> <input
-											type='radio' name="choice"> C
-										</label> <label class='radio radio-inline'> <input
-											type='radio' name="choice"> D
+										<label class='radio radio-inline'> 
+											<input type='radio' name="choice"> A
+										</label> 
+										<label class='radio radio-inline'> 
+											<input type='radio' name="choice"> B
+										</label> 
+										<label class='radio radio-inline'> 
+											<input type='radio' name="choice"> C
+										</label> 
+										<label class='radio radio-inline'> 
+											<input type='radio' name="choice"> D
 										</label>
 									</div>
-								</div>
+								</div> -->
 
 							</form>
 						</div>
@@ -287,23 +372,23 @@
 								<hr class='hr-normal'>
 								
 								<div class='form-group'>
-									<label class='col-sm-1'> A. </label> <label class='col-sm-10'>
-										科普文章对作家的依赖 </label>
+									<label class='col-sm-1 checkbox'> <input type='checkbox' value=''> A. </label> 
+									<label class='col-sm-10'>科普文章对作家的依赖 </label>
 								</div>
 								<div class='form-group'>
-									<label class='col-sm-1'> B. </label> <label class='col-sm-10'>
-										科学和文学的互相激励作用 </label>
+									<label class='col-sm-1 checkbox'> <input type='checkbox' value=''> B. </label> 
+									<label class='col-sm-10'>科学和文学的互相激励作用 </label>
 								</div>
 								<div class='form-group'>
-									<label class='col-sm-1'> C. </label> <label class='col-sm-10'>
-										科学和文学互相依赖的关系 </label>
+									<label class='col-sm-1 checkbox'> <input type='checkbox' value=''> C. </label> 
+									<label class='col-sm-10'>科学和文学互相依赖的关系 </label>
 								</div>
 								<div class='form-group'>
-									<label class='col-sm-1'> D. </label> <label class='col-sm-10'>
-										科学发展为文学提供了丰富的素材 </label>
+									<label class='col-sm-1 checkbox'> <input type='checkbox' value=''> D. </label> 
+									<label class='col-sm-10'>科学发展为文学提供了丰富的素材 </label>
 								</div>
 
-								<hr class='hr-normal'>
+<!-- 								<hr class='hr-normal'>
 								<div class='form-group'>
 									<div class='col-sm-12'>
 										<label class='checkbox-inline'> 
@@ -319,7 +404,7 @@
 											type='checkbox' value=''> D
 										</label>
 									</div>
-								</div>
+								</div> -->
 
 							</form>
 						</div>
@@ -341,6 +426,7 @@
 								<div class='form-group'>
 									<div class='col-sm-12'>
 										<textarea class='form-control' rows='3'></textarea>
+										<!-- <input class='form-control' type="text" /> -->
 									</div>
 								</div>
 							</form>
@@ -375,7 +461,7 @@
 								<div class='box-content'>
 									<div class='row'>
 										<div class='col-sm-12'>
-											<div id="timer" class="pull-left" style="color:green;font-family:courier;font-size:150%"></div>
+											<div id="timer" class="pull-left" style="color:green;font-family:Arial;font-size:170%"></div>
 											<div class="pull-right">
 												<a class="btn">暂停</a> 
 												<a class="btn">下次再做</a>
@@ -444,7 +530,7 @@
 		function CountDown() {
 			if (maxtime >= 0) {
 				minutes = Math.floor(maxtime / 60);
-				seconds = Math.floor(maxtime % 60);
+				seconds = Math.floor(maxtime % 60)>9?Math.floor(maxtime % 60):"0"+Math.floor(maxtime % 60);
 				msg = minutes + ":" + seconds ;
 				$("#timer").html(msg);
 				if (maxtime == 5 * 60)
