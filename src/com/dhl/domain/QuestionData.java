@@ -18,12 +18,20 @@ public class QuestionData {
 	
 	private List<String> content;
 	
-	private String answer;
+	private List<String> answer;
 	
 	private int score;
 
 	private String explain;
 
+	public List<String> getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(List<String> answer) {
+		this.answer = answer;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -54,14 +62,6 @@ public class QuestionData {
 
 	public void setContent(List<String> content) {
 		this.content = content;
-	}
-
-	public String getAnswer() {
-		return answer;
-	}
-
-	public void setAnswer(String answer) {
-		this.answer = answer;
 	}
 
 	public int getScore() {

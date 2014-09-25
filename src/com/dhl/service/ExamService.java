@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.SCPClient;
-import ch.ethz.ssh2.Session;
 
 import com.dhl.dao.ChapterDao;
 import com.dhl.dao.CompetionExamDao;

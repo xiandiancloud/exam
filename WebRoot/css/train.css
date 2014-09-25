@@ -182,6 +182,7 @@ li {
 .rborder{margin-top: 30px;}
 .none{display:none;}
 .desc{height:150px;}
+.trainimg img{}
 /* Nav links */
 .lastspan > li > a{
     width: 35px;

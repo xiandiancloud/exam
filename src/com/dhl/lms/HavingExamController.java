@@ -1,11 +1,13 @@
 package com.dhl.lms;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,8 @@ import com.dhl.domain.UserExam;
 import com.dhl.service.ExamQuestionService;
 import com.dhl.service.ExamService;
 import com.dhl.service.UserExamService;
+import com.dhl.service.UserQuestionService;
+import com.dhl.util.ParseQuestion;
 import com.dhl.web.BaseController;
 
 /**
@@ -42,6 +46,8 @@ public class HavingExamController extends BaseController {
 	private ExamService examService;
 	@Autowired
 	private ExamQuestionService examquestionService;
+	@Autowired
+	private UserQuestionService userQuestionService;
 	
 	//判断是否有权限去考试
 	private boolean isHaving(Exam exam)
@@ -49,9 +55,9 @@ public class HavingExamController extends BaseController {
 		int isnormal = exam.getIsnormal();
 		if (isnormal == 1)
 		{
-			
+			//如果是竞赛试卷，需要判断是否考试在这个竞赛内
 		}
-		return false;
+		return true;
 	}
 	
 	//判断是否有权限去判分
@@ -67,21 +73,21 @@ public class HavingExamController extends BaseController {
 	
 	private List<QuestionData> changetohtml(String content)
 	{
-		List<QuestionData> qtlist = new ArrayList();
-//		
-		QuestionData qd = new QuestionData();
-		qd.setAnswer("111111");
-		List<String> qs = new ArrayList();
-		qs.add("content111--------");
-		qs.add("content222--------");
-		qd.setContent(qs);
-		qd.setScore(100);
-		qd.setTitle("问题标题测试---------");
-		qd.setId(1);
-		qd.setType(2);
-		qd.setExplain("解释--------");
-		qtlist.add(qd);
-		return qtlist;//ParseQuestion.changetohtml(content);
+//		List<QuestionData> qtlist = new ArrayList();
+////		
+//		QuestionData qd = new QuestionData();
+//		qd.setAnswer("111111");
+//		List<String> qs = new ArrayList();
+//		qs.add("content111--------");
+//		qs.add("content222--------");
+//		qd.setContent(qs);
+//		qd.setScore(100);
+//		qd.setTitle("问题标题测试---------");
+//		qd.setId(1);
+//		qd.setType(3);
+//		qd.setExplain("解释--------");
+//		qtlist.add(qd);
+		return ParseQuestion.changetohtml(content);
 	}
 	
 	/**
@@ -95,7 +101,6 @@ public class HavingExamController extends BaseController {
 		ModelAndView view = new ModelAndView();
 		Exam exam = examService.get(examId);
 		//
-		
 		Set<ExamChapter> chapterset = exam.getExamchapters();
 		Iterator it = chapterset.iterator();
 		List<Train> tlist = new ArrayList();
@@ -111,35 +116,38 @@ public class HavingExamController extends BaseController {
 				while (it3.hasNext()) {
 					ExamVertical vertical = (ExamVertical) it3.next();
 					Set<ExamQuestion> vt = vertical.getExamQuestion();//examquestionService.getVerticalTrainList(vertical.getId());
+					System.out.println("yyy---------"+vt.size()+"    vertical    "+vertical.getName());
 					for (ExamQuestion eq:vt)
 					{
 						Question q = eq.getQuestion();
+						//问题
 						if (q != null)
 						{
 							String content = q.getContent();
 							List<QuestionData> qdlist = changetohtml(content);
 							eq.setQdlist(qdlist);
 //							eq.setHtmlcontent(content);
-							
+						}
+						else//实训
+						{
+							Train t = eq.getTrain();
+							if (t != null)
+							{
+								List<QuestionData> trainList = new ArrayList();
+								QuestionData qd = new QuestionData();
+								qd.setTitle(t.getName());
+								List<String> qs = new ArrayList();
+								qs.add(t.getConContent());
+								qd.setContent(qs);
+								qd.setType(6);
+								trainList.add(qd);
+								eq.setQdlist(trainList);
+							}
 						}
 					}
-//					Set<VerticalTrain> verticalTrainset = vertical
-//							.getVerticalTrains();
-//					Iterator it4 = verticalTrainset.iterator();
-//					while (it4.hasNext()) {
-//						VerticalTrain vt = (VerticalTrain) it4.next();
-//						Train train = vt.getTrain();
-//						if (train != null) {
-//							tlist.add(train);
-//						}
-//					}
 				}
 			}
 		}
-		
-		
-		
-		
 		User user = getSessionUser(request);
 		userExamService.setMyCourseActiveState(user.getId());
 		UserExam ucs = userExamService
@@ -164,4 +172,22 @@ public class HavingExamController extends BaseController {
 		return view;
 	}
 
+	/**
+	 * 提交答案
+	 */
+	@RequestMapping("/submitquesstion")
+	public void submitquesstion(HttpServletRequest request,
+			HttpServletResponse response, int examId,int questionId,int number,String useranswer) {
+		try {
+			
+			User user = getSessionUser(request);
+			userQuestionService.saveQuestion(user.getId(),examId,questionId, number, useranswer);
+			String str = "{'sucess':'sucess'}";
+			PrintWriter out = response.getWriter();
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 }

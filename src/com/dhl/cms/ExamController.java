@@ -586,6 +586,9 @@ public class ExamController extends BaseController {
 		ExamVertical vertical = examverticalService.get(verticalId);
 		view.addObject("vertical", vertical);
 		
+		List<Train> courselists = new ArrayList<Train>();
+		try
+		{
 		//取得实训课程列表
 		RestTrain rs = new RestTrain();
 		HttpEntity<RestTrain> entity = new HttpEntity<RestTrain>(rs);
@@ -596,7 +599,7 @@ public class ExamController extends BaseController {
 		RestTrain e = res.getBody();
 		String courseList = e.getCourselist();
 		JSONArray jsonArray = JSONArray.fromObject(courseList);
-		List<Train> courselists = new ArrayList<Train>();
+		
 		for (Object obj : jsonArray)  
         {  
             JSONObject jsonObject = (JSONObject) obj;  
@@ -607,6 +610,9 @@ public class ExamController extends BaseController {
             c.setName(name);
             courselists.add(c);
         }  
+		}
+		catch(Exception e)
+		{}
 		view.addObject("trainlist", courselists);
 		
 		view.setViewName("/cms/unit");
@@ -615,7 +621,7 @@ public class ExamController extends BaseController {
 	
 	private List<QuestionData> changetohtml(String content)
 	{
-		return null;//ParseQuestion.changetohtml(content);
+		return ParseQuestion.changetohtml(content);
 	}
 	
 	/**

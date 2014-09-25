@@ -1271,97 +1271,6 @@ img.MathJax_strut {
 										data-usage-id="#"
 										data-type="None" data-block-type="vertical">
 										
-										<!-- <ol class="reorderable-container ui-sortable"id="problem_checkbox" style="display:none;">
-										<li class="studio-xblock-wrapper is-draggable" data-locator="i4x://cet55/cs01/problem/5e23049fc8734b2498f66db6e34b6a82" data-course-key="cet55/cs01/2014">
-
-										<section class="wrapper-xblock level-element ">
-
-									<header class="xblock-header xblock-header-problem">
-										<div class="xblock-header-primary">
-											<div class="header-details">
-												<span class="xblock-display-name">问题</span>
-											</div>
-											<div class="header-actions">
-												<ul class="actions-list">
-															<li class="action-item action-edit">
-																<a  class="edit-button action-button" onclick="showeditor()">
-																	<i class="icon-pencil"></i>
-																	<span class="action-button-text">编辑</span>
-																</a>
-															</li>
-															<li class="action-item action-duplicate">
-																<a href="#" data-tooltip="复制" class="duplicate-button action-button">
-																<i class="icon-copy"></i>
-																<span class="sr">复制</span>
-																</a>
-															</li>
-														<li class="action-item action-delete">
-															<a href="#" data-tooltip="删除" class="delete-button action-button">
-															<i class="icon-trash"></i>
-															<span class="sr">删除</span>
-															</a>
-														</li>
-															<li class="action-item action-drag">
-																<span data-tooltip="Drag to reorder" class="drag-handle action"></span>
-															</li>
-												</ul>
-											</div>
-										</div>
-									 </header>
-										<article class="xblock-render">
-										
-
-										</article>
-
-										</section>
-											</li></ol> -->
-											
-										<!--实验-->	
-										<!-- <ol class="reorderable-container ui-sortable"id="exam_content" style="display:none;">
-										<li class="studio-xblock-wrapper is-draggable" data-locator="i4x://cet55/cs01/problem/5e23049fc8734b2498f66db6e34b6a82" data-course-key="cet55/cs01/2014">
-
-										<section class="wrapper-xblock level-element ">
-
-									<header class="xblock-header xblock-header-problem">
-										<div class="xblock-header-primary">
-											<div class="header-details">
-												<span class="xblock-display-name">实验</span>
-											</div>
-											<div class="header-actions">
-												<ul class="actions-list">
-															<li class="action-item action-edit">
-																<a  class="edit-button action-button" onclick="showtrain()">
-																	<i class="icon-pencil"></i>
-																	<span class="action-button-text">编辑</span>
-																</a>
-															</li>
-															<li class="action-item action-duplicate">
-																<a href="#" data-tooltip="复制" class="duplicate-button action-button">
-																<i class="icon-copy"></i>
-																<span class="sr">复制</span>
-																</a>
-															</li>
-														<li class="action-item action-delete">
-															<a href="#" data-tooltip="删除" class="delete-button action-button">
-															<i class="icon-trash"></i>
-															<span class="sr">删除</span>
-															</a>
-														</li>
-															<li class="action-item action-drag">
-																<span data-tooltip="Drag to reorder" class="drag-handle action"></span>
-															</li>
-												</ul>
-											</div>
-										</div>
-									 </header>
-										<article class="xblock-render">
-										
-
-										</article>
-
-										</section>
-											</li></ol> -->
-										
 										<c:forEach var="vt" items="${vtlist}">
 										<ol class="reorderable-container ui-sortable" style="">
 										 <li class="studio-xblock-wrapper is-draggable" data-locator="#" data-course-key="">
@@ -1404,6 +1313,11 @@ img.MathJax_strut {
 										 </header>
 										    <article class="xblock-render">
 										   		<c:if test="${!empty vt.question}">
+										   			<div class="xblock xblock-student_view xmodule_display xmodule_CapaModule xblock-initialized" data-runtime-class="PreviewRuntime" data-init="XBlockToXModuleShim" data-runtime-version="1" data-usage-id="" data-type="Problem" data-block-type="problem">
+														<div id="" class="problems-wrapper showed" data-problem-id="" data-url="" data-progress_status="none" data-progress_detail="0/1">
+														
+										   			<div class="problem-progress">(本题共有1分)</div></br></br>
+										   			<div class="problem" role="application">
 											   		<%-- ${vt.htmlcontent} --%>
 											   		<c:forEach var="qd" items="${vt.qdlist}">
 											   		    <%-- html问题描述 --%>
@@ -1416,27 +1330,96 @@ img.MathJax_strut {
 											   			</c:if>
 											   		    <%-- 单选 --%>
 											   			<c:if test="${qd.type == 2}">
-											   				${qd.title}</br>
-											   				<c:forEach var="qdcontent" items="${qd.content}">
-											   					<label  for=""><input type="radio" name="" id="" aria-role="radio" aria-describedby="" value="${qdcontent}" aria-multiselectable="true"/>${qdcontent}</label>
-											   				</c:forEach>
-											   				</br>${qd.explain}
+											   				<div>
+																<p>${qd.title}</p>
+																
+																    <span><form class="choicegroup capa_inputtype" id="">
+																    <div class="indicator_container">
+																        <span class="unanswered" id="" aria-describedby="" style="display: inline-block;"></span>
+																    </div>
+																
+																    <fieldset role="radiogroup" aria-label="">
+																		<c:forEach var="qdcontent" items="${qd.content}">
+																        <label for="" correct_answer="true" class="choicegroup_correct">
+																            <input type="radio" name="" id="" aria-role="radio" aria-describedby="" value="choice_ipod">${qdcontent}
+																
+																        </label>
+																        </c:forEach>
+																        <span id=""></span>
+																    </fieldset>
+																
+																</form></span>
+																    <section class="solution-span">
+																 <span id=""><solution id="">
+																        <div class="detailed-solution">
+																            <p>${qd.explain}</p>
+																        </div>
+																    </solution>
+																</span>
+																</section>
+																</div>
+											   				
 											   			</c:if>
 											   			<%-- 多选 --%>
 											   			<c:if test="${qd.type == 3}">
-											   				${qd.title}</br>
-											   				<c:forEach var="qdcontent" items="${qd.content}">
-											   					<label  for=""><input type="radio" name="" id="" aria-role="radio" aria-describedby="" value="${qdcontent}" aria-multiselectable="true"/>${qdcontent}</label>
-											   				</c:forEach>
-											   				</br>${qd.explain}
+														  <div>
+														  <p>${qd.title}</p>
+														  <span><form class="choicegroup capa_inputtype" id="">
+														    <div class="indicator_container">
+														        <span class="status unanswered" id="" aria-describedby="">
+														            <span class="sr">
+														                -
+														                未答复
+														            </span>
+														        </span>
+														    </div>
+														
+														    <fieldset role="checkboxgroup" aria-label="Select the answer that matches">
+																<c:forEach var="qdcontent" items="${qd.content}">
+														        <label for="" correct_answer="true" class="choicegroup_correct">
+														            <input type="checkbox" name="" id="" aria-role="radio" aria-describedby="" aria-multiselectable="true">${qdcontent}
+														        </label>
+														        </c:forEach>
+														        <span id=""></span>
+														    </fieldset>
+														
+														</form></span>
+														<section class="solution-span">
+																 <span id=""><solution id="">
+																        <div class="detailed-solution">
+																            <p>${qd.explain}</p>
+																        </div>
+																    </solution>
+																</span>
+																</section>
+														</div>
 											   			</c:if>
 											   			<%-- 填空 --%>
 											   			<c:if test="${qd.type == 4}">
-											   				${qd.title}</br>
-											   				<c:forEach var="qdcontent" items="${qd.content}">
-											   					<label  for=""><input type="radio" name="" id="" aria-role="radio" aria-describedby="" value="${qdcontent}" aria-multiselectable="true"/>${qdcontent}</label>
-											   				</c:forEach>
-											   				</br>${qd.explain}
+											   				  <div>
+																<p>${qd.title}</p>
+																
+																 <span><div id="" class=" capa_inputtype  textline">
+																    <div class="unanswered " id="">
+																
+																    <input type="text" name="" id="" aria-label="Which US state has Lansing as its capital?" aria-describedby="" value="" size="20">
+																      <p class="status" aria-hidden="true" aria-describedby="">
+																        Which US state has Lansing as its capital?
+																        -
+																        未答复
+																      </p>
+																      <p id="" class="answer" aria-hidden="true">Michigan</p>
+																</div>
+																</div></span>
+																    <section class="solution-span">
+																 <span id=""><solution id="">
+																        <div class="detailed-solution">
+																            <p>${qd.explain}</p>
+																        </div>
+																    </solution>
+																</span>
+																</section>
+																</div>
 											   			</c:if>
 											   			<%-- 多文本填空 --%>
 											   			<c:if test="${qd.type == 5}">
@@ -1447,7 +1430,17 @@ img.MathJax_strut {
 											   				</br>${qd.explain}
 											   			</c:if>
 											   		</c:forEach>
-										   		
+											   		
+														  <div class="action">
+														    <input type="hidden" name="problem_id" value="Checkboxes">
+														
+														    <input class="check 提交" type="button" data-checking="正在检测..." value="提交">
+														    <button class="show"><span class="show-label" aria-hidden="true">隐藏答案</span> <span class="sr">揭示答案</span></button>
+														  </div>
+														</div>
+										   			</div>
+														
+													</div>
 										   		</c:if>
 										        <c:if test="${empty vt.question}">${vt.train.name}</c:if>
 										    </article>
@@ -1484,7 +1477,11 @@ img.MathJax_strut {
 											</ul>
 											<div id="tab1" class="tab current ui-tabs-panel ui-widget-content ui-corner-bottom" aria-labelledby="ui-id-1" role="tabpanel" style="display: block;" aria-expanded="true" aria-hidden="false">
 												<ul class="new-component-template">
-															
+															<li class="editor-md">
+																<a data-boilerplate="checkboxes_response.yaml" data-category="problem"  onclick="showcheckbox(1)">
+																	<span class="name">描述题</span>
+																</a>
+															</li>
 															<li class="editor-md">
 																<a data-boilerplate="checkboxes_response.yaml" data-category="problem"  onclick="showcheckbox(1)">
 																	<span class="name">多项选择</span>
@@ -1498,6 +1495,11 @@ img.MathJax_strut {
 															<li class="editor-md">
 																<a data-boilerplate="string_response.yaml" data-category="problem"  onclick="showcheckbox(3)">
 																	<span class="name">填空</span>
+																</a>
+															</li>
+															<li class="editor-md">
+																<a data-boilerplate="checkboxes_response.yaml" data-category="problem"  onclick="showcheckbox(1)">
+																	<span class="name">论述题</span>
 																</a>
 															</li>
 												</ul>

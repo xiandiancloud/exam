@@ -325,34 +325,29 @@ create table t_user_question
 (
    id                  int not null AUTO_INCREMENT,
    userId              int(10) not null,
-   examId              int(10) default 0,
+   examId              int(10) not null,
    trainId             int(10) default 0,
-   questionId          int(10) not null,
+   questionId          int(10) default 0,
    counts              int(10) default 0,
-   revalue             varchar(3000) default null,
-   result              varchar(255) default null,
    primary key (id),
-   UNIQUE KEY (courseId,trainId),
-   CONSTRAINT receiveuser_train_ibfk_1 FOREIGN KEY (userId) REFERENCES auth_user (id) ON DELETE CASCADE,
-   CONSTRAINT receiveuser_train_ibfk_2 FOREIGN KEY (courseId) REFERENCES t_course (id),
-   CONSTRAINT receiveuser_train_ibfk_3 FOREIGN KEY (trainId) REFERENCES t_train (id)
+   CONSTRAINT receivet_user_question_ibfk_1 FOREIGN KEY (userId) REFERENCES auth_user (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_user_question_ibfk_2 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_user_question_ibfk_3 FOREIGN KEY (trainId) REFERENCES t_train (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_user_question_ibfk_4 FOREIGN KEY (questionId) REFERENCES t_question (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*考试系统下问题跟子问题的对应关系*/
-drop table if exists t_user_childquestion;
-create table t_user_childquestion
+drop table if exists t_user_questionchild;
+create table t_user_questionchild
 (
    id                  int not null AUTO_INCREMENT,
+   number              int(10) not null,
    userquestionId      int(10) not null,
-   counts              int(10) default 0,
-   useranswer          varchar(1000) default null,
-   revalue             varchar(3000) default null,
+   useranswer          text default null,
+   revalue             text default null,
    result              varchar(255) default null,
    primary key (id),
-   UNIQUE KEY (courseId,trainId),
-   CONSTRAINT receiveuser_train_ibfk_1 FOREIGN KEY (userId) REFERENCES auth_user (id) ON DELETE CASCADE,
-   CONSTRAINT receiveuser_train_ibfk_2 FOREIGN KEY (courseId) REFERENCES t_course (id),
-   CONSTRAINT receiveuser_train_ibfk_3 FOREIGN KEY (trainId) REFERENCES t_train (id)
+   CONSTRAINT receivet_user_questionchild_ibfk_1 FOREIGN KEY (userquestionId) REFERENCES t_user_question (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 drop table if exists t_user_course;
