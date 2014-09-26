@@ -131,7 +131,7 @@
                                 <li class='dd-item' data-id='4'>
                                   <div class='dd-handle'>${vertical.name}</div>
                                   <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
-			                 		<c:forEach var="qd" items="${examq.qdlist}">
+			                 		<c:forEach var="qd" items="${examq.qdlist}" varStatus="nn">
 			                 			<%-- 实训 --%>
 							   			<c:if test="${qd.type == 6}">
 							   				<div class='row'>
@@ -186,7 +186,7 @@
 															</span>
 														</div>
 														<hr class='hr-normal'>
-														<c:forEach var="qdcontent" items="${qd.content}" varStatus="nn">
+														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
 																<label class='radio'>
 																	<input type="radio" name="${qd.id}" id="${qd.id}" onclick="submitquesstion('${qd.id}','${nn.index+1}','${qdcontent}');"/>${qdcontent}
@@ -205,7 +205,7 @@
 							   			<c:if test="${qd.type == 3}">
 							   				<div class='row'>
 												<div class='col-xs-12'>
-													<form class="form form-horizontal" method="post" action="#">
+													<form class="form form-horizontal" method="post" action="#" id="${examq.id}${qd.id}">
 														<div class='form-group col-sm-12'>
 															<span class='' id="number${l.index+1+k.index*(fn:length(sequential.examVerticals))+j.index*(fn:length(chapter.esequentials))+i.index*(fn:length(exam.examchapters))}">
 															${l.index+1+k.index*(fn:length(sequential.examVerticals))+j.index*(fn:length(chapter.esequentials))+i.index*(fn:length(exam.examchapters))}
@@ -215,7 +215,7 @@
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
 																<label class='checkbox'>
-																	<input type="checkbox" name="${qd.id}" />${qdcontent}
+																	<input type="checkbox" name="${qd.id}" onclick="submitmultiquesstion('${qd.id}','${nn.index+1}','${examq.id}${qd.id}');" value="${qdcontent}"/>${qdcontent}
 																</label> 
 															</div>
 														</c:forEach>
@@ -250,7 +250,7 @@
 														<hr class='hr-normal'>
 														<div class='form-group'>
 															<div class='col-sm-12'>
-																<input class='form-control' type="text" />
+																<input class='form-control' type="text" onblur="submittextquesstion('${qd.id}','${nn.index+1}',this);" />
 															</div>
 														</div>
 														<hr class='hr-normal'>
@@ -284,7 +284,7 @@
 														<hr class='hr-normal'>
 														<div class='form-group'>
 															<div class='col-sm-12'>
-																<textarea class='form-control' rows='3'></textarea>
+																<textarea class='form-control' rows='5' onblur="submittextareaquesstion('${qd.id}','${nn.index+1}',this);"></textarea>
 															</div>
 														</div>
 														<hr class='hr-normal'>
@@ -414,11 +414,69 @@
 		}
 		timer = setInterval("CountDown()", 1000);
 		
-		//提交答案
+		//提交答案------单选
 		function submitquesstion(questionId,number,useranswer)
 		{
-			//alert("11111111111111111111111");
 			var examId = "${exam.id}";
+			var data = {examId:examId,questionId:questionId,number:number,useranswer:useranswer};
+			$.ajax({
+				url : "lms/submitquesstion.action",
+				type : "post",
+				data : data,
+				success : function(s) {
+					var a = eval("(" + s + ")");
+					if ("sucess" == a.sucess) {
+						alert("提交了");
+					}
+				}
+			});
+		}
+		//提交答案------多选
+		function submitmultiquesstion(questionId,number,id)
+		{
+			var s='';
+			$("#"+id+" input[type='checkbox']:checked").each(function(){ 
+			   s+=$(this).val()+'#'; 
+			}); 
+			if (s.length > 0) { 
+			    s = s.substring(0,s.length - 1); 
+			} 
+ 			var examId = "${exam.id}";
+			var data = {examId:examId,questionId:questionId,number:number,useranswer:s};
+			$.ajax({
+				url : "lms/submitquesstion.action",
+				type : "post",
+				data : data,
+				success : function(s) {
+					var a = eval("(" + s + ")");
+					if ("sucess" == a.sucess) {
+						alert("提交了");
+					}
+				}
+			});
+		}
+		//提交答案------文本输入
+		function submittextquesstion(questionId,number,element)
+		{
+ 			var examId = "${exam.id}";
+			var data = {examId:examId,questionId:questionId,number:number,useranswer:$(element).val()};
+			$.ajax({
+				url : "lms/submitquesstion.action",
+				type : "post",
+				data : data,
+				success : function(s) {
+					var a = eval("(" + s + ")");
+					if ("sucess" == a.sucess) {
+						alert("提交了");
+					}
+				}
+			});
+		}
+		//提交答案------论述题输入
+		function submittextareaquesstion(questionId,number,element)
+		{
+			var useranswer = replaceTextarea1($(element).val());
+ 			var examId = "${exam.id}";
 			var data = {examId:examId,questionId:questionId,number:number,useranswer:useranswer};
 			$.ajax({
 				url : "lms/submitquesstion.action",

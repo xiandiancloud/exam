@@ -45,7 +45,7 @@
   </head>
   <body class='contrast-red fixed-header'>
     <jsp:include page="theader.jsp"></jsp:include>
-    <div id='wrapper'>
+    <div id='wrapper' class="top20">
       <section id=''>
 	      <div class="container-fluid">
 			<div class="row topback">
@@ -196,7 +196,7 @@
 				                    </div>
 				                    <div class='box-content'>
 				                    <label for="trainname" class="control-label"><div class="h2font">内容</div></label>
-						    		<h6 id="traincon"></h6>
+						    		<h6 id="traincon" class="trainimg"></h6>
 				                    </div>
 						    </div>
                   
@@ -358,9 +358,10 @@
 			myshell();
 			timeservice(0);
 		});
-		initClock();
+		//initClock();
 		//var mainheight = $("#leftpanel").height();
 		//$("#iframe").height(mainheight);
+		initlist();
 	});
 	function initlist()
 	{
@@ -441,7 +442,7 @@
 		clearTimeout(onet);
 	}
 	function initClock() {
-		var courseId = parseInt("${course.id}");
+		var courseId = parseInt("${exam.id}");
 		var data = {
 			courseId : courseId
 		};
@@ -619,7 +620,7 @@
 			$("#traincode").attr("value","${train.codenum}");//html("实验名称：${train.name}");
 			$("#trainprename").attr("value","${train.envname}");
 			//$("#trainjoin").attr("href", "");
-			$("#traincon").html("${train.conContent}");
+			$("#traincon").html('${train.conContent}');
 			$("#trainanswer").html("${train.conAnswer}");
 		}
 		</c:forEach>

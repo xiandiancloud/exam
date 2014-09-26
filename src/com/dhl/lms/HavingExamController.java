@@ -23,6 +23,7 @@ import com.dhl.domain.Question;
 import com.dhl.domain.QuestionData;
 import com.dhl.domain.Train;
 import com.dhl.domain.User;
+import com.dhl.domain.UserCourse;
 import com.dhl.domain.UserExam;
 import com.dhl.service.ExamQuestionService;
 import com.dhl.service.ExamService;
@@ -202,11 +203,6 @@ public class HavingExamController extends BaseController {
 			int everticalId, int trainId) {
 		ModelAndView view = new ModelAndView();
 		User user = getSessionUser(request);
-		// if (user == null) {
-		// String url = "redirect:/tologin.action?url=getCourse.courseId="
-		// + courseId;
-		// return new ModelAndView(url);
-		// }
 		Exam exam = examService.get(examId);
 		UserExam ucs = userExamService.getUserExam(user.getId(), examId);
 		if (ucs == null) {
