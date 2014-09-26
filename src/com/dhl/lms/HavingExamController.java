@@ -71,7 +71,7 @@ public class HavingExamController extends BaseController {
 		return false;
 	}
 	
-	private List<QuestionData> changetohtml(String content)
+	private List<QuestionData> changetohtml(String content,int id)
 	{
 //		List<QuestionData> qtlist = new ArrayList();
 ////		
@@ -87,7 +87,7 @@ public class HavingExamController extends BaseController {
 //		qd.setType(3);
 //		qd.setExplain("解释--------");
 //		qtlist.add(qd);
-		return ParseQuestion.changetohtml(content);
+		return ParseQuestion.changetohtml(content,id);
 	}
 	
 	/**
@@ -116,7 +116,6 @@ public class HavingExamController extends BaseController {
 				while (it3.hasNext()) {
 					ExamVertical vertical = (ExamVertical) it3.next();
 					Set<ExamQuestion> vt = vertical.getExamQuestion();//examquestionService.getVerticalTrainList(vertical.getId());
-					System.out.println("yyy---------"+vt.size()+"    vertical    "+vertical.getName());
 					for (ExamQuestion eq:vt)
 					{
 						Question q = eq.getQuestion();
@@ -124,7 +123,7 @@ public class HavingExamController extends BaseController {
 						if (q != null)
 						{
 							String content = q.getContent();
-							List<QuestionData> qdlist = changetohtml(content);
+							List<QuestionData> qdlist = changetohtml(content,q.getId());
 							eq.setQdlist(qdlist);
 //							eq.setHtmlcontent(content);
 						}
@@ -134,7 +133,7 @@ public class HavingExamController extends BaseController {
 							if (t != null)
 							{
 								List<QuestionData> trainList = new ArrayList();
-								QuestionData qd = new QuestionData();
+								QuestionData qd = new QuestionData(t.getId());
 								qd.setTitle(t.getName());
 								List<String> qs = new ArrayList();
 								qs.add(t.getConContent());
@@ -149,7 +148,7 @@ public class HavingExamController extends BaseController {
 			}
 		}
 		User user = getSessionUser(request);
-		userExamService.setMyCourseActiveState(user.getId());
+		userExamService.setMyExamActiveState(user.getId());
 		UserExam ucs = userExamService
 				.getUserExam(user.getId(), examId);
 		if (ucs == null) {
@@ -163,7 +162,7 @@ public class HavingExamController extends BaseController {
 			userExamService.save(uc);
 		} else {
 			ucs.setActivestate(1);
-			userExamService.updateUserCourse(ucs);
+			userExamService.updateUserExam(ucs);
 		}
 		
 		view.addObject("exam", exam);
@@ -189,5 +188,75 @@ public class HavingExamController extends BaseController {
 			e.printStackTrace();
 		}
 
+	}
+	
+	/**
+	 * 考试界面调整到
+	 * 
+	 * @param request
+	 * @param courseId
+	 * @return
+	 */
+	@RequestMapping("/toexamtrainone")
+	public ModelAndView tocourseone(HttpServletRequest request, int examId,
+			int everticalId, int trainId) {
+		ModelAndView view = new ModelAndView();
+		User user = getSessionUser(request);
+		// if (user == null) {
+		// String url = "redirect:/tologin.action?url=getCourse.courseId="
+		// + courseId;
+		// return new ModelAndView(url);
+		// }
+		Exam exam = examService.get(examId);
+		UserExam ucs = userExamService.getUserExam(user.getId(), examId);
+		if (ucs == null) {
+			UserExam uc = new UserExam();
+			uc.setUserId(user.getId());
+			uc.setExam(exam);
+			uc.setState(0);
+			uc.setDocounts(1);
+			uc.setActivestate(1);
+			userExamService.save(uc);
+		} else {
+			ucs.setActivestate(1);
+			userExamService.updateUserExam(ucs);
+		}
+		userExamService.setMyExamActiveState(user.getId());
+		view.addObject("exam", exam);
+
+		Set<ExamChapter> chapterset = exam.getExamchapters();
+		Iterator it = chapterset.iterator();
+		List<Train> tlist = new ArrayList();
+		int currentPage = 0;
+		while (it.hasNext()) {
+			ExamChapter chapter = (ExamChapter) it.next();
+			Set<ExamSequential> sequentialset = chapter.getEsequentials();
+			Iterator it2 = sequentialset.iterator();
+
+			while (it2.hasNext()) {
+				ExamSequential sequential = (ExamSequential) it2.next();
+				Set<ExamVertical> verticalset = sequential.getExamVerticals();
+				Iterator it3 = verticalset.iterator();
+				while (it3.hasNext()) {
+					ExamVertical vertical = (ExamVertical) it3.next();
+					Set<ExamQuestion> verticalTrainset = vertical.getExamQuestion();
+					Iterator it4 = verticalTrainset.iterator();
+					while (it4.hasNext()) {
+						ExamQuestion vt = (ExamQuestion) it4.next();
+						Train train = vt.getTrain();
+						if (train != null) {
+							tlist.add(train);
+							currentPage++;
+							if (trainId == train.getId()) {
+								view.addObject("currentPage", currentPage);
+							}
+						}
+					}
+				}
+			}
+		}
+		view.addObject("tlist", tlist);
+		view.setViewName("/lms/examtrain");
+		return view;
 	}
 }

@@ -142,25 +142,18 @@
 
       // replace selects
       xml = xml.replace(/\[\[(.+?)\]\]/g, function(match, p) {
-          var selectString = '\n<optionresponse>\n',
+          var selectString = '\n<textareainput>\n',
               correct, options;
 
-          selectString += '  <optioninput options="(';
-          options = p.split(/\,\s*/g);
-
-          for (i = 0; i < options.length; i += 1) {
-              selectString += "'" + options[i].replace(/(?:^|,)\s*\((.*?)\)\s*(?:$|,)/g, '$1') + "'" + (i < options.length -1 ? ',' : '');
-          }
-
-          selectString += ')" correct="';
+          selectString += '  <areainput answer="';
           correct = /(?:^|,)\s*\((.*?)\)\s*(?:$|,)/g.exec(p);
 
           if (correct) {
               selectString += correct[1];
           }
 
-          selectString += '"></optioninput>\n';
-          selectString += '</optionresponse>\n\n';
+          selectString += '"></areainput>\n';
+          selectString += '</textareainput>\n\n';
 
           return selectString;
       });

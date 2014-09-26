@@ -356,7 +356,7 @@ public class LmsExamController extends BaseController {
 	public ModelAndView myexam(HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
 		User user = getSessionUser(request);
-		List<UserExam> mycourses = userExamService.getMyAllCourse(user.getId());
+		List<UserExam> mycourses = userExamService.getMyAllExam(user.getId());
 		view.addObject("sexamlist", mycourses);
 		List<TeacherExam> tcourselist = teacherExamService
 				.getMyTCourse(user.getId());

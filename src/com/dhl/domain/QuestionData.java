@@ -9,9 +9,14 @@ import java.util.List;
  */
 public class QuestionData {
 
+	//问题或者实训的id
 	private int id;
 	
-	//1:html问题描述 2：单选 3：多选 4：填空 5：多文本填空
+	public QuestionData(int id)
+	{
+		this.id = id;
+	}
+	//1:html问题描述 2：单选 3：多选 4：填空 5：多文本填空6：实训
 	private int type;
 	
 	private String title;

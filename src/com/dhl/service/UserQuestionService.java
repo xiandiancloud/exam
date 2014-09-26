@@ -32,6 +32,7 @@ public class UserQuestionService {
 			uq.setExamId(examId);
 			uq.setQuestionId(questionId);
 			uq.setUserId(userId);
+			uq.setTrain(null);
 			userQuestionDao.save(uq);
 		}
 		else
@@ -39,21 +40,24 @@ public class UserQuestionService {
 			uq.setExamId(examId);
 			uq.setQuestionId(questionId);
 			uq.setUserId(userId);
+			uq.setTrain(null);
 			userQuestionDao.update(uq);
 		}
 		
 		UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(number,uq.getId());
 		if (uqc == null)
 		{
-			uqc = new UserQuestionChild();
-			uqc.setNumber(number);
-			uqc.setUseranswer(useranswer);
-			userQuestionChildDao.save(uqc);
+			UserQuestionChild uqc2 = new UserQuestionChild();
+			uqc2.setNumber(number);
+			uqc2.setUseranswer(useranswer);
+			uqc2.setUserquestionId(uq.getId());
+			userQuestionChildDao.save(uqc2);
 		}
 		else
 		{
 			uqc.setNumber(number);
 			uqc.setUseranswer(useranswer);
+			uqc.setUserquestionId(uq.getId());
 			userQuestionChildDao.update(uqc);
 		}
 	}

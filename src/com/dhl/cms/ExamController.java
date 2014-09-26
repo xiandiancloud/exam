@@ -561,7 +561,7 @@ public class ExamController extends BaseController {
 			if (q != null)
 			{
 				String content = q.getContent();
-				List<QuestionData> qtlist = changetohtml(content);
+				List<QuestionData> qtlist = changetohtml(content,q.getId());
 //				eq.setHtmlcontent(content);
 //				List<QuestionData> qtlist = new ArrayList();
 //				
@@ -619,9 +619,9 @@ public class ExamController extends BaseController {
 		return view;
 	}
 	
-	private List<QuestionData> changetohtml(String content)
+	private List<QuestionData> changetohtml(String content,int id)
 	{
-		return ParseQuestion.changetohtml(content);
+		return ParseQuestion.changetohtml(content,id);
 	}
 	
 	/**

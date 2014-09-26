@@ -2,9 +2,12 @@ package com.dhl.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -23,10 +26,18 @@ public class UserQuestion extends BaseDomain {
 	private int id;
 	private int userId;
 	private int examId;
-	private int trainId;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "trainId")
+	private Train train;
 	private int questionId;
 	private int counts;
 	
+	public Train getTrain() {
+		return train;
+	}
+	public void setTrain(Train train) {
+		this.train = train;
+	}
 	public int getId() {
 		return id;
 	}
@@ -44,12 +55,6 @@ public class UserQuestion extends BaseDomain {
 	}
 	public void setExamId(int examId) {
 		this.examId = examId;
-	}
-	public int getTrainId() {
-		return trainId;
-	}
-	public void setTrainId(int trainId) {
-		this.trainId = trainId;
 	}
 	public int getQuestionId() {
 		return questionId;

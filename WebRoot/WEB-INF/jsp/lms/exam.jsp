@@ -143,11 +143,15 @@
 															&nbsp;${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
-															<div class='form-group col-sm-12 trainimg'>
-																<label>${qdcontent}</label> 
+															<div class='form-group col-sm-12'>
+																<div class="trainimg">${qdcontent}</div> 
 															</div>
 														</c:forEach>
 													</form>
+													<hr class='hr-normal'>
+													<div class='form-group col-sm-12'>
+														<a href="lms/toexamtrainone.action?examId=${exam.id}&everticalId=${vertical.id}&trainId=${qd.id}" target="_blank">进入实训</a>
+													</div>	
 												</div>
 											</div>
 							   			</c:if>
@@ -182,10 +186,10 @@
 															</span>
 														</div>
 														<hr class='hr-normal'>
-														<c:forEach var="qdcontent" items="${qd.content}">
+														<c:forEach var="qdcontent" items="${qd.content}" varStatus="nn">
 															<div class='form-group col-sm-12'>
 																<label class='radio'>
-																	<input type="radio" name="${qd.id}" id="" />${qdcontent}
+																	<input type="radio" name="${qd.id}" id="${qd.id}" onclick="submitquesstion('${qd.id}','${nn.index+1}','${qdcontent}');"/>${qdcontent}
 																</label> 
 															</div>
 														</c:forEach>
@@ -411,10 +415,11 @@
 		timer = setInterval("CountDown()", 1000);
 		
 		//提交答案
-		function submitquesstion(questionId)
+		function submitquesstion(questionId,number,useranswer)
 		{
+			//alert("11111111111111111111111");
 			var examId = "${exam.id}";
-			var data = {examId:examId,questionId:questionId};
+			var data = {examId:examId,questionId:questionId,number:number,useranswer:useranswer};
 			$.ajax({
 				url : "lms/submitquesstion.action",
 				type : "post",

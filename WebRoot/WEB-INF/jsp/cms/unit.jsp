@@ -30,7 +30,7 @@
 <link type="text/css" rel="stylesheet" href="tcss/style-app-extend1.css">
 <link rel="stylesheet" type="text/css" href="tcss/jquery.timepicker.css" />
 <link href="tcss/style-xmodule.css" rel="stylesheet" type="text/css" />
-
+<link href="tcss/custom.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 <script src="js/jquery/jquery.min.js"></script>
@@ -45,7 +45,7 @@ $(function additem(){
 		$(".xml-box").insert({"text":"Header\n=====\n"});
 	});
 	$(".multiple-choice-button").click(function(){
-		$(".xml-box").insert({"text":"[x]  correct\n[  ]  incorrect\n[x]  correct\n"});
+		$(".xml-box").insert({"text":"[x]  correct\n[ ]  incorrect\n[x]  correct\n"});
 	});
 	$(".checks-button").click(function(){
 		$(".xml-box").insert({"text":"(  )  incorrect\n(  )  incorrect\n(x)  correct\n"});
@@ -56,8 +56,11 @@ $(function additem(){
 	$(".number-button").click(function(){
 		$(".xml-box").insert({"text":"= answer +- 0.001%\n"});
 	});
-	$(".dropdown-button").click(function(){
+/* 	$(".dropdown-button").click(function(){
 		$(".xml-box").insert({"text":"dropdown-button"});
+	}); */
+	$(".dropdown-button").click(function(){
+		$(".xml-box").insert({"text":"[[(answer)]]"});
 	});
 	$(".explanation-button").click(function(){
 		$(".xml-box").insert({"text":"[问题解释]\n问题解释内容 \n[问题解释]"});
@@ -70,6 +73,11 @@ $(function additem(){
 
 <!-- end dummy segment.io -->
 <script>
+function problem_html_cancel(){
+	$("#problem_html").hide();
+	$("#component").show();
+	
+}
 function exam_editor_cancel(){
 	$("#exam_editor").hide();
 	$("#exam_select").hide();
@@ -126,50 +134,65 @@ function advanced_cancel(){
 	$("#component").show();
 }
 /**
- * 选择3种问题类型
+ * 选择5种问题类型
  */
-function showcheckbox(type){
-	$("#problem_select").hide();
-	$("#problem_checkbox").show();
-	//$("#component").show();
-	var tmp='';
-	if (type == 1)//多选
-	{
-		tmp  = '>>问题题目请在这儿修改<<\r'+
-		'[x] 选项内容\r'+
-		'[ ] 选项内容\r'+
-		'[x] 选项内容\r'+
-		'[问题解释]\r'+
-		'问题解释内容\r'+
-		'[问题解释]';
-	}
-	else if (type ==2)//单选
-	{
-		tmp  = '>>问题题目请在这儿修改<<\r'+
-		'( ) 选项内容\r'+
-		'( ) 选项内容\r'+
-		'(x) 选项内容\r'+
-		'[问题解释]\r'+
-		'问题解释内容\r'+
-		'[问题解释]';
-	}
-	else if (type == 3)
-	{
-		tmp  = '>>问题题目请在这儿修改<<\r'+
-		'= 答案在这儿修改\r'+
-		'[问题解释]\r'+
-		'问题解释内容\r'+
-		'[问题解释]';
-	}
-	$("#lowedittextarea").attr("value",tmp);
-	showeditor();
-	/*A checkboxes problem presents checkbox buttons for student input. Students can select more than one option presented.
-	>>Select the answer that matches<<
+ function showcheckbox(type){
+		if(type==5){
+			$("#problem_select").hide();
+			$("#problem_html").show();
+		}
+		else{
+		$("#problem_select").hide();
+		$("#problem_checkbox").show();
+		//$("#component").show();
+		var tmp='';
+		if (type == 1)//多选
+		{
+			tmp  = '>>问题题目请在这儿修改<<\r'+
+			'[x] 选项内容\r'+
+			'[ ] 选项内容\r'+
+			'[x] 选项内容\r'+
+			'[问题解释]\r'+
+			'问题解释内容\r'+
+			'[问题解释]';
+		}
+		else if (type ==2)//单选
+		{
+			tmp  = '>>问题题目请在这儿修改<<\r'+
+			'( ) 选项内容\r'+
+			'( ) 选项内容\r'+
+			'(x) 选项内容\r'+
+			'[问题解释]\r'+
+			'问题解释内容\r'+
+			'[问题解释]';
+		}
+		else if (type == 3)
+		{
+			tmp  = '>>问题题目请在这儿修改<<\r'+
+			'= 答案在这儿修改\r'+
+			'[问题解释]\r'+
+			'问题解释内容\r'+
+			'[问题解释]';
+		}
+		else if (type == 4)
+		{
+			tmp  = '>>问题题目请在这儿修改<<\r'+
+			'[[(答案在这儿修改)]]\r'+
+			'[问题解释]\r'+
+			'问题解释内容\r'+
+			'[问题解释]';
+		}
+		
+		$("#lowedittextarea").attr("value",tmp);
+		showeditor();
+		}
+		/*A checkboxes problem presents checkbox buttons for student input. Students can select more than one option presented.
+		>>Select the answer that matches<<
 
-	[x] correct
-	[ ] incorrect
-	[x] correct*/
-}
+		[x] correct
+		[ ] incorrect
+		[x] correct*/
+	}
 function savequestion()
 {
 	resetadvice();
@@ -1340,15 +1363,23 @@ img.MathJax_strut {
 																
 																    <fieldset role="radiogroup" aria-label="">
 																		<c:forEach var="qdcontent" items="${qd.content}">
-																        <label for="" correct_answer="true" class="choicegroup_correct">
-																            <input type="radio" name="" id="" aria-role="radio" aria-describedby="" value="choice_ipod">${qdcontent}
+																        <label for="" correct_answer="true" class=""><!-- choicegroup_correct -->
+																            <input type="radio" name="${qd.id}" id="" aria-role="radio" aria-describedby="" value="choice_ipod">${qdcontent}
 																
 																        </label>
 																        </c:forEach>
 																        <span id=""></span>
 																    </fieldset>
 																
-																</form></span>
+																</form>
+																 <p id="" class="answer" aria-hidden="true">
+																	      <c:forEach var="qdanswer" items="${qd.answer}">
+																	        <label>
+																	        	${qdanswer }
+																	        </label>
+																	       </c:forEach>
+																      </p>
+																</span>
 																    <section class="solution-span">
 																 <span id=""><solution id="">
 																        <div class="detailed-solution">
@@ -1376,14 +1407,22 @@ img.MathJax_strut {
 														
 														    <fieldset role="checkboxgroup" aria-label="Select the answer that matches">
 																<c:forEach var="qdcontent" items="${qd.content}">
-														        <label for="" correct_answer="true" class="choicegroup_correct">
+														        <label for="" correct_answer="true" class="">
 														            <input type="checkbox" name="" id="" aria-role="radio" aria-describedby="" aria-multiselectable="true">${qdcontent}
 														        </label>
 														        </c:forEach>
 														        <span id=""></span>
 														    </fieldset>
 														
-														</form></span>
+														</form>
+														<p id="" class="answer" aria-hidden="true">
+																	      <c:forEach var="qdanswer" items="${qd.answer}">
+																	        <label>
+																	        	${qdanswer }
+																	        </label>
+																	       </c:forEach>
+																      </p>
+														</span>
 														<section class="solution-span">
 																 <span id=""><solution id="">
 																        <div class="detailed-solution">
@@ -1408,7 +1447,13 @@ img.MathJax_strut {
 																        -
 																        未答复
 																      </p>
-																      <p id="" class="answer" aria-hidden="true">Michigan</p>
+																      <p id="" class="answer" aria-hidden="true">
+																	      <c:forEach var="qdanswer" items="${qd.answer}">
+																	        <label>
+																	        	${qdanswer }
+																	        </label>
+																	       </c:forEach>
+																      </p>
 																</div>
 																</div></span>
 																    <section class="solution-span">
@@ -1423,20 +1468,45 @@ img.MathJax_strut {
 											   			</c:if>
 											   			<%-- 多文本填空 --%>
 											   			<c:if test="${qd.type == 5}">
-											   				${qd.title}</br>
-											   				<c:forEach var="qdcontent" items="${qd.content}">
-											   					<label  for=""><input type="radio" name="" id="" aria-role="radio" aria-describedby="" value="${qdcontent}" aria-multiselectable="true"/>${qdcontent}</label>
-											   				</c:forEach>
-											   				</br>${qd.explain}
+											   				<div>
+																<p>${qd.title}</p>
+																
+																 <span><div id="" class=" capa_inputtype  textline">
+																    <div class="unanswered " id="">
+																
+																    <textarea name="" id="" aria-label="" aria-describedby="" value="" size="20" rows="5" style="width:95%"></textarea>
+																      <p class="status" aria-hidden="true" aria-describedby="">
+																        Which US state has Lansing as its capital?
+																        -
+																        未答复
+																      </p>
+																      <p id="" class="answer" aria-hidden="true">
+																      <c:forEach var="qdanswer" items="${qd.answer}">
+																	        <label>
+																	        	${qdanswer }
+																	        </label>
+																	       </c:forEach>
+																      </p>
+																</div>
+																</div></span>
+																    <section class="solution-span">
+																 <span id=""><solution id="">
+																        <div class="detailed-solution">
+																            <p>${qd.explain}</p>
+																        </div>
+																    </solution>
+																</span>
+																</section>
+																</div>
 											   			</c:if>
 											   		</c:forEach>
 											   		
-														  <div class="action">
+														  <!-- <div class="action">
 														    <input type="hidden" name="problem_id" value="Checkboxes">
 														
 														    <input class="check 提交" type="button" data-checking="正在检测..." value="提交">
-														    <button class="show"><span class="show-label" aria-hidden="true">隐藏答案</span> <span class="sr">揭示答案</span></button>
-														  </div>
+														    <button class="show"><span class="show-label">揭示答案</span></button>
+														  </div> -->
 														</div>
 										   			</div>
 														
@@ -1478,7 +1548,7 @@ img.MathJax_strut {
 											<div id="tab1" class="tab current ui-tabs-panel ui-widget-content ui-corner-bottom" aria-labelledby="ui-id-1" role="tabpanel" style="display: block;" aria-expanded="true" aria-hidden="false">
 												<ul class="new-component-template">
 															<li class="editor-md">
-																<a data-boilerplate="checkboxes_response.yaml" data-category="problem"  onclick="showcheckbox(1)">
+																<a data-boilerplate="checkboxes_response.yaml" data-category="problem"  onclick="showcheckbox(5)">
 																	<span class="name">描述题</span>
 																</a>
 															</li>
@@ -1498,7 +1568,7 @@ img.MathJax_strut {
 																</a>
 															</li>
 															<li class="editor-md">
-																<a data-boilerplate="checkboxes_response.yaml" data-category="problem"  onclick="showcheckbox(1)">
+																<a data-boilerplate="checkboxes_response.yaml" data-category="problem"  onclick="showcheckbox(4)">
 																	<span class="name">论述题</span>
 																</a>
 															</li>
@@ -4832,6 +4902,39 @@ require(['tender']);
 
 </div>
 
-	
+<!--描述题-->
+<div id="problem_html" style="display:none">
+    <div class="wrapper wrapper-modal-window wrapper-modal-window-edit-xblock" aria-describedby="modal-window-description" aria-labelledby="modal-window-title" aria-hidden="" role="dialog">
+    <div class="modal-window-overlay"></div>
+    <div class="modal-window modal-editor confirm modal-lg modal-type-html" style="top: 31.39999999999999px; left: 202.5px;position:fixed;">
+        <div class="edit-xblock-modal">
+            <div class="modal-header">
+                <h2 class="title modal-window-title">编辑：HTML</h2>
+                <ul class="editor-modes action-list action-modes">
+					<li class="action-item" data-mode="editor">
+					<a href="#" class="editor-button is-set">编辑器</a>
+					</li>
+					<li class="action-item" data-mode="settings">
+					<a href="#" class="settings-button">设置</a>
+					</li>
+				</ul>
+            </div>
+			<div style="float:left;width:99.1%;margin-top:1.5%;margin-left:5px;"><iframe width="100%" height="340" scrolling="no"  frameborder="0" id="conAnswer" src="input.html" ></iframe></div>
+            <div class="modal-actions" style="display: block;">
+                <h3 class="sr">Actions</h3>
+                <ul>
+					<li class="action-item">
+					<a href="javascript:void(0);" class="button action-primary action-save">Save</a>
+					</li>
+					<li class="action-item">
+					<a href="javascript:void(0);" class="button  action-cancel"onclick="problem_html_cancel()">取消</a>
+				</li>
+				</ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>	
 </body>
 </html>

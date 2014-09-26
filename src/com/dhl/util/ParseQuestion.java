@@ -17,7 +17,7 @@ public class ParseQuestion {
 		return childList;
 	}
 	
-	public static List<QuestionData> changetohtml(String xml)
+	public static List<QuestionData> changetohtml(String xml,int id)
 	{
 		try
 		{
@@ -31,8 +31,8 @@ public class ParseQuestion {
 		String parent_name=root.getName();
 		List<Element> list=getChildNode(root);
 		List<QuestionData> problem_list = new ArrayList();
-		QuestionData qd = new QuestionData();
-		String problem_html=parse_html(list,html,parent_name,problem_list,qd,null,null);
+		QuestionData qd = new QuestionData(id);
+		String problem_html=parse_html(list,html,parent_name,problem_list,qd,null,null,id);
 		//for(QuestionData str:problem_list){System.out.println(str);}
 		return problem_list;
 		}
@@ -54,7 +54,7 @@ public class ParseQuestion {
 	/**
 	 * @param args
 	 */
-		private static String parse_html(List<Element> list,String html,String parent_name,List<QuestionData>problem_list,QuestionData qd,List<String> content,List<String> answer){
+		private static String parse_html(List<Element> list,String html,String parent_name,List<QuestionData>problem_list,QuestionData qd,List<String> content,List<String> answer,int id){
 			
 			int len=list.size();
 			if(len>0){
@@ -87,7 +87,7 @@ public class ParseQuestion {
 						qd.setAnswer(answe);
 						qd.setType(4);
 						problem_list.add(qd);
-						qd = new QuestionData();
+						qd = new QuestionData(id);
 					}
 					else if(name=="stringresponse"&&i!=len-1){
 						Map<String,String> attr=getNodeAttrName(list.get(i));
@@ -97,8 +97,29 @@ public class ParseQuestion {
 						qd.setAnswer(answe);
 						qd.setType(4);
 					}
+					else if((name=="textareainput"&&i==len-1)||(name=="textareainput"&&i<len-1&&list.get(i+1).getName()!="solution")){
+						List<String> answe=new ArrayList();
+						html=parse_html(list_new,html,name,problem_list,qd,null,answe,id);
+						qd.setType(5);
+						qd.setAnswer(answe);
+						problem_list.add(qd);
+						qd = new QuestionData(id);
+					}
+					else if(name=="textareainput"&&i!=len-1){
+						List<String> answe=new ArrayList();
+						html=parse_html(list_new,html,name,problem_list,qd,null,answe,id);
+						qd.setType(5);
+						qd.setAnswer(answe);
+//						problem_list.add(qd);
+					}
+					else if(name=="areainput"){
+						Map<String,String> attr=getNodeAttrName(list.get(i));
+						String attrname=attr.get("answer");
+						System.out.println(attrname);
+						answer.add(attrname);
+					}
 					else if(((name=="choiceresponse"||name=="multiplechoiceresponse")&&i==len-1)||((name=="choiceresponse"||name=="multiplechoiceresponse")&&i<len-1&&list.get(i+1).getName()!="solution")){
-						html=parse_html(list_new,html,name,problem_list,qd,null,null);
+						html=parse_html(list_new,html,name,problem_list,qd,null,null,id);
 						if(name=="multiplechoiceresponse"){
 							qd.setType(2);
 						}
@@ -106,11 +127,11 @@ public class ParseQuestion {
 							qd.setType(3);
 						}
 						problem_list.add(qd);
-						qd = new QuestionData();
+						qd = new QuestionData(id);
 						html="";
 					}
 					else if((name=="choiceresponse"||name=="multiplechoiceresponse")&&i!=len-1){
-						html=parse_html(list_new,html,name,problem_list,qd,null,null);
+						html=parse_html(list_new,html,name,problem_list,qd,null,null,id);
 						if(name=="multiplechoiceresponse"){
 							qd.setType(2);
 						}
@@ -122,14 +143,14 @@ public class ParseQuestion {
 					else if(name=="checkboxgroup"){
 						List<String> conte=new ArrayList();
 						List<String> answe=new ArrayList();
-						html=parse_html(list_new,html,name,problem_list,qd,conte,answe);
+						html=parse_html(list_new,html,name,problem_list,qd,conte,answe,id);
 						qd.setContent(conte);
 						qd.setAnswer(answe);
 					}
 					else if(name=="choicegroup"){
 						List<String> conte=new ArrayList();
 						List<String> answe=new ArrayList();
-						html=parse_html(list_new,html,name,problem_list,qd,conte,answe);
+						html=parse_html(list_new,html,name,problem_list,qd,conte,answe,id);
 						qd.setContent(conte);
 						qd.setAnswer(answe);
 					}
@@ -146,12 +167,12 @@ public class ParseQuestion {
 						}
 					}
 					else if (name=="solution"){
-						html=parse_html(list_new,html,name,problem_list,qd,null,null);
+						html=parse_html(list_new,html,name,problem_list,qd,null,null,id);
 						problem_list.add(qd);
-						qd = new QuestionData();
+						qd = new QuestionData(id);
 					}
 					else
-						html=parse_html(list_new,html,name,problem_list,qd,null,null);
+						html=parse_html(list_new,html,name,problem_list,qd,null,null,id);
 				}
 			}
 			return html;
