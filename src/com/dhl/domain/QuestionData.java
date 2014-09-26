@@ -29,6 +29,14 @@ public class QuestionData {
 
 	private String explain;
 
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
 	public List<String> getAnswer() {
 		return answer;
 	}
@@ -67,14 +75,6 @@ public class QuestionData {
 
 	public void setContent(List<String> content) {
 		this.content = content;
-	}
-
-	public int getScore() {
-		return score;
-	}
-
-	public void setScore(int score) {
-		this.score = score;
 	}
 
 	public String getExplain() {

@@ -22,7 +22,16 @@ public class Question extends BaseDomain {
 	private String content;
 	//低级
 	private String lowcontent;
-	
+	//区分描述提
+	private int type;//0:代表问题 ，1：代表描述题
+	public int getType() {
+			return type;
+		}
+
+		public void setType(int type) {
+			this.type = type;
+		}
+
 	public String getLowcontent() {
 		return lowcontent;
 	}

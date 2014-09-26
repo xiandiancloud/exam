@@ -222,6 +222,27 @@ public class ExamService {
 	}
 	
 	/**
+	 * 保存试卷下单元下的html描述问题
+	 * @param content
+	 * @param examId
+	 * @param everticalId
+	 * @return
+	 */
+	public String savehtml(String content, int examId, int everticalId) {
+
+		Question q = new Question();
+		q.setContent(content);
+		q.setType(1);
+		questionDao.save(q);
+		
+		ExamQuestion vt = new ExamQuestion();
+		vt.setExam(examDao.get(examId));
+		vt.setExamVertical(examVerticalDao.get(everticalId));
+		vt.setQuestion(q);
+		examquestionDao.save(vt);
+		return null;
+	}
+	/**
 	 * 更新试卷下单元下的问题
 	 * @param content
 	 * @param examId

@@ -38,6 +38,7 @@ public class ParseQuestion {
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -110,13 +111,31 @@ public class ParseQuestion {
 						html=parse_html(list_new,html,name,problem_list,qd,null,answe,id);
 						qd.setType(5);
 						qd.setAnswer(answe);
-//						problem_list.add(qd);
+					}
+					else if(name=="scoredefinition"){
+						List<String> answe=new ArrayList();
+						html=parse_html(list_new,html,name,problem_list,qd,null,answe,id);
 					}
 					else if(name=="areainput"){
 						Map<String,String> attr=getNodeAttrName(list.get(i));
 						String attrname=attr.get("answer");
-						System.out.println(attrname);
 						answer.add(attrname);
+					}
+					else if(name=="scorearea"){
+						Map<String,String> attr=getNodeAttrName(list.get(i));
+						String attrname=attr.get("score");
+						answer.add(attrname);
+						
+						int score=0;
+						try
+						{
+							score = Integer.parseInt(answer.get(0));
+						}
+						catch(Exception e)
+						{
+							e.printStackTrace();
+						}
+						qd.setScore(score);
 					}
 					else if(((name=="choiceresponse"||name=="multiplechoiceresponse")&&i==len-1)||((name=="choiceresponse"||name=="multiplechoiceresponse")&&i<len-1&&list.get(i+1).getName()!="solution")){
 						html=parse_html(list_new,html,name,problem_list,qd,null,null,id);

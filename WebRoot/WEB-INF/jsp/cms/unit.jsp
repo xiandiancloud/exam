@@ -48,13 +48,16 @@ $(function additem(){
 		$(".xml-box").insert({"text":"[x]  correct\n[ ]  incorrect\n[x]  correct\n"});
 	});
 	$(".checks-button").click(function(){
-		$(".xml-box").insert({"text":"(  )  incorrect\n(  )  incorrect\n(x)  correct\n"});
+		$(".xml-box").insert({"text":"( )  incorrect\n( )  incorrect\n(x)  correct\n"});
 	});
 	$(".string-button").click(function(){
 		$(".xml-box").insert({"text":"= answer\n"});
 	});
-	$(".number-button").click(function(){
+/* 	$(".number-button").click(function(){
 		$(".xml-box").insert({"text":"= answer +- 0.001%\n"});
+	}); */
+	$(".number-button").click(function(){
+		$(".xml-box").insert({"text":"{分值}"});
 	});
 /* 	$(".dropdown-button").click(function(){
 		$(".xml-box").insert({"text":"dropdown-button"});
@@ -148,7 +151,7 @@ function advanced_cancel(){
 		var tmp='';
 		if (type == 1)//多选
 		{
-			tmp  = '>>问题题目请在这儿修改<<\r'+
+			tmp  = '>>问题题目请在这儿修改<<\r{分值}\r'+
 			'[x] 选项内容\r'+
 			'[ ] 选项内容\r'+
 			'[x] 选项内容\r'+
@@ -158,7 +161,7 @@ function advanced_cancel(){
 		}
 		else if (type ==2)//单选
 		{
-			tmp  = '>>问题题目请在这儿修改<<\r'+
+			tmp  = '>>问题题目请在这儿修改<<\r{分值}\r'+
 			'( ) 选项内容\r'+
 			'( ) 选项内容\r'+
 			'(x) 选项内容\r'+
@@ -168,7 +171,7 @@ function advanced_cancel(){
 		}
 		else if (type == 3)
 		{
-			tmp  = '>>问题题目请在这儿修改<<\r'+
+			tmp  = '>>问题题目请在这儿修改<<\r{分值}\r'+
 			'= 答案在这儿修改\r'+
 			'[问题解释]\r'+
 			'问题解释内容\r'+
@@ -176,7 +179,7 @@ function advanced_cancel(){
 		}
 		else if (type == 4)
 		{
-			tmp  = '>>问题题目请在这儿修改<<\r'+
+			tmp  = '>>问题题目请在这儿修改<<\r{分值}\r'+
 			'[[(答案在这儿修改)]]\r'+
 			'[问题解释]\r'+
 			'问题解释内容\r'+
@@ -193,8 +196,24 @@ function advanced_cancel(){
 		[ ] incorrect
 		[x] correct*/
 	}
+	
+function isinter(xml)
+{
+	  xml = xml.replace(/\{(.+?)\}/g, function(match, p) {
+          var selectString = '\n<scoredefinition>\n',
+              correct;
+			  correct=p;
+			  if (!isInteger(p))
+			  {
+				  return true;
+			  }
+
+          return false;
+      });
+}
 function savequestion()
 {
+	
 	resetadvice();
 	var everticalId = parseInt("${verticalId}");
 	var examId = parseInt("${examId}");
@@ -228,6 +247,27 @@ function saveadvicequestion()
 	var data={id:id,content:content,examId:examId,everticalId:everticalId};
 	$.ajax({
 		url : "cms/createadviceExamQuestion.action",
+		type : "post",
+		data :data,
+		success : function(s) {
+			var a = eval("(" + s + ")");
+			if ("sucess" == a.sucess)
+			{
+				location.reload();
+			}
+		}
+	});
+}
+function savehtmlquestion()
+{
+	var everticalId = parseInt("${verticalId}");
+	var examId = parseInt("${examId}");
+	var content = $("#htmledit").contents().find("#editor").html();
+	content = replaceTextarea1(content);
+	var id = $("#editinput").attr("value",id);
+	var data={id:id,content:content,examId:examId,everticalId:everticalId};
+	$.ajax({
+		url : "cms/createhtmlExamQuestion.action",
 		type : "post",
 		data :data,
 		success : function(s) {
@@ -321,6 +361,28 @@ function showquestiondialog(id)
 				$("#editinput").attr("value",id);
 				//location.reload();
 				
+			}
+		}
+	});
+}
+function showhtmlquestiondialog(id)
+{
+	var data = {id:id};
+	$.ajax({
+		url:"cms/getExamQuestion.action",
+		type:"post",
+		data:data,
+		success:function(s){
+			var a=eval("("+s+")");	
+			if (a.sucess=="sucess")
+			{
+				var con = a.advicecontent;
+				con = replaceTextarea2(con);
+				$("#htmledit").contents().find("#editor").html(con);
+				
+				$("#editinput").attr("value",id);
+				//location.reload();
+				$("#problem_html").show();
 			}
 		}
 	});
@@ -1311,10 +1373,18 @@ img.MathJax_strut {
 										            <ul class="actions-list">
 									                        <li class="action-item action-edit">
 									                        	<c:if test="${!empty vt.question}">
+									                        	<c:if test="${vt.question.type==1}">
+									                        	<a href="javascript:void(0);" onclick="showhtmlquestiondialog(${vt.id});" class="edit-button action-button">
+									                                <i class="icon-pencil"></i>
+									                                <span class="action-button-text">编辑</span>
+									                            </a>
+									                        	</c:if>
+									                        	<c:if test="${vt.question.type==0}">
 									                        	<a href="javascript:void(0);" onclick="showquestiondialog(${vt.id});" class="edit-button action-button">
 									                                <i class="icon-pencil"></i>
 									                                <span class="action-button-text">编辑</span>
 									                            </a>
+									                            </c:if>
 									                        	</c:if>
 									                            <c:if test="${empty vt.question}">
 									                            <%-- inittrain('${vt.train.id}','${vt.train.name}','${vt.train.codenum}','${vt.train.envname}','${vt.train.conContent}','${vt.train.conShell}','${vt.train.conAnswer}','${vt.train.score}','${vt.train.scoretag}'); --%>
@@ -1338,18 +1408,17 @@ img.MathJax_strut {
 										   		<c:if test="${!empty vt.question}">
 										   			<div class="xblock xblock-student_view xmodule_display xmodule_CapaModule xblock-initialized" data-runtime-class="PreviewRuntime" data-init="XBlockToXModuleShim" data-runtime-version="1" data-usage-id="" data-type="Problem" data-block-type="problem">
 														<div id="" class="problems-wrapper showed" data-problem-id="" data-url="" data-progress_status="none" data-progress_detail="0/1">
-														
-										   			<div class="problem-progress">(本题共有1分)</div></br></br>
+														<c:if test="${vt.question.type == 0}">
+										   			<div class="problem-progress">
+										   			(本题共有${vt.score}分)
+										   			</div></br></br>
 										   			<div class="problem" role="application">
+										   			</c:if>
 											   		<%-- ${vt.htmlcontent} --%>
 											   		<c:forEach var="qd" items="${vt.qdlist}">
 											   		    <%-- html问题描述 --%>
 											   			<c:if test="${qd.type == 1}">
-											   				${qd.title}</br>
-											   				<c:forEach var="qdcontent" items="${qd.content}">
-											   					<label  for=""><input type="radio" name="" id="" aria-role="radio" aria-describedby="" value="${qdcontent}" aria-multiselectable="true"/>${qdcontent}</label>
-											   				</c:forEach>
-											   				</br>${qd.explain}
+											   				${qd.title}
 											   			</c:if>
 											   		    <%-- 单选 --%>
 											   			<c:if test="${qd.type == 2}">
@@ -1380,6 +1449,7 @@ img.MathJax_strut {
 																	       </c:forEach>
 																      </p>
 																</span>
+																<c:if test="${!empty qd.explain}">
 																    <section class="solution-span">
 																 <span id=""><solution id="">
 																        <div class="detailed-solution">
@@ -1388,6 +1458,7 @@ img.MathJax_strut {
 																    </solution>
 																</span>
 																</section>
+																</c:if>
 																</div>
 											   				
 											   			</c:if>
@@ -1423,6 +1494,7 @@ img.MathJax_strut {
 																	       </c:forEach>
 																      </p>
 														</span>
+														<c:if test="${!empty qd.explain}">
 														<section class="solution-span">
 																 <span id=""><solution id="">
 																        <div class="detailed-solution">
@@ -1431,6 +1503,7 @@ img.MathJax_strut {
 																    </solution>
 																</span>
 																</section>
+																</c:if>
 														</div>
 											   			</c:if>
 											   			<%-- 填空 --%>
@@ -1456,6 +1529,7 @@ img.MathJax_strut {
 																      </p>
 																</div>
 																</div></span>
+																<c:if test="${!empty qd.explain}">
 																    <section class="solution-span">
 																 <span id=""><solution id="">
 																        <div class="detailed-solution">
@@ -1464,6 +1538,7 @@ img.MathJax_strut {
 																    </solution>
 																</span>
 																</section>
+																</c:if>
 																</div>
 											   			</c:if>
 											   			<%-- 多文本填空 --%>
@@ -1489,6 +1564,7 @@ img.MathJax_strut {
 																      </p>
 																</div>
 																</div></span>
+																<c:if test="${!empty qd.explain}">
 																    <section class="solution-span">
 																 <span id=""><solution id="">
 																        <div class="detailed-solution">
@@ -1497,6 +1573,7 @@ img.MathJax_strut {
 																    </solution>
 																</span>
 																</section>
+																</c:if>
 																</div>
 											   			</c:if>
 											   		</c:forEach>
@@ -1507,9 +1584,11 @@ img.MathJax_strut {
 														    <input class="check 提交" type="button" data-checking="正在检测..." value="提交">
 														    <button class="show"><span class="show-label">揭示答案</span></button>
 														  </div> -->
+														  <c:if test="${vt.question.type == 0}">
 														</div>
-										   			</div>
 														
+										   			</div>
+														</c:if>
 													</div>
 										   		</c:if>
 										        <c:if test="${empty vt.question}">${vt.train.name}</c:if>
@@ -4660,7 +4739,7 @@ require(['tender']);
 </ul>
             </div>
             <div class="modal-content">
-    <div class="xblock-editor" data-locator="i4x://cet55/cs01/problem/e4415677016e414282f3a8c1df1f2a70" data-course-key="cet55/cs01/2014"><div class="xblock xblock-studio_view xmodule_edit xmodule_CapaDescriptor xblock-initialized" data-runtime-class="StudioRuntime" data-init="XBlockToXModuleShim" data-runtime-version="1" data-usage-id="i4x://cet55/cs01/problem/e4415677016e414282f3a8c1df1f2a70" data-type="MarkdownEditingDescriptor" data-block-type="problem">
+    <div class="xblock-editor" data-locator="" data-course-key=""><div class="xblock xblock-studio_view xmodule_edit xmodule_CapaDescriptor xblock-initialized" data-runtime-class="StudioRuntime" data-init="XBlockToXModuleShim" data-runtime-version="1" data-usage-id="i4x://cet55/cs01/problem/e4415677016e414282f3a8c1df1f2a70" data-type="MarkdownEditingDescriptor" data-block-type="problem">
     
 
 
@@ -4919,15 +4998,15 @@ require(['tender']);
 					</li>
 				</ul>
             </div>
-			<div style="float:left;width:99.1%;margin-top:1.5%;margin-left:5px;"><iframe width="100%" height="340" scrolling="no"  frameborder="0" id="conAnswer" src="input.html" ></iframe></div>
+			<div style="float:left;width:99.1%;margin-top:1.5%;margin-left:5px;"><iframe width="100%" height="340" scrolling="no"  frameborder="0" id="htmledit" src="input.html" ></iframe></div>
             <div class="modal-actions" style="display: block;">
                 <h3 class="sr">Actions</h3>
                 <ul>
 					<li class="action-item">
-					<a href="javascript:void(0);" class="button action-primary action-save">Save</a>
+					<a href="javascript:void(0);" class="button action-primary action-save" onclick="savehtmlquestion();">保存</a>
 					</li>
 					<li class="action-item">
-					<a href="javascript:void(0);" class="button  action-cancel"onclick="problem_html_cancel()">取消</a>
+					<a href="javascript:void(0);" class="button  action-cancel" onclick="problem_html_cancel()">取消</a>
 				</li>
 				</ul>
             </div>

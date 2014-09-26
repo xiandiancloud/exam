@@ -561,25 +561,31 @@ public class ExamController extends BaseController {
 			if (q != null)
 			{
 				String content = q.getContent();
-				List<QuestionData> qtlist = changetohtml(content,q.getId());
-//				eq.setHtmlcontent(content);
-//				List<QuestionData> qtlist = new ArrayList();
-//				
-//				QuestionData qd = new QuestionData();
-//				qd.setAnswer("111111");
-//				List<String> qs = new ArrayList();
-//				qs.add("content111--------");
-//				qs.add("content222--------");
-//				qd.setContent(qs);
-//				qd.setScore(100);
-//				qd.setTitle("问题标题测试---------");
-//				qd.setId(q.getId());
-//				qd.setType(2);
-//				qd.setExplain("解释--------");
-//				qtlist.add(qd);
-				
-				
-				eq.setQdlist(qtlist);
+				if (q.getType() == 1)
+				{
+					List<QuestionData> qtlist = new ArrayList();
+					QuestionData qd = new QuestionData(q.getId());
+					qd.setTitle(content);
+					qd.setType(1);
+					qtlist.add(qd);
+					eq.setQdlist(qtlist);
+				}
+				else
+				{
+					List<QuestionData> qtlist = changetohtml(content,q.getId());
+					
+					if (qtlist != null)
+					{
+						int score = 0;
+						for (QuestionData qt:qtlist)
+						{
+							score+=qt.getScore();
+						}
+						eq.setScore(score);
+						eq.setQdlist(qtlist);
+					}
+					
+				}
 			}
 		}
 		view.addObject("vtlist", vt);
@@ -739,6 +745,33 @@ public class ExamController extends BaseController {
 		}
 	}
 	
+	/**
+	 * 创建试卷单元下面的描述问题,本质上跟问题一样，但这个要把低级内容删除
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/createhtmlExamQuestion")
+	public void createhtmlExamQuestion(HttpServletRequest request,
+			HttpServletResponse response,int id, String content,int examId,
+			int everticalId) {
+
+		try {
+			PrintWriter out = response.getWriter();
+			if (id > 0)
+			{
+				examService.updateAdviceExamQuestion(id,content);
+			}
+			else
+			{
+				examService.savehtml(content, examId, everticalId);
+			}
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * 创建试卷单元下面的问题
 	 * 

@@ -46,6 +46,14 @@ public class ExamQuestion extends BaseDomain {
 	}
 	@Transient
 	private List<QuestionData> qdlist;
+	@Transient
+	private int score;
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
 	public List<QuestionData> getQdlist() {
 		return qdlist;
 	}

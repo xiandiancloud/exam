@@ -140,7 +140,7 @@
           return processNumericalResponse(answersList[0]) || processStringResponse(answersList);
       });
 
-      // replace selects
+      // replace textarea
       xml = xml.replace(/\[\[(.+?)\]\]/g, function(match, p) {
           var selectString = '\n<textareainput>\n',
               correct, options;
@@ -154,6 +154,27 @@
 
           selectString += '"></areainput>\n';
           selectString += '</textareainput>\n\n';
+
+          return selectString;
+      });
+      //replace score
+	  xml = xml.replace(/\{(.+?)\}/g, function(match, p) {
+          var selectString = '\n<scoredefinition>\n',
+              correct;
+			  correct=p;
+			  if (!isInteger(p))
+			  {
+				  if(confirm('分值必须是数字？')){
+					}else{
+					}
+			  }
+          selectString += '  <scorearea score="';
+          if (correct) {
+              selectString += correct;
+          }
+
+          selectString += '"></scorearea>\n';
+          selectString += '</scoredefinition>\n\n';
 
           return selectString;
       });
