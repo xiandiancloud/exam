@@ -150,8 +150,9 @@
 													</form>
 													<hr class='hr-normal'>
 													<div class='form-group col-sm-12'>
-														<a href="lms/toexamtrainone.action?examId=${exam.id}&everticalId=${vertical.id}&trainId=${qd.id}" target="_blank">进入实训</a>
-													</div>	
+														<a href="lms/toexamtrainone.action?examId=${exam.id}&everticalId=${vertical.id}&trainId=${qd.id}" target="_blank" class='btn btn-success'>
+														<i class='icon-circle-arrow-right'></i>进入实训</a>
+													</div>
 												</div>
 											</div>
 							   			</c:if>
@@ -319,7 +320,7 @@
 									<hr class='hr-normal'>
 									<div class='row'>
 										<div class='col-sm-12'>
-											<ul data-offset-top="125" class="nav nav-tabs nav-stacked section">
+											<div data-offset-top="125" class="nav nav-tabs nav-stacked section">
 												<!-- <li><a href="javascript:void(0)" onclick="document.getElementById('section-2').scrollIntoView();" class="j-item item  f-fl">31</a></li> -->
 												<c:set value="0" var="sum" />
 												<c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
@@ -328,18 +329,19 @@
 							                                  <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
 							                                  
 										                 		<c:forEach var="qd" items="${examq.qdlist}">
-										                 		<li>
+										                 		<!-- <li> -->
 										                 		<c:set value="${sum + 1}" var="sum" /> 
 										                 		<a href="javascript:void(0)" onclick="document.getElementById('number${sum}').scrollIntoView();" class="j-item item  f-fl">
 										                 		${sum}
-										                 		</a></li>
+										                 		</a>
+										                 		<!-- </li> -->
 
 										                 		</c:forEach>
 										                 	</c:forEach>
 							                              </c:forEach>
 							                          </c:forEach>
 							                      </c:forEach>
-											</ul>
+											</div>
 										</div>
 									</div>
 									<hr class='hr-normal'>
@@ -425,6 +427,15 @@
 										        	 }
 											     });
             								</c:if>
+            								<c:if test="${qd.type == 3}">
+            								var strs = a.answer.split('#');
+        									$("#number"+a.index+" :checkbox").each(function(i){
+        										 if ($.inArray($(this).val(), strs) != -1)
+									        	 {
+										        	 $(this).attr("checked","checked");
+									        	 }
+										     });
+        									</c:if>
             								<c:if test="${qd.type == 4}">
             									$("#number"+a.index).attr("value",a.answer);
 	        								</c:if>
