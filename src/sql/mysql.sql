@@ -341,13 +341,15 @@ drop table if exists t_user_questionchild;
 create table t_user_questionchild
 (
    id                  int not null AUTO_INCREMENT,
+   userId              int(10) not null,
    number              int(10) not null,
    userquestionId      int(10) not null,
    useranswer          text default null,
    revalue             text default null,
    result              varchar(255) default null,
    primary key (id),
-   CONSTRAINT receivet_user_questionchild_ibfk_1 FOREIGN KEY (userquestionId) REFERENCES t_user_question (id) ON DELETE CASCADE
+   CONSTRAINT receivet_user_questionchild_ibfk_1 FOREIGN KEY (userId) REFERENCES auth_user (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_user_questionchild_ibfk_2 FOREIGN KEY (userquestionId) REFERENCES t_user_question (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 drop table if exists t_user_course;

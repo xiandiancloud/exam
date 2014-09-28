@@ -26,7 +26,14 @@ public class UserQuestionChild extends BaseDomain {
 	private String useranswer;
 	private String revalue;
 	private String result;
+	private int userId;
 	
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 	public int getId() {
 		return id;
 	}

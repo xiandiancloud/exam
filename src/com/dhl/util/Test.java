@@ -55,15 +55,15 @@ public class Test {
 	public static void main(String[] args) {
 		
 		
-		for (int i=0;i<3;i++)
+		for (int i=0;i<5;i++)
 		{
-			for (int j=0;j<3;j++)
+			for (int j=0;j<4;j++)
 			{
 				for (int k=0;k<3;k++)
 				{
-					for (int l=0;l<3;l++)
+					for (int l=0;l<2;l++)
 					{
-						System.out.println("index == "+(l+1+k*3+j*9+i*27));
+						System.out.println("index == "+(l+1+k*2+j*6+i*24));
 					}
 				}
 			}

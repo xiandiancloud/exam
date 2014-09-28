@@ -23,8 +23,8 @@ import com.dhl.domain.Question;
 import com.dhl.domain.QuestionData;
 import com.dhl.domain.Train;
 import com.dhl.domain.User;
-import com.dhl.domain.UserCourse;
 import com.dhl.domain.UserExam;
+import com.dhl.domain.UserQuestionChild;
 import com.dhl.service.ExamQuestionService;
 import com.dhl.service.ExamService;
 import com.dhl.service.UserExamService;
@@ -136,6 +136,7 @@ public class HavingExamController extends BaseController {
 							}
 							else
 							{
+								
 								List<QuestionData> qdlist = changetohtml(content,q.getId());
 								eq.setQdlist(qdlist);
 							}
@@ -184,6 +185,31 @@ public class HavingExamController extends BaseController {
 		return view;
 	}
 
+	/**
+	 * 得到用户提交的答案
+	 */
+	@RequestMapping("/getQuestionAnswer")
+	public void getQuestionAnswer(HttpServletRequest request,
+			HttpServletResponse response, int examId,int questionId,int number,int index) {
+		try {
+			
+			User user = getSessionUser(request);
+			UserQuestionChild uqc = userQuestionService.getQuestion(user.getId(),examId,questionId, number);
+			String str = "{'sucess':'sucess'}";
+			if (uqc != null)
+			{
+				String useranswer = uqc.getUseranswer();
+				str = "{'sucess':'sucess','answer':'"+useranswer+"','index':'"+index+"'}";
+			}
+			
+			PrintWriter out = response.getWriter();
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 	/**
 	 * 提交答案
 	 */

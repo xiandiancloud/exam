@@ -112,6 +112,7 @@
 					<div class='col-sm-12 box box-nomargin'>
 					<div class='box-content'>
                     <div class='dd dd-nestable'>
+                    <c:set value="0" var="index" />
                     <c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
                       <ol class='dd-list'>
                         <li class='dd-item' data-id='2'>
@@ -138,9 +139,8 @@
 												<div class='col-xs-12'>
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
-															<span class='' id="number${l.index+1+k.index*(fn:length(sequential.examVerticals))+j.index*(fn:length(chapter.esequentials))+i.index*(fn:length(exam.examchapters))}">
-															${l.index+1+k.index*(fn:length(sequential.examVerticals))+j.index*(fn:length(chapter.esequentials))+i.index*(fn:length(exam.examchapters))}
-															&nbsp;${qd.title}</span>
+														    <c:set value="${index + 1}" var="index" />
+															<span>${index}&nbsp;${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -161,9 +161,8 @@
 												<div class='col-xs-12'>
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
-															<span class='trainimg' id="number${l.index+1+k.index*(fn:length(sequential.examVerticals))+j.index*(fn:length(chapter.esequentials))+i.index*(fn:length(exam.examchapters))}">
-															${l.index+1+k.index*(fn:length(sequential.examVerticals))+j.index*(fn:length(chapter.esequentials))+i.index*(fn:length(exam.examchapters))}
-															&nbsp;${qd.title}</span>
+															<c:set value="${index + 1}" var="index" />
+															<span class='trainimg'>${index}&nbsp;${qd.title}</span>
 														</div>
 														<%-- <c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -180,19 +179,19 @@
 												<div class='col-xs-12'>
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
-															<span class='' id="number${l.index+1+k.index*(fn:length(sequential.examVerticals))+j.index*(fn:length(chapter.esequentials))+i.index*(fn:length(exam.examchapters))}">
-															${l.index+1+k.index*(fn:length(sequential.examVerticals))+j.index*(fn:length(chapter.esequentials))+i.index*(fn:length(exam.examchapters))}
-															&nbsp;${qd.title}
-															</span>
+															<c:set value="${index + 1}" var="index" />
+															<span>${index}&nbsp;${qd.title}</span>
 														</div>
 														<hr class='hr-normal'>
+														<div id="number${index}">
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
 																<label class='radio'>
-																	<input type="radio" name="${qd.id}" id="${qd.id}" onclick="submitquesstion('${qd.id}','${nn.index+1}','${qdcontent}');"/>${qdcontent}
+																	<input type="radio" name="${qd.id}" onclick="submitquesstion('${qd.id}','${nn.index+1}','${qdcontent}');" value="${qdcontent}"/>${qdcontent}
 																</label> 
 															</div>
 														</c:forEach>
+														</div>
 														<hr class='hr-normal'>
 														<div class='form-group col-sm-12'>
 															<label >正确答案：${qd.answer}</label>
@@ -207,11 +206,11 @@
 												<div class='col-xs-12'>
 													<form class="form form-horizontal" method="post" action="#" id="${examq.id}${qd.id}">
 														<div class='form-group col-sm-12'>
-															<span class='' id="number${l.index+1+k.index*(fn:length(sequential.examVerticals))+j.index*(fn:length(chapter.esequentials))+i.index*(fn:length(exam.examchapters))}">
-															${l.index+1+k.index*(fn:length(sequential.examVerticals))+j.index*(fn:length(chapter.esequentials))+i.index*(fn:length(exam.examchapters))}
-															&nbsp;${qd.title}</span>
+															<c:set value="${index + 1}" var="index" />
+															<span>${index}&nbsp;${qd.title}</span>
 														</div>
 														<hr class='hr-normal'>
+														<div id="number${index}">
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
 																<label class='checkbox'>
@@ -219,6 +218,7 @@
 																</label> 
 															</div>
 														</c:forEach>
+														</div>
 														<hr class='hr-normal'>
 														<div class='form-group col-sm-12'>
 															<label >正确答案：${qd.answer}</label>
@@ -229,18 +229,12 @@
 							   			</c:if>
 							   			<%-- 填空 --%>
 							   			<c:if test="${qd.type == 4}">
-							   				<%-- ${qd.title}<br />
-							   				<c:forEach var="qdcontent" items="${qd.content}">
-							   					<label  for=""><input type="radio" name="" id="" aria-role="radio" aria-describedby="" value="${qdcontent}" aria-multiselectable="true"/>${qdcontent}</label>
-							   				</c:forEach>
-							   				<br />${qd.explain} --%>
 											<div class='row'>
 												<div class='col-xs-12'>
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
-															<span class='' id="number${l.index+1+k.index*(fn:length(sequential.examVerticals))+j.index*(fn:length(chapter.esequentials))+i.index*(fn:length(exam.examchapters))}">
-															${l.index+1+k.index*(fn:length(sequential.examVerticals))+j.index*(fn:length(chapter.esequentials))+i.index*(fn:length(exam.examchapters))}
-															&nbsp;${qd.title}</span>
+															<c:set value="${index + 1}" var="index" />
+															<span>${index}&nbsp;${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -250,7 +244,7 @@
 														<hr class='hr-normal'>
 														<div class='form-group'>
 															<div class='col-sm-12'>
-																<input class='form-control' type="text" onblur="submittextquesstion('${qd.id}','${nn.index+1}',this);" />
+																<input class='form-control' type="text" id="number${index}" onblur="submittextquesstion('${qd.id}','${nn.index+1}',this);" />
 															</div>
 														</div>
 														<hr class='hr-normal'>
@@ -263,18 +257,12 @@
 										</c:if>
 							   			<%-- 多文本填空 --%>
 							   			<c:if test="${qd.type == 5}">
-							   				<%-- ${qd.title}<br />
-							   				<c:forEach var="qdcontent" items="${qd.content}">
-							   					<label  for=""><input type="radio" name="" id="" aria-role="radio" aria-describedby="" value="${qdcontent}" aria-multiselectable="true"/>${qdcontent}</label>
-							   				</c:forEach>
-							   				<br />${qd.explain} --%>
 							   				<div class='row'>
 												<div class='col-xs-12'>
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
-															<span class='' id="number${l.index+1+k.index*(fn:length(sequential.examVerticals))+j.index*(fn:length(chapter.esequentials))+i.index*(fn:length(exam.examchapters))}">
-															${l.index+1+k.index*(fn:length(sequential.examVerticals))+j.index*(fn:length(chapter.esequentials))+i.index*(fn:length(exam.examchapters))}
-															&nbsp;${qd.title}</span>
+															<c:set value="${index + 1}" var="index" />
+															<span>${index}&nbsp;${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -284,7 +272,7 @@
 														<hr class='hr-normal'>
 														<div class='form-group'>
 															<div class='col-sm-12'>
-																<textarea class='form-control' rows='5' onblur="submittextareaquesstion('${qd.id}','${nn.index+1}',this);"></textarea>
+																<textarea class='form-control' rows='5' id="number${index}" onblur="submittextareaquesstion('${qd.id}','${nn.index+1}',this);"></textarea>
 															</div>
 														</div>
 														<hr class='hr-normal'>
@@ -333,13 +321,17 @@
 										<div class='col-sm-12'>
 											<ul data-offset-top="125" class="nav nav-tabs nav-stacked section">
 												<!-- <li><a href="javascript:void(0)" onclick="document.getElementById('section-2').scrollIntoView();" class="j-item item  f-fl">31</a></li> -->
+												<c:set value="0" var="sum" />
 												<c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
 							                          <c:forEach var="sequential" items="${chapter.esequentials}" varStatus="j">
 							                              <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
 							                                  <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
+							                                  
 										                 		<c:forEach var="qd" items="${examq.qdlist}">
-										                 		<li><a href="javascript:void(0)" onclick="document.getElementById('number${l.index+1+k.index*(fn:length(sequential.examVerticals)+1)+j.index*(fn:length(chapter.esequentials)+1)+i.index*(fn:length(exam.examchapters)+1)}').scrollIntoView();" class="j-item item  f-fl">
-										                 		${l.index+1+k.index*(fn:length(sequential.examVerticals)+1)+j.index*(fn:length(chapter.esequentials)+1)+i.index*(fn:length(exam.examchapters)+1)}
+										                 		<li>
+										                 		<c:set value="${sum + 1}" var="sum" /> 
+										                 		<a href="javascript:void(0)" onclick="document.getElementById('number${sum}').scrollIntoView();" class="j-item item  f-fl">
+										                 		${sum}
 										                 		</a></li>
 
 										                 		</c:forEach>
@@ -395,7 +387,62 @@
 	<script src="js/common.js" type="text/javascript"></script>
 	<script src="js/holder.js" type="text/javascript"></script>
 
-	<script type="text/javascript">   
+	<script type="text/javascript">
+		$(function() {
+			//填充试卷内容，判断对错，或者是否已经做过
+			initquestion();
+		});
+	
+		//这个方法多次提交，如果性能有问题再优化
+		function initquestion()
+		{
+			var index = 0;
+			<c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
+            <c:forEach var="sequential" items="${chapter.esequentials}" varStatus="j">
+                <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
+                    <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
+                    	<c:forEach var="qd" items="${examq.qdlist}" varStatus="nn">
+                    		index ++;
+                    		var examId = "${exam.id}";
+                    		var questionId = "${qd.id}";
+                    		var number = "${nn.index+1}";
+	                    	var data = {examId:examId,questionId:questionId,number:number,index:index};
+	            			$.ajax({
+	            				url : "lms/getQuestionAnswer.action",
+	            				type : "post",
+	            				data : data,
+	            				success : function(s) {
+	            					var a = eval("(" + s + ")");
+	            					if ("sucess" == a.sucess) {
+	            						var answer = a.answer;
+	            						if (answer)
+            							{
+	            							<c:if test="${qd.type == 2}">
+            									$("#number"+a.index+" :radio").each(function(){
+											         if ($(this).val() == a.answer)
+										        	 {
+											        	 $(this).attr("checked","checked");
+										        	 }
+											     });
+            								</c:if>
+            								<c:if test="${qd.type == 4}">
+            									$("#number"+a.index).attr("value",a.answer);
+	        								</c:if>
+	        								<c:if test="${qd.type == 5}">
+	        									$("#number"+a.index).attr("value",replaceTextarea2(a.answer));
+	    									</c:if>
+    								
+            							}
+	            					}
+	            				}
+	            			});
+	               		</c:forEach>
+               	</c:forEach>
+                </c:forEach>
+            </c:forEach>
+          </c:forEach>
+		}
+		
 		//一个小时，按秒计算，可以自己调整时间
 		var maxtime = 60 * 60;
 		function CountDown() {

@@ -21,6 +21,20 @@ public class UserQuestionService {
 
 	
 	/**
+	 * 得到用户提交的答案
+	 */
+	public UserQuestionChild getQuestion(int userId,int examId,int questionId,int number)
+	{
+		UserQuestion uq = userQuestionDao.getUserQuestionByquestion(userId, examId, questionId);
+		if (uq != null)
+		{
+			UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(userId,number,uq.getId());
+			return uqc;
+		}
+		return null;
+	}
+	
+	/**
 	 * 提交答案
 	 */
 	public void saveQuestion(int userId,int examId,int questionId,int number,String useranswer)
@@ -44,10 +58,11 @@ public class UserQuestionService {
 			userQuestionDao.update(uq);
 		}
 		
-		UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(number,uq.getId());
+		UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(userId,number,uq.getId());
 		if (uqc == null)
 		{
 			UserQuestionChild uqc2 = new UserQuestionChild();
+			uqc2.setUserId(userId);
 			uqc2.setNumber(number);
 			uqc2.setUseranswer(useranswer);
 			uqc2.setUserquestionId(uq.getId());

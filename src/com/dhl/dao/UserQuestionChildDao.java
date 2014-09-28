@@ -9,8 +9,8 @@ import com.dhl.domain.UserQuestionChild;
 @Repository
 public class UserQuestionChildDao extends BaseDao<UserQuestionChild> {
 
-	public UserQuestionChild getUserQuestionByuserquestionId(int number,int userquestionId) {
-		String hql = "from UserQuestionChild where number = "+number+" and userquestionId = "+userquestionId;
+	public UserQuestionChild getUserQuestionByuserquestionId(int userId,int number,int userquestionId) {
+		String hql = "from UserQuestionChild where userId = "+userId+" and number = "+number+" and userquestionId = "+userquestionId;
 		List<UserQuestionChild> list = find(hql);
 		if (list.size() == 0) {
 			return null;
