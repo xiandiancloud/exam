@@ -124,9 +124,21 @@ public class HavingExamController extends BaseController {
 						if (q != null)
 						{
 							String content = q.getContent();
-							List<QuestionData> qdlist = changetohtml(content,q.getId());
-							eq.setQdlist(qdlist);
+							if (q.getType() == 1)
+							{
+								List<QuestionData> qtlist = new ArrayList();
+								QuestionData qd = new QuestionData(q.getId());
+								qd.setTitle(content);
+								qd.setType(1);
+								qtlist.add(qd);
+								eq.setQdlist(qtlist);
 //							eq.setHtmlcontent(content);
+							}
+							else
+							{
+								List<QuestionData> qdlist = changetohtml(content,q.getId());
+								eq.setQdlist(qdlist);
+							}
 						}
 						else//实训
 						{

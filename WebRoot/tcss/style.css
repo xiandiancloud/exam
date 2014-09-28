@@ -2,6 +2,19 @@
 // markItUp!
 // By Jay Salvat - http://markitup.jaysalvat.com/
 // ------------------------------------------------------------------*/
+.trainimg{overflow:hidden}
+.trainimg img{
+	padding: 4px;
+  line-height: 1.42857;
+  background-color: white;
+  border: 0px solid #dddddd;
+  border-radius: 4px;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+}
 .wiki .markItUpButton1 a {
   background-image:url(images/h1.png); 
 }

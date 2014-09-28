@@ -161,15 +161,15 @@
 												<div class='col-xs-12'>
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
-															<span class='' id="number${l.index+1+k.index*(fn:length(sequential.examVerticals))+j.index*(fn:length(chapter.esequentials))+i.index*(fn:length(exam.examchapters))}">
+															<span class='trainimg' id="number${l.index+1+k.index*(fn:length(sequential.examVerticals))+j.index*(fn:length(chapter.esequentials))+i.index*(fn:length(exam.examchapters))}">
 															${l.index+1+k.index*(fn:length(sequential.examVerticals))+j.index*(fn:length(chapter.esequentials))+i.index*(fn:length(exam.examchapters))}
 															&nbsp;${qd.title}</span>
 														</div>
-														<c:forEach var="qdcontent" items="${qd.content}">
+														<%-- <c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
-																<label>${qdcontent}</label> 
+																<label>${qdcontent}</label>
 															</div>
-														</c:forEach>
+														</c:forEach> --%>
 													</form>
 												</div>
 											</div>

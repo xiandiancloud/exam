@@ -1418,7 +1418,10 @@ img.MathJax_strut {
 											   		<c:forEach var="qd" items="${vt.qdlist}">
 											   		    <%-- html问题描述 --%>
 											   			<c:if test="${qd.type == 1}">
-											   				${qd.title}
+											   				<div id="" class="trainimg" aria-hidden="true">
+																	${qd.title}
+															</div>
+											   				
 											   			</c:if>
 											   		    <%-- 单选 --%>
 											   			<c:if test="${qd.type == 2}">
