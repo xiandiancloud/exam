@@ -275,10 +275,38 @@
 															</div>
 														</c:forEach>
 														</div>
-														<hr class='hr-normal'>
-														<div class='form-group col-sm-12'>
+														<hr class='hr-normal nospace'>
+														<%-- <div class='form-group col-sm-12'>
 															<label >正确答案：${qd.answer}</label>
-														</div>	
+														</div>	 --%>
+														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
+															<%-- <label >正确答案：${qd.answer}</label> --%>
+															<div class='row'>
+															<div class='col-xs-12 h30'></div>
+															</div>												
+															<div class='row'>
+																<div class='col-xs-6 juzhong' style="line-height:40px;">
+																	<label >正确答案：${qd.answer}</label>
+																</div>
+																<div class='col-xs-2 juzhong'>
+																	本题满分：<span>10</span>
+																</div>
+																<div class='col-xs-2 juzhong'>
+																	您的得分：<span>5</span>
+																</div>
+																<div class='col-xs-2 juzhong'>
+																	<div class='input-group controls-group'>
+																		<input class="form-control" type="text" />
+																		<span class='input-group-btn'>
+																			<button class='btn' type='submit'>改分</button>
+																		</span>
+																	</div>
+																</div>
+															</div>
+															<div class='row'>
+																<div class='col-xs-12 h30'></div>
+															</div>
+														</div>
 													</form>
 												</div>
 											</div>
@@ -302,10 +330,38 @@
 															</div>
 														</c:forEach>
 														</div>
-														<hr class='hr-normal'>
-														<div class='form-group col-sm-12'>
+														<hr class='hr-normal nospace'>
+														<%-- <div class='form-group col-sm-12'>
 															<label >正确答案：${qd.answer}</label>
-														</div>															
+														</div>	 --%>	
+														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
+															<%-- <label >正确答案：${qd.answer}</label> --%>
+															<div class='row'>
+															<div class='col-xs-12 h30'></div>
+															</div>												
+															<div class='row'>
+																<div class='col-xs-6 juzhong' style="line-height:40px;">
+																	<label >正确答案：${qd.answer}</label>
+																</div>
+																<div class='col-xs-2 juzhong'>
+																	本题满分：<span>10</span>
+																</div>
+																<div class='col-xs-2 juzhong'>
+																	您的得分：<span>5</span>
+																</div>
+																<div class='col-xs-2 juzhong'>
+																	<div class='input-group controls-group'>
+																		<input class="form-control" type="text" />
+																		<span class='input-group-btn'>
+																			<button class='btn' type='submit'>改分</button>
+																		</span>
+																	</div>
+																</div>
+															</div>
+															<div class='row'>
+																<div class='col-xs-12 h30'></div>
+															</div>
+														</div>													
 													</form>
 												</div>
 											</div>
@@ -330,9 +386,37 @@
 																<input class='form-control' type="text" id="number${index}" onblur="submittextquesstion('${qd.id}','${nn.index+1}',this);" />
 															</div>
 														</div>
-														<hr class='hr-normal'>
-														<div class='form-group col-sm-12'>
+														<hr class='hr-normal nospace'>
+														<%-- <div class='form-group col-sm-12'>
 															<label >正确答案：${qd.answer}</label>
+														</div> --%>
+														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
+															<%-- <label >正确答案：${qd.answer}</label> --%>
+															<div class='row'>
+															<div class='col-xs-12 h30'></div>
+															</div>												
+															<div class='row'>
+																<div class='col-xs-6 juzhong' style="line-height:40px;">
+																	<label >正确答案：${qd.answer}</label>
+																</div>
+																<div class='col-xs-2 juzhong'>
+																	本题满分：<span>10</span>
+																</div>
+																<div class='col-xs-2 juzhong'>
+																	您的得分：<span>5</span>
+																</div>
+																<div class='col-xs-2 juzhong'>
+																	<div class='input-group controls-group'>
+																		<input class="form-control" type="text" />
+																		<span class='input-group-btn'>
+																			<button class='btn' type='submit'>改分</button>
+																		</span>
+																	</div>
+																</div>
+															</div>
+															<div class='row'>
+																<div class='col-xs-12 h30'></div>
+															</div>
 														</div>
 													</form>
 												</div>
@@ -358,9 +442,37 @@
 																<textarea class='form-control' rows='5' id="number${index}" onblur="submittextareaquesstion('${qd.id}','${nn.index+1}',this);"></textarea>
 															</div>
 														</div>
-														<hr class='hr-normal'>
-														<div class='form-group col-sm-12'>
+														<hr class='hr-normal nospace'>
+														<%-- <div class='form-group col-sm-12'>
 															<label >正确答案：${qd.answer}</label>
+														</div> --%>
+														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
+															<%-- <label >正确答案：${qd.answer}</label> --%>
+															<div class='row'>
+															<div class='col-xs-12 h30'></div>
+															</div>												
+															<div class='row'>
+																<div class='col-xs-6 juzhong' style="line-height:40px;">
+																	<label >正确答案：${qd.answer}</label>
+																</div>
+																<div class='col-xs-2 juzhong'>
+																	本题满分：<span>10</span>
+																</div>
+																<div class='col-xs-2 juzhong'>
+																	您的得分：<span>5</span>
+																</div>
+																<div class='col-xs-2 juzhong'>
+																	<div class='input-group controls-group'>
+																		<input class="form-control" type="text" />
+																		<span class='input-group-btn'>
+																			<button class='btn' type='submit'>改分</button>
+																		</span>
+																	</div>
+																</div>
+															</div>
+															<div class='row'>
+																<div class='col-xs-12 h30'></div>
+															</div>
 														</div>
 													</form>
 												</div>
