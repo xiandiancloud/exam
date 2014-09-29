@@ -20,6 +20,11 @@ public class UserQuestionChildDao extends BaseDao<UserQuestionChild> {
 		}
 	}
 	
+	public List<UserQuestionChild> getUserQuestionByuserquestionId(int userId,int userquestionId) {
+		String hql = "from UserQuestionChild where userId = "+userId+" and userquestionId = "+userquestionId+" order by number";
+		return find(hql);
+	}
+	
 	public UserQuestionChild getUserQuestionByusertrainId(int userId,int userquestionId) {
 		String hql = "from UserQuestionChild where userId = "+userId+" and userquestionId = "+userquestionId;
 		List<UserQuestionChild> list = find(hql);

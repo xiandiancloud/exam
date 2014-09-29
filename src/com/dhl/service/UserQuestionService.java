@@ -1,5 +1,7 @@
 package com.dhl.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -70,6 +72,19 @@ public class UserQuestionService {
 		{
 			UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(userId,number,uq.getId());
 			return uqc;
+		}
+		return null;
+	}
+	
+	/**
+	 * 得到用户提交的答案列表
+	 */
+	public List<UserQuestionChild> getQuestionList(int userId,int examId,int questionId)
+	{
+		UserQuestion uq = userQuestionDao.getUserQuestionByquestion(userId, examId, questionId);
+		if (uq != null)
+		{
+			return userQuestionChildDao.getUserQuestionByuserquestionId(userId,uq.getId());
 		}
 		return null;
 	}

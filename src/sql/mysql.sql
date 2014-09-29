@@ -347,6 +347,7 @@ create table t_user_questionchild
    useranswer          text default null,
    revalue             text default null,
    result              varchar(255) default null,
+   pfscore             int(10) not null,
    primary key (id),
    CONSTRAINT receivet_user_questionchild_ibfk_1 FOREIGN KEY (userId) REFERENCES auth_user (id) ON DELETE CASCADE,
    CONSTRAINT receivet_user_questionchild_ibfk_2 FOREIGN KEY (userquestionId) REFERENCES t_user_question (id) ON DELETE CASCADE

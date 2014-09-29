@@ -91,7 +91,7 @@ public class HavingExamController extends BaseController {
 //		qd.setId(1);
 //		qd.setType(3);
 //		qd.setExplain("解释--------");
-//		qtlist.add(qd);
+//		q.add(qd);
 		return ParseQuestion.changetohtml(content,id);
 	}
 	
@@ -108,7 +108,6 @@ public class HavingExamController extends BaseController {
 		//
 		Set<ExamChapter> chapterset = exam.getExamchapters();
 		Iterator it = chapterset.iterator();
-		List<Train> tlist = new ArrayList();
 		while (it.hasNext()) {
 			ExamChapter chapter = (ExamChapter) it.next();
 			Set<ExamSequential> sequentialset = chapter.getEsequentials();
@@ -120,7 +119,7 @@ public class HavingExamController extends BaseController {
 				Iterator it3 = verticalset.iterator();
 				while (it3.hasNext()) {
 					ExamVertical vertical = (ExamVertical) it3.next();
-					Set<ExamQuestion> vt = vertical.getExamQuestion();//examquestionService.getVerticalTrainList(vertical.getId());
+					Set<ExamQuestion> vt = vertical.getExamQuestion();
 					for (ExamQuestion eq:vt)
 					{
 						Question q = eq.getQuestion();
@@ -189,6 +188,82 @@ public class HavingExamController extends BaseController {
 		return view;
 	}
 
+	
+	/**
+	 * 跳转到老师判分试卷页面
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/toexamingtopfexam")
+	public ModelAndView toexamingtopfexam(HttpServletRequest request,int examId,int userId) {
+		ModelAndView view = new ModelAndView();
+		Exam exam = examService.get(examId);
+		//
+		Set<ExamChapter> chapterset = exam.getExamchapters();
+		Iterator it = chapterset.iterator();
+		while (it.hasNext()) {
+			ExamChapter chapter = (ExamChapter) it.next();
+			Set<ExamSequential> sequentialset = chapter.getEsequentials();
+			Iterator it2 = sequentialset.iterator();
+
+			while (it2.hasNext()) {
+				ExamSequential sequential = (ExamSequential) it2.next();
+				Set<ExamVertical> verticalset = sequential.getExamVerticals();
+				Iterator it3 = verticalset.iterator();
+				while (it3.hasNext()) {
+					ExamVertical vertical = (ExamVertical) it3.next();
+					Set<ExamQuestion> vt = vertical.getExamQuestion();
+					for (ExamQuestion eq:vt)
+					{
+						Question q = eq.getQuestion();
+						//问题
+						if (q != null)
+						{
+							String content = q.getContent();
+							if (q.getType() == 1)
+							{
+								List<QuestionData> qtlist = new ArrayList();
+								QuestionData qd = new QuestionData(q.getId());
+								qd.setTitle(content);
+								qd.setType(1);
+								qtlist.add(qd);
+								eq.setQdlist(qtlist);
+//							eq.setHtmlcontent(content);
+							}
+							else
+							{
+								
+								List<QuestionData> qdlist = changetohtml(content,q.getId());
+								eq.setQdlist(qdlist);
+							}
+						}
+						else//实训
+						{
+							Train t = eq.getTrain();
+							if (t != null)
+							{
+								List<QuestionData> trainList = new ArrayList();
+								QuestionData qd = new QuestionData(t.getId());
+								qd.setTitle(t.getName());
+								List<String> qs = new ArrayList();
+								qs.add(t.getConContent());
+								qd.setContent(qs);
+								qd.setType(6);
+								trainList.add(qd);
+								eq.setQdlist(trainList);
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		view.addObject("exam", exam);
+		view.addObject("userId", userId);
+		view.setViewName("/lms/pfexam");
+		return view;
+	}
 	/**
 	 * 得到用户提交的答案
 	 */
@@ -355,6 +430,63 @@ public class HavingExamController extends BaseController {
 			PrintWriter out = response.getWriter();
 			userQuestionService.saveTrainQuestion(name, codenum, envname, conContent,
 					conShell, conAnswer, score, scoretag, examId, everticalId);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * 用户的统计分数
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/usercounts")
+	public void usercounts(HttpServletRequest request,
+			HttpServletResponse response,int examId) {
+
+		try {
+			PrintWriter out = response.getWriter();
+			User user = getSessionUser(request);
+			
+			Exam exam = examService.get(examId);
+			Set<ExamChapter> chapterset = exam.getExamchapters();
+			Iterator it = chapterset.iterator();
+			while (it.hasNext()) {
+				ExamChapter chapter = (ExamChapter) it.next();
+				Set<ExamSequential> sequentialset = chapter.getEsequentials();
+				Iterator it2 = sequentialset.iterator();
+
+				while (it2.hasNext()) {
+					ExamSequential sequential = (ExamSequential) it2.next();
+					Set<ExamVertical> verticalset = sequential.getExamVerticals();
+					Iterator it3 = verticalset.iterator();
+					while (it3.hasNext()) {
+						ExamVertical vertical = (ExamVertical) it3.next();
+						Set<ExamQuestion> vt = vertical.getExamQuestion();//examquestionService.getVerticalTrainList(vertical.getId());
+						for (ExamQuestion eq:vt)
+						{
+							Question q = eq.getQuestion();
+							//问题
+							if (q != null)
+							{
+								List<UserQuestionChild> uqc = userQuestionService.getQuestionList(user.getId(),examId,q.getId());
+							}
+							else//实训
+							{
+								Train t = eq.getTrain();
+								if (t != null)
+								{
+									UserQuestionChild userTrain = userQuestionService.getUserExamTrainQuestion(user.getId(),examId, t.getId());
+								}
+							}
+						}
+					}
+				}
+			}
 			String str = "{'sucess':'sucess'}";
 			out.write(str);
 		} catch (Exception e) {
