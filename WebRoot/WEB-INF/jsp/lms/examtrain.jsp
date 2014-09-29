@@ -502,11 +502,11 @@
 		<c:forEach items="${tlist}" var="train" varStatus="status">
 		if ("${status.count}" == currentPage) {
 			var name = "${train.envname}";
-			var courseId = parseInt("${course.id}");
+			var examId = parseInt("${exam.id}");
 			var path = "${train.conShell}";
 			var trainId = parseInt("${train.id}");
 			var data = {
-				courseId : courseId,
+				examId : examId,
 				trainId : trainId,
 				name : name,
 				path : path
@@ -540,13 +540,13 @@
 		<c:forEach items="${tlist}" var="train" varStatus="status">
 		if ("${status.count}" == currentPage) {
 			var name = "${train.envname}";
-			var courseId = parseInt("${course.id}");
+			var examId = parseInt("${exam.id}");
 			var data = {
-				courseId : courseId,
+				examId : examId,
 				name : name
 			};
 			$.ajax({
-				url : "lms/createServer.action",
+				url : "lms/createExamServer.action",
 				type : "post",
 				data : data,
 				success : function(s) {
@@ -573,15 +573,15 @@
 		<c:forEach items="${tlist}" var="train" varStatus="status">
 		if ("${status.count}" == currentPage) {
 			var name = "${train.envname}";
-			var courseId = parseInt("${course.id}");
+			var examId = parseInt("${exam.id}");
 			var trainId = parseInt("${train.id}");
 			var data = {
-				courseId : courseId,
+				examId : examId,
 				trainId : trainId,
 				name : name
 			};
 			$.ajax({
-				url : "lms/hasenv.action",
+				url : "lms/hasexamenv.action",
 				type : "post",
 				data : data,
 				success : function(s) {

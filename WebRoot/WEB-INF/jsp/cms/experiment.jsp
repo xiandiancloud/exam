@@ -311,9 +311,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	}
     	function savetrain()
     	{
-    		var sequenticalId = parseInt("${sequentialId}");
+    		//var sequenticalId = parseInt("${sequentialId}");
 			var verticalId = parseInt("${verticalId}");
-			var courseId = parseInt("${courseId}");
+			var examId = parseInt("${examId}");
 			
 			var name = $("#trainname").val();
 			var codenum = $("#codenum").val();
@@ -343,20 +343,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var scoretag = "";
 			//alert("name --- "+name+" , "+codenum+"  ,  "+envname);
 			//$('#editor').wysiwyg();
-			var data = {name:name,codenum:codenum,envname:envname,conContent:conContent,conShell:conShell,conAnswer:conAnswer,score:score,scoretag:scoretag,courseId:courseId,verticalId:verticalId};
+			var data = {name:name,codenum:codenum,envname:envname,conContent:conContent,conShell:conShell,conAnswer:conAnswer,score:score,scoretag:scoretag,examId:examId,everticalId:verticalId};
 			$.ajax({
-				url:"cms/createTrain.action",
+				url:"lms/createExamTrain.action",
 				type:"post",
 				data:data,
 				success:function(s){
 					var a=eval("("+s+")");	
 					if (a.sucess=="sucess")
 					{
-						location.href = "cms/tottrain.action?courseId="+courseId+"&sequentialId="+sequenticalId+"&verticalId="+verticalId;
-					}
-					else
-					{
-						alert(a.msg);
+						//location.href = "cms/tottrain.action?courseId="+courseId+"&sequentialId="+sequenticalId+"&verticalId="+verticalId;
+						location.reload();
 					}
 				}
 			});
@@ -366,8 +363,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		/* var sequenticalId = parseInt("${sequentialId}");
 			var verticalId = parseInt("${verticalId}");
 			var courseId = parseInt("${courseId}");  */
-			
-    		var trainId = parseInt($("#vtrainid").val());
+			var tid = $("#vtrainid").val();
+			if (tid)
+			{
+			}
+			else
+			{
+				savetrain();
+				return;
+			}
+    		var trainId = parseInt(tid);
 			var name = $("#trainname").val();
 			var codenum = $("#codenum").val();
 			if (isNull(name))	

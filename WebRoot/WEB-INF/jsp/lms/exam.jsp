@@ -46,12 +46,12 @@
     <script src="assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
     <![endif]-->
     
-    <style type="text/css">
+   <style type="text/css">
     /* Custom Styles */
 	.section .item {
-    	background: url("http://s.stu.126.net/res/images/question/ui_question.png?a2a90d6702c600cc5523d3d971309eca") no-repeat scroll 0 -760px rgba(0, 0, 0, 0);
+    	background: url("images/ui_question.png") no-repeat scroll 0 -760px rgba(0, 0, 0, 0);
     	color: #666;
-   		cursor: pointer;
+    	cursor: pointer;
     	display: block;
     	font-family: "Arial";
     	font-size: 12px;
@@ -60,9 +60,9 @@
     	margin: 0 2px 5px 0;
     	outline: medium none;
     	text-align: center;
+    	text-decoration: none;
     	width: 22px;
-    	float:left;
-    	text-decoration:none;
+    	float: left;
 	}
 	.section .item.greater {
     	font-size: 11px;
@@ -93,7 +93,22 @@
     	background-position: 0 -895px;
     	color: #fff;
 	}
-
+	.totalScore {
+    	font-family: Arial,Helvetica,sans-serif;
+    	font-size: 100px;
+   	 	line-height: 229px;  	 	
+	}
+ 	.advance {
+    	left: 0;
+    	text-align: center;
+    	top: 0;
+    	width: 235px;
+    	color:#FF7F24;
+	}
+	.juzhong{
+		height:40px;
+		line-height:40px;
+	}
 </style>
 
   </head>
@@ -101,13 +116,80 @@
     <jsp:include page="header.jsp"></jsp:include>
 	<div id='wrapper'>
 		<div class='container'>
+					<div class='row'>
+						<div class='col-xs-12'>
+							<div class='row'>
+								<div class='col-xs-12'>
+									<div class='page-header'>
+										<h1 class='pull-left'>
+											<span>${exam.name}</span>
+										</h1>
+									</div>
+								</div>
+							</div>
+							<div class='row'>
+							<div class='col-sm-3'>
+								<div class="advance ">
+									<span class="totalScore">100</span>分
+								</div>
+							</div>
+							<div class='col-sm-9'>
+								<div class='box bordered-box' style='margin-bottom:0;'>
+									<div class='box-content box-no-padding'>
+										<div class='responsive-table'>
+											<div class='scrollable-area'>
+												<table class='table table-bordered' style='margin-bottom:0;background-color:#CCCCCC'>
+													<thead>
+														<tr>
+															<th></th>
+															<th>第一部分</th>
+															<th>第二部分</th>
+															<th>第三部分</th>
+															<th>第四部分</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>答对</td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+														</tr>
+														<tr>
+															<td>答错</td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+														</tr>
+														<tr>
+															<td>未答</td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+														</tr>
+														<tr>
+															<td>得分</td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+			
 			<div class='row' id='content-wrapper'>
 				<div class='col-xs-9'>
-					<div class='page-header'>
-                    	<h1 class='pull-left'>
-                      		<span>${exam.name}</span>
-                    	</h1>
-                 	</div>
 					<div class='row'>
 					<div class='col-sm-12 box box-nomargin'>
 					<div class='box-content'>
@@ -140,7 +222,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
 														    <c:set value="${index + 1}" var="index" />
-															<span>${index}&nbsp;${qd.title}</span>
+															<span id="number${index}">${index}&nbsp;${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -163,7 +245,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span class='trainimg'>${index}&nbsp;${qd.title}</span>
+															<span class='trainimg' id="number${index}">${index}&nbsp;${qd.title}</span>
 														</div>
 														<%-- <c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -181,7 +263,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span>${index}&nbsp;${qd.title}</span>
+															<span id="number${index}">${index}&nbsp;${qd.title}</span>
 														</div>
 														<hr class='hr-normal'>
 														<div id="number${index}">
@@ -208,7 +290,7 @@
 													<form class="form form-horizontal" method="post" action="#" id="${examq.id}${qd.id}">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span>${index}&nbsp;${qd.title}</span>
+															<span id="number${index}">${index}&nbsp;${qd.title}</span>
 														</div>
 														<hr class='hr-normal'>
 														<div id="number${index}">
@@ -235,7 +317,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span>${index}&nbsp;${qd.title}</span>
+															<span id="number${index}">${index}&nbsp;${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -263,7 +345,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span>${index}&nbsp;${qd.title}</span>
+															<span id="number${index}">${index}&nbsp;${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -303,14 +385,15 @@
 				</div>																																			
 					
 				<div class="col-xs-3" id="myScrollspy">
-					<div class='page-header'></div>
 					<div class='row' data-spy="affix">
-						<div class='col-sm-12'>
+						<div class='col-xs-12'>
 							<div class='box bordered-box blue-border'>
 								<div class='box-content'>
 									<div class='row'>
-										<div class='col-sm-12'>
-											<div id="timer" class="pull-left" style="color:green;font-family:Arial;font-size:170%"></div>
+										<div class='col-xs-3'>
+											<div id="timer" style="color:green;font-family:Arial;font-size:170%;"></div>
+										</div>
+										<div class='col-xs-9'>
 											<div class="pull-right">
 												<a class="btn">暂停</a> 
 												<a class="btn">下次再做</a>
@@ -319,7 +402,7 @@
 									</div>
 									<hr class='hr-normal'>
 									<div class='row'>
-										<div class='col-sm-12'>
+										<div class='col-xs-12'>
 											<div data-offset-top="125" class="nav nav-tabs nav-stacked section">
 												<!-- <li><a href="javascript:void(0)" onclick="document.getElementById('section-2').scrollIntoView();" class="j-item item  f-fl">31</a></li> -->
 												<c:set value="0" var="sum" />
@@ -346,7 +429,7 @@
 									</div>
 									<hr class='hr-normal'>
 									<div class='row'>
-										<div class='col-sm-12'>
+										<div class='col-xs-12'>
 											<div class='box-content' style="padding:0">
 												<a class="btn btn-success btn-block btn-lg" href="">提交试卷</a>
 											</div>

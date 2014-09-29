@@ -31,6 +31,56 @@
 <link rel="stylesheet" type="text/css" href="tcss/jquery.timepicker.css" />
 <link href="tcss/style-xmodule.css" rel="stylesheet" type="text/css" />
 <link href="tcss/custom.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css"> 
+.exam_button { 
+width:100%;
+display: inline-block; 
+zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */ 
+*display: inline; 
+vertical-align: baseline; 
+outline: none; 
+cursor: pointer; 
+text-align: center; 
+text-decoration: none; 
+font: 14px/100% Arial, Helvetica, sans-serif; 
+padding: .5em 2em .55em; 
+text-shadow: 0 1px 1px rgba(0,0,0,.3); 
+-webkit-border-radius: .5em; 
+-moz-border-radius: .5em; 
+border-radius: .5em; 
+-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2); 
+-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2); 
+box-shadow: 0 1px 2px rgba(0,0,0,.2); 
+} 
+.exam_button:hover { 
+text-decoration: none; 
+} 
+.exam_button:active { 
+position: relative; 
+top: 1px; 
+} 
+.exam_button_blue { 
+color: #d9eef7; 
+border: solid 1px #0076a3; 
+background: -webkit-gradient(linear, left top, left bottom, from(#00adee), to(#0078a5)); 
+background: -moz-linear-gradient(top, #00adee, #0078a5); 
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00adee', endColorstr='#0078a5'); 
+} 
+.exam_button_blue:hover { 
+background: #007ead; 
+background: -webkit-gradient(linear, left top, left bottom, from(#0095cc), to(#00678e)); 
+background: -moz-linear-gradient(top, #0095cc, #00678e); 
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0095cc', endColorstr='#00678e'); 
+} 
+.exam_button_blue:active { 
+color: #80bed6; 
+background: -webkit-gradient(linear, left top, left bottom, from(#0078a5), to(#00adee)); 
+background: -moz-linear-gradient(top, #0078a5, #00adee); 
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0078a5', endColorstr='#00adee'); 
+} 
+</style> 
+
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 <script src="js/jquery/jquery.min.js"></script>
@@ -1669,6 +1719,9 @@ img.MathJax_strut {
 											</ul>
 											<div id="tab1" class="tab current ui-tabs-panel ui-widget-content ui-corner-bottom" aria-labelledby="ui-id-1" role="tabpanel" style="display: block;" aria-expanded="true" aria-hidden="false">
 												<ul class="new-component-template">
+													<li>
+														<input class="exam_button exam_button_blue" type="button" value="添加实验" onclick="showtrain();resettrain();"/> 
+													</li>
 												    <!--注意实训系统的开启  -->
 													<c:forEach var="train" items="${trainlist}">
 															<li class="editor-md">

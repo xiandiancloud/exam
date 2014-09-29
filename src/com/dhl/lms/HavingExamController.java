@@ -24,9 +24,11 @@ import com.dhl.domain.QuestionData;
 import com.dhl.domain.Train;
 import com.dhl.domain.User;
 import com.dhl.domain.UserExam;
+import com.dhl.domain.UserExamEnvironment;
 import com.dhl.domain.UserQuestionChild;
 import com.dhl.service.ExamQuestionService;
 import com.dhl.service.ExamService;
+import com.dhl.service.UserExamEnvironmentService;
 import com.dhl.service.UserExamService;
 import com.dhl.service.UserQuestionService;
 import com.dhl.util.ParseQuestion;
@@ -49,6 +51,8 @@ public class HavingExamController extends BaseController {
 	private ExamQuestionService examquestionService;
 	@Autowired
 	private UserQuestionService userQuestionService;
+	@Autowired
+	private UserExamEnvironmentService userExamEnvironmentService;
 	
 	//判断是否有权限去考试
 	private boolean isHaving(Exam exam)
@@ -293,4 +297,70 @@ public class HavingExamController extends BaseController {
 		view.setViewName("/lms/examtrain");
 		return view;
 	}
+	
+	//----------------------------------考试实训调用--------------------------------
+	/**
+	 * 判断环境是否已经准备好
+	 * 
+	 * @param request
+	 * @param response
+	 * @param courseId
+	 * @param name
+	 *            :环境名称
+	 */
+	@RequestMapping("/hasexamenv")
+	public void hasexamenv(HttpServletRequest request,
+			HttpServletResponse response, int examId, int trainId, String name) {
+
+		try {
+			User user = getSessionUser(request);
+			PrintWriter out = response.getWriter();
+			UserExamEnvironment uce = userExamEnvironmentService.getMyUCE(user.getId(), examId,
+					name);
+			UserQuestionChild userTrain = userQuestionService.getUserExamTrainQuestion(user.getId(),
+					examId, trainId);
+			String result = userTrain == null ? "" : userTrain.getResult();
+			String revalue = userTrain == null ? "" : userTrain.getRevalue();
+			if (uce != null) {
+				String str = "{'sucess':'sucess','ip':'" + uce.getHostname()
+						+ "','username':'" + uce.getUsername() + "','result':'"
+						+ result + "','revalue':'" + revalue + "','password':'"
+						+ uce.getPassword() + "','ssh':'" + uce.getServerId()
+						+ "'}";
+				out.write(str);
+			} else {
+				String str = "{'sucess':'fail','result':'" + result
+						+ "','revalue':'" + revalue + "'}";
+				out.write(str);
+			}
+		} catch (Exception e) {
+
+		}
+	}
+	
+	/**
+	 * 创建考试的实验
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/createExamTrain")
+	public void createExamTrain(HttpServletRequest request,
+			HttpServletResponse response, String name, String codenum,
+			String envname, String conContent, String conShell,
+			String conAnswer, int score, String scoretag, int examId,
+			int everticalId) {
+
+		try {
+			PrintWriter out = response.getWriter();
+			userQuestionService.saveTrainQuestion(name, codenum, envname, conContent,
+					conShell, conAnswer, score, scoretag, examId, everticalId);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//-----------------------考试实训-------------------------------
 }
