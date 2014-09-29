@@ -31,6 +31,7 @@ import com.dhl.service.ExamService;
 import com.dhl.service.UserExamEnvironmentService;
 import com.dhl.service.UserExamService;
 import com.dhl.service.UserQuestionService;
+import com.dhl.service.UserService;
 import com.dhl.util.ParseQuestion;
 import com.dhl.web.BaseController;
 
@@ -43,6 +44,8 @@ import com.dhl.web.BaseController;
 @RequestMapping("/lms")
 public class HavingExamController extends BaseController {
 
+	@Autowired
+	private UserService userService;
 	@Autowired
 	private UserExamService userExamService;
 	@Autowired
@@ -286,7 +289,30 @@ public class HavingExamController extends BaseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+	}
+	
+	/**
+	 * 评分裁判得到用户提交的答案
+	 */
+	@RequestMapping("/getUserQuestionAnswer")
+	public void getUserQuestionAnswer(HttpServletRequest request,
+			HttpServletResponse response, int examId,int questionId,int number,int index,int userId) {
+		try {
+			
+			User user = userService.getUserById(userId);
+			UserQuestionChild uqc = userQuestionService.getQuestion(user.getId(),examId,questionId, number);
+			String str = "{'sucess':'sucess'}";
+			if (uqc != null)
+			{
+				String useranswer = uqc.getUseranswer();
+				str = "{'sucess':'sucess','answer':'"+useranswer+"','index':'"+index+"'}";
+			}
+			
+			PrintWriter out = response.getWriter();
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**

@@ -12,7 +12,7 @@
 <html>
   <head>
     <base href="<%=basePath%>">
-	<title>我的考试</title>
+	<title>评分</title>
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 	<meta content='text/html;charset=utf-8' http-equiv='content-type'>
 	<meta content='Flat administration template for Twitter Bootstrap. Twitter Bootstrap 3 template with Ruby on Rails support.' name='description'>
@@ -265,14 +265,14 @@
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
 																<label class='radio'>
-																	<input type="radio" name="${qd.id}" onclick="submitquesstion('${qd.id}','${nn.index+1}','${qdcontent}');" value="${qdcontent}"/>${qdcontent}
+																	<input type="radio" name="${qd.id}" value="${qdcontent}"/>${qdcontent}
 																</label> 
 															</div>
 														</c:forEach>
 														</div>
-														<%-- <hr class='hr-normal nospace'>
+														<hr class='hr-normal nospace'>
 														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<label >正确答案：${qd.answer}</label>
+															<%-- <label >正确答案：${qd.answer}</label> --%>
 															<div class='row'>
 															<div class='col-xs-12 h30'></div>
 															</div>												
@@ -298,7 +298,7 @@
 															<div class='row'>
 																<div class='col-xs-12 h30'></div>
 															</div>
-														</div> --%>
+														</div>
 													</form>
 												</div>
 											</div>
@@ -317,14 +317,14 @@
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
 																<label class='checkbox'>
-																	<input type="checkbox" name="${qd.id}" onclick="submitmultiquesstion('${qd.id}','${nn.index+1}','${examq.id}${qd.id}');" value="${qdcontent}"/>${qdcontent}
+																	<input type="checkbox" name="${qd.id}" value="${qdcontent}"/>${qdcontent}
 																</label> 
 															</div>
 														</c:forEach>
 														</div>
-														<%-- <hr class='hr-normal nospace'>
+														<hr class='hr-normal nospace'>
 														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<label >正确答案：${qd.answer}</label>
+															<%-- <label >正确答案：${qd.answer}</label> --%>
 															<div class='row'>
 															<div class='col-xs-12 h30'></div>
 															</div>												
@@ -350,7 +350,7 @@
 															<div class='row'>
 																<div class='col-xs-12 h30'></div>
 															</div>
-														</div> --%>													
+														</div>													
 													</form>
 												</div>
 											</div>
@@ -372,12 +372,12 @@
 														<hr class='hr-normal'>
 														<div class='form-group'>
 															<div class='col-sm-12'>
-																<input class='form-control' type="text" id="number${index}" onblur="submittextquesstion('${qd.id}','${nn.index+1}',this);" />
+																<input class='form-control' type="text" id="number${index}" />
 															</div>
 														</div>
-														<%-- <hr class='hr-normal nospace'>
+														<hr class='hr-normal nospace'>
 														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<label >正确答案：${qd.answer}</label>
+															<%-- <label >正确答案：${qd.answer}</label> --%>
 															<div class='row'>
 															<div class='col-xs-12 h30'></div>
 															</div>												
@@ -403,7 +403,7 @@
 															<div class='row'>
 																<div class='col-xs-12 h30'></div>
 															</div>
-														</div> --%>
+														</div>
 													</form>
 												</div>
 											</div>
@@ -425,12 +425,12 @@
 														<hr class='hr-normal'>
 														<div class='form-group'>
 															<div class='col-sm-12'>
-																<textarea class='form-control' rows='5' id="number${index}" onblur="submittextareaquesstion('${qd.id}','${nn.index+1}',this);"></textarea>
+																<textarea class='form-control' rows='5' id="number${index}"></textarea>
 															</div>
 														</div>
-														<%-- <hr class='hr-normal nospace'>
+														<hr class='hr-normal nospace'>
 														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<label >正确答案：${qd.answer}</label>
+															<%-- <label >正确答案：${qd.answer}</label> --%>
 															<div class='row'>
 															<div class='col-xs-12 h30'></div>
 															</div>												
@@ -456,7 +456,7 @@
 															<div class='row'>
 																<div class='col-xs-12 h30'></div>
 															</div>
-														</div> --%>
+														</div>
 													</form>
 												</div>
 											</div>
@@ -485,10 +485,10 @@
 							<div class='box bordered-box blue-border'>
 								<div class='box-content'>
 									<div class='row'>
-										<div class='col-xs-3'>
-											<div id="timer" style="color:green;font-family:Arial;font-size:170%;"></div>
+										<div class='col-xs-12'>
+											<!-- <div id="timer" style="color:green;font-family:Arial;font-size:170%;"></div> -->
 										</div>
-										<div class='col-xs-9'>
+										<div class='col-xs-12'>
 											<div class="pull-right">
 												<a class="btn">暂停</a> 
 												<a class="btn">下次再做</a>
@@ -526,7 +526,7 @@
 									<div class='row'>
 										<div class='col-xs-12'>
 											<div class='box-content' style="padding:0">
-												<a class="btn btn-success btn-block btn-lg" href="">提交试卷</a>
+												<a class="btn btn-success btn-block btn-lg" href="">评分结束</a>
 											</div>
 										</div>
 									</div>									
@@ -577,18 +577,19 @@
 		function initquestion()
 		{
 			var index = 0;
+			var examId = "${exam.id}";
+			var userId = "${userId}";
 			<c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
             <c:forEach var="sequential" items="${chapter.esequentials}" varStatus="j">
                 <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
                     <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
                     	<c:forEach var="qd" items="${examq.qdlist}" varStatus="nn">
                     		index ++;
-                    		var examId = "${exam.id}";
                     		var questionId = "${qd.id}";
                     		var number = "${nn.index+1}";
-	                    	var data = {examId:examId,questionId:questionId,number:number,index:index};
+	                    	var data = {examId:examId,questionId:questionId,number:number,index:index,userId:userId};
 	            			$.ajax({
-	            				url : "lms/getQuestionAnswer.action",
+	            				url : "lms/getUserQuestionAnswer.action",
 	            				type : "post",
 	            				data : data,
 	            				success : function(s) {
@@ -632,87 +633,10 @@
           </c:forEach>
 		}
 		
-		//一个小时，按秒计算，可以自己调整时间
-		var maxtime = 60 * 60;
-		function CountDown() {
-			if (maxtime >= 0) {
-				minutes = Math.floor(maxtime / 60);
-				seconds = Math.floor(maxtime % 60)>9?Math.floor(maxtime % 60):"0"+Math.floor(maxtime % 60);
-				msg = minutes + ":" + seconds ;
-				$("#timer").html(msg);
-				if (maxtime == 5 * 60)
-					alert('注意，还有5分钟!');
-				--maxtime;
-			} else {
-				clearInterval(timer);
-				alert("时间到，结束!");
-			}
-		}
-		timer = setInterval("CountDown()", 1000);
-		
 		//提交答案------单选
-		function submitquesstion(questionId,number,useranswer)
+		function resetquesstionscore(questionId,number)
 		{
 			var examId = "${exam.id}";
-			var data = {examId:examId,questionId:questionId,number:number,useranswer:useranswer};
-			$.ajax({
-				url : "lms/submitquesstion.action",
-				type : "post",
-				data : data,
-				success : function(s) {
-					var a = eval("(" + s + ")");
-					if ("sucess" == a.sucess) {
-						alert("提交了");
-					}
-				}
-			});
-		}
-		//提交答案------多选
-		function submitmultiquesstion(questionId,number,id)
-		{
-			var s='';
-			$("#"+id+" input[type='checkbox']:checked").each(function(){ 
-			   s+=$(this).val()+'#'; 
-			}); 
-			if (s.length > 0) { 
-			    s = s.substring(0,s.length - 1); 
-			} 
- 			var examId = "${exam.id}";
-			var data = {examId:examId,questionId:questionId,number:number,useranswer:s};
-			$.ajax({
-				url : "lms/submitquesstion.action",
-				type : "post",
-				data : data,
-				success : function(s) {
-					var a = eval("(" + s + ")");
-					if ("sucess" == a.sucess) {
-						alert("提交了");
-					}
-				}
-			});
-		}
-		//提交答案------文本输入
-		function submittextquesstion(questionId,number,element)
-		{
- 			var examId = "${exam.id}";
-			var data = {examId:examId,questionId:questionId,number:number,useranswer:$(element).val()};
-			$.ajax({
-				url : "lms/submitquesstion.action",
-				type : "post",
-				data : data,
-				success : function(s) {
-					var a = eval("(" + s + ")");
-					if ("sucess" == a.sucess) {
-						alert("提交了");
-					}
-				}
-			});
-		}
-		//提交答案------论述题输入
-		function submittextareaquesstion(questionId,number,element)
-		{
-			var useranswer = replaceTextarea1($(element).val());
- 			var examId = "${exam.id}";
 			var data = {examId:examId,questionId:questionId,number:number,useranswer:useranswer};
 			$.ajax({
 				url : "lms/submitquesstion.action",
