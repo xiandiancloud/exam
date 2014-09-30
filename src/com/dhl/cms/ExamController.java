@@ -566,7 +566,7 @@ public class ExamController extends BaseController {
 					List<QuestionData> qtlist = new ArrayList();
 					QuestionData qd = new QuestionData(q.getId());
 					qd.setTitle(content);
-					qd.setType(1);
+					qd.setType(CommonConstant.QTYPE_1);
 					qtlist.add(qd);
 					eq.setQdlist(qtlist);
 				}
@@ -592,7 +592,7 @@ public class ExamController extends BaseController {
 		ExamVertical vertical = examverticalService.get(verticalId);
 		view.addObject("vertical", vertical);
 		
-		List<Train> courselists = new ArrayList<Train>();
+		/*List<Train> courselists = new ArrayList<Train>();
 		try
 		{
 		//取得实训课程列表
@@ -619,10 +619,57 @@ public class ExamController extends BaseController {
 		}
 		catch(Exception e)
 		{}
-		view.addObject("trainlist", courselists);
+		view.addObject("trainlist", courselists);*/
 		
 		view.setViewName("/cms/unit");
 		return view;
+	}
+	
+	/**
+	 * 取得实训系统的实训列表
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/getTrainList")
+	public void getTrainList(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		try {
+			PrintWriter out = response.getWriter();
+			
+			String str = "[";
+			//取得实训课程列表
+			RestTrain rs = new RestTrain();
+			HttpEntity<RestTrain> entity = new HttpEntity<RestTrain>(rs);
+
+			String resturl = UtilTools.getConfig().getProperty("REST_URL_COURSELIST");
+			ResponseEntity<RestTrain> res = restTemplate.postForEntity(resturl,
+					entity, RestTrain.class);
+			RestTrain e = res.getBody();
+			String courseList = e.getCourselist();
+			JSONArray jsonArray = JSONArray.fromObject(courseList);
+			
+			for (Object obj : jsonArray)  
+	        {  
+	            JSONObject jsonObject = (JSONObject) obj;
+//	        	Train c = new Train();
+	            int id = Integer.parseInt((String)jsonObject.get("id"));
+	            String name = (String)jsonObject.get("name");
+//	            c.setId(id);
+//	            c.setName(name);
+	            str += "{'id':"+id+",'name':'"+name+"'},";
+	        }  
+//			view.addObject("trainlist", courselists);
+			
+			if (str.length() > 1)
+			{
+				str = str.substring(0, str.length() - 1) + "]";
+				str = str.replaceAll("null", "");
+			}
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private List<QuestionData> changetohtml(String content,int id)

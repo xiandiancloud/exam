@@ -152,7 +152,7 @@ public class LmsExamController extends BaseController {
 		Exam exam = examService.get(examId);
 		String s = exam.getStarttimedetail();
 		String e = exam.getEndtimedetail();
-		if ("".equals(s) || "".equals(3))
+		if (s==null || e== null || "".equals(s) || "".equals(e))
 		{
 			view.addObject("mm", "无限制");
 		}

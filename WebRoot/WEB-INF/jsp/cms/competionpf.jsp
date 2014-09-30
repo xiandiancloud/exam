@@ -269,7 +269,7 @@
 				                               <%--       <a class='btn btn-danger btn-xs' href='javascript:void(0);' onclick="unlockallexam(${ce.competionId},${ce.exam.id});">
 				                                      <i class='icon-unlock'></i>
 				                                    </a> --%>
-				                                    <a class='btn btn-danger btn-xs' href='lms/toexamingtopfexam.action?examId=${ceexam.exam.id}'>
+				                                    <a class='btn btn-danger btn-xs' href='lms/toexamingtopfexam.action?examId=${ceexam.exam.id}&userId=${student.user.id}'>
 				                                      <i class='icon-ok'></i>判卷
 				                                    </a>
 				                                  </div>

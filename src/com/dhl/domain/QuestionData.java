@@ -17,14 +17,15 @@ public class QuestionData {
 		this.id = id;
 	}
 	//1:html问题描述 2：单选 3：多选 4：填空 5：多文本填空6：实训
+	//--------------查看commonconstants对应的 常量类
 	private int type;
 	
 	private String title;
 	
-	private List<String> content;
-	
+	//如果是多项题目，解析出来的是多个内容跟答案
+	private List<String> content;	
 	private List<String> answer;
-	
+	//题目分
 	private int score;
 
 	private String explain;

@@ -29,9 +29,17 @@ public class UserQuestion extends BaseDomain {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "trainId")
 	private Train train;
-	private int questionId;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "questionId")
+	private Question question;
 	private int counts;
 	
+	public Question getQuestion() {
+		return question;
+	}
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
 	public Train getTrain() {
 		return train;
 	}
@@ -55,12 +63,6 @@ public class UserQuestion extends BaseDomain {
 	}
 	public void setExamId(int examId) {
 		this.examId = examId;
-	}
-	public int getQuestionId() {
-		return questionId;
-	}
-	public void setQuestionId(int questionId) {
-		this.questionId = questionId;
 	}
 	public int getCounts() {
 		return counts;

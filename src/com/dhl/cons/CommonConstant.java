@@ -35,7 +35,13 @@ public class CommonConstant
    public static final String ROLE_T = "老师";
    public static final String ROLE_C = "裁判";
    public static final String ROLE_A = "管理员";
-   
+   //考试系统对应的问题的6种类型————>1:html问题描述 2：单选 3：多选 4：填空 5：多文本填空6：实训
+   public static final int QTYPE_1 = 1;
+   public static final int QTYPE_2 = 2;
+   public static final int QTYPE_3 = 3;
+   public static final int QTYPE_4 = 4;
+   public static final int QTYPE_5 = 5;
+   public static final int QTYPE_6 = 6;
    //竞赛对应的4种角色关系-------角色对应的所有的都是老师
 //   public static final String CROLE_1 = "创建者";
    public static final String CROLE_2 = "主裁判";

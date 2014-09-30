@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Exam;
 import com.dhl.domain.ExamChapter;
 import com.dhl.domain.ExamQuestion;
@@ -25,6 +26,7 @@ import com.dhl.domain.Train;
 import com.dhl.domain.User;
 import com.dhl.domain.UserExam;
 import com.dhl.domain.UserExamEnvironment;
+import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
 import com.dhl.service.ExamQuestionService;
 import com.dhl.service.ExamService;
@@ -135,7 +137,7 @@ public class HavingExamController extends BaseController {
 								List<QuestionData> qtlist = new ArrayList();
 								QuestionData qd = new QuestionData(q.getId());
 								qd.setTitle(content);
-								qd.setType(1);
+								qd.setType(CommonConstant.QTYPE_1);
 								qtlist.add(qd);
 								eq.setQdlist(qtlist);
 //							eq.setHtmlcontent(content);
@@ -158,7 +160,7 @@ public class HavingExamController extends BaseController {
 								List<String> qs = new ArrayList();
 								qs.add(t.getConContent());
 								qd.setContent(qs);
-								qd.setType(6);
+								qd.setType(CommonConstant.QTYPE_6);
 								trainList.add(qd);
 								eq.setQdlist(trainList);
 							}
@@ -229,7 +231,7 @@ public class HavingExamController extends BaseController {
 								List<QuestionData> qtlist = new ArrayList();
 								QuestionData qd = new QuestionData(q.getId());
 								qd.setTitle(content);
-								qd.setType(1);
+								qd.setType(CommonConstant.QTYPE_1);
 								qtlist.add(qd);
 								eq.setQdlist(qtlist);
 //							eq.setHtmlcontent(content);
@@ -252,7 +254,8 @@ public class HavingExamController extends BaseController {
 								List<String> qs = new ArrayList();
 								qs.add(t.getConContent());
 								qd.setContent(qs);
-								qd.setType(6);
+								qd.setType(CommonConstant.QTYPE_6);
+								qd.setScore(t.getScore());
 								trainList.add(qd);
 								eq.setQdlist(trainList);
 							}
@@ -276,7 +279,7 @@ public class HavingExamController extends BaseController {
 		try {
 			
 			User user = getSessionUser(request);
-			UserQuestionChild uqc = userQuestionService.getQuestion(user.getId(),examId,questionId, number);
+			UserQuestionChild uqc = userQuestionService.getQuestionChild(user.getId(),examId,questionId, number);
 			String str = "{'sucess':'sucess'}";
 			if (uqc != null)
 			{
@@ -299,13 +302,81 @@ public class HavingExamController extends BaseController {
 			HttpServletResponse response, int examId,int questionId,int number,int index,int userId) {
 		try {
 			
-			User user = userService.getUserById(userId);
-			UserQuestionChild uqc = userQuestionService.getQuestion(user.getId(),examId,questionId, number);
+//			User user = userService.getUserById(userId);
+			UserQuestion uq = userQuestionService.getQuestion(userId, examId, questionId);
+			UserQuestionChild uqc = userQuestionService.getQuestionChild(uq,userId,number);
 			String str = "{'sucess':'sucess'}";
+			String score = "";
 			if (uqc != null)
 			{
 				String useranswer = uqc.getUseranswer();
-				str = "{'sucess':'sucess','answer':'"+useranswer+"','index':'"+index+"'}";
+				String pfscore = uqc.getPfscore();
+				//判分裁判一旦修改了系统判分，采用判分裁判的
+				if (pfscore != null)
+				{
+					score = pfscore;
+				}
+				else
+				{
+					//采用自动评分
+					Train t = uq.getTrain();
+					if (t != null)//实训
+					{
+						String tanswer = t.getConAnswer();
+						if (useranswer != null && tanswer != null && useranswer.trim().equals(tanswer.trim()))
+						{
+							score = t.getScore()+"";
+						}
+					}
+					else//问题
+					{
+						Question q = uq.getQuestion();
+						List<QuestionData> qdlist = changetohtml(q.getContent(), q.getId());
+						//理论上不应该越界，没有容错，是为了前期发现问题，如果出错，好排查问题
+						if (qdlist != null)
+						{
+							QuestionData qd = qdlist.get(number-1);
+							int type = qd.getType();
+							if (type == CommonConstant.QTYPE_2 || type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5)
+							{
+								List<String> answerlist = qd.getAnswer();
+								if (answerlist != null && answerlist.size() > 0)
+								{
+									if (useranswer != null && useranswer.trim().equals(answerlist.get(0).trim()))
+									{
+										score = qd.getScore()+"";
+									}
+								}
+							}
+							else if (type == CommonConstant.QTYPE_3)//多选要匹配答案列表
+							{
+								if (useranswer != null)
+								{
+									List<String> answerlist = qd.getAnswer();
+									if (answerlist != null)
+									{
+										String[] strs = useranswer.split("#");
+										int size = answerlist.size();
+										boolean flag = true;
+										for (int i=0;i<size;i++)
+										{
+											if (answerlist.get(i).equals(strs[i]))
+											{
+												flag = false;
+												break;
+											}
+										}
+										if (flag)
+										{
+											score = qd.getScore()+"";
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				str = "{'sucess':'sucess','answer':'"+useranswer+"','index':'"+index+"','pfscore':'"+score+"'}";
 			}
 			
 			PrintWriter out = response.getWriter();
@@ -325,6 +396,25 @@ public class HavingExamController extends BaseController {
 			
 			User user = getSessionUser(request);
 			userQuestionService.saveQuestion(user.getId(),examId,questionId, number, useranswer);
+			String str = "{'sucess':'sucess'}";
+			PrintWriter out = response.getWriter();
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	/**
+	 * 裁判修改分值
+	 */
+	@RequestMapping("/setquesstionpfscore")
+	public void setquesstionpfscore(HttpServletRequest request,
+			HttpServletResponse response,int userId, int examId,int questionId,int number,String pfscore) {
+		try {
+			
+			User user = userService.getUserById(userId);
+			userQuestionService.updateQuestion(user.getId(),examId,questionId, number,pfscore);
 			String str = "{'sucess':'sucess'}";
 			PrintWriter out = response.getWriter();
 			out.write(str);
@@ -418,7 +508,7 @@ public class HavingExamController extends BaseController {
 			PrintWriter out = response.getWriter();
 			UserExamEnvironment uce = userExamEnvironmentService.getMyUCE(user.getId(), examId,
 					name);
-			UserQuestionChild userTrain = userQuestionService.getUserExamTrainQuestion(user.getId(),
+			UserQuestionChild userTrain = userQuestionService.getUserExamTrainQuestionChild(user.getId(),
 					examId, trainId);
 			String result = userTrain == null ? "" : userTrain.getResult();
 			String revalue = userTrain == null ? "" : userTrain.getRevalue();
@@ -506,7 +596,7 @@ public class HavingExamController extends BaseController {
 								Train t = eq.getTrain();
 								if (t != null)
 								{
-									UserQuestionChild userTrain = userQuestionService.getUserExamTrainQuestion(user.getId(),examId, t.getId());
+									UserQuestionChild userTrain = userQuestionService.getUserExamTrainQuestionChild(user.getId(),examId, t.getId());
 								}
 							}
 						}

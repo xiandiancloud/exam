@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.dhl.dao.ExamDao;
 import com.dhl.dao.ExamQuestionDao;
 import com.dhl.dao.ExamVerticalDao;
+import com.dhl.dao.QuestionDao;
 import com.dhl.dao.TrainDao;
 import com.dhl.dao.UserQuestionChildDao;
 import com.dhl.dao.UserQuestionDao;
@@ -22,6 +23,8 @@ import com.dhl.domain.UserQuestionChild;
 @Service
 public class UserQuestionService {
 
+	@Autowired
+	private QuestionDao questionDao;
 	@Autowired
 	private UserQuestionDao userQuestionDao;
 	@Autowired
@@ -65,7 +68,25 @@ public class UserQuestionService {
 	/**
 	 * 得到用户提交的答案
 	 */
-	public UserQuestionChild getQuestion(int userId,int examId,int questionId,int number)
+	public UserQuestion getQuestion(int userId,int examId,int questionId)
+	{
+		UserQuestion uq = userQuestionDao.getUserQuestionByquestion(userId, examId, questionId);
+		return uq;
+	}
+	
+	/**
+	 * 得到用户提交的答案
+	 */
+	public UserQuestionChild getQuestionChild(UserQuestion uq,int userId,int number)
+	{
+		UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(userId,number,uq.getId());
+		return uqc;
+	}
+	
+	/**
+	 * 得到用户提交的答案
+	 */
+	public UserQuestionChild getQuestionChild(int userId,int examId,int questionId,int number)
 	{
 		UserQuestion uq = userQuestionDao.getUserQuestionByquestion(userId, examId, questionId);
 		if (uq != null)
@@ -92,7 +113,16 @@ public class UserQuestionService {
 	/**
 	 * 得到用户关于单元下的实验类型的问题
 	 */
-	public UserQuestionChild getUserExamTrainQuestion(int userId,int examId,int trainId)
+	public UserQuestion getUserExamTrainQuestion(int userId,int examId,int trainId)
+	{
+		UserQuestion uq = userQuestionDao.getUserQuestionBytrain(userId, examId, trainId);
+		return uq;
+	}
+	
+	/**
+	 * 得到用户关于单元下的实验类型的问题
+	 */
+	public UserQuestionChild getUserExamTrainQuestionChild(int userId,int examId,int trainId)
 	{
 		UserQuestion uq = userQuestionDao.getUserQuestionBytrain(userId, examId, trainId);
 		if (uq != null)
@@ -101,6 +131,48 @@ public class UserQuestionService {
 			return uqc;
 		}
 		return null;
+	}
+	
+	/**
+	 * 保存考试系统的实训答案
+	 * @param userId
+	 * @param examId
+	 * @param trainId
+	 */
+	public void saveQuestionTrain(int userId,int examId,int trainId,String useranswer,String rdata,String result)
+	{
+		UserQuestion uq = new UserQuestion();
+		uq.setExamId(examId);
+		uq.setQuestion(null);
+		uq.setUserId(userId);
+		uq.setTrain(trainDao.get(trainId));
+		userQuestionDao.save(uq);
+		
+		
+		UserQuestionChild uqc = new UserQuestionChild();
+		uqc.setUserId(userId);
+		uqc.setNumber(1);
+		uqc.setUseranswer(useranswer);
+		uqc.setResult(result);
+		uqc.setRevalue(rdata);
+		uqc.setUserquestionId(uq.getId());
+		userQuestionChildDao.save(uqc);
+		
+	}
+	
+	/**
+	 * 更新考试系统的实训答案
+	 */
+	public void updateQuestionTrain(UserQuestion uq,int userId,int examId,int questionId,String useranswer,String rdata,String result)
+	{
+		UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(userId,1,uq.getId());
+		if (uqc != null)
+		{
+			uqc.setUseranswer(useranswer);
+			uqc.setResult(result);
+			uqc.setRevalue(rdata);
+			userQuestionChildDao.update(uqc);
+		}
 	}
 	
 	/**
@@ -113,7 +185,7 @@ public class UserQuestionService {
 		{
 			uq = new UserQuestion();
 			uq.setExamId(examId);
-			uq.setQuestionId(questionId);
+			uq.setQuestion(questionDao.get(questionId));
 			uq.setUserId(userId);
 			uq.setTrain(null);
 			userQuestionDao.save(uq);
@@ -121,7 +193,7 @@ public class UserQuestionService {
 		else
 		{
 			uq.setExamId(examId);
-			uq.setQuestionId(questionId);
+			uq.setQuestion(questionDao.get(questionId));
 			uq.setUserId(userId);
 			uq.setTrain(null);
 			userQuestionDao.update(uq);
@@ -146,6 +218,22 @@ public class UserQuestionService {
 		}
 	}
 	
+	/**
+	 * 提交答案
+	 */
+	public void updateQuestion(int userId,int examId,int questionId,int number,String pfscore)
+	{
+		UserQuestion uq = userQuestionDao.getUserQuestionByquestion(userId, examId, questionId);
+		if (uq != null)
+		{
+			UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(userId,number,uq.getId());
+			if (uqc != null)
+			{
+				uqc.setPfscore(pfscore);
+				userQuestionChildDao.update(uqc);
+			}
+		}
+	}
 	/**
 	 * 提交答案
 	 */

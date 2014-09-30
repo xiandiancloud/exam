@@ -222,7 +222,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
 														    <c:set value="${index + 1}" var="index" />
-															<span id="number${index}">${index}&nbsp;${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -245,7 +245,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span class='trainimg' id="number${index}">${index}&nbsp;${qd.title}</span>
+															<span class='trainimg' id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
 														</div>
 													</form>
 												</div>
@@ -258,10 +258,10 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span id="number${index}">${index}&nbsp;${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
 														</div>
 														<hr class='hr-normal'>
-														<div id="number${index}">
+														<div id="numberquestion${index}">
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
 																<label class='radio'>
@@ -310,10 +310,10 @@
 													<form class="form form-horizontal" method="post" action="#" id="${examq.id}${qd.id}">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span id="number${index}">${index}&nbsp;${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
 														</div>
 														<hr class='hr-normal'>
-														<div id="number${index}">
+														<div id="numberquestion${index}">
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
 																<label class='checkbox'>
@@ -362,7 +362,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span id="number${index}">${index}&nbsp;${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -372,7 +372,7 @@
 														<hr class='hr-normal'>
 														<div class='form-group'>
 															<div class='col-sm-12'>
-																<input class='form-control' type="text" id="number${index}" onblur="submittextquesstion('${qd.id}','${nn.index+1}',this);" />
+																<input class='form-control' type="text" id="numberquestion${index}" onblur="submittextquesstion('${qd.id}','${nn.index+1}',this);" />
 															</div>
 														</div>
 														<%-- <hr class='hr-normal nospace'>
@@ -415,7 +415,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span id="number${index}">${index}&nbsp;${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -425,7 +425,7 @@
 														<hr class='hr-normal'>
 														<div class='form-group'>
 															<div class='col-sm-12'>
-																<textarea class='form-control' rows='5' id="number${index}" onblur="submittextareaquesstion('${qd.id}','${nn.index+1}',this);"></textarea>
+																<textarea class='form-control' rows='5' id="numberquestion${index}" onblur="submittextareaquesstion('${qd.id}','${nn.index+1}',this);"></textarea>
 															</div>
 														</div>
 														<%-- <hr class='hr-normal nospace'>
@@ -485,10 +485,10 @@
 							<div class='box bordered-box blue-border'>
 								<div class='box-content'>
 									<div class='row'>
-										<div class='col-xs-3'>
+										<!-- <div class='col-xs-3'>
 											<div id="timer" style="color:green;font-family:Arial;font-size:170%;"></div>
-										</div>
-										<div class='col-xs-9'>
+										</div> -->
+										<div class='col-xs-12'>
 											<div class="pull-right">
 												<a class="btn">暂停</a> 
 												<a class="btn">下次再做</a>
@@ -598,7 +598,7 @@
 	            						if (answer)
             							{
 	            							<c:if test="${qd.type == 2}">
-            									$("#number"+a.index+" :radio").each(function(){
+            									$("#numberquestion"+a.index+" :radio").each(function(){
 											         if ($(this).val() == a.answer)
 										        	 {
 											        	 $(this).attr("checked","checked");
@@ -607,7 +607,7 @@
             								</c:if>
             								<c:if test="${qd.type == 3}">
             								var strs = a.answer.split('#');
-        									$("#number"+a.index+" :checkbox").each(function(i){
+        									$("#numberquestion"+a.index+" :checkbox").each(function(i){
         										 if ($.inArray($(this).val(), strs) != -1)
 									        	 {
 										        	 $(this).attr("checked","checked");
@@ -615,12 +615,11 @@
 										     });
         									</c:if>
             								<c:if test="${qd.type == 4}">
-            									$("#number"+a.index).attr("value",a.answer);
+            									$("#numberquestion"+a.index).attr("value",a.answer);
 	        								</c:if>
 	        								<c:if test="${qd.type == 5}">
-	        									$("#number"+a.index).attr("value",replaceTextarea2(a.answer));
+	        									$("#numberquestion"+a.index).attr("value",replaceTextarea2(a.answer));
 	    									</c:if>
-    								
             							}
 	            					}
 	            				}
@@ -633,7 +632,7 @@
 		}
 		
 		//一个小时，按秒计算，可以自己调整时间
-		var maxtime = 60 * 60;
+		/* var maxtime = 60 * 60;
 		function CountDown() {
 			if (maxtime >= 0) {
 				minutes = Math.floor(maxtime / 60);
@@ -648,7 +647,7 @@
 				alert("时间到，结束!");
 			}
 		}
-		timer = setInterval("CountDown()", 1000);
+		timer = setInterval("CountDown()", 1000); */
 		
 		//提交答案------单选
 		function submitquesstion(questionId,number,useranswer)

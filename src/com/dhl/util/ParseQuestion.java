@@ -10,6 +10,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
+import com.dhl.cons.CommonConstant;
 import com.dhl.domain.QuestionData;
 public class ParseQuestion {
 	public static List<Element> getChildNode(Element element){
@@ -86,7 +87,7 @@ public class ParseQuestion {
 						List<String> answe=new ArrayList();
 						answe.add(attrname);
 						qd.setAnswer(answe);
-						qd.setType(4);
+						qd.setType(CommonConstant.QTYPE_4);
 						problem_list.add(qd);
 						qd = new QuestionData(id);
 					}
@@ -96,12 +97,12 @@ public class ParseQuestion {
 						List<String> answe=new ArrayList();
 						answe.add(attrname);
 						qd.setAnswer(answe);
-						qd.setType(4);
+						qd.setType(CommonConstant.QTYPE_4);
 					}
 					else if((name=="textareainput"&&i==len-1)||(name=="textareainput"&&i<len-1&&list.get(i+1).getName()!="solution")){
 						List<String> answe=new ArrayList();
 						html=parse_html(list_new,html,name,problem_list,qd,null,answe,id);
-						qd.setType(5);
+						qd.setType(CommonConstant.QTYPE_5);
 						qd.setAnswer(answe);
 						problem_list.add(qd);
 						qd = new QuestionData(id);
@@ -109,7 +110,7 @@ public class ParseQuestion {
 					else if(name=="textareainput"&&i!=len-1){
 						List<String> answe=new ArrayList();
 						html=parse_html(list_new,html,name,problem_list,qd,null,answe,id);
-						qd.setType(5);
+						qd.setType(CommonConstant.QTYPE_5);
 						qd.setAnswer(answe);
 					}
 					else if(name=="scoredefinition"){
@@ -140,10 +141,10 @@ public class ParseQuestion {
 					else if(((name=="choiceresponse"||name=="multiplechoiceresponse")&&i==len-1)||((name=="choiceresponse"||name=="multiplechoiceresponse")&&i<len-1&&list.get(i+1).getName()!="solution")){
 						html=parse_html(list_new,html,name,problem_list,qd,null,null,id);
 						if(name=="multiplechoiceresponse"){
-							qd.setType(2);
+							qd.setType(CommonConstant.QTYPE_2);
 						}
 						if(name=="choiceresponse"){
-							qd.setType(3);
+							qd.setType(CommonConstant.QTYPE_3);
 						}
 						problem_list.add(qd);
 						qd = new QuestionData(id);
@@ -152,10 +153,10 @@ public class ParseQuestion {
 					else if((name=="choiceresponse"||name=="multiplechoiceresponse")&&i!=len-1){
 						html=parse_html(list_new,html,name,problem_list,qd,null,null,id);
 						if(name=="multiplechoiceresponse"){
-							qd.setType(2);
+							qd.setType(CommonConstant.QTYPE_2);
 						}
 						if(name=="choiceresponse"){
-							qd.setType(3);
+							qd.setType(CommonConstant.QTYPE_3);
 						}
 					}
 					

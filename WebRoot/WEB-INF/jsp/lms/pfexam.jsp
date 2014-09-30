@@ -189,9 +189,7 @@
 			</div>
 			
 			<div class='row' id='content-wrapper'>
-				<div class='col-xs-9'>
-					<div class='row'>
-					<div class='col-sm-12 box box-nomargin'>
+				<div class='col-xs-9 box box-nomargin'>
 					<div class='box-content'>
                     <div class='dd dd-nestable'>
                     <c:set value="0" var="index" />
@@ -220,9 +218,9 @@
 							   				<div class='row'>
 												<div class='col-xs-12'>
 													<form class="form form-horizontal" method="post" action="#">
+														<c:set value="${index + 1}" var="index" />
 														<div class='form-group col-sm-12'>
-														    <c:set value="${index + 1}" var="index" />
-															<span id="number${index}">${index}&nbsp;${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -231,10 +229,29 @@
 														</c:forEach>
 													</form>
 													<hr class='hr-normal'>
-													<div class='form-group col-sm-12'>
-														<a href="lms/toexamtrainone.action?examId=${exam.id}&everticalId=${vertical.id}&trainId=${qd.id}" target="_blank" class='btn btn-success'>
-														<i class='icon-circle-arrow-right'></i>进入实训</a>
-													</div>
+													<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
+															<div class='h30'></div>											
+															<div class='row'>
+																<div class='col-xs-6 juzhong' style="line-height:40px;">
+																	<label >正确答案：${qd.answer}</label>
+																</div>
+																<div class='col-xs-2 juzhong'>
+																	本题满分：<span>${qd.score}</span>
+																</div>
+																<div class='col-xs-2 juzhong'>
+																	得分：<span id="scorequestion${index}"></span>
+																</div>
+																<div class='col-xs-2 juzhong'>
+																	<div class='input-group controls-group'>
+																		<input class="form-control" type="text" />
+																		<span class='input-group-btn'>
+																			<button class='btn btn-danger' type='button'>改分</button>
+																		</span>
+																	</div>
+																</div>
+															</div>
+															<div class='h30'></div>
+														</div>
 												</div>
 											</div>
 							   			</c:if>
@@ -245,7 +262,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span class='trainimg' id="number${index}">${index}&nbsp;${qd.title}</span>
+															<span class='trainimg' id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
 														</div>
 													</form>
 												</div>
@@ -256,12 +273,12 @@
 											<div class='row'>
 												<div class='col-xs-12'>
 													<form class="form form-horizontal" method="post" action="#">
+														<c:set value="${index + 1}" var="index" />
 														<div class='form-group col-sm-12'>
-															<c:set value="${index + 1}" var="index" />
-															<span id="number${index}">${index}&nbsp;${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
 														</div>
 														<hr class='hr-normal'>
-														<div id="number${index}">
+														<div id="numberquestion${index}">
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
 																<label class='radio'>
@@ -272,32 +289,27 @@
 														</div>
 														<hr class='hr-normal nospace'>
 														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<%-- <label >正确答案：${qd.answer}</label> --%>
-															<div class='row'>
-															<div class='col-xs-12 h30'></div>
-															</div>												
+															<div class='h30'></div>											
 															<div class='row'>
 																<div class='col-xs-6 juzhong' style="line-height:40px;">
 																	<label >正确答案：${qd.answer}</label>
 																</div>
 																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>10</span>
+																	本题满分：<span>${qd.score}</span>
 																</div>
 																<div class='col-xs-2 juzhong'>
-																	您的得分：<span>5</span>
+																	得分：<span id="scorequestion${index}"></span>
 																</div>
 																<div class='col-xs-2 juzhong'>
 																	<div class='input-group controls-group'>
-																		<input class="form-control" type="text" />
+																		<input class="form-control" type="text" id="textquestion${index}"/>
 																		<span class='input-group-btn'>
-																			<button class='btn' type='submit'>改分</button>
+																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.id}','${nn.index+1}','${index}');">改分</button>
 																		</span>
 																	</div>
 																</div>
 															</div>
-															<div class='row'>
-																<div class='col-xs-12 h30'></div>
-															</div>
+															<div class='h30'></div>
 														</div>
 													</form>
 												</div>
@@ -308,12 +320,12 @@
 							   				<div class='row'>
 												<div class='col-xs-12'>
 													<form class="form form-horizontal" method="post" action="#" id="${examq.id}${qd.id}">
+														<c:set value="${index + 1}" var="index" />
 														<div class='form-group col-sm-12'>
-															<c:set value="${index + 1}" var="index" />
-															<span id="number${index}">${index}&nbsp;${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
 														</div>
 														<hr class='hr-normal'>
-														<div id="number${index}">
+														<div id="numberquestion${index}">
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
 																<label class='checkbox'>
@@ -324,32 +336,27 @@
 														</div>
 														<hr class='hr-normal nospace'>
 														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<%-- <label >正确答案：${qd.answer}</label> --%>
-															<div class='row'>
-															<div class='col-xs-12 h30'></div>
-															</div>												
+															<div class='h30'></div>											
 															<div class='row'>
 																<div class='col-xs-6 juzhong' style="line-height:40px;">
 																	<label >正确答案：${qd.answer}</label>
 																</div>
 																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>10</span>
+																	本题满分：<span>${qd.score}</span>
 																</div>
 																<div class='col-xs-2 juzhong'>
-																	您的得分：<span>5</span>
+																	得分：<span id="scorequestion${index}"></span>
 																</div>
 																<div class='col-xs-2 juzhong'>
 																	<div class='input-group controls-group'>
-																		<input class="form-control" type="text" />
+																		<input class="form-control" type="text" id="textquestion${index}"/>
 																		<span class='input-group-btn'>
-																			<button class='btn' type='submit'>改分</button>
+																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.id}','${nn.index+1}','${index}');">改分</button>
 																		</span>
 																	</div>
 																</div>
 															</div>
-															<div class='row'>
-																<div class='col-xs-12 h30'></div>
-															</div>
+															<div class='h30'></div>
 														</div>													
 													</form>
 												</div>
@@ -360,9 +367,9 @@
 											<div class='row'>
 												<div class='col-xs-12'>
 													<form class="form form-horizontal" method="post" action="#">
+														<c:set value="${index + 1}" var="index" />
 														<div class='form-group col-sm-12'>
-															<c:set value="${index + 1}" var="index" />
-															<span id="number${index}">${index}&nbsp;${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -372,37 +379,32 @@
 														<hr class='hr-normal'>
 														<div class='form-group'>
 															<div class='col-sm-12'>
-																<input class='form-control' type="text" id="number${index}" />
+																<input class='form-control' type="text" id="numberquestion${index}" />
 															</div>
 														</div>
 														<hr class='hr-normal nospace'>
 														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<%-- <label >正确答案：${qd.answer}</label> --%>
-															<div class='row'>
-															<div class='col-xs-12 h30'></div>
-															</div>												
+															<div class='h30'></div>											
 															<div class='row'>
 																<div class='col-xs-6 juzhong' style="line-height:40px;">
 																	<label >正确答案：${qd.answer}</label>
 																</div>
 																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>10</span>
+																	本题满分：<span>${qd.score}</span>
 																</div>
 																<div class='col-xs-2 juzhong'>
-																	您的得分：<span>5</span>
+																	得分：<span id="scorequestion${index}"></span>
 																</div>
 																<div class='col-xs-2 juzhong'>
 																	<div class='input-group controls-group'>
-																		<input class="form-control" type="text" />
+																		<input class="form-control" type="text" id="textquestion${index}"/>
 																		<span class='input-group-btn'>
-																			<button class='btn' type='submit'>改分</button>
+																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.id}','${nn.index+1}','${index}');">改分</button>
 																		</span>
 																	</div>
 																</div>
 															</div>
-															<div class='row'>
-																<div class='col-xs-12 h30'></div>
-															</div>
+															<div class='h30'></div>
 														</div>
 													</form>
 												</div>
@@ -413,9 +415,9 @@
 							   				<div class='row'>
 												<div class='col-xs-12'>
 													<form class="form form-horizontal" method="post" action="#">
+														<c:set value="${index + 1}" var="index" />
 														<div class='form-group col-sm-12'>
-															<c:set value="${index + 1}" var="index" />
-															<span id="number${index}">${index}&nbsp;${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -425,37 +427,32 @@
 														<hr class='hr-normal'>
 														<div class='form-group'>
 															<div class='col-sm-12'>
-																<textarea class='form-control' rows='5' id="number${index}"></textarea>
+																<textarea class='form-control' rows='5' id="numberquestion${index}"></textarea>
 															</div>
 														</div>
 														<hr class='hr-normal nospace'>
 														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<%-- <label >正确答案：${qd.answer}</label> --%>
-															<div class='row'>
-															<div class='col-xs-12 h30'></div>
-															</div>												
+															<div class='h30'></div>												
 															<div class='row'>
 																<div class='col-xs-6 juzhong' style="line-height:40px;">
 																	<label >正确答案：${qd.answer}</label>
 																</div>
 																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>10</span>
+																	本题满分：<span>${qd.score}</span>
 																</div>
 																<div class='col-xs-2 juzhong'>
-																	您的得分：<span>5</span>
+																	得分：<span id="scorequestion${index}"></span>
 																</div>
 																<div class='col-xs-2 juzhong'>
 																	<div class='input-group controls-group'>
-																		<input class="form-control" type="text" />
+																		<input class="form-control" type="text" id="textquestion${index}"/>
 																		<span class='input-group-btn'>
-																			<button class='btn' type='submit'>改分</button>
+																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.id}','${nn.index+1}','${index}');">改分</button>
 																		</span>
 																	</div>
 																</div>
 															</div>
-															<div class='row'>
-																<div class='col-xs-12 h30'></div>
-															</div>
+															<div class='h30'></div>
 														</div>
 													</form>
 												</div>
@@ -475,29 +472,26 @@
                       </c:forEach>
                     </div>
                   </div>
-                  </div>
-                  </div>
 				</div>																																			
 					
 				<div class="col-xs-3" id="myScrollspy">
-					<div class='row' data-spy="affix">
-						<div class='col-xs-12'>
+						<div data-spy="affix">
 							<div class='box bordered-box blue-border'>
 								<div class='box-content'>
-									<div class='row'>
+									<!-- <div class='row'>
 										<div class='col-xs-12'>
-											<!-- <div id="timer" style="color:green;font-family:Arial;font-size:170%;"></div> -->
-										</div>
-										<div class='col-xs-12'>
+											<div id="timer" style="color:green;font-family:Arial;font-size:170%;"></div>
+										</div> -->
+										<!-- <div class='col-xs-12'> -->
 											<div class="pull-right">
 												<a class="btn">暂停</a> 
 												<a class="btn">下次再做</a>
 											</div>
-										</div>
-									</div>
+										<!-- </div> -->
+									<!-- </div> -->
 									<hr class='hr-normal'>
-									<div class='row'>
-										<div class='col-xs-12'>
+									<!-- <div class='row'>
+										<div class='col-xs-12'> -->
 											<div data-offset-top="125" class="nav nav-tabs nav-stacked section">
 												<!-- <li><a href="javascript:void(0)" onclick="document.getElementById('section-2').scrollIntoView();" class="j-item item  f-fl">31</a></li> -->
 												<c:set value="0" var="sum" />
@@ -520,20 +514,19 @@
 							                          </c:forEach>
 							                      </c:forEach>
 											</div>
-										</div>
-									</div>
+										<!-- </div>
+									</div> -->
 									<hr class='hr-normal'>
-									<div class='row'>
-										<div class='col-xs-12'>
+									<!-- <div class='row'>
+										<div class='col-xs-12'> -->
 											<div class='box-content' style="padding:0">
 												<a class="btn btn-success btn-block btn-lg" href="">评分结束</a>
 											</div>
-										</div>
-									</div>									
+										<!-- </div>
+									</div>	 -->								
 								</div>
 							</div>
 						</div>
-					</div>
 		        </div>
 			</div>
 		</div>
@@ -596,30 +589,35 @@
 	            					var a = eval("(" + s + ")");
 	            					if ("sucess" == a.sucess) {
 	            						var answer = a.answer;
+	            						var pfscore = a.pfscore;
 	            						if (answer)
             							{
 	            							<c:if test="${qd.type == 2}">
-            									$("#number"+a.index+" :radio").each(function(){
+            									$("#numberquestion"+a.index+" :radio").each(function(){
 											         if ($(this).val() == a.answer)
 										        	 {
 											        	 $(this).attr("checked","checked");
 										        	 }
 											     });
+            									 $("#scorequestion"+a.index).html(pfscore);
             								</c:if>
             								<c:if test="${qd.type == 3}">
             								var strs = a.answer.split('#');
-        									$("#number"+a.index+" :checkbox").each(function(i){
+        									$("#numberquestion"+a.index+" :checkbox").each(function(i){
         										 if ($.inArray($(this).val(), strs) != -1)
 									        	 {
 										        	 $(this).attr("checked","checked");
 									        	 }
 										     });
+        									$("#scorequestion"+a.index).html(pfscore);
         									</c:if>
             								<c:if test="${qd.type == 4}">
-            									$("#number"+a.index).attr("value",a.answer);
+            									$("#numberquestion"+a.index).attr("value",a.answer);
+            									$("#scorequestion"+a.index).html(pfscore);
 	        								</c:if>
 	        								<c:if test="${qd.type == 5}">
-	        									$("#number"+a.index).attr("value",replaceTextarea2(a.answer));
+	        									$("#numberquestion"+a.index).attr("value",replaceTextarea2(a.answer));
+	        									$("#scorequestion"+a.index).html(pfscore);
 	    									</c:if>
     								
             							}
@@ -633,19 +631,22 @@
           </c:forEach>
 		}
 		
-		//提交答案------单选
-		function resetquesstionscore(questionId,number)
+		//裁判修改了判分
+		function resetquesstionscore(questionId,number,index)
 		{
+			var userId = "${userId}";
 			var examId = "${exam.id}";
-			var data = {examId:examId,questionId:questionId,number:number,useranswer:useranswer};
+			var pfscore = $("#textquestion"+index).val();
+			var data = {userId:userId,examId:examId,questionId:questionId,number:number,pfscore:pfscore};
 			$.ajax({
-				url : "lms/submitquesstion.action",
+				url : "lms/setquesstionpfscore.action",
 				type : "post",
 				data : data,
 				success : function(s) {
 					var a = eval("(" + s + ")");
 					if ("sucess" == a.sucess) {
-						alert("提交了");
+						//alert("修改了分值");
+						$("#scorequestion"+index).html(pfscore);
 					}
 				}
 			});
