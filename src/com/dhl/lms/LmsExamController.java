@@ -147,7 +147,88 @@ public class LmsExamController extends BaseController {
 	 */
 	@RequestMapping("/toexamintroduce")
 	public ModelAndView toexamintroduce(HttpServletRequest request,int examId) {
+		User user = getSessionUser(request);
+		UserExam ucs = userExamService.getUserExam(user.getId(), examId);
+		if (ucs != null)
+		{
+			String url = "redirect:/lms/toexamingtostartexam.action?examId="+examId;
+			return new ModelAndView(url);
+		}
 		ModelAndView view = new ModelAndView();
+		view.addObject("examId", examId);
+		Exam exam = examService.get(examId);
+		String s = exam.getStarttimedetail();
+		String e = exam.getEndtimedetail();
+		if (s==null || e== null || "".equals(s) || "".equals(e))
+		{
+			view.addObject("mm", "无限制");
+		}
+		else
+		{
+			long startT = UtilTools.fromDateStringToLong(s);
+			long endT = UtilTools.fromDateStringToLong(e);
+			long ss=(startT-endT)/(1000); //共计秒数
+			int mm = (int)ss/60;   //共计分钟数
+			view.addObject("mm", mm);
+		}
+		int size = exam.getExamchapters().size();
+		int index = 0;
+		int score = 0;
+		Set<ExamChapter> chapterset = exam.getExamchapters();
+		Iterator it = chapterset.iterator();
+		List<Train> tlist = new ArrayList();
+		while (it.hasNext()) {
+			ExamChapter chapter = (ExamChapter) it.next();
+			Set<ExamSequential> sequentialset = chapter.getEsequentials();
+			Iterator it2 = sequentialset.iterator();
+
+			while (it2.hasNext()) {
+				ExamSequential sequential = (ExamSequential) it2.next();
+				Set<ExamVertical> verticalset = sequential.getExamVerticals();
+				Iterator it3 = verticalset.iterator();
+				while (it3.hasNext()) {
+					ExamVertical vertical = (ExamVertical) it3.next();
+					Set<ExamQuestion> vt = vertical.getExamQuestion();//examquestionService.getVerticalTrainList(vertical.getId());
+					for (ExamQuestion eq:vt)
+					{
+						index ++;
+						Question q = eq.getQuestion();
+						if (q != null)
+						{
+							
+						}
+						else
+						{
+							Train train = eq.getTrain();
+							if (train != null)
+							{
+								score += train.getScore();
+							}
+						}
+					}
+				}
+			}
+		}
+		view.addObject("score", score);
+		view.addObject("size", size);
+		view.addObject("index", index);
+		view.setViewName("/lms/introduce");
+		return view;
+	}
+	
+	/**
+	 * 考试再做一次
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/toagainexamintroduce")
+	public ModelAndView toagainexamintroduce(HttpServletRequest request,int examId) {
+
+		ModelAndView view = new ModelAndView();
+		User user = getSessionUser(request);
+		
+		userExamService.updateAgainUserExam(user.getId(), examId);
+		
 		view.addObject("examId", examId);
 		Exam exam = examService.get(examId);
 		String s = exam.getStarttimedetail();

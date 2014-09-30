@@ -138,6 +138,8 @@
 									<ul class='nav nav-tabs nav-tabs-simple'>
 										<li class='active'><a class='green-border'
 											data-toggle='tab' href='#tabsimple1'>我参加的试卷</a></li>
+										<li ><a class='green-border'
+											data-toggle='tab' href='#tabsimple3'>试卷历史</a></li>	
 											<c:if test="${USER_CONTEXT.role.roleName=='老师'}">
 										<li><a class='green-border' data-toggle='tab'
 											href='#tabsimple2'>我定义的试卷 </a></li>
@@ -157,9 +159,34 @@
 																<hr class="hr-normal">
 																<div class="pull-left">${se.exam.describle}</div>
 																<div class="pull-right">
-																	<a href="#" class="btn  btn-success">查看分析</a> 
-																	<c:if test="${se.state == 1}"></i><a href="#"	class="btn btn-danger">再做一次</a></c:if>
-																	<c:if test="${se.state == 0}"><a href="lms/toexamintroduce.action?examId=${se.exam.id}"	class="btn  btn-danger">进入考试</a></c:if>
+																	<c:if test="${se.state == 1}">
+																	<a href="lms/toexamingtostartexam.action?examId=${se.exam.id}" class="btn  btn-success">查看分析</a>
+																	<a href="lms/toagainexamintroduce.action?examId=${se.exam.id}"	class="btn btn-danger">再做一次</a>
+																	</c:if>
+																	<c:if test="${se.state == 0}"><a href="lms/toexamingtostartexam.action?examId=${se.exam.id}" class="btn btn-danger">继续考试</a></c:if>
+																</div>
+																<div class="clearfix"></div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</c:forEach>
+										</div>
+										<div class='tab-pane' id='tabsimple3'>
+											<!-- <p>I'm in Section 1.</p> -->
+											<c:forEach var="se" items="${sexamlist}">
+												<div class="row">
+													<div class="col-sm-12">
+														<div class="box ">
+															<div class="box-content">
+																<p>
+																	<strong>${se.exam.name}</strong>
+																</p>
+																<hr class="hr-normal">
+																<div class="pull-left">${se.exam.describle}</div>
+																<div class="pull-right">
+																	<a href="#" class="btn  btn-success">查看分析</a>
+																	<a href="#"	class="btn btn-danger">再做一次</a>
 																</div>
 																<div class="clearfix"></div>
 															</div>

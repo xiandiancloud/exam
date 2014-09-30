@@ -27,7 +27,7 @@ public class UserExamDao extends BaseDao<UserExam> {
 	}
 
 	public UserExam getUserRecentlyExam(int userId) {
-		String hql = "from UserExam where activestate = 1 and userId = " + userId;
+		String hql = "from UserExam where activestate = 1 and userId = " + userId +" and exam.isnormal = 0";
 		List<UserExam> list = find(hql);
 		if (list.size() == 0) {
 			return null;
@@ -37,12 +37,12 @@ public class UserExamDao extends BaseDao<UserExam> {
 		}
 	}
 	public List<UserExam> getMyAllExam(int userId) {
-		String hql = "from UserExam where userId = " + userId;
+		String hql = "from UserExam where userId = " + userId +" and exam.isnormal = 0";
 		return find(hql);
 	}
 	
 	public List<UserExam> getMyFinishExam(int userId) {
-		String hql = "from UserExam where userId = " + userId +" and state = 1";
+		String hql = "from UserExam where userId = " + userId +" and state = 1 and exam.isnormal = 0";
 		return find(hql);
 	}
 	

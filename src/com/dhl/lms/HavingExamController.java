@@ -101,6 +101,19 @@ public class HavingExamController extends BaseController {
 	}
 	
 	/**
+	 * 跳转到考试错误页面
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/toexamerror")
+	public ModelAndView toexamerror(HttpServletRequest request) {
+		ModelAndView view = new ModelAndView();
+		view.setViewName("/lms/error");
+		return view;
+	}
+	
+	/**
 	 * 跳转到学生考试试卷页面
 	 * 
 	 * @param request
@@ -186,7 +199,7 @@ public class HavingExamController extends BaseController {
 			ucs.setActivestate(1);
 			userExamService.updateUserExam(ucs);
 		}
-		
+		view.addObject("userexam",ucs);
 		view.addObject("exam", exam);
 		
 		view.setViewName("/lms/exam");
@@ -406,6 +419,26 @@ public class HavingExamController extends BaseController {
 	}
 	
 	/**
+	 * 提交考卷
+	 */
+	@RequestMapping("/submitallquesstion")
+	public void submitallquesstion(HttpServletRequest request,
+			HttpServletResponse response, int examId) {
+		try {
+			User user = getSessionUser(request);
+			UserExam ue = userExamService.getUserExam(user.getId(),examId);
+			ue.setState(1);
+			userExamService.updateUserExam(ue);
+			String str = "{'sucess':'sucess'}";
+			PrintWriter out = response.getWriter();
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	/**
 	 * 裁判修改分值
 	 */
 	@RequestMapping("/setquesstionpfscore")
@@ -447,6 +480,12 @@ public class HavingExamController extends BaseController {
 			uc.setActivestate(1);
 			userExamService.save(uc);
 		} else {
+			
+			if (ucs.getState() == 1)
+			{
+				String url = "redirect:/lms/toexamerror.action";
+				return new ModelAndView(url);
+			}
 			ucs.setActivestate(1);
 			userExamService.updateUserExam(ucs);
 		}

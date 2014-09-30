@@ -37,4 +37,14 @@ public class UserQuestionDao extends BaseDao<UserQuestion> {
 			return list.get(0);
 		}
 	}
+	
+	public List<UserQuestion> getUserQueston(int userId,int examId) {
+		String hql = "from UserQuestion where userId = "+userId+" and examId = "+examId;
+		return find(hql);
+	}
+	
+	public void deleteUserQueston(int userId,int examId) {
+		String hql = "delete from UserQuestion where userId = "+userId+" and examId = "+examId;
+		this.getSession().createQuery(hql).executeUpdate();
+	}
 }

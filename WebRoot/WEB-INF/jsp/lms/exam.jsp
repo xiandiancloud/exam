@@ -232,7 +232,7 @@
 													</form>
 													<hr class='hr-normal'>
 													<div class='form-group col-sm-12'>
-														<a href="lms/toexamtrainone.action?examId=${exam.id}&everticalId=${vertical.id}&trainId=${qd.id}" target="_blank" class='btn btn-success'>
+														<a id="hrefnumber${index}" href="javascript:void(0);" onclick="entertrain('${exam.id}','${vertical.id}','${qd.id}','hrefnumber${index}');" target="_blank" class='btn btn-success'>
 														<i class='icon-circle-arrow-right'></i>进入实训</a>
 													</div>
 												</div>
@@ -490,8 +490,8 @@
 										</div> -->
 										<div class='col-xs-12'>
 											<div class="pull-right">
-												<a class="btn">暂停</a> 
-												<a class="btn">下次再做</a>
+												<!-- <a class="btn">暂停</a>  -->
+												<a href="lms/myexam.action" class="btn">下次再做</a>
 											</div>
 										</div>
 									</div>
@@ -526,7 +526,12 @@
 									<div class='row'>
 										<div class='col-xs-12'>
 											<div class='box-content' style="padding:0">
-												<a class="btn btn-success btn-block btn-lg" href="">提交试卷</a>
+												<c:if test="${userexam.state == 0}">
+													<a class="btn btn-success btn-block btn-lg" href="javascript:void(0);" onclick="submitallquesstion();">提交试卷</a>
+												</c:if>
+												<c:if test="${userexam.state == 1}">
+													<a class="btn btn-success btn-block btn-lg" href="">再做一次</a>
+												</c:if>
 											</div>
 										</div>
 									</div>									
@@ -652,6 +657,12 @@
 		//提交答案------单选
 		function submitquesstion(questionId,number,useranswer)
 		{
+			var isover = examisover();
+			if (!isover)
+			{
+				alert("答题已经结束");
+				return;
+			}
 			var examId = "${exam.id}";
 			var data = {examId:examId,questionId:questionId,number:number,useranswer:useranswer};
 			$.ajax({
@@ -669,6 +680,12 @@
 		//提交答案------多选
 		function submitmultiquesstion(questionId,number,id)
 		{
+			var isover = examisover();
+			if (!isover)
+			{
+				alert("答题已经结束");
+				return;
+			}
 			var s='';
 			$("#"+id+" input[type='checkbox']:checked").each(function(){ 
 			   s+=$(this).val()+'#'; 
@@ -693,6 +710,12 @@
 		//提交答案------文本输入
 		function submittextquesstion(questionId,number,element)
 		{
+			var isover = examisover();
+			if (!isover)
+			{
+				alert("答题已经结束");
+				return;
+			}
  			var examId = "${exam.id}";
 			var data = {examId:examId,questionId:questionId,number:number,useranswer:$(element).val()};
 			$.ajax({
@@ -710,6 +733,12 @@
 		//提交答案------论述题输入
 		function submittextareaquesstion(questionId,number,element)
 		{
+			var isover = examisover();
+			if (!isover)
+			{
+				alert("答题已经结束");
+				return;
+			}
 			var useranswer = replaceTextarea1($(element).val());
  			var examId = "${exam.id}";
 			var data = {examId:examId,questionId:questionId,number:number,useranswer:useranswer};
@@ -721,6 +750,42 @@
 					var a = eval("(" + s + ")");
 					if ("sucess" == a.sucess) {
 						alert("提交了");
+					}
+				}
+			});
+		}
+		function entertrain(examId,everticalId,trainId,hrefId)
+		{
+			var isover = examisover();
+			if (!isover)
+			{
+				alert("答题已经结束");
+				return;
+			}
+			$("#"+hrefId).attr("href","lms/toexamtrainone.action?examId="+examId+"&everticalId="+everticalId+"&trainId="+trainId);
+		}
+		function examisover()
+		{
+			var examstate = "${userexam.state}";
+			if (examstate == 1)
+			{
+				return false;
+			}
+			return true;
+		}
+		//提交答案
+		function submitallquesstion()
+		{
+ 			var examId = "${exam.id}";
+			var data = {examId:examId};
+			$.ajax({
+				url : "lms/submitallquesstion.action",
+				type : "post",
+				data : data,
+				success : function(s) {
+					var a = eval("(" + s + ")");
+					if ("sucess" == a.sucess) {
+						location.reload();
 					}
 				}
 			});

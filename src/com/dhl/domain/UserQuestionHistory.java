@@ -1,0 +1,80 @@
+package com.dhl.domain;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+/**
+ * 学生考试时答题对应的历史表
+ * @author dhl
+ *
+ */
+
+@Entity
+@Table(name= "t_user_question_history")
+public class UserQuestionHistory extends BaseDomain {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
+	private int userId;
+	private int examId;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "trainId")
+	private Train train;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "questionId")
+	private Question question;
+	private int counts;
+	private int docounts;
+	
+	public int getDocounts() {
+		return docounts;
+	}
+	public void setDocounts(int docounts) {
+		this.docounts = docounts;
+	}
+	public Question getQuestion() {
+		return question;
+	}
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+	public Train getTrain() {
+		return train;
+	}
+	public void setTrain(Train train) {
+		this.train = train;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	public int getExamId() {
+		return examId;
+	}
+	public void setExamId(int examId) {
+		this.examId = examId;
+	}
+	public int getCounts() {
+		return counts;
+	}
+	public void setCounts(int counts) {
+		this.counts = counts;
+	}
+}
