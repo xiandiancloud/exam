@@ -1474,7 +1474,7 @@ img.MathJax_strut {
 										   		<c:if test="${!empty vt.question}">
 										   			<div class="xblock xblock-student_view xmodule_display xmodule_CapaModule xblock-initialized" data-runtime-class="PreviewRuntime" data-init="XBlockToXModuleShim" data-runtime-version="1" data-usage-id="" data-type="Problem" data-block-type="problem">
 														<div id="" class="problems-wrapper showed" data-problem-id="" data-url="" data-progress_status="none" data-progress_detail="0/1">
-														<c:if test="${vt.question.type == 0}">
+													<c:if test="${vt.question.type == 0}">
 										   			<div class="problem-progress">
 										   			(本题共有${vt.score}分)
 										   			</div></br></br>

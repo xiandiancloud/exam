@@ -14,8 +14,8 @@ public class UserExamDao extends BaseDao<UserExam> {
         this.getSession().createQuery(hql).executeUpdate();
 	}
 	
-	public UserExam getUserExam(int userId, int courseId) {
-		String hql = "from UserExam where examId = " + courseId
+	public UserExam getUserExam(int userId, int examId) {
+		String hql = "from UserExam where examId = " + examId
 				+ " and userId = " + userId;
 		List<UserExam> list = find(hql);
 		if (list.size() == 0) {

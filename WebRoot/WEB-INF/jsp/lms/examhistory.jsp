@@ -109,15 +109,10 @@
 		height:40px;
 		line-height:40px;
 	}
-	.fixtop 
-	{ 
-	position:fixed;
-	top:216px; 
-	} 
 </style>
 
   </head>
-  <body data-spy="scroll" class='contrast-red fixed-header'>
+  <body data-spy="scroll" data-target="#myScrollspy" class='contrast-red fixed-header'>
     <jsp:include page="header.jsp"></jsp:include>
 	<div id='wrapper'>
 		<div class='container'>
@@ -132,7 +127,7 @@
 									</div>
 								</div>
 							</div>
-							<div class='row none' id="firesult">
+							<div class='row' id="firesult">
 							<div class='col-sm-3'>
 								<div class="advance ">
 									<span class="totalScore">100</span>分
@@ -484,22 +479,23 @@
                   </div>
 				</div>																																			
 					
-				<div class="col-xs-3" id="scroll1">
-				<div class="fixtop" id="scroll2">
+				<div class="col-xs-3" id="myScrollspy">
+					<div class='row' data-spy="affix">
+						<div class='col-xs-12'>
 							<div class='box bordered-box blue-border'>
 								<div class='box-content'>
-									<div class='row'>
-										<!-- <div class='col-xs-3'>
+<!-- 									<div class='row'>
+										<div class='col-xs-3'>
 											<div id="timer" style="color:green;font-family:Arial;font-size:170%;"></div>
-										</div> -->
+										</div>
 										<div class='col-xs-12'>
 											<div class="pull-right">
-												<!-- <a class="btn">暂停</a>  -->
+												<a class="btn">暂停</a> 
 												<a href="lms/myexam.action" class="btn">下次再做</a>
 											</div>
 										</div>
 									</div>
-									<hr class='hr-normal'>
+									<hr class='hr-normal'> -->
 									<div class='row'>
 										<div class='col-xs-12'>
 											<div data-offset-top="125" class="nav nav-tabs nav-stacked section">
@@ -530,20 +526,19 @@
 									<div class='row'>
 										<div class='col-xs-12'>
 											<div class='box-content' style="padding:0">
-												<c:if test="${userexam.state == 0}">
+												<%-- <c:if test="${userexam.state == 0}">
 													<a class="btn btn-danger btn-block btn-lg" href="javascript:void(0);" onclick="submitallquesstion();">提交试卷</a>
-												</c:if>
-												<c:if test="${userexam.state == 1}">
-													<c:if test="${exam.isnormal == 0}">
-														<a class="btn btn-danger btn-block btn-lg" href="lms/toagainexamintroduce.action?examId=${exam.id}">再做一次</a>
-													</c:if>
-												</c:if>
+												</c:if> --%>
+												<%-- <c:if test="${userexam.state == 1}"> --%>
+													<a class="btn btn-danger btn-block btn-lg" href="lms/toagainexamintroduce.action?examId=${exam.id}">再做一次</a>
+												<%-- </c:if> --%>
 											</div>
 										</div>
 									</div>									
 								</div>
 							</div>
-		        </div>
+						</div>
+					</div>
 		        </div>
 			</div>
 		</div>
@@ -579,22 +574,8 @@
 
 	<script type="text/javascript">
 		$(function() {
-			$("#scroll2").width($("#scroll1").width());
 			//填充试卷内容，判断对错，或者是否已经做过
 			initquestion();
-			//是否显示考试成绩
-			if ("${userexam.state}" == 1)
-			{
-				if ("${exam.isnormal}" == 0)
-				{
-					$("#firesult").show();
-					$("#scroll2").css("top",445);
-				}
-			}
-			else
-			{
-				$("#firesult").hide();
-			}
 		});
 	
 		//这个方法多次提交，如果性能有问题再优化
@@ -676,15 +657,14 @@
 		//提交答案------单选
 		function submitquesstion(questionId,number,useranswer)
 		{
-			var isover = examisover();
+			/* var isover = examisover();
 			if (!isover)
 			{
 				alert("答题已经结束");
 				return;
 			}
 			var examId = "${exam.id}";
-			var competionId = "${competionId}";
-			var data = {competionId:competionId,examId:examId,questionId:questionId,number:number,useranswer:useranswer};
+			var data = {examId:examId,questionId:questionId,number:number,useranswer:useranswer};
 			$.ajax({
 				url : "lms/submitquesstion.action",
 				type : "post",
@@ -694,17 +674,13 @@
 					if ("sucess" == a.sucess) {
 						alert("提交了");
 					}
-					else
-					{
-						location.href="lms/toexamerror.action";
-					}
 				}
-			});
+			}); */
 		}
 		//提交答案------多选
 		function submitmultiquesstion(questionId,number,id)
 		{
-			var isover = examisover();
+			/* var isover = examisover();
 			if (!isover)
 			{
 				alert("答题已经结束");
@@ -718,8 +694,7 @@
 			    s = s.substring(0,s.length - 1); 
 			} 
  			var examId = "${exam.id}";
- 			var competionId = "${competionId}";
-			var data = {competionId:competionId,examId:examId,questionId:questionId,number:number,useranswer:s};
+			var data = {examId:examId,questionId:questionId,number:number,useranswer:s};
 			$.ajax({
 				url : "lms/submitquesstion.action",
 				type : "post",
@@ -729,25 +704,20 @@
 					if ("sucess" == a.sucess) {
 						alert("提交了");
 					}
-					else
-					{
-						location.href="lms/toexamerror.action";
-					}
 				}
-			});
+			}); */
 		}
 		//提交答案------文本输入
 		function submittextquesstion(questionId,number,element)
 		{
-			var isover = examisover();
+			/* var isover = examisover();
 			if (!isover)
 			{
 				alert("答题已经结束");
 				return;
 			}
  			var examId = "${exam.id}";
- 			var competionId = "${competionId}";
-			var data = {competionId:competionId,examId:examId,questionId:questionId,number:number,useranswer:$(element).val()};
+			var data = {examId:examId,questionId:questionId,number:number,useranswer:$(element).val()};
 			$.ajax({
 				url : "lms/submitquesstion.action",
 				type : "post",
@@ -757,17 +727,13 @@
 					if ("sucess" == a.sucess) {
 						alert("提交了");
 					}
-					else
-					{
-						location.href="lms/toexamerror.action";
-					}
 				}
-			});
+			}); */
 		}
 		//提交答案------论述题输入
 		function submittextareaquesstion(questionId,number,element)
 		{
-			var isover = examisover();
+			/* var isover = examisover();
 			if (!isover)
 			{
 				alert("答题已经结束");
@@ -775,8 +741,7 @@
 			}
 			var useranswer = replaceTextarea1($(element).val());
  			var examId = "${exam.id}";
- 			var competionId = "${competionId}";
-			var data = {competionId:competionId,examId:examId,questionId:questionId,number:number,useranswer:useranswer};
+			var data = {examId:examId,questionId:questionId,number:number,useranswer:useranswer};
 			$.ajax({
 				url : "lms/submitquesstion.action",
 				type : "post",
@@ -786,22 +751,18 @@
 					if ("sucess" == a.sucess) {
 						alert("提交了");
 					}
-					else
-					{
-						location.href="lms/toexamerror.action";
-					}
 				}
-			});
+			}); */
 		}
 		function entertrain(examId,everticalId,trainId,hrefId)
 		{
-			var isover = examisover();
+			/* var isover = examisover();
 			if (!isover)
 			{
 				alert("答题已经结束");
 				return;
 			}
-			$("#"+hrefId).attr("href","lms/toexamtrainone.action?examId="+examId+"&everticalId="+everticalId+"&trainId="+trainId);
+			$("#"+hrefId).attr("href","lms/toexamtrainone.action?examId="+examId+"&everticalId="+everticalId+"&trainId="+trainId); */
 		}
 		function examisover()
 		{
@@ -815,9 +776,8 @@
 		//提交答案
 		function submitallquesstion()
 		{
- 			var examId = "${exam.id}";
- 			var competionId = "${competionId}";
-			var data = {competionId:competionId,examId:examId};
+ 			/* var examId = "${exam.id}";
+			var data = {examId:examId};
 			$.ajax({
 				url : "lms/submitallquesstion.action",
 				type : "post",
@@ -827,12 +787,8 @@
 					if ("sucess" == a.sucess) {
 						location.reload();
 					}
-					else
-					{
-						location.href="lms/toexamerror.action";
-					}
 				}
-			});
+			}); */
 		}
 		//再做一次
 		/* function againallquesstion()

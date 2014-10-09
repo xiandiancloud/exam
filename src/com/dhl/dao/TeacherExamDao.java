@@ -11,7 +11,7 @@ public class TeacherExamDao extends BaseDao<TeacherExam> {
 
 	public List<TeacherExam> getMyTCourse(int userId)
 	{
-		String hql = "from TeacherExam where userId = "+userId;
+		String hql = "from TeacherExam where userId = "+userId +" and exam.isnormal = 0";
 	    return find(hql);
 	}
 	

@@ -54,5 +54,11 @@ public class CommonConstant
    public static final String ERROR_2 = "保存成功";
    public static final String ERROR_3 = "分类已经存在";
    public static final String ERROR_4 = "实验已经存在";
+   public static final String ERROR_5 = "竞赛还没有选卷";
+   public static final String ERROR_6 = "竞赛还没有开始";
    
+   //课程级别
+   public static final String LEVEL_1 = "初级";
+   public static final String LEVEL_2 = "中级";
+   public static final String LEVEL_3 = "高级";
 }

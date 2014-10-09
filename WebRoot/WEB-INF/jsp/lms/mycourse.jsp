@@ -160,10 +160,10 @@
 																<div class="pull-left">${se.exam.describle}</div>
 																<div class="pull-right">
 																	<c:if test="${se.state == 1}">
-																	<a href="lms/toexamingtostartexam.action?examId=${se.exam.id}" class="btn  btn-success">查看分析</a>
+																	<a href="lms/toexamingtostartexam.action?competionId=-1&examId=${se.exam.id}" class="btn  btn-success">查看分析</a>
 																	<a href="lms/toagainexamintroduce.action?examId=${se.exam.id}"	class="btn btn-danger">再做一次</a>
 																	</c:if>
-																	<c:if test="${se.state == 0}"><a href="lms/toexamingtostartexam.action?examId=${se.exam.id}" class="btn btn-danger">继续考试</a></c:if>
+																	<c:if test="${se.state == 0}"><a href="lms/toexamingtostartexam.action?competionId=-1&examId=${se.exam.id}" class="btn btn-danger">继续考试</a></c:if>
 																</div>
 																<div class="clearfix"></div>
 															</div>
@@ -174,19 +174,19 @@
 										</div>
 										<div class='tab-pane' id='tabsimple3'>
 											<!-- <p>I'm in Section 1.</p> -->
-											<c:forEach var="se" items="${sexamlist}">
+											<c:forEach var="history" items="${historylist}">
 												<div class="row">
 													<div class="col-sm-12">
 														<div class="box ">
 															<div class="box-content">
 																<p>
-																	<strong>${se.exam.name}</strong>
+																	<strong>${history.exam.name}</strong>
 																</p>
 																<hr class="hr-normal">
-																<div class="pull-left">${se.exam.describle}</div>
+																<div class="pull-left">${history.exam.describle}</div>
 																<div class="pull-right">
-																	<a href="#" class="btn  btn-success">查看分析</a>
-																	<a href="#"	class="btn btn-danger">再做一次</a>
+																	<a href="lms/toexamingtohistoryexam.action?examId=${history.exam.id}" class="btn  btn-success">查看分析</a>
+																	<a href="lms/toagainexamintroduce.action?examId=${history.exam.id}"	class="btn btn-danger">再做一次</a>
 																</div>
 																<div class="clearfix"></div>
 															</div>
@@ -207,7 +207,7 @@
 																<hr class="hr-normal">
 																<div class="pull-left">${te.exam.describle}</div>
 																<div class="pull-right">
-																	<a href="cms/totexam.action?examId=${te.exam.id}" class="btn  btn-success">编辑</a> 
+																	<a href="cms/totexam.action?examId=${te.exam.id}" class="btn btn-danger">编辑</a> 
 																</div>
 																<div class="clearfix"></div>
 															</div>

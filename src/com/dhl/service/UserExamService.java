@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dhl.dao.UserExamDao;
+import com.dhl.dao.UserExamHistoryDao;
 import com.dhl.dao.UserQuestionChildDao;
 import com.dhl.dao.UserQuestionChildHistoryDao;
 import com.dhl.dao.UserQuestionDao;
 import com.dhl.dao.UserQuestionHistoryDao;
 import com.dhl.domain.UserExam;
+import com.dhl.domain.UserExamHistory;
 import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
 import com.dhl.domain.UserQuestionChildHistory;
@@ -32,6 +34,8 @@ public class UserExamService {
 	private UserQuestionHistoryDao userQuestionHistoryDao;
 	@Autowired
 	private UserQuestionChildHistoryDao userQuestionChildHistoryDao;
+	@Autowired
+	private UserExamHistoryDao userExamHistoryDao;
 	
 	public void save(UserExam entity)
 	{
@@ -50,6 +54,15 @@ public class UserExamService {
 		UserExam ucs = getUserExam(userId, examId);
 		if (ucs != null)
 		{
+			UserExamHistory ueh = new UserExamHistory();
+			ueh.setActivestate(ucs.getActivestate());
+			ueh.setDocounts(ucs.getDocounts());
+			ueh.setExam(ucs.getExam());
+			ueh.setState(ucs.getState());
+			ueh.setUserId(ucs.getUserId());
+			ueh.setUsetime(ucs.getUsetime());
+			userExamHistoryDao.save(ueh);
+			
 			//更新用户考试的相关信息
 			ucs.setState(0);
 			int oldcounts = ucs.getDocounts();
@@ -80,7 +93,7 @@ public class UserExamService {
 					uqch.setRevalue(uqc.getRevalue());
 					uqch.setUseranswer(uqc.getUseranswer());
 					uqch.setUserId(uqc.getUserId());
-					uqch.setUserquestionId(uqc.getUserquestionId());
+					uqch.setUserquestionId(uqh.getId());//应该是历史记录的id
 					userQuestionChildHistoryDao.save(uqch);
 				}
 			}

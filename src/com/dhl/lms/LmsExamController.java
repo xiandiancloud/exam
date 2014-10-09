@@ -31,6 +31,7 @@ import com.dhl.domain.Train;
 import com.dhl.domain.User;
 import com.dhl.domain.UserCompetion;
 import com.dhl.domain.UserExam;
+import com.dhl.domain.UserExamHistory;
 import com.dhl.service.CompetionService;
 import com.dhl.service.ECategoryService;
 import com.dhl.service.ExamCategoryService;
@@ -38,6 +39,7 @@ import com.dhl.service.ExamQuestionService;
 import com.dhl.service.ExamService;
 import com.dhl.service.TeacherExamService;
 import com.dhl.service.UserCompetionService;
+import com.dhl.service.UserExamHistoryService;
 import com.dhl.service.UserExamService;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
@@ -61,7 +63,8 @@ public class LmsExamController extends BaseController {
 	private UserExamService userExamService;
 	@Autowired
 	private ExamService examService;
-	
+	@Autowired
+	private UserExamHistoryService userExamHistoryService;
 	@Autowired
 	private ECategoryService ecategoryService;
 	@Autowired
@@ -146,12 +149,12 @@ public class LmsExamController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/toexamintroduce")
-	public ModelAndView toexamintroduce(HttpServletRequest request,int examId) {
+	public ModelAndView toexamintroduce(HttpServletRequest request,int competionId,int examId) {
 		User user = getSessionUser(request);
 		UserExam ucs = userExamService.getUserExam(user.getId(), examId);
 		if (ucs != null)
 		{
-			String url = "redirect:/lms/toexamingtostartexam.action?examId="+examId;
+			String url = "redirect:/lms/toexamingtostartexam.action?competionId="+competionId+"&examId="+examId;
 			return new ModelAndView(url);
 		}
 		ModelAndView view = new ModelAndView();
@@ -212,6 +215,7 @@ public class LmsExamController extends BaseController {
 		view.addObject("score", score);
 		view.addObject("size", size);
 		view.addObject("index", index);
+		view.addObject("competionId",competionId);
 		view.setViewName("/lms/introduce");
 		return view;
 	}
@@ -226,7 +230,9 @@ public class LmsExamController extends BaseController {
 
 		ModelAndView view = new ModelAndView();
 		User user = getSessionUser(request);
+		//如果在历史记录里面点击再做一次的逻辑还需要实现
 		
+		//end
 		userExamService.updateAgainUserExam(user.getId(), examId);
 		
 		view.addObject("examId", examId);
@@ -366,12 +372,12 @@ public class LmsExamController extends BaseController {
 				}
 				else
 				{
-					str = "{'sucess':'fail','msg':'竞赛还没有选卷'}";
+					str = "{'sucess':'fail','msg':'"+CommonConstant.ERROR_5+"'}";
 				}
 			}
 			else
 			{
-				str = "{'sucess':'fail','msg':'竞赛还没有开始'}";
+				str = "{'sucess':'fail','msg':'"+CommonConstant.ERROR_6+"'}";
 			}
 			
 			PrintWriter out = response.getWriter();
@@ -388,18 +394,66 @@ public class LmsExamController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/examlist")
-	public ModelAndView examlist(HttpServletRequest request, int currentpage) {
+	public ModelAndView examlist(HttpServletRequest request, int currentpage,int c,int r,String s) {
 		ModelAndView view = new ModelAndView();
-		
-		Page page = examService.getAllExamnotcompetion(currentpage, CommonConstant.EXAMLIST_PAGE_SIZE);
-		List<Exam> courses = page.getResult();
+		if (s != null)
+		s=UtilTools.converStr(s);
+		//examService.getAllExamnotcompetion(currentpage, CommonConstant.EXAMLIST_PAGE_SIZE);
+		Page page = examCategoryService.searchExam(c, r, s, currentpage, CommonConstant.EXAMLIST_PAGE_SIZE);
+		List<ExamCategory> courses = page.getResult();
 		int totalpage = (int) page.getTotalPageCount();
 		view.addObject("examlist", courses);
 		view.addObject("totalpage", totalpage);
 		view.addObject("currentpage", currentpage);
-		
+		view.addObject("category",c);
+		view.addObject("rank",r);
+		view.addObject("search",s);
 		view.setViewName("/lms/online");
 		return view;
+	}
+	
+	/**
+	 * 老师在增加课程的时候取得所有试卷分类
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/getAllExamCategory")
+	public void getAllExamCategory(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		try {
+			PrintWriter out = response.getWriter();
+			List<ECategory> list = ecategoryService.getAllCategory();
+			String str = getProjectViewStr(list);
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private String getProjectViewStr(List<ECategory> list) {
+		StringBuffer buffer = new StringBuffer();
+		int count = list.size();
+		buffer.append("{\"total\":" + count + ",\"rows\":[");
+		for (int i = 0; i < count; i++) {
+			ECategory p = list.get(i);
+			buffer.append("{");
+			buffer.append("\"id\":");
+			buffer.append("\"" + p.getId() + "\"");
+			buffer.append(",\"name\":");
+			buffer.append("\"" + p.getName() + "\"");
+			buffer.append("},");
+		}
+		if (count > 0) {
+			String str = buffer.substring(0, buffer.length() - 1) + "]}";
+			str = str.replaceAll("null", "");
+			return str;
+		} else {
+			String str = buffer.toString() + "]}";
+			str = str.replaceAll("null", "");
+			return str;
+		}
 	}
 	
 //	@RequestMapping("/toexam")
@@ -439,6 +493,8 @@ public class LmsExamController extends BaseController {
 		User user = getSessionUser(request);
 		List<UserExam> mycourses = userExamService.getMyAllExam(user.getId());
 		view.addObject("sexamlist", mycourses);
+		List<UserExamHistory> history = userExamHistoryService.getMyHistoryExam(user.getId());
+		view.addObject("historylist", history);
 		List<TeacherExam> tcourselist = teacherExamService
 				.getMyTCourse(user.getId());
 		view.addObject("texamlist", tcourselist);

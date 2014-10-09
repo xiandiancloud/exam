@@ -11,7 +11,7 @@ import com.dhl.domain.UserCompetion;
 public class UserCompetionDao extends BaseDao<UserCompetion> {
 
 	public List<UserCompetion> getMyAllCompetion(int userId) {
-		String hql = "from UserCompetion where userId = " + userId;
+		String hql = "from UserCompetion where userId = " + userId +" order by id desc";
 		return find(hql);
 	}
 

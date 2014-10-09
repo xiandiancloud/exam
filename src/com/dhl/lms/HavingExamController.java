@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.cons.CommonConstant;
+import com.dhl.domain.Competion;
 import com.dhl.domain.Exam;
 import com.dhl.domain.ExamChapter;
 import com.dhl.domain.ExamQuestion;
@@ -26,11 +27,14 @@ import com.dhl.domain.Train;
 import com.dhl.domain.User;
 import com.dhl.domain.UserExam;
 import com.dhl.domain.UserExamEnvironment;
+import com.dhl.domain.UserExamHistory;
 import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
+import com.dhl.service.CompetionService;
 import com.dhl.service.ExamQuestionService;
 import com.dhl.service.ExamService;
 import com.dhl.service.UserExamEnvironmentService;
+import com.dhl.service.UserExamHistoryService;
 import com.dhl.service.UserExamService;
 import com.dhl.service.UserQuestionService;
 import com.dhl.service.UserService;
@@ -51,6 +55,8 @@ public class HavingExamController extends BaseController {
 	@Autowired
 	private UserExamService userExamService;
 	@Autowired
+	private UserExamHistoryService userExamHistoryService;
+	@Autowired
 	private ExamService examService;
 	@Autowired
 	private ExamQuestionService examquestionService;
@@ -58,6 +64,8 @@ public class HavingExamController extends BaseController {
 	private UserQuestionService userQuestionService;
 	@Autowired
 	private UserExamEnvironmentService userExamEnvironmentService;
+	@Autowired
+	private CompetionService competionService;
 	
 	//判断是否有权限去考试
 	private boolean isHaving(Exam exam)
@@ -65,7 +73,7 @@ public class HavingExamController extends BaseController {
 		int isnormal = exam.getIsnormal();
 		if (isnormal == 1)
 		{
-			//如果是竞赛试卷，需要判断是否考试在这个竞赛内
+			//如果是竞赛试卷，需要判断是否考生在这个竞赛内
 		}
 		return true;
 	}
@@ -120,7 +128,12 @@ public class HavingExamController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/toexamingtostartexam")
-	public ModelAndView toexamingtostartexam(HttpServletRequest request,int examId) {
+	public ModelAndView toexamingtostartexam(HttpServletRequest request,int competionId,int examId) {
+		if (!isstart(competionId))
+		{
+			String url = "redirect:/lms/toexamerror.action";
+			return new ModelAndView(url);
+		}
 		ModelAndView view = new ModelAndView();
 		Exam exam = examService.get(examId);
 		//
@@ -201,11 +214,91 @@ public class HavingExamController extends BaseController {
 		}
 		view.addObject("userexam",ucs);
 		view.addObject("exam", exam);
-		
+		view.addObject("competionId",competionId);
 		view.setViewName("/lms/exam");
 		return view;
 	}
 
+	
+	/**
+	 * 跳转到学生考试的历史记录试卷页面
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/toexamingtohistoryexam")
+	public ModelAndView toexamingtohistoryexam(HttpServletRequest request,int examId) {
+		ModelAndView view = new ModelAndView();
+		Exam exam = examService.get(examId);
+		//
+		Set<ExamChapter> chapterset = exam.getExamchapters();
+		Iterator it = chapterset.iterator();
+		while (it.hasNext()) {
+			ExamChapter chapter = (ExamChapter) it.next();
+			Set<ExamSequential> sequentialset = chapter.getEsequentials();
+			Iterator it2 = sequentialset.iterator();
+
+			while (it2.hasNext()) {
+				ExamSequential sequential = (ExamSequential) it2.next();
+				Set<ExamVertical> verticalset = sequential.getExamVerticals();
+				Iterator it3 = verticalset.iterator();
+				while (it3.hasNext()) {
+					ExamVertical vertical = (ExamVertical) it3.next();
+					Set<ExamQuestion> vt = vertical.getExamQuestion();
+					for (ExamQuestion eq:vt)
+					{
+						Question q = eq.getQuestion();
+						//问题
+						if (q != null)
+						{
+							String content = q.getContent();
+							if (q.getType() == 1)
+							{
+								List<QuestionData> qtlist = new ArrayList();
+								QuestionData qd = new QuestionData(q.getId());
+								qd.setTitle(content);
+								qd.setType(CommonConstant.QTYPE_1);
+								qtlist.add(qd);
+								eq.setQdlist(qtlist);
+//							eq.setHtmlcontent(content);
+							}
+							else
+							{
+								
+								List<QuestionData> qdlist = changetohtml(content,q.getId());
+								eq.setQdlist(qdlist);
+							}
+						}
+						else//实训
+						{
+							Train t = eq.getTrain();
+							if (t != null)
+							{
+								List<QuestionData> trainList = new ArrayList();
+								QuestionData qd = new QuestionData(t.getId());
+								qd.setTitle(t.getName());
+								List<String> qs = new ArrayList();
+								qs.add(t.getConContent());
+								qd.setContent(qs);
+								qd.setType(CommonConstant.QTYPE_6);
+								trainList.add(qd);
+								eq.setQdlist(trainList);
+							}
+						}
+					}
+				}
+			}
+		}
+		User user = getSessionUser(request);
+//		userExamService.setMyExamActiveState(user.getId());
+		UserExamHistory ucs = userExamHistoryService
+				.getUserExam(user.getId(), examId);
+		view.addObject("userexam",ucs);
+		view.addObject("exam", exam);
+		
+		view.setViewName("/lms/examhistory");
+		return view;
+	}
 	
 	/**
 	 * 跳转到老师判分试卷页面
@@ -399,17 +492,45 @@ public class HavingExamController extends BaseController {
 		}
 	}
 	
+	//判断竞赛是否结束---以后修改调用
+	private boolean isstart(int competionId)
+	{
+		if (competionId > 0)
+		{
+			Competion c = competionService.get(competionId);
+			if (c != null)
+			{
+				if (c.getIsstart() == 1)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+		
 	/**
 	 * 提交答案
 	 */
 	@RequestMapping("/submitquesstion")
 	public void submitquesstion(HttpServletRequest request,
-			HttpServletResponse response, int examId,int questionId,int number,String useranswer) {
+			HttpServletResponse response,int competionId, int examId,int questionId,int number,String useranswer) {
 		try {
-			
-			User user = getSessionUser(request);
-			userQuestionService.saveQuestion(user.getId(),examId,questionId, number, useranswer);
-			String str = "{'sucess':'sucess'}";
+			String str="";
+			if (!isstart(competionId))
+			{
+				str = "{'sucess':'fail'}";
+			}
+			else
+			{
+				User user = getSessionUser(request);
+				userQuestionService.saveQuestion(user.getId(),examId,questionId, number, useranswer);
+				str = "{'sucess':'sucess'}";
+			}
 			PrintWriter out = response.getWriter();
 			out.write(str);
 		} catch (Exception e) {
@@ -423,13 +544,21 @@ public class HavingExamController extends BaseController {
 	 */
 	@RequestMapping("/submitallquesstion")
 	public void submitallquesstion(HttpServletRequest request,
-			HttpServletResponse response, int examId) {
+			HttpServletResponse response,int competionId, int examId) {
 		try {
-			User user = getSessionUser(request);
-			UserExam ue = userExamService.getUserExam(user.getId(),examId);
-			ue.setState(1);
-			userExamService.updateUserExam(ue);
-			String str = "{'sucess':'sucess'}";
+			String str="";
+			if (!isstart(competionId))
+			{
+				str = "{'sucess':'fail'}";
+			}
+			else
+			{
+				User user = getSessionUser(request);
+				UserExam ue = userExamService.getUserExam(user.getId(),examId);
+				ue.setState(1);
+				userExamService.updateUserExam(ue);
+				str = "{'sucess':'sucess'}";
+			}
 			PrintWriter out = response.getWriter();
 			out.write(str);
 		} catch (Exception e) {
@@ -437,6 +566,7 @@ public class HavingExamController extends BaseController {
 		}
 
 	}
+	
 	
 	/**
 	 * 裁判修改分值
@@ -458,7 +588,7 @@ public class HavingExamController extends BaseController {
 	}
 	
 	/**
-	 * 考试界面调整到
+	 * 考试界面调转到
 	 * 
 	 * @param request
 	 * @param courseId

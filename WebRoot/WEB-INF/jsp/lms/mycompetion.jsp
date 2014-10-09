@@ -246,7 +246,7 @@
 					var a = eval("(" + s + ")");
 					if ("sucess" == a.sucess)
 					{
-						location.href = "lms/toexamintroduce.action?examId="+a.examId;
+						location.href = "lms/toexamintroduce.action?competionId="+competionId+"&examId="+a.examId;
 					}
 					else
 					{

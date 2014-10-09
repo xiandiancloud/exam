@@ -406,7 +406,14 @@
 													</c:forEach>
 												</select>
                           						</td>
-                          						<td id="selectexamtime">&nbsp;&nbsp;${sexam.selecttime}&nbsp;&nbsp;完成选题</td>
+                          						<td id="selectexamtime">
+                          						<c:if test="${empty sexam}">
+                          						&nbsp;&nbsp;还没有完成选题
+                          						</c:if>
+                          						<c:if test="${!empty sexam}">
+                          						&nbsp;&nbsp;${sexam.selecttime}&nbsp;&nbsp;完成选题
+                          						</c:if>
+                          						</td>
                           						</tr></table>
                           						
                           						</div>
@@ -852,6 +859,7 @@
 					$("#savebutton").hide();
 					$("#updatebutton").show();
 					$("#competionId").attr("value",a.competionId);
+					location.reload();
 				}
 			}
 		});
@@ -1124,6 +1132,7 @@
 	}
 	function selectexam()
 	{
+		alert("111111");
 		var competionId = parseInt($("#competionId").attr("value"));
 		var examId = parseInt($("#selectexam").attr("value"));
 		var data={competionId:competionId,examId:examId};

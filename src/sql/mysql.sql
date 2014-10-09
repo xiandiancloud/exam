@@ -446,6 +446,23 @@ create table t_user_exam
    CONSTRAINT receivet_user_exam_2 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+/*学生（用户）相关试卷定义的历史记录*/
+drop table if exists t_user_exam_history;
+create table t_user_exam_history
+(
+   id                  int not null AUTO_INCREMENT,
+   userId              int(10) not null,
+   examId              int(10) not null,
+   state               int(10) default 0,
+   activestate         int(10) default 0,
+   usetime             varchar(255) default 0,
+   docounts            int(10) default 1,
+   primary key (id),
+   UNIQUE KEY (userId,examId,docounts),
+   CONSTRAINT receivet_user_exam_history_1 FOREIGN KEY (userId) REFERENCES auth_user (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_user_exam_history_2 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
 drop table if exists user_train_history;
 create table user_train_history
 (
