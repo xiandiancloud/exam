@@ -423,7 +423,7 @@
 				                            <thead>
 				                              <tr>
 				                                <th>姓名</th>
-				                                <th>时间</th>
+				                                <th>得分</th>
 				                                <th>状态</th>
 				                                <th></th>
 				                              </tr>
@@ -431,17 +431,17 @@
 				                            <tbody>
 				                            <c:forEach var="student" items="${studentlist}">
 				                              <tr>
-				                                <td>${student.user.username}</td>
-				                                <td></td>
+				                                <td>${student.username}</td>
+				                                <td>${student.score}</td>
 				                                <td>
-				                                  <span class='label label-important'></span>
+				                                  <span class='label label-important'>${student.state}</span>
 				                                </td>
 				                                <td>
 				                                  <div class='text-right'>
 				                               <%--       <a class='btn btn-danger btn-xs' href='javascript:void(0);' onclick="unlockallexam(${ce.competionId},${ce.exam.id});">
 				                                      <i class='icon-unlock'></i>
 				                                    </a> --%>
-				                                    <a class='btn btn-danger btn-xs' href='javascript:void(0);' onclick="delcompetionuser(${student.id});">
+				                                    <a class='btn btn-danger btn-xs' href='javascript:void(0);' onclick="delcompetionuser(${student.userCompetionId});">
 				                                      <i class='icon-remove'></i>
 				                                    </a>
 				                                  </div>
@@ -856,10 +856,10 @@
 				var a = eval("(" + s + ")");
 				if ("sucess" == a.sucess)
 				{
-					$("#savebutton").hide();
-					$("#updatebutton").show();
-					$("#competionId").attr("value",a.competionId);
-					location.reload();
+					//$("#savebutton").hide();
+					//$("#updatebutton").show();
+					//$("#competionId").attr("value",a.competionId);
+					location.href = "cms/totcompetion.action?competionId="+a.competionId;
 				}
 			}
 		});
@@ -1132,7 +1132,6 @@
 	}
 	function selectexam()
 	{
-		alert("111111");
 		var competionId = parseInt($("#competionId").attr("value"));
 		var examId = parseInt($("#selectexam").attr("value"));
 		var data={competionId:competionId,examId:examId};

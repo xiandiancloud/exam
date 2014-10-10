@@ -109,10 +109,15 @@
 		height:40px;
 		line-height:40px;
 	}
+	.fixtop 
+	{ 
+		position:fixed;
+		top:445px; 
+	} 
 </style>
 
   </head>
-  <body data-spy="scroll" data-target="#myScrollspy" class='contrast-red fixed-header'>
+  <body data-spy="scroll" class='contrast-red fixed-header'>
     <jsp:include page="header.jsp"></jsp:include>
 	<div id='wrapper'>
 		<div class='container'>
@@ -474,8 +479,8 @@
                   </div>
 				</div>																																			
 					
-				<div class="col-xs-3" id="myScrollspy">
-						<div data-spy="affix">
+				<div class="col-xs-3" id="scroll1">
+						<div class="fixtop" id="scroll2">
 							<div class='box bordered-box blue-border'>
 								<div class='box-content'>
 									<!-- <div class='row'>
@@ -483,13 +488,13 @@
 											<div id="timer" style="color:green;font-family:Arial;font-size:170%;"></div>
 										</div> -->
 										<!-- <div class='col-xs-12'> -->
-											<div class="pull-right">
+									<!-- 		<div class="pull-right">
 												<a class="btn">暂停</a> 
 												<a class="btn">下次再做</a>
-											</div>
+											</div> -->
 										<!-- </div> -->
 									<!-- </div> -->
-									<hr class='hr-normal'>
+									<!-- <hr class='hr-normal'> -->
 									<!-- <div class='row'>
 										<div class='col-xs-12'> -->
 											<div data-offset-top="125" class="nav nav-tabs nav-stacked section">
@@ -520,7 +525,7 @@
 									<!-- <div class='row'>
 										<div class='col-xs-12'> -->
 											<div class='box-content' style="padding:0">
-												<a class="btn btn-success btn-block btn-lg" href="">评分结束</a>
+												<a class="btn btn-success btn-block btn-lg" href="javascript:void(0);" onclick="finishpf();">评分结束</a>
 											</div>
 										<!-- </div>
 									</div>	 -->								
@@ -562,6 +567,7 @@
 
 	<script type="text/javascript">
 		$(function() {
+			$("#scroll2").width($("#scroll1").width());
 			//填充试卷内容，判断对错，或者是否已经做过
 			initquestion();
 		});
@@ -645,8 +651,30 @@
 				success : function(s) {
 					var a = eval("(" + s + ")");
 					if ("sucess" == a.sucess) {
-						//alert("修改了分值");
+						alert("修改了分值");
 						$("#scorequestion"+index).html(pfscore);
+					}
+					else
+					{
+						alert(a.msg);
+					}
+				}
+			});
+		}
+		//裁判判定结束
+		function finishpf()
+		{
+			var userId = "${userId}";
+			var examId = "${exam.id}";
+			var data = {userId:userId,examId:examId};
+			$.ajax({
+				url : "lms/finishpf.action",
+				type : "post",
+				data : data,
+				success : function(s) {
+					var a = eval("(" + s + ")");
+					if ("sucess" == a.sucess) {
+						location.href="cms/totcompetionpf.action?competionId=${competionId}";
 					}
 				}
 			});

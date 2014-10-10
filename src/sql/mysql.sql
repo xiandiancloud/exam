@@ -437,6 +437,7 @@ create table t_user_exam
    userId              int(10) not null,
    examId              int(10) not null,
    state               int(10) default 0,
+   fipf                int(10) default 0,
    activestate         int(10) default 0,
    usetime             varchar(255) default 0,
    docounts            int(10) default 1,

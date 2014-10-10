@@ -111,8 +111,8 @@
 	}
 	.fixtop 
 	{ 
-	position:fixed;
-	top:216px; 
+		position:fixed;
+		top:216px; 
 	} 
 </style>
 
@@ -825,6 +825,7 @@
 				success : function(s) {
 					var a = eval("(" + s + ")");
 					if ("sucess" == a.sucess) {
+						alert("提交成功");
 						location.reload();
 					}
 					else

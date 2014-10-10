@@ -221,7 +221,7 @@ public class UserQuestionService {
 	/**
 	 * 提交答案
 	 */
-	public void updateQuestion(int userId,int examId,int questionId,int number,String pfscore)
+	public boolean updateQuestion(int userId,int examId,int questionId,int number,String pfscore)
 	{
 		UserQuestion uq = userQuestionDao.getUserQuestionByquestion(userId, examId, questionId);
 		if (uq != null)
@@ -231,8 +231,10 @@ public class UserQuestionService {
 			{
 				uqc.setPfscore(pfscore);
 				userQuestionChildDao.update(uqc);
+				return true;
 			}
 		}
+		return false;
 	}
 	/**
 	 * 提交答案

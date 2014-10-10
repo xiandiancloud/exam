@@ -43,11 +43,14 @@ public class CommonConstant
    public static final int QTYPE_5 = 5;
    public static final int QTYPE_6 = 6;
    //竞赛对应的4种角色关系-------角色对应的所有的都是老师
-//   public static final String CROLE_1 = "创建者";
+   //public static final String CROLE_1 = "创建者";
    public static final String CROLE_2 = "主裁判";
    public static final String CROLE_3 = "命题裁判";
    public static final String CROLE_4 = "判分裁判";
    public static final String CROLE_5 = "考生";
+   //
+   public static final String STRING_0 = "评分当中";
+   public static final String STRING_1 = "评分完毕";
    //错误提示
    public static final String ERROR_0 = "后台异常，请联系系统管理员";
    public static final String ERROR_1 = "学校已经存在";
@@ -56,7 +59,7 @@ public class CommonConstant
    public static final String ERROR_4 = "实验已经存在";
    public static final String ERROR_5 = "竞赛还没有选卷";
    public static final String ERROR_6 = "竞赛还没有开始";
-   
+   public static final String ERROR_7 = "用户没有答题，不允许修改评分";
    //课程级别
    public static final String LEVEL_1 = "初级";
    public static final String LEVEL_2 = "中级";

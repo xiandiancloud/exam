@@ -109,6 +109,19 @@ public class UserExamService {
 	public UserExam getUserExam(int userId, int examId) {
 		return userExamDao.getUserExam(userId, examId);
 	}
+	/**
+	 * 裁判完成评分
+	 * @param userId
+	 * @param examId
+	 */
+	public void finishUserExam(int userId, int examId) {
+		UserExam ue = getUserExam(userId, examId);
+		if (ue != null)
+		{
+			ue.setFipf(1);
+			userExamDao.update(ue);
+		}
+	}
 	
 	public UserExam getUserRecentlyExam(int userId) {
 		return userExamDao.getUserRecentlyExam(userId);

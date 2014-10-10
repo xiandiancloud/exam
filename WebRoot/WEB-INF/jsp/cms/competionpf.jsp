@@ -251,7 +251,7 @@
 				                            <thead>
 				                              <tr>
 				                                <th>姓名</th>
-				                                <th>时间</th>
+				                                <th>得分</th>
 				                                <th>状态</th>
 				                                <th></th>
 				                              </tr>
@@ -259,17 +259,17 @@
 				                            <tbody>
 				                            <c:forEach var="student" items="${studentlist}">
 				                              <tr>
-				                                <td>${student.user.username}</td>
-				                                <td></td>
+				                                <td>${student.username}</td>
+				                                <td>${student.score}</td>
 				                                <td>
-				                                  <span class='label label-important'></span>
+				                                  <span class='label label-important'>${student.state}</span>
 				                                </td>
 				                                <td>
 				                                  <div class='text-right'>
 				                               <%--       <a class='btn btn-danger btn-xs' href='javascript:void(0);' onclick="unlockallexam(${ce.competionId},${ce.exam.id});">
 				                                      <i class='icon-unlock'></i>
 				                                    </a> --%>
-				                                    <a class='btn btn-danger btn-xs' href='lms/toexamingtopfexam.action?examId=${ceexam.exam.id}&userId=${student.user.id}'>
+				                                    <a class='btn btn-danger btn-xs' href='lms/toexamingtopfexam.action?competionId=${competion.id}&examId=${ceexam.exam.id}&userId=${student.userId}'>
 				                                      <i class='icon-ok'></i>判卷
 				                                    </a>
 				                                  </div>
@@ -285,7 +285,7 @@
 						</div>
 					  </div>
 					</div>
-				<div class='row'>
+<!-- 				<div class='row'>
 					<div class='col-sm-12'>
 						<div class='box bordered-box red-background'>
 							<div class='box-header red-background'>
@@ -304,7 +304,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	<jsp:include page="footer.jsp"></jsp:include>
@@ -379,41 +379,6 @@
                         </div>
                       </div>
                     </div>  
-       <div class='modal fade' id='modal-example3' tabindex='-1'>
-               <div class='modal-dialog'>
-                 <div class='modal-content'>
-                   <div class='modal-header'>
-                     <button aria-hidden='true' class='close' data-dismiss='modal' type='button'>×</button>
-                     <h4 class='modal-title' id='myModalLabel'>选择考生</h4>
-                   </div>
-                   <div class='modal-body'>
-                     	<div class='row'>
-						<div class='col-sm-12'>
-							<div id="tree2">
-								<ul id='tree2-treeData'>
-			                      <!-- <li class='expanded' id='tree2id3'>
-			                        Folder with some children
-			                        <ul>
-			                          <li id='tree2id2.1'>
-			                            Sub-item 3.1
-			                          </li>
-			                          <li id='tree2id3.2'>
-			                            Sub-item 3.2
-			                          </li>
-			                        </ul>
-			                      </li> -->
-			                    </ul>
-			               </div>
-						</div>
-						</div>
-                   </div>
-                   <div class='modal-footer'>
-                     <button class='btn btn-default' data-dismiss='modal' type='button'>关闭</button>
-                     <button class='btn btn-primary' type='button' onclick="adduser();">确定</button>
-                   </div>
-                 </div>
-               </div>
-    </div>  
     <script src="assets/javascripts/jquery/jquery.min.js" type="text/javascript"></script>
 
     <script src="assets/javascripts/jquery/jquery.mobile.custom.min.js" type="text/javascript"></script>
@@ -665,10 +630,6 @@
 	function updatecompetion()
 	{
 		
-	}
-	function showuserdialog()
-	{
-		$("#modal-example3").modal('show');
 	}
 	function showexamdialog()
 	{

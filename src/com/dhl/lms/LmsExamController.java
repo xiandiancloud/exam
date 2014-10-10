@@ -495,8 +495,7 @@ public class LmsExamController extends BaseController {
 		view.addObject("sexamlist", mycourses);
 		List<UserExamHistory> history = userExamHistoryService.getMyHistoryExam(user.getId());
 		view.addObject("historylist", history);
-		List<TeacherExam> tcourselist = teacherExamService
-				.getMyTCourse(user.getId());
+		List<TeacherExam> tcourselist = teacherExamService.getMyNormalTExam(user.getId());
 		view.addObject("texamlist", tcourselist);
 		view.setViewName("/lms/mycourse");
 		return view;

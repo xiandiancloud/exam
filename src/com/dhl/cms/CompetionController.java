@@ -19,6 +19,7 @@ import com.dhl.domain.CompetionSchool;
 import com.dhl.domain.TeacherExam;
 import com.dhl.domain.User;
 import com.dhl.domain.UserCompetion;
+import com.dhl.domain.UserCompetionData;
 import com.dhl.service.CompetionService;
 import com.dhl.service.ExamService;
 import com.dhl.service.TeacherExamService;
@@ -89,9 +90,12 @@ public class CompetionController extends BaseController {
 		}
 		view.addObject("celist", celist);
 		//竞赛学生
-		List<UserCompetion> ucslist = usercompetionService.getCompetionStudent(competionId);
+//		List<UserCompetion> ucslist = usercompetionService.getCompetionStudent(competionId);
+//		view.addObject("studentlist", ucslist);
+		//竞赛学生
+		List<UserCompetionData> ucslist = usercompetionService.getCompetionStudentData(competionId);
 		view.addObject("studentlist", ucslist);
-				
+		
 		view.setViewName("/cms/competion");
 		return view;
 	}
@@ -140,7 +144,7 @@ public class CompetionController extends BaseController {
 		Competion competion = competionService.get(competionId);
 		view.addObject("competion", competion);
 		//竞赛学生
-		List<UserCompetion> ucslist = usercompetionService.getCompetionStudent(competionId);
+		List<UserCompetionData> ucslist = usercompetionService.getCompetionStudentData(competionId);
 		view.addObject("studentlist", ucslist);
 		
 		CompetionExam ce = competionService.getCompetionSelectExam(competionId);

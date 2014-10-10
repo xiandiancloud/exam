@@ -30,11 +30,17 @@ public class UserExam extends BaseDomain {
 	@JoinColumn(name = "examId")
 	private Exam exam;
 	private int docounts;
-	private int state;//1：完成试卷0：没有完成
+	private int state;//1：完成试卷0：没有完成----针对学生的状态
 	private String usetime;
 	private int activestate;//0:默认，最近操作就set为1
+	private int fipf;//0：默认   1：完成评分   -----  是否评分结束，针对老师评分的状态
 	
-	
+	public int getFipf() {
+		return fipf;
+	}
+	public void setFipf(int fipf) {
+		this.fipf = fipf;
+	}
 	public int getActivestate() {
 		return activestate;
 	}

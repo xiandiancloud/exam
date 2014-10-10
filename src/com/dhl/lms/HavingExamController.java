@@ -208,6 +208,7 @@ public class HavingExamController extends BaseController {
 			uc.setActivestate(1);
 			uc.setUsetime("0");
 			userExamService.save(uc);
+			ucs = uc;
 		} else {
 			ucs.setActivestate(1);
 			userExamService.updateUserExam(ucs);
@@ -307,7 +308,7 @@ public class HavingExamController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/toexamingtopfexam")
-	public ModelAndView toexamingtopfexam(HttpServletRequest request,int examId,int userId) {
+	public ModelAndView toexamingtopfexam(HttpServletRequest request,int competionId,int examId,int userId) {
 		ModelAndView view = new ModelAndView();
 		Exam exam = examService.get(examId);
 		//
@@ -370,7 +371,7 @@ public class HavingExamController extends BaseController {
 				}
 			}
 		}
-		
+		view.addObject("competionId",competionId);
 		view.addObject("exam", exam);
 		view.addObject("userId", userId);
 		view.setViewName("/lms/pfexam");
@@ -410,81 +411,87 @@ public class HavingExamController extends BaseController {
 			
 //			User user = userService.getUserById(userId);
 			UserQuestion uq = userQuestionService.getQuestion(userId, examId, questionId);
-			UserQuestionChild uqc = userQuestionService.getQuestionChild(uq,userId,number);
-			String str = "{'sucess':'sucess'}";
-			String score = "";
-			if (uqc != null)
+			String str = "{'sucess':'sucess','answer':' ','index':'"+index+"','pfscore':'0'}";//"{'sucess':'sucess'}";
+			String score = "0";
+			if (uq != null)
 			{
-				String useranswer = uqc.getUseranswer();
-				String pfscore = uqc.getPfscore();
-				//判分裁判一旦修改了系统判分，采用判分裁判的
-				if (pfscore != null)
+				UserQuestionChild uqc = userQuestionService.getQuestionChild(uq,userId,number);
+				if (uqc != null)
 				{
-					score = pfscore;
-				}
-				else
-				{
-					//采用自动评分
-					Train t = uq.getTrain();
-					if (t != null)//实训
+					String useranswer = uqc.getUseranswer();
+					String pfscore = uqc.getPfscore();
+					//判分裁判一旦修改了系统判分，采用判分裁判的
+					if (pfscore != null)
 					{
-						String tanswer = t.getConAnswer();
-						if (useranswer != null && tanswer != null && useranswer.trim().equals(tanswer.trim()))
-						{
-							score = t.getScore()+"";
-						}
+						score = pfscore;
 					}
-					else//问题
+					else
 					{
-						Question q = uq.getQuestion();
-						List<QuestionData> qdlist = changetohtml(q.getContent(), q.getId());
-						//理论上不应该越界，没有容错，是为了前期发现问题，如果出错，好排查问题
-						if (qdlist != null)
+						//采用自动评分
+						Train t = uq.getTrain();
+						if (t != null)//实训
 						{
-							QuestionData qd = qdlist.get(number-1);
-							int type = qd.getType();
-							if (type == CommonConstant.QTYPE_2 || type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5)
+							String tanswer = t.getConAnswer();
+							if (useranswer != null && tanswer != null && useranswer.trim().equals(tanswer.trim()))
 							{
-								List<String> answerlist = qd.getAnswer();
-								if (answerlist != null && answerlist.size() > 0)
-								{
-									if (useranswer != null && useranswer.trim().equals(answerlist.get(0).trim()))
-									{
-										score = qd.getScore()+"";
-									}
-								}
+								score = t.getScore()+"";
 							}
-							else if (type == CommonConstant.QTYPE_3)//多选要匹配答案列表
+						}
+						else//问题
+						{
+							Question q = uq.getQuestion();
+							List<QuestionData> qdlist = changetohtml(q.getContent(), q.getId());
+							//理论上不应该越界，没有容错，是为了前期发现问题，如果出错，好排查问题
+							if (qdlist != null)
 							{
-								if (useranswer != null)
+								QuestionData qd = qdlist.get(number-1);
+								int type = qd.getType();
+								if (type == CommonConstant.QTYPE_2 || type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5)
 								{
 									List<String> answerlist = qd.getAnswer();
-									if (answerlist != null)
+									if (answerlist != null && answerlist.size() > 0)
 									{
-										String[] strs = useranswer.split("#");
-										int size = answerlist.size();
-										boolean flag = true;
-										for (int i=0;i<size;i++)
-										{
-											if (answerlist.get(i).equals(strs[i]))
-											{
-												flag = false;
-												break;
-											}
-										}
-										if (flag)
+										if (useranswer != null && useranswer.trim().equals(answerlist.get(0).trim()))
 										{
 											score = qd.getScore()+"";
 										}
 									}
 								}
+								else if (type == CommonConstant.QTYPE_3)//多选要匹配答案列表
+								{
+									if (useranswer != null)
+									{
+										List<String> answerlist = qd.getAnswer();
+										if (answerlist != null)
+										{
+											String[] strs = useranswer.split("#");
+											int size = answerlist.size();
+											boolean flag = true;
+											for (int i=0;i<size;i++)
+											{
+												if (answerlist.get(i).equals(strs[i]))
+												{
+													flag = false;
+													break;
+												}
+											}
+											if (flag)
+											{
+												score = qd.getScore()+"";
+											}
+										}
+									}
+								}
 							}
 						}
 					}
+					str = "{'sucess':'sucess','answer':'"+useranswer+"','index':'"+index+"','pfscore':'"+score+"'}";
 				}
-				str = "{'sucess':'sucess','answer':'"+useranswer+"','index':'"+index+"','pfscore':'"+score+"'}";
 			}
-			
+			else
+			{
+				str = "{'sucess':'sucess','answer':' ','index':'"+index+"','pfscore':'"+score+"'}";
+			}
 			PrintWriter out = response.getWriter();
 			out.write(str);
 		} catch (Exception e) {
@@ -577,7 +584,24 @@ public class HavingExamController extends BaseController {
 		try {
 			
 			User user = userService.getUserById(userId);
-			userQuestionService.updateQuestion(user.getId(),examId,questionId, number,pfscore);
+			boolean flag = userQuestionService.updateQuestion(user.getId(),examId,questionId, number,pfscore);
+			String str = flag?"{'sucess':'sucess'}":"{'sucess':'fail','msg':'"+CommonConstant.ERROR_7+"'}";
+			PrintWriter out = response.getWriter();
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	/**
+	 * 裁判判分结束
+	 */
+	@RequestMapping("/finishpf")
+	public void finishpf(HttpServletRequest request,
+			HttpServletResponse response,int userId, int examId) {
+		try {
+			userExamService.finishUserExam(userId, examId);
 			String str = "{'sucess':'sucess'}";
 			PrintWriter out = response.getWriter();
 			out.write(str);

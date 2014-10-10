@@ -9,9 +9,15 @@ import com.dhl.domain.TeacherExam;
 @Repository
 public class TeacherExamDao extends BaseDao<TeacherExam> {
 
-	public List<TeacherExam> getMyTCourse(int userId)
+	public List<TeacherExam> getMyNormalTExam(int userId)
 	{
 		String hql = "from TeacherExam where userId = "+userId +" and exam.isnormal = 0";
+	    return find(hql);
+	}
+	
+	public List<TeacherExam> getMyTCourse(int userId)
+	{
+		String hql = "from TeacherExam where userId = "+userId;
 	    return find(hql);
 	}
 	

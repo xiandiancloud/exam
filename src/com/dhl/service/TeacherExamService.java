@@ -40,6 +40,11 @@ public class TeacherExamService {
 		return teacherExamDao.getMyTCourse(userId);
 	}
 	
+	public List<TeacherExam> getMyNormalTExam(int userId)
+	{
+		return teacherExamDao.getMyNormalTExam(userId);
+	}
+	
 	/**
 	 * 根据试卷id得到出卷老师，限制一个人
 	 * @param examId
