@@ -135,133 +135,103 @@ public class UserCompetionService {
 		List<UserCompetionData> list = new ArrayList<UserCompetionData>();
 		//竞赛下的试卷
 		CompetionExam ce = competionExamDao.getCompetionSelectExam(competionId);
-		Exam exam = ce.getExam();
-		for (UserCompetion uc:ucslist)
+		if (ce != null)
 		{
-			UserCompetionData ucd = new UserCompetionData();
-			ucd.setUserCompetionId(uc.getId());
-			User user = uc.getUser();
-			ucd.setUsername(user.getUsername());
-			ucd.setUserId(user.getId());
-			//用户对应的竞赛试卷			
-			UserExam ue = userExamDao.getUserExam(user.getId(), exam.getId());
-			if (ue != null)
-			ucd.setState(ue.getFipf() == 1?CommonConstant.STRING_1:CommonConstant.STRING_0);
-			//对应的总分数，先采取计算方式，如果性能出问题再优化
-			int score = 0;
-			
-			Set<ExamChapter> chapterset = exam.getExamchapters();
-			Iterator it = chapterset.iterator();
-			while (it.hasNext()) {
-				ExamChapter chapter = (ExamChapter) it.next();
-				Set<ExamSequential> sequentialset = chapter.getEsequentials();
-				Iterator it2 = sequentialset.iterator();
-				while (it2.hasNext()) {
-					ExamSequential sequential = (ExamSequential) it2.next();
-					Set<ExamVertical> verticalset = sequential.getExamVerticals();
-					Iterator it3 = verticalset.iterator();
-					while (it3.hasNext()) {
-						ExamVertical vertical = (ExamVertical) it3.next();
-						Set<ExamQuestion> vt = vertical.getExamQuestion();
-						for (ExamQuestion eq:vt)
-						{
-							////////////////////
-							Question q = eq.getQuestion();
-							if (q != null)//问题
+			Exam exam = ce.getExam();
+			for (UserCompetion uc:ucslist)
+			{
+				UserCompetionData ucd = new UserCompetionData();
+				ucd.setUserCompetionId(uc.getId());
+				User user = uc.getUser();
+				ucd.setUsername(user.getUsername());
+				ucd.setUserId(user.getId());
+				//用户对应的竞赛试卷			
+				UserExam ue = userExamDao.getUserExam(user.getId(), exam.getId());
+				if (ue != null)
+				ucd.setState(ue.getFipf() == 1?CommonConstant.STRING_1:CommonConstant.STRING_0);
+				//对应的总分数，先采取计算方式，如果性能出问题再优化
+				int score = 0;
+				
+				Set<ExamChapter> chapterset = exam.getExamchapters();
+				Iterator it = chapterset.iterator();
+				while (it.hasNext()) {
+					ExamChapter chapter = (ExamChapter) it.next();
+					Set<ExamSequential> sequentialset = chapter.getEsequentials();
+					Iterator it2 = sequentialset.iterator();
+					while (it2.hasNext()) {
+						ExamSequential sequential = (ExamSequential) it2.next();
+						Set<ExamVertical> verticalset = sequential.getExamVerticals();
+						Iterator it3 = verticalset.iterator();
+						while (it3.hasNext()) {
+							ExamVertical vertical = (ExamVertical) it3.next();
+							Set<ExamQuestion> vt = vertical.getExamQuestion();
+							for (ExamQuestion eq:vt)
 							{
-								String content = q.getContent();
-								if (q.getType() == 1)
+								////////////////////
+								Question q = eq.getQuestion();
+								if (q != null)//问题
 								{
-									List<QuestionData> qtlist = new ArrayList();
-									QuestionData qd = new QuestionData(q.getId());
-									qd.setTitle(content);
-									qd.setType(CommonConstant.QTYPE_1);
-									qtlist.add(qd);
-									eq.setQdlist(qtlist);
-//								eq.setHtmlcontent(content);
-								}
-								else
-								{
-									
-									List<QuestionData> qdlist = ParseQuestion.changetohtml(content,q.getId());
-									eq.setQdlist(qdlist);
-								}
-							}
-							else//实训
-							{
-								Train t = eq.getTrain();
-								if (t != null)
-								{
-									List<QuestionData> trainList = new ArrayList();
-									QuestionData qd = new QuestionData(t.getId());
-									qd.setTitle(t.getName());
-									List<String> qs = new ArrayList();
-									qs.add(t.getConContent());
-									qd.setContent(qs);
-									qd.setType(CommonConstant.QTYPE_6);
-									qd.setScore(t.getScore());
-									trainList.add(qd);
-									eq.setQdlist(trainList);
-								}
-							}
-						}
-						////////////////
-						for (ExamQuestion eq:vt)
-						{
-							List<QuestionData> qdlist = eq.getQdlist();
-							int len = qdlist.size();
-							for (int i=0;i<len;i++)
-							{
-								QuestionData qd = qdlist.get(i);
-								int type = qd.getType();
-								if (type == CommonConstant.QTYPE_6)
-								{
-									UserQuestion uq = userQuestionDao.getUserQuestionBytrain(user.getId(), exam.getId(),qd.getId());
-									if (uq != null)
+									String content = q.getContent();
+									if (q.getType() == 1)
 									{
-										UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByusertrainId(user.getId(),uq.getId());
-										if (uqc != null)
-										{
-											String useranswer = uqc.getUseranswer();
-											String pfscore = uqc.getPfscore();
-											//判分裁判一旦修改了系统判分，采用判分裁判的
-											if (pfscore != null)
-											{
-												score += Integer.parseInt(pfscore);
-											}
-											else
-											{
-												List<String> answerlist = qd.getAnswer();
-												if (answerlist != null && answerlist.size() > 0)
-												{
-													if (useranswer != null && useranswer.trim().equals(answerlist.get(0).trim()))
-													{
-														score += qd.getScore();
-													}
-												}
-											}
-										}
+										List<QuestionData> qtlist = new ArrayList();
+										QuestionData qd = new QuestionData(q.getId());
+										qd.setTitle(content);
+										qd.setType(CommonConstant.QTYPE_1);
+										qtlist.add(qd);
+										eq.setQdlist(qtlist);
+	//								eq.setHtmlcontent(content);
+									}
+									else
+									{
+										
+										List<QuestionData> qdlist = ParseQuestion.changetohtml(content,q.getId());
+										eq.setQdlist(qdlist);
 									}
 								}
-								else
+								else//实训
 								{
-									int number = i+1;
-									UserQuestion uq = userQuestionDao.getUserQuestionByquestion(user.getId(), exam.getId(), qd.getId());
-									if (uq != null)
+									Train t = eq.getTrain();
+									if (t != null)
 									{
-										UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(user.getId(),number,uq.getId());
-										if (uqc != null)
+										List<QuestionData> trainList = new ArrayList();
+										QuestionData qd = new QuestionData(t.getId());
+										qd.setTitle(t.getName());
+										List<String> qs = new ArrayList();
+										qs.add(t.getConContent());
+										qd.setContent(qs);
+										qd.setType(CommonConstant.QTYPE_6);
+										qd.setScore(t.getScore());
+										trainList.add(qd);
+										eq.setQdlist(trainList);
+									}
+								}
+							}
+							////////////////
+							for (ExamQuestion eq:vt)
+							{
+								List<QuestionData> qdlist = eq.getQdlist();
+								int len = qdlist.size();
+								for (int i=0;i<len;i++)
+								{
+									QuestionData qd = qdlist.get(i);
+									int type = qd.getType();
+									if (type == CommonConstant.QTYPE_6)
+									{
+										UserQuestion uq = userQuestionDao.getUserQuestionBytrain(user.getId(), exam.getId(),qd.getId());
+										if (uq != null)
 										{
-											String useranswer = uqc.getUseranswer();
-											String pfscore = uqc.getPfscore();
-											//判分裁判一旦修改了系统判分，采用判分裁判的
-											if (pfscore != null)
+											UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByusertrainId(user.getId(),uq.getId());
+											if (uqc != null)
 											{
-												score += Integer.parseInt(pfscore);
-											}
-											else
-											{
-												if (type == CommonConstant.QTYPE_2 || type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5)
+												String useranswer = uqc.getUseranswer();
+												String pfscore = uqc.getPfscore();
+												//判分裁判一旦修改了系统判分，采用判分裁判的
+												if (pfscore != null)
+												{
+													score += Integer.parseInt(pfscore);
+												}
+												else
 												{
 													List<String> answerlist = qd.getAnswer();
 													if (answerlist != null && answerlist.size() > 0)
@@ -272,27 +242,60 @@ public class UserCompetionService {
 														}
 													}
 												}
-												else if (type == CommonConstant.QTYPE_3)//多选要匹配答案列表
+											}
+										}
+									}
+									else
+									{
+										int number = i+1;
+										UserQuestion uq = userQuestionDao.getUserQuestionByquestion(user.getId(), exam.getId(), qd.getId());
+										if (uq != null)
+										{
+											UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(user.getId(),number,uq.getId());
+											if (uqc != null)
+											{
+												String useranswer = uqc.getUseranswer();
+												String pfscore = uqc.getPfscore();
+												//判分裁判一旦修改了系统判分，采用判分裁判的
+												if (pfscore != null)
 												{
-													if (useranswer != null)
+													score += Integer.parseInt(pfscore);
+												}
+												else
+												{
+													if (type == CommonConstant.QTYPE_2 || type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5)
 													{
 														List<String> answerlist = qd.getAnswer();
-														if (answerlist != null)
+														if (answerlist != null && answerlist.size() > 0)
 														{
-															String[] strs = useranswer.split("#");
-															int size = answerlist.size();
-															boolean flag = true;
-															for (int j=0;j<size;j++)
-															{
-																if (answerlist.get(j).equals(strs[j]))
-																{
-																	flag = false;
-																	break;
-																}
-															}
-															if (flag)
+															if (useranswer != null && useranswer.trim().equals(answerlist.get(0).trim()))
 															{
 																score += qd.getScore();
+															}
+														}
+													}
+													else if (type == CommonConstant.QTYPE_3)//多选要匹配答案列表
+													{
+														if (useranswer != null)
+														{
+															List<String> answerlist = qd.getAnswer();
+															if (answerlist != null)
+															{
+																String[] strs = useranswer.split("#");
+																int size = answerlist.size();
+																boolean flag = true;
+																for (int j=0;j<size;j++)
+																{
+																	if (answerlist.get(j).equals(strs[j]))
+																	{
+																		flag = false;
+																		break;
+																	}
+																}
+																if (flag)
+																{
+																	score += qd.getScore();
+																}
 															}
 														}
 													}
@@ -305,9 +308,9 @@ public class UserCompetionService {
 						}
 					}
 				}
+				ucd.setScore(score);
+				list.add(ucd);
 			}
-			ucd.setScore(score);
-			list.add(ucd);
 		}
 		return list;
 	}

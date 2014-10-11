@@ -13,9 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.domain.UCEnvironment;
 import com.dhl.domain.User;
-import com.dhl.domain.UserExamEnvironment;
+import com.dhl.domain.UserEnvironment;
 import com.dhl.service.UCEService;
-import com.dhl.service.UserExamEnvironmentService;
+import com.dhl.service.UserEnvironmentService;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
 
@@ -32,9 +32,10 @@ public class ISController extends BaseController {
 	// private UserTrainService userTrainService;
 	@Autowired
 	private UCEService uceService;
-
 	@Autowired
-	private UserExamEnvironmentService userExamEnvironmenteService;
+	private UserEnvironmentService userEnvironmenteService;
+//	@Autowired
+//	private UserExamEnvironmentService userExamEnvironmenteService;
 	
 	//---------考试系统-------------
 
@@ -45,8 +46,7 @@ public class ISController extends BaseController {
 			PrintWriter out = response.getWriter();
 			User user = getSessionUser(request);
 
-			UserExamEnvironment uce = userExamEnvironmenteService.getMyUCE(user.getId(), examId,
-					name);
+			UserEnvironment uce = userEnvironmenteService.getMyUCE(user.getId(), name);
 			if (uce != null) {
 				String uh = uce.getHostname();
 				if (uh != null && uh.length() > 0) {
@@ -65,7 +65,7 @@ public class ISController extends BaseController {
 							+ "','username':'" + username
 							+ "','password':'" + password + "','ssh':'"
 							+ ssh + "'}";
-					userExamEnvironmenteService.update(uce, ip, username, password, ssh);
+					userEnvironmenteService.update(uce, ip, username, password, ssh);
 					out.write(str);
 				}
 			} else {
@@ -78,7 +78,7 @@ public class ISController extends BaseController {
 				String str = "{'sucess':'sucess','ip':'" + ip
 						+ "','username':'" + username + "','password':'"
 						+ password + "','ssh':'" + ssh + "'}";
-				userExamEnvironmenteService.save(user.getId(), examId, name, ip, username,
+				userEnvironmenteService.save(user.getId(), name, ip, username,
 						password, ssh);
 				out.write(str);
 			}
@@ -101,15 +101,16 @@ public class ISController extends BaseController {
 	@RequestMapping("/deleteExamEnv")
 	public ModelAndView deleteExamEnv(HttpServletRequest request,
 			HttpServletResponse response, int id) {
-		UserExamEnvironment uce = userExamEnvironmenteService.get(id);
+		UserEnvironment uce = userEnvironmenteService.get(id);
 		if (uce != null) {
 			String uh = uce.getServerId();
 			if (uh != null && uh.length() > 0) {
 				UtilTools.delServer(uh);
 			}
-			userExamEnvironmenteService.delete(uce);
+			userEnvironmenteService.delete(uce);
 		}
-		String url = "redirect:/lms/setting.action?index=2";
+//		String url = "redirect:/lms/mysetting.action?index=2";
+		String url = "redirect:/lms/myexamenv.action";
 		return new ModelAndView(url);
 	}
 	

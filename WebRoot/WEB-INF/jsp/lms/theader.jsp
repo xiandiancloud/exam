@@ -82,8 +82,7 @@
 				         <span class="icon-bar"></span>
 				      </button>
 					<a class='navbar-brand' href='lms/getteamCategory.action'> <img
-						width="51" height="48" class="logo" src="images/logo.png" /><a
-						class='navbar-brand'><img width="160" height="30"
+						width="51" height="48" class="logo" src="images/logo.png" /><img width="160" height="30"
 							class="logo" alt="Flatty" src="images/logo-lab.png" />
 					</a>
 				</div>
@@ -126,7 +125,7 @@
 										<li><a href='lms/myexam.action'> <i
 												class='icon-signout'></i> 我的云课堂
 										</a></li>
-										<li><a href='lms/setting.action?index=1'> <i
+										<li><a href='lms/mysetting.action'> <i
 												class='icon-signout'></i> 设置
 										</a></li>
 										<li class='divider'></li>

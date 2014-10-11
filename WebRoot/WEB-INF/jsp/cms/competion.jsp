@@ -465,7 +465,7 @@
                             							<i class='icon-lock'></i>
                             							考试结束
                             						</a>
-                            						<a class='btn btn-success'>
+                            						<a class='btn btn-success' href="cms/exportdata.action?competionId=${competion.id}">
                             							<i class='icon-plus'></i>
                             							数据导出
                             						</a>
@@ -478,7 +478,7 @@
 						</div>
 					  </div>
 					</div>
-				<div class='row'>
+<!-- 				<div class='row'>
 					<div class='col-sm-12'>
 						<div class='box bordered-box red-background'>
 							<div class='box-header red-background'>
@@ -497,7 +497,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	<jsp:include page="footer.jsp"></jsp:include>
@@ -1147,6 +1147,11 @@
 				}
 			}
 		});
+	}
+	//导出数据
+	function exportdata()
+	{
+		
 	}
 	</script>
 </body>

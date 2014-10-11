@@ -1,5 +1,15 @@
 package com.dhl.cms;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,6 +108,91 @@ public class CompetionController extends BaseController {
 		
 		view.setViewName("/cms/competion");
 		return view;
+	}
+	
+	/**
+	 * 导出学生竞赛信息
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/exportdata")
+	public void exportdata(HttpServletRequest request,HttpServletResponse response,int competionId) {
+		try {
+			
+			List<UserCompetionData> list = usercompetionService.getCompetionStudentData(competionId);
+			
+			 String path = request.getSession().getServletContext().getRealPath("/export/");
+			 File file = new File(path+"/比赛信息.csv");
+			 if (!file.exists())
+			 {
+				 file.createNewFile();
+			 }
+//				FileOutputStream fos = new FileOutputStream(upath+path);
+//				fos.write(bytes); 
+//				fos.close();
+			 
+			 FileOutputStream out=null;
+		        OutputStreamWriter osw=null;
+		        BufferedWriter bw=null;
+		        try {
+		            out = new FileOutputStream(file);
+		            osw = new OutputStreamWriter(out);
+		            bw =new BufferedWriter(osw);
+		            bw.append("#").append("学生编号,比赛成绩").append("\r");
+		            if(list!=null && !list.isEmpty()){
+		            	
+		                for(UserCompetionData ucd : list){
+		                	bw.append(ucd.getUsername()).append(",").append(ucd.getScore()+"").append("\r");
+		                }
+		            }
+		        } catch (Exception e) {
+		        }finally{
+		            if(bw!=null){
+		                try {
+		                    bw.close();
+		                    bw=null;
+		                } catch (IOException e) {
+		                    e.printStackTrace();
+		                } 
+		            }
+		            if(osw!=null){
+		                try {
+		                    osw.close();
+		                    osw=null;
+		                } catch (IOException e) {
+		                    e.printStackTrace();
+		                } 
+		            }
+		            if(out!=null){
+		                try {
+		                    out.close();
+		                    out=null;
+		                } catch (IOException e) {
+		                    e.printStackTrace();
+		                } 
+		            }
+		        }
+	            // 以流的形式下载文件。
+	            InputStream fis = new BufferedInputStream(new FileInputStream(file));
+	            byte[] buffer = new byte[fis.available()];
+	            fis.read(buffer);
+	            fis.close();
+	            // 清空response
+	            response.reset();
+	            // 设置response的Header
+	            response.addHeader("Content-Disposition", "attachment;filename=" + new String(file.getName().getBytes("utf-8"),"ISO-8859-1"));
+	            response.addHeader("Content-Length", "" + file.length());
+			OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
+	            response.setContentType("application/octet-stream");
+	            toClient.write(buffer);
+	            toClient.flush();
+	            toClient.close();
+	            
+//			pout.print("{\"success\": \"true\"}");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**

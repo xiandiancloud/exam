@@ -115,12 +115,12 @@
 				<c:forEach var="category" items="${category}">
 					<div class="row">
 						<div class="col-xs-12 left nospace">
-							<h1>${category.name}</h1>
+							<h3>${category.name}<a href=""><img src="images/more.png"/></a></h3>
 						</div>
 						<%-- <div class="col-xs-12 center">
 							<h4>${category.describle}</h4>
 						</div> --%>
-						<div class="col-xs-12 clear"></div>
+						<!-- <div class="col-xs-12 clear"></div> -->
 						<div id="category${category.id}"></div>	
 						<div class="col-xs-12 clear"></div>
 						<div class="col-xs-12 center" id="nav${category.id}"></div>
@@ -270,6 +270,7 @@
 								var name = course.name;
 								var desc = course.desc;
 								var imgpath = course.imgpath;
+								var org = course.org;
 								/* tmp += '<div class="col-sm-3 boxgrid">'
 										+ '<a href="lms/getCourse.action?courseId='
 										+ id
@@ -281,10 +282,41 @@
 										+ '</div>' + '<h3>' + name + '</h3>'
 										+ '</a>' + '</div>'; */
 								
+								tmp += '<section class="col-sm-4 boxgrid">'+
+										'<section class="highlighted-courses">'+
+									        '<section class="courses">'+
+									            '<ul class="courses-listing">'+
+									                  '<li class="courses-listing-item">'+
+														'<article class="course">'+
+														    '<span class="status">新</span>'+
+														  '<a href="lms/toexamintroduce.action?competionId=-1&examId='+id+'">'+
+														    '<div class="inner-wrapper">'+
+														      '<section class="infos">'+
+														        '<div class="cover-images">'+
+														          '<img src="'+imgpath+'" alt="">'+
+														        '</div>'+
+														      '<div class="descs">'+
+														          '<h3><span class="course-number">'+name+'</span></h3>'+
+														          '<h4>课程描述:</h4>'+
+														          '<p class="txt">'+desc+'</p>'+
+														      '</div>'+
+														        '<div class="bottoms">'+
+														          '<span class="university">'+org+'</span>'+
+														        '</div>'+
+														      '</section>'+
+														    '</div>'+
+														    '<div class="meta-infos"><p class="university">'+org+'</p></div>'+
+														      '</a>'+
+														'</article>'+
+									                  '</li>'+
+									            '</ul>'+
+									        '</section>'+
+									    '</section>'+
+								    '</section>';
 							
-								tmp +='<div class="brand vertical col-sm-3">'+
+								/* tmp +='<div class="brand vertical col-sm-3">'+
 									'<a href="lms/toexamintroduce.action?competionId=-1&examId='+id+'"><img src="'+imgpath+'" /><div class="info">'+desc+'</div><h3>'+name+'</h3></a>'+
-								'</div>';
+								'</div>'; */
 							}
 							tmp += '</div>';
 							$("#category" + categoryId).html(tmp);
@@ -310,6 +342,7 @@
 								}
 							}
 							tmp2 += '</ul>';
+							
 							/* var tmp2 = '<ul class="pagination">'+
 							  '<li class="active"><a href="javascript:void(0);" onclick="">1</a></li>'+
 							  '<li><a href="#">2</a></li>'+
@@ -317,8 +350,9 @@
 							  '<li><a href="#">4</a></li>'+
 							  '<li><a href="#">5</a></li>'+
 							'</ul>'; */
-							$("#nav" + categoryId).html(tmp2);
-							addimgmove();
+							
+							/* $("#nav" + categoryId).html(tmp2);
+							addimgmove(); */
 							/* 							$
 							 .jqPaginator(
 							 '#nav'+categoryId,

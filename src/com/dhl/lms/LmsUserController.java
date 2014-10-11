@@ -203,6 +203,88 @@ public class LmsUserController extends BaseController {
 	}
 
 	/**
+	 * 个人设置，环境准备，个人课程情况等等总结信息
+	 * 
+	 * @param request
+	 * @param index
+	 * @return
+	 */
+	@RequestMapping("/mysetting")
+	public ModelAndView mysetting(HttpServletRequest request) {
+		ModelAndView view = new ModelAndView();
+		// User user = userService.getUserByUserName(userName);
+		// if (user == null)
+		// {
+		// user = userService.add(userName);
+		// }
+		// setSessionUser(request, user);
+		// String url = "redirect:/getAllCourse.action";
+
+		User user = getSessionUser(request);
+		// if (user == null) {
+		// String url = "redirect:/tologin.action";
+		// return new ModelAndView(url);
+		// }
+//		if (index == 2) {
+//			List<UCEnvironment> uce = uceService.getMyUCE(user.getId());
+//			view.addObject("uce", uce);
+//		}
+//		if (index == 3) {
+//			List<UserCourse> having = userCourseService.getMyHavingCourse(user
+//					.getId());
+//			List<UserCourse> finish = userCourseService.getMyFinishCourse(user
+//					.getId());
+//
+//			view.addObject("having", having);
+//			view.addObject("finish", finish);
+//		}
+//		view.addObject("setindex", index);
+		view.setViewName("/lms/mysetting");
+		return view;
+	}
+	
+	/**
+	 * 考试系统个人设置，环境准备，个人课程情况等等总结信息
+	 * 
+	 * @param request
+	 * @param index
+	 * @return
+	 */
+	@RequestMapping("/myexamenv")
+	public ModelAndView myexamenv(HttpServletRequest request) {
+		ModelAndView view = new ModelAndView();
+		// User user = userService.getUserByUserName(userName);
+		// if (user == null)
+		// {
+		// user = userService.add(userName);
+		// }
+		// setSessionUser(request, user);
+		// String url = "redirect:/getAllCourse.action";
+
+		User user = getSessionUser(request);
+		// if (user == null) {
+		// String url = "redirect:/tologin.action";
+		// return new ModelAndView(url);
+		// }
+//		if (index == 2) {
+//			List<UCEnvironment> uce = uceService.getMyUCE(user.getId());
+//			view.addObject("uce", uce);
+//		}
+//		if (index == 3) {
+//			List<UserCourse> having = userCourseService.getMyHavingCourse(user
+//					.getId());
+//			List<UserCourse> finish = userCourseService.getMyFinishCourse(user
+//					.getId());
+//
+//			view.addObject("having", having);
+//			view.addObject("finish", finish);
+//		}
+//		view.addObject("setindex", index);
+		view.setViewName("/lms/myenv");
+		return view;
+	}
+	
+	/**
 	 * 判断环境是否已经准备好
 	 * 
 	 * @param request

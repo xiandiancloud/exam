@@ -535,7 +535,7 @@
 												</c:if>
 												<c:if test="${userexam.state == 1}">
 													<c:if test="${exam.isnormal == 0}">
-														<a class="btn btn-danger btn-block btn-lg" href="lms/toagainexamintroduce.action?examId=${exam.id}">再做一次</a>
+														<a class="btn btn-danger btn-block btn-lg" href="lms/toagainexamintroduce.action?competionId=${competionId}&examId=${exam.id}">再做一次</a>
 													</c:if>
 												</c:if>
 											</div>

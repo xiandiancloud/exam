@@ -69,8 +69,8 @@
 						class="list-group-item list-group-item-success <c:if test='${setindex == 1}'>active</c:if>">
 						个人 设置 </a> <a href="lms/setting.action?index=2"
 						class="list-group-item list-group-item-success <c:if test='${setindex == 2}'>active</c:if>">我的云平台</a>
-					<a href="lms/setting.action?index=3"
-						class="list-group-item list-group-item-success <c:if test='${setindex == 3}'>active</c:if>">我的实验</a>
+					<%-- <a href="lms/setting.action?index=3"
+						class="list-group-item list-group-item-success <c:if test='${setindex == 3}'>active</c:if>">我的实验</a> --%>
 				</div>
 			</div>
 			<c:if test="${setindex == 1}">
@@ -255,7 +255,7 @@
 								<textarea class="form-control" rows="3"></textarea>
 								<div class="clear"></div>
 								<div class="clear"></div>
-								<button type="button" class="btn btn-success btn-lg btn-block"
+								<button type="button" class="btn btn-danger btn-lg btn-block"
 									onclick="">修改</button>
 							</div>
 						</form>

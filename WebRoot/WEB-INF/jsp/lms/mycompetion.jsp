@@ -90,15 +90,14 @@
 						<div class='col-sm-12 box'>
 							<div class='box-content'>
 								<div style="text-align:center">
-									<img src="http://placehold.it/250x150&amp">
-									<!-- <img src="http://placehold.it/140x70/dce1e5/143249"> -->
+									<img src="images/user.jpg">
 								</div>
 								<div style="text-align:center">
-									<a class="btn btn-link"> 你的名字 </a>
+									<a class="btn btn-link">${USER_CONTEXT.username} </a>
 								</div>
 								<div style="text-align:center">
-									<a class="btn btn-link"> 关注0 </a> <a class="btn btn-link">
-										粉丝0 </a>
+									<a class="btn btn-link">你的角色 </a> <a class="btn btn-link">
+										${USER_CONTEXT.role.roleName} </a>
 								</div>
 							</div>
 						</div>

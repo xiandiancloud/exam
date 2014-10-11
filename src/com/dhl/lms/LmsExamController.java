@@ -121,6 +121,8 @@ public class LmsExamController extends BaseController {
 			buffer.append("\"" + p.getExam().getId() + "\"");
 			buffer.append(",\"name\":");
 			buffer.append("\"" + p.getExam().getName() + "\"");
+			buffer.append(",\"org\":");
+			buffer.append("\"" + p.getExam().getOrg() + "\"");
 			buffer.append(",\"imgpath\":");
 			String img = p.getExam().getImgpath();
 			if (img == null || img.length() < 1)
@@ -226,7 +228,7 @@ public class LmsExamController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/toagainexamintroduce")
-	public ModelAndView toagainexamintroduce(HttpServletRequest request,int examId) {
+	public ModelAndView toagainexamintroduce(HttpServletRequest request,int competionId,int examId) {
 
 		ModelAndView view = new ModelAndView();
 		User user = getSessionUser(request);
@@ -292,6 +294,7 @@ public class LmsExamController extends BaseController {
 		view.addObject("score", score);
 		view.addObject("size", size);
 		view.addObject("index", index);
+		view.addObject("competionId",competionId);
 		view.setViewName("/lms/introduce");
 		return view;
 	}

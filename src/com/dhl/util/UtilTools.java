@@ -198,7 +198,7 @@ public class UtilTools {
 		ServerForCreate serverForCreate = new ServerForCreate();
 		serverForCreate.setName(serverName);
 		serverForCreate.setFlavorRef("2");
-		serverForCreate.setImageRef("c2de2f09-84e5-41a8-838b-ace493b8a639");
+		serverForCreate.setImageRef("fd6f5232-7564-4f1c-b597-2f4e29478597");
 		serverForCreate.setKeyName("hello_key");
 		serverForCreate.getSecurityGroups().add(
 				new ServerForCreate.SecurityGroup("default"));

@@ -19,11 +19,11 @@ import ch.ethz.ssh2.SCPClient;
 import com.dhl.domain.RestShell;
 import com.dhl.domain.UCEnvironment;
 import com.dhl.domain.User;
-import com.dhl.domain.UserExamEnvironment;
+import com.dhl.domain.UserEnvironment;
 import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserTrain;
 import com.dhl.service.UCEService;
-import com.dhl.service.UserExamEnvironmentService;
+import com.dhl.service.UserEnvironmentService;
 import com.dhl.service.UserQuestionService;
 import com.dhl.service.UserTrainService;
 import com.dhl.util.UtilTools;
@@ -49,9 +49,10 @@ public class ShellController extends BaseController {
 	private UCEService uceService;
 	@Autowired
 	private RestTemplate restTemplate;
-	
 	@Autowired
-	private UserExamEnvironmentService userExamEnvironmenteService;
+	private UserEnvironmentService userEnvironmenteService;
+//	@Autowired
+//	private UserExamEnvironmentService userExamEnvironmenteService;
 	
 	//-------------考试系统-------------------
 	@RequestMapping("/myExamShell")
@@ -78,8 +79,7 @@ public class ShellController extends BaseController {
 			}
 			conn.close();
 			System.out.println("path ---------- " + path);
-			UserExamEnvironment uce = userExamEnvironmenteService.getMyUCE(user.getId(), examId,
-					name);
+			UserEnvironment uce = userEnvironmenteService.getMyUCE(user.getId(), name);
 			if (uce != null)
 			{
 				String ip = uce.getHostname();

@@ -16,7 +16,7 @@
 <!--<![endif]-->
 <head>
 <base href="<%=basePath%>">
-<title>我的云课堂</title>
+<title>我的设置</title>
 <meta
 	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
 	name='viewport'>
@@ -106,16 +106,15 @@
 						<div class='col-sm-12 box'>
 							<div class="box bordered-box blue-border box-nomargin">
 								<div class="box-header green-background">
-									<i class="icon-book"></i> 我的题库
+									<i class="icon-book"></i> 我的信息
 								</div>
 								<div class="box-content">
-									<a href="lms/myexam.action"> <i class='icon-add'></i> 我的考卷
+									<a href="lms/mysetting.action"> <i class='icon-add'></i> 我的信息
 									</a>
 									<hr class="hr-normal">
-									<a href="lms/mycompetion.action"> <i class='icon-add'></i> 我的竞赛
+									<a href="lms/myexamenv.action"> <i class='icon-add'></i> 我的云平台
 									</a>
-									<hr class="hr-normal">
-									<!-- <p>增加竞赛</p> -->
+									<%-- <hr class="hr-normal">
 									<c:if test="${USER_CONTEXT.role.roleName=='老师'}">
 									<a href="cms" class='btn btn-success'> <i
 										class='icon-add'></i> 增加试卷
@@ -123,103 +122,35 @@
 									<a href="cms/totcompetion.action?competionId=-1" class='btn btn-primary'> <i
 										class='icon-add'></i> 增加竞赛
 									</a>
-									</c:if>
+									</c:if> --%>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class='col-xs-9'>
-					<div class='row'>
-						<div class='col-sm-12' style='margin-bottom: 0'>
-							<div class='box-content'>
-								<div class='tabbable'>
-									<ul class='nav nav-tabs nav-tabs-simple'>
-										<li class='active'><a class='green-border'
-											data-toggle='tab' href='#tabsimple1'>我参加的试卷</a></li>
-										<li ><a class='green-border'
-											data-toggle='tab' href='#tabsimple3'>试卷历史</a></li>	
-											<c:if test="${USER_CONTEXT.role.roleName=='老师'}">
-										<li><a class='green-border' data-toggle='tab'
-											href='#tabsimple2'>我定义的试卷 </a></li>
-											</c:if>
-									</ul>
-									<div class='tab-content'>
-										<div class='tab-pane active' id='tabsimple1'>
-											<!-- <p>I'm in Section 1.</p> -->
-											<c:forEach var="se" items="${sexamlist}">
-												<div class="row">
-													<div class="col-sm-12">
-														<div class="box ">
-															<div class="box-content">
-																<p>
-																	<strong>${se.exam.name}</strong>
-																</p>
-																<hr class="hr-normal">
-																<div class="pull-left">${se.exam.describle}</div>
-																<div class="pull-right">
-																	<c:if test="${se.state == 1}">
-																	<a href="lms/toexamingtostartexam.action?competionId=-1&examId=${se.exam.id}" class="btn  btn-success">查看分析</a>
-																	<a href="lms/toagainexamintroduce.action?competionId=-1&examId=${se.exam.id}"	class="btn btn-danger">再做一次</a>
-																	</c:if>
-																	<c:if test="${se.state == 0}"><a href="lms/toexamingtostartexam.action?competionId=-1&examId=${se.exam.id}" class="btn btn-danger">继续考试</a></c:if>
-																</div>
-																<div class="clearfix"></div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</c:forEach>
-										</div>
-										<div class='tab-pane' id='tabsimple3'>
-											<!-- <p>I'm in Section 1.</p> -->
-											<c:forEach var="history" items="${historylist}">
-												<div class="row">
-													<div class="col-sm-12">
-														<div class="box ">
-															<div class="box-content">
-																<p>
-																	<strong>${history.exam.name}</strong>
-																</p>
-																<hr class="hr-normal">
-																<div class="pull-left">${history.exam.describle}</div>
-																<div class="pull-right">
-																	<a href="lms/toexamingtohistoryexam.action?examId=${history.exam.id}" class="btn  btn-success">查看分析</a>
-																	<a href="lms/toagainexamintroduce.action?examId=${history.exam.id}"	class="btn btn-danger">再做一次</a>
-																</div>
-																<div class="clearfix"></div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</c:forEach>
-										</div>
-										<div class='tab-pane' id='tabsimple2'>
-											<c:forEach var="te" items="${texamlist}">
-												<div class="row">
-													<div class="col-sm-12">
-														<div class="box bordered-box blue-border box-nomargin">
-															<div class="box-content">
-																<p>
-																	<strong>${te.exam.name}</strong>
-																</p>
-																<hr class="hr-normal">
-																<div class="pull-left">${te.exam.describle}</div>
-																<div class="pull-right">
-																	<a href="cms/totexam.action?examId=${te.exam.id}" class="btn btn-danger">编辑</a> 
-																</div>
-																<div class="clearfix"></div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</c:forEach>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+				<div class='col-xs-9 panel panel-default'>
+					<div class="h10"></div>
+					<table class="table table-bordered table-hover h5">
+						<caption></caption>
+						<thead>
+							<tr class="danger">
+								<th>名称</th>
+								<th>创建时间</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="uce" items="${uce}">
+								<tr>
+									<td>${uce.name}</td>
+									<td>${uce.createtime}</td>
+									<td><a href="lms/deleteEnv.action?id=${uce.id}"
+										class="glyphicon glyphicon-trash"></a></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+					<div class="h10"></div>
 				</div>
 			</div>
 		</div>

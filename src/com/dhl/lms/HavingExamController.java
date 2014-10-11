@@ -25,15 +25,15 @@ import com.dhl.domain.Question;
 import com.dhl.domain.QuestionData;
 import com.dhl.domain.Train;
 import com.dhl.domain.User;
+import com.dhl.domain.UserEnvironment;
 import com.dhl.domain.UserExam;
-import com.dhl.domain.UserExamEnvironment;
 import com.dhl.domain.UserExamHistory;
 import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
 import com.dhl.service.CompetionService;
 import com.dhl.service.ExamQuestionService;
 import com.dhl.service.ExamService;
-import com.dhl.service.UserExamEnvironmentService;
+import com.dhl.service.UserEnvironmentService;
 import com.dhl.service.UserExamHistoryService;
 import com.dhl.service.UserExamService;
 import com.dhl.service.UserQuestionService;
@@ -62,8 +62,10 @@ public class HavingExamController extends BaseController {
 	private ExamQuestionService examquestionService;
 	@Autowired
 	private UserQuestionService userQuestionService;
+//	@Autowired
+//	private UserExamEnvironmentService userExamEnvironmentService;
 	@Autowired
-	private UserExamEnvironmentService userExamEnvironmentService;
+	private UserEnvironmentService userEnvironmentService;
 	@Autowired
 	private CompetionService competionService;
 	
@@ -699,8 +701,7 @@ public class HavingExamController extends BaseController {
 		try {
 			User user = getSessionUser(request);
 			PrintWriter out = response.getWriter();
-			UserExamEnvironment uce = userExamEnvironmentService.getMyUCE(user.getId(), examId,
-					name);
+			UserEnvironment uce = userEnvironmentService.getMyUCE(user.getId(), name);
 			UserQuestionChild userTrain = userQuestionService.getUserExamTrainQuestionChild(user.getId(),
 					examId, trainId);
 			String result = userTrain == null ? "" : userTrain.getResult();
