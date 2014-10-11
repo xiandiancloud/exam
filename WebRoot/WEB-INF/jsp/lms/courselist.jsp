@@ -114,15 +114,15 @@
 				</div>
 				<c:forEach var="category" items="${category}">
 					<div class="row">
-						<div class="col-xs-12 left nospace">
-							<h3>${category.name}<a href=""><img src="images/more.png"/></a></h3>
+						<div class="col-xs-12 left nospace" id="name${category.id}">
+							<h3>${category.name}</h3>
 						</div>
 						<%-- <div class="col-xs-12 center">
 							<h4>${category.describle}</h4>
 						</div> --%>
 						<!-- <div class="col-xs-12 clear"></div> -->
 						<div id="category${category.id}"></div>	
-						<div class="col-xs-12 clear"></div>
+						<!-- <div class="col-xs-12 clear"></div> -->
 						<div class="col-xs-12 center" id="nav${category.id}"></div>
 					</div>
 					<div class="clear"></div>
@@ -350,6 +350,16 @@
 							  '<li><a href="#">4</a></li>'+
 							  '<li><a href="#">5</a></li>'+
 							'</ul>'; */
+							
+							if (row.length > 0)
+							{
+								tmp2 = "<a href='lms/examlist.action?currentpage=1&c="+categoryId+"&r=0'><img src='images/more.png'/></a>";
+								$("#nav" + categoryId).html(tmp2);
+							}
+							else
+							{
+								$("#name"+categoryId).hide();
+							}
 							
 							/* $("#nav" + categoryId).html(tmp2);
 							addimgmove(); */
