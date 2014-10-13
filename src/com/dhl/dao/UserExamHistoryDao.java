@@ -11,7 +11,7 @@ public class UserExamHistoryDao extends BaseDao<UserExamHistory> {
 
 	public List<UserExamHistory> getMyHistoryExam(int userId)
 	{
-		String hql = "from UserExamHistory where userId = "+userId;
+		String hql = "from UserExamHistory where userId = "+userId+" order by againdotime desc";
 		return find(hql);
 	}
 	

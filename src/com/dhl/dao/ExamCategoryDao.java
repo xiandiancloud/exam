@@ -41,7 +41,7 @@ public class ExamCategoryDao extends BaseDao<ExamCategory> {
 		}
 		if (search != null&& !"".equals(search))
 		{
-			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and exam.name like '%"+search+"%'";
+			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and (exam.name like '%"+search+"%' or exam.describle like '%"+search+"%')";
 		}
 		if (categoryId > 0 && rank > 0)
 		{
@@ -49,15 +49,15 @@ public class ExamCategoryDao extends BaseDao<ExamCategory> {
 		}
 		if (categoryId > 0 && search != null && !"".equals(search))
 		{
-			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and ecategory.id = "+categoryId+" and exam.name like '%"+search+"%'";
+			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and ecategory.id = "+categoryId+" and (exam.name like '%"+search+"%' or exam.describle like '%"+search+"%')";
 		}
 		if (rank > 0 && search != null)
 		{
-			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and exam.rank = '"+r+"' and exam.name like '%"+search+"%'";
+			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and exam.rank = '"+r+"' and (exam.name like '%"+search+"%' or exam.describle like '%"+search+"%')";
 		}
 		if (categoryId > 0 && rank > 0 && search != null && !"".equals(search))
 		{
-			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and ecategory.id = "+categoryId+" and exam.rank = '"+r+"' and exam.name like '%"+search+"%'";
+			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and ecategory.id = "+categoryId+" and exam.rank = '"+r+"' and (exam.name like '%"+search+"%' or exam.describle like '%"+search+"%')";
 		}
 		return pagedQuery(hql, pageNo, pageSize);
 	}

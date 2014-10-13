@@ -1,9 +1,8 @@
 package com.dhl.util;
 
-import java.io.File;
-import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 
 public class Test {
@@ -53,21 +52,22 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+				
+		System.out.println("------ "+UtilTools.timeTostrHMS(new Date()));
 		
-		
-		for (int i=0;i<5;i++)
-		{
-			for (int j=0;j<4;j++)
-			{
-				for (int k=0;k<3;k++)
-				{
-					for (int l=0;l<2;l++)
-					{
-						System.out.println("index == "+(l+1+k*2+j*6+i*24));
-					}
-				}
-			}
-		}
+//		for (int i=0;i<5;i++)
+//		{
+//			for (int j=0;j<4;j++)
+//			{
+//				for (int k=0;k<3;k++)
+//				{
+//					for (int l=0;l<2;l++)
+//					{
+//						System.out.println("index == "+(l+1+k*2+j*6+i*24));
+//					}
+//				}
+//			}
+//		}
 //		String aaa = "shell/fsafasfaaa.sh";
 //		String[] strs = aaa.split("/");
 //		System.out.println(strs[1]);

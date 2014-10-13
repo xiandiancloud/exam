@@ -1,5 +1,6 @@
 package com.dhl.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
 import com.dhl.domain.UserQuestionChildHistory;
 import com.dhl.domain.UserQuestionHistory;
+import com.dhl.util.UtilTools;
 
 /**
  *
@@ -61,6 +63,7 @@ public class UserExamService {
 			ueh.setState(ucs.getState());
 			ueh.setUserId(ucs.getUserId());
 			ueh.setUsetime(ucs.getUsetime());
+			ueh.setAgaindotime(UtilTools.timeTostrHMS(new Date()));
 			userExamHistoryDao.save(ueh);
 			
 			//更新用户考试的相关信息

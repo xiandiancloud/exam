@@ -33,8 +33,14 @@ public class UserExamHistory extends BaseDomain {
 	private int state;//1：完成试卷0：没有完成
 	private String usetime;
 	private int activestate;//0:默认，最近操作就set为1
+	private String againdotime;//再来一次的时间点
 	
-	
+	public String getAgaindotime() {
+		return againdotime;
+	}
+	public void setAgaindotime(String againdotime) {
+		this.againdotime = againdotime;
+	}
 	public int getActivestate() {
 		return activestate;
 	}

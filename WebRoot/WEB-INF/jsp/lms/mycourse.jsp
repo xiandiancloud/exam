@@ -16,7 +16,7 @@
 <!--<![endif]-->
 <head>
 <base href="<%=basePath%>">
-<title>我的云课堂</title>
+<title>我的云试卷</title>
 <meta
 	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
 	name='viewport'>
@@ -182,7 +182,7 @@
 																	<strong>${history.exam.name}</strong>
 																</p>
 																<hr class="hr-normal">
-																<div class="pull-left">${history.exam.describle}</div>
+																<div class="pull-left">${history.againdotime}</div>
 																<div class="pull-right">
 																	<a href="lms/toexamingtohistoryexam.action?examId=${history.exam.id}" class="btn  btn-success">查看分析</a>
 																	<a href="lms/toagainexamintroduce.action?examId=${history.exam.id}"	class="btn btn-danger">再做一次</a>

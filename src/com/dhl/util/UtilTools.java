@@ -155,7 +155,7 @@ public class UtilTools {
 		}
 		return strDate;
 	}
-
+	
 	public static String htmlspecialchars(String str) {
 		str = str.replaceAll("&", "&amp;");
 		str = str.replaceAll("<", "&lt;");

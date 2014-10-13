@@ -458,6 +458,7 @@ create table t_user_exam_history
    state               int(10) default 0,
    activestate         int(10) default 0,
    usetime             varchar(255) default 0,
+   dotime              varchar(255) not null,
    docounts            int(10) default 1,
    primary key (id),
    UNIQUE KEY (userId,examId,docounts),
