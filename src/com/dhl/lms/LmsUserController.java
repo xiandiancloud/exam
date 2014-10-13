@@ -20,6 +20,7 @@ import com.dhl.domain.UserCourse;
 import com.dhl.domain.UserTrain;
 import com.dhl.service.UCEService;
 import com.dhl.service.UserCourseService;
+import com.dhl.service.UserEnvironmentService;
 import com.dhl.service.UserService;
 import com.dhl.service.UserTrainService;
 import com.dhl.util.MD5;
@@ -40,6 +41,8 @@ public class LmsUserController extends BaseController {
 	private UserService userService;
 	@Autowired
 	private UCEService uceService;
+	@Autowired
+	private UserEnvironmentService ueService;
 	@Autowired
 	private UserTrainService userTrainService;
 	@Autowired

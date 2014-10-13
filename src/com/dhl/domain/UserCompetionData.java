@@ -8,7 +8,7 @@ public class UserCompetionData {
 
 	private String username;
 	private int userId;
-	private int score;//学生对应的总分
+	private String score;//学生对应的总分
 	private String state;//是否评分完毕，给老师看的评分状态
 	private int userCompetionId;
 	
@@ -27,11 +27,11 @@ public class UserCompetionData {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public int getScore() {
+	public String getScore() {
 		return score;
 	}
 
-	public void setScore(int score) {
+	public void setScore(String score) {
 		this.score = score;
 	}
 

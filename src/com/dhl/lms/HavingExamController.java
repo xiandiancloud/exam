@@ -39,6 +39,7 @@ import com.dhl.service.UserExamService;
 import com.dhl.service.UserQuestionService;
 import com.dhl.service.UserService;
 import com.dhl.util.ParseQuestion;
+import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
 
 /**
@@ -365,6 +366,9 @@ public class HavingExamController extends BaseController {
 								qd.setContent(qs);
 								qd.setType(CommonConstant.QTYPE_6);
 								qd.setScore(t.getScore());
+								List<String> answer = new ArrayList();
+								answer.add(t.getConAnswer());
+								qd.setAnswer(answer);
 								trainList.add(qd);
 								eq.setQdlist(trainList);
 							}
@@ -408,12 +412,19 @@ public class HavingExamController extends BaseController {
 	 */
 	@RequestMapping("/getUserQuestionAnswer")
 	public void getUserQuestionAnswer(HttpServletRequest request,
-			HttpServletResponse response, int examId,int questionId,int number,int index,int userId) {
+			HttpServletResponse response,int qdtype, int examId,int questionId,int number,int index,int userId) {
 		try {
-			
-//			User user = userService.getUserById(userId);
-			UserQuestion uq = userQuestionService.getQuestion(userId, examId, questionId);
-			String str = "{'sucess':'sucess','answer':' ','index':'"+index+"','pfscore':'0'}";//"{'sucess':'sucess'}";
+			UserQuestion uq;
+			if (qdtype == CommonConstant.QTYPE_6)
+			{
+				uq = userQuestionService.getUserExamTrainQuestion(userId, examId, questionId);
+			}
+			else
+			{
+				uq = userQuestionService.getQuestion(userId, examId, questionId);
+			}
+			String revalue="";
+			String str = "{'sucess':'sucess','answer':' ','index':'"+index+"','pfscore':'0','revalue':' '}";
 			String score = "0";
 			if (uq != null)
 			{
@@ -421,78 +432,11 @@ public class HavingExamController extends BaseController {
 				if (uqc != null)
 				{
 					String useranswer = uqc.getUseranswer();
-					String pfscore = uqc.getPfscore();
-					//判分裁判一旦修改了系统判分，采用判分裁判的
-					if (pfscore != null)
-					{
-						score = pfscore;
-					}
-					else
-					{
-						//采用自动评分
-						Train t = uq.getTrain();
-						if (t != null)//实训
-						{
-							String tanswer = t.getConAnswer();
-							if (useranswer != null && tanswer != null && useranswer.trim().equals(tanswer.trim()))
-							{
-								score = t.getScore()+"";
-							}
-						}
-						else//问题
-						{
-							Question q = uq.getQuestion();
-							List<QuestionData> qdlist = changetohtml(q.getContent(), q.getId());
-							//理论上不应该越界，没有容错，是为了前期发现问题，如果出错，好排查问题
-							if (qdlist != null)
-							{
-								QuestionData qd = qdlist.get(number-1);
-								int type = qd.getType();
-								if (type == CommonConstant.QTYPE_2 || type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5)
-								{
-									List<String> answerlist = qd.getAnswer();
-									if (answerlist != null && answerlist.size() > 0)
-									{
-										if (useranswer != null && useranswer.trim().equals(answerlist.get(0).trim()))
-										{
-											score = qd.getScore()+"";
-										}
-									}
-								}
-								else if (type == CommonConstant.QTYPE_3)//多选要匹配答案列表
-								{
-									if (useranswer != null)
-									{
-										List<String> answerlist = qd.getAnswer();
-										if (answerlist != null)
-										{
-											String[] strs = useranswer.split("#");
-											int size = answerlist.size();
-											boolean flag = true;
-											for (int i=0;i<size;i++)
-											{
-												if (answerlist.get(i).equals(strs[i]))
-												{
-													flag = false;
-													break;
-												}
-											}
-											if (flag)
-											{
-												score = qd.getScore()+"";
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-					str = "{'sucess':'sucess','answer':'"+useranswer+"','index':'"+index+"','pfscore':'"+score+"'}";
+					//实训机器返回值
+					revalue = uqc.getRevalue();
+					score = UtilTools.getScore(uq, uqc, number);
+					str = "{'sucess':'sucess','answer':'"+useranswer+"','index':'"+index+"','pfscore':'"+score+"','revalue':'"+revalue+"'}";
 				}
-			}
-			else
-			{
-				str = "{'sucess':'sucess','answer':' ','index':'"+index+"','pfscore':'"+score+"'}";
 			}
 			PrintWriter out = response.getWriter();
 			out.write(str);
@@ -582,11 +526,11 @@ public class HavingExamController extends BaseController {
 	 */
 	@RequestMapping("/setquesstionpfscore")
 	public void setquesstionpfscore(HttpServletRequest request,
-			HttpServletResponse response,int userId, int examId,int questionId,int number,String pfscore) {
+			HttpServletResponse response,int type,int userId, int examId,int questionId,int number,String pfscore) {
 		try {
 			
 			User user = userService.getUserById(userId);
-			boolean flag = userQuestionService.updateQuestion(user.getId(),examId,questionId, number,pfscore);
+			boolean flag = userQuestionService.updateQuestion(type,user.getId(),examId,questionId, number,pfscore);
 			String str = flag?"{'sucess':'sucess'}":"{'sucess':'fail','msg':'"+CommonConstant.ERROR_7+"'}";
 			PrintWriter out = response.getWriter();
 			out.write(str);

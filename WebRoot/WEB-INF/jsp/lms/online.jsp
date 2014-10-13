@@ -101,7 +101,7 @@
 				<c:forEach var="ec" items="${examlist}">
 				<div class="row wback nospace">
 					<div class="col-sm-3 courseh">
-						<a> <img src="${(empty ec.exam.imgpath)?'images/exam.jpg':ec.exam.imgpath}" alt="..." width="100%" height="150px;"
+						<a> <img src="${(empty ec.exam.imgpath)?'images/exam.jpg':ec.exam.imgpath}" width="100%" height="150px;"
 							class="img-rounded">
 						</a>
 					</div>

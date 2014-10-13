@@ -28,6 +28,12 @@ import org.apache.tools.tar.TarOutputStream;
 
 import ch.ethz.ssh2.Connection;
 
+import com.dhl.cons.CommonConstant;
+import com.dhl.domain.Question;
+import com.dhl.domain.QuestionData;
+import com.dhl.domain.Train;
+import com.dhl.domain.UserQuestion;
+import com.dhl.domain.UserQuestionChild;
 import com.woorea.openstack.base.client.OpenStackSimpleTokenProvider;
 import com.woorea.openstack.keystone.Keystone;
 import com.woorea.openstack.keystone.model.Access;
@@ -854,5 +860,94 @@ public class UtilTools {
 
 		}
 
+	}
+	
+	//动态计算得分情况
+	public static String getScore(UserQuestion uq,UserQuestionChild uqc,int number)
+	{
+		String score = "0";
+		//判分裁判一旦修改了系统判分，采用判分裁判的
+		String pfscore = uqc.getPfscore();
+		if (pfscore != null)
+		{
+			score = pfscore;
+		}
+		else
+		{
+			String useranswer = uqc.getUseranswer();
+			String result = uqc.getResult();
+			//采用自动评分
+			Train t = uq.getTrain();
+			if (t != null)//实训
+			{
+				String tanswer = t.getConAnswer();
+				//-------如果有机器跟用户的答案，先判断用户提交答案
+				int tmpscore = 0;
+				if (useranswer != null && tanswer != null && useranswer.trim().equals(tanswer.trim()))
+				{
+					tmpscore = t.getScore();
+				}
+				if (tmpscore > 0)
+				{
+					score = tmpscore+"";
+				}
+				else
+				{
+					//机器评分
+					if (result != null && "True".equals(result))
+					{
+						score = t.getScore()+"";
+					}
+				}
+			}
+			else//问题
+			{
+				Question q = uq.getQuestion();
+				List<QuestionData> qdlist = ParseQuestion.changetohtml(q.getContent(), q.getId());
+				//理论上不应该越界，没有容错，是为了前期发现问题，如果出错，好排查问题
+				if (qdlist != null)
+				{
+					QuestionData qd = qdlist.get(number-1);
+					int type = qd.getType();
+					if (type == CommonConstant.QTYPE_2 || type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5)
+					{
+						List<String> answerlist = qd.getAnswer();
+						if (answerlist != null && answerlist.size() > 0)
+						{
+							if (useranswer != null && useranswer.trim().equals(answerlist.get(0).trim()))
+							{
+								score = qd.getScore()+"";
+							}
+						}
+					}
+					else if (type == CommonConstant.QTYPE_3)//多选要匹配答案列表
+					{
+						if (useranswer != null)
+						{
+							List<String> answerlist = qd.getAnswer();
+							if (answerlist != null)
+							{
+								String[] strs = useranswer.split("#");
+								int size = answerlist.size();
+								boolean flag = true;
+								for (int i=0;i<size;i++)
+								{
+									if (answerlist.get(i).equals(strs[i]))
+									{
+										flag = false;
+										break;
+									}
+								}
+								if (flag)
+								{
+									score = qd.getScore()+"";
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return score;
 	}
 }

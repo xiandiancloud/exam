@@ -166,6 +166,14 @@ public class ExamService {
 	}
 
 	/**
+	 * 得到推荐试卷
+	 */
+	public List<Exam> getGroomExam()
+	{
+		return examDao.getGroomExam();
+	}
+	
+	/**
 	 * 保存试卷
 	 * 
 	 * @param name
@@ -290,7 +298,9 @@ public class ExamService {
 	public Page getAllExamnotcompetion(int pageNo, int pageSize) {
 		return examDao.getAllExamnotcompetion(pageNo, pageSize);
 	}
-
+	public List<Exam> getAllExam(){
+		return examDao.getAllExam();
+	}
 	/**
 	 * 根据试卷id取得试卷
 	 * 

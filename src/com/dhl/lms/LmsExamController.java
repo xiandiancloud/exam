@@ -86,8 +86,12 @@ public class LmsExamController extends BaseController {
 	@RequestMapping("/getteamCategory")
 	public ModelAndView getteamCategory(HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
+		
+		List<Exam> groomlist = examService.getGroomExam();
+		
 		List<ECategory> category = ecategoryService.getAllCategory();
 		view.addObject("category", category);
+		view.addObject("groomlist", groomlist);
 		view.addObject("navindex", 1);
 		view.setViewName("/lms/courselist");
 		return view;

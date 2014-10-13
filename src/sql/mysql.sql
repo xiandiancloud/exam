@@ -132,6 +132,7 @@ create table t_exam
    rank                varchar(255) default null,
    lockexam            int(10) default 0,
    isnormal            int(10) default 0,
+   isisgroom           int(10) default 0,
    primary key (id),
    UNIQUE KEY (name)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

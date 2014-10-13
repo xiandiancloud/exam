@@ -41,7 +41,7 @@ public class ISController extends BaseController {
 
 	@RequestMapping("/createExamServer")
 	public void createExamServer(HttpServletRequest request,
-			HttpServletResponse response, int examId, String name) {
+			HttpServletResponse response, String name) {
 		try {
 			PrintWriter out = response.getWriter();
 			User user = getSessionUser(request);

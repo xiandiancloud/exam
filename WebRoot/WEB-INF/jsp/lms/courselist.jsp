@@ -112,6 +112,26 @@
 					</div>
 
 				</div>
+				<div class="row">
+					<div class="col-xs-12 center">
+						<h1>XD-EXAM 推荐</h1>
+						<h5>从推荐试卷里选择你感兴趣的试卷，赶快加入吧!</h5>
+					</div>
+					<div class="clear"></div>
+					<c:forEach var="groom" items="${groomlist}">
+						<div class="col-xs-3">
+							<a href="" class=""><img src="${(empty groom.imgpath)?'images/exam.jpg':groom.imgpath}" width="100%" height="250px;"><h4>${groom.name}</h4></a>
+						</div>
+					</c:forEach>
+				</div>
+				<div class="clear"></div>
+				<div class="clear"></div>
+				<div class="row">
+						<div class="col-xs-12 center">
+							<h1>XD-EXAM 试卷分类</h1>
+							<h5>在这里你可以找到任何你想要的考试试卷，实现你的云梦想，赶快加入吧！</h5>
+						</div>
+				</div>
 				<c:forEach var="category" items="${category}">
 					<div class="row">
 						<div class="col-xs-12 left nospace" id="name${category.id}">

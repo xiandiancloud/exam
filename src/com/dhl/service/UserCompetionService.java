@@ -32,6 +32,7 @@ import com.dhl.domain.UserExam;
 import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
 import com.dhl.util.ParseQuestion;
+import com.dhl.util.UtilTools;
 
 /**
  *
@@ -214,101 +215,118 @@ public class UserCompetionService {
 								int len = qdlist.size();
 								for (int i=0;i<len;i++)
 								{
+									int number = i+1;
 									QuestionData qd = qdlist.get(i);
 									int type = qd.getType();
+									UserQuestion uq;
 									if (type == CommonConstant.QTYPE_6)
 									{
-										UserQuestion uq = userQuestionDao.getUserQuestionBytrain(user.getId(), exam.getId(),qd.getId());
-										if (uq != null)
-										{
-											UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByusertrainId(user.getId(),uq.getId());
-											if (uqc != null)
-											{
-												String useranswer = uqc.getUseranswer();
-												String pfscore = uqc.getPfscore();
-												//判分裁判一旦修改了系统判分，采用判分裁判的
-												if (pfscore != null)
-												{
-													score += Integer.parseInt(pfscore);
-												}
-												else
-												{
-													List<String> answerlist = qd.getAnswer();
-													if (answerlist != null && answerlist.size() > 0)
-													{
-														if (useranswer != null && useranswer.trim().equals(answerlist.get(0).trim()))
-														{
-															score += qd.getScore();
-														}
-													}
-												}
-											}
-										}
+										uq = userQuestionDao.getUserQuestionBytrain(user.getId(), exam.getId(),qd.getId());
 									}
 									else
 									{
-										int number = i+1;
-										UserQuestion uq = userQuestionDao.getUserQuestionByquestion(user.getId(), exam.getId(), qd.getId());
-										if (uq != null)
+										uq = userQuestionDao.getUserQuestionByquestion(user.getId(), exam.getId(), qd.getId());
+									}
+									if (uq != null)
+									{
+										UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(user.getId(),number,uq.getId());
+										if (uqc != null)
 										{
-											UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(user.getId(),number,uq.getId());
-											if (uqc != null)
-											{
-												String useranswer = uqc.getUseranswer();
-												String pfscore = uqc.getPfscore();
-												//判分裁判一旦修改了系统判分，采用判分裁判的
-												if (pfscore != null)
-												{
-													score += Integer.parseInt(pfscore);
-												}
-												else
-												{
-													if (type == CommonConstant.QTYPE_2 || type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5)
-													{
-														List<String> answerlist = qd.getAnswer();
-														if (answerlist != null && answerlist.size() > 0)
-														{
-															if (useranswer != null && useranswer.trim().equals(answerlist.get(0).trim()))
-															{
-																score += qd.getScore();
-															}
-														}
-													}
-													else if (type == CommonConstant.QTYPE_3)//多选要匹配答案列表
-													{
-														if (useranswer != null)
-														{
-															List<String> answerlist = qd.getAnswer();
-															if (answerlist != null)
-															{
-																String[] strs = useranswer.split("#");
-																int size = answerlist.size();
-																boolean flag = true;
-																for (int j=0;j<size;j++)
-																{
-																	if (answerlist.get(j).equals(strs[j]))
-																	{
-																		flag = false;
-																		break;
-																	}
-																}
-																if (flag)
-																{
-																	score += qd.getScore();
-																}
-															}
-														}
-													}
-												}
-											}
+											score += Integer.parseInt(UtilTools.getScore(uq, uqc, number));
 										}
 									}
+//									if (type == CommonConstant.QTYPE_6)
+//									{
+//										UserQuestion uq = userQuestionDao.getUserQuestionBytrain(user.getId(), exam.getId(),qd.getId());
+//										if (uq != null)
+//										{
+//											UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByusertrainId(user.getId(),uq.getId());
+//											if (uqc != null)
+//											{
+//												String useranswer = uqc.getUseranswer();
+//												String pfscore = uqc.getPfscore();
+//												//判分裁判一旦修改了系统判分，采用判分裁判的
+//												if (pfscore != null)
+//												{
+//													score += Integer.parseInt(pfscore);
+//												}
+//												else
+//												{
+//													List<String> answerlist = qd.getAnswer();
+//													if (answerlist != null && answerlist.size() > 0)
+//													{
+//														if (useranswer != null && useranswer.trim().equals(answerlist.get(0).trim()))
+//														{
+//															score += qd.getScore();
+//														}
+//													}
+//												}
+//											}
+//										}
+//									}
+//									else
+//									{
+//										UserQuestion uq = userQuestionDao.getUserQuestionByquestion(user.getId(), exam.getId(), qd.getId());
+//										if (uq != null)
+//										{
+//											UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(user.getId(),number,uq.getId());
+//											if (uqc != null)
+//											{
+//												String useranswer = uqc.getUseranswer();
+//												String pfscore = uqc.getPfscore();
+//												//判分裁判一旦修改了系统判分，采用判分裁判的
+//												if (pfscore != null)
+//												{
+//													score += Integer.parseInt(pfscore);
+//												}
+//												else
+//												{
+//													if (type == CommonConstant.QTYPE_2 || type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5)
+//													{
+//														List<String> answerlist = qd.getAnswer();
+//														if (answerlist != null && answerlist.size() > 0)
+//														{
+//															if (useranswer != null && useranswer.trim().equals(answerlist.get(0).trim()))
+//															{
+//																score += qd.getScore();
+//															}
+//														}
+//													}
+//													else if (type == CommonConstant.QTYPE_3)//多选要匹配答案列表
+//													{
+//														if (useranswer != null)
+//														{
+//															List<String> answerlist = qd.getAnswer();
+//															if (answerlist != null)
+//															{
+//																String[] strs = useranswer.split("#");
+//																int size = answerlist.size();
+//																boolean flag = true;
+//																for (int j=0;j<size;j++)
+//																{
+//																	if (answerlist.get(j).equals(strs[j]))
+//																	{
+//																		flag = false;
+//																		break;
+//																	}
+//																}
+//																if (flag)
+//																{
+//																	score += qd.getScore();
+//																}
+//															}
+//														}
+//													}
+//												}
+//											}
+//										}
+//									}
 								}
 							}
 						}
 					}
 				}
-				ucd.setScore(score);
+				ucd.setScore(score+"");
 				list.add(ucd);
 			}
 		}

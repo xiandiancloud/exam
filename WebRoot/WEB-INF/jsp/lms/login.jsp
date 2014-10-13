@@ -69,7 +69,7 @@
 							<p>
 								<a>请登陆</a>
 							</p>
-							<p class="left40">来访问你的实验</p>
+							<p class="left40">来访问你的云试卷</p>
 						</h3>
 					</div>
 				</div>
@@ -90,8 +90,8 @@
 								<input type="password" class="form-control" id="password" placeholder="文本输入">
 								<div class="clear"></div>
 								<div class="clear"></div>
-								<button type="button" class="btn btn-success btn-lg btn-block" onclick="login();">
-									登陆+进入我的实验</button>
+								<button type="button" class="btn btn-danger btn-lg btn-block" onclick="login();">
+									登陆+进入我的试卷</button>
 							</div>
 						</form>
 					</div>

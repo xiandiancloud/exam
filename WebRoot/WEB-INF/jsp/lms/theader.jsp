@@ -92,7 +92,10 @@
 						<li><a href="lms/getteamCategory.action">首页</a></li>
 						<li><a href="lms/examlist.action?currentpage=1">题库</a></li>
 						<!-- <li><a href="cms/totcompetion.action">竞赛</a></li> -->
-						<li><a href="lms/myexam.action">我的云课堂</a></li>
+						<li><a href="lms/myexam.action">我的云试卷</a></li>
+						<c:if test="${USER_CONTEXT.role.roleName=='老师'}">
+						<li><a href="cms">制作课件</a></li>
+						</c:if>
 					</ul>
 					<!--向右对齐-->
 					<ul class="nav navbar-nav navbar-right">
@@ -123,7 +126,7 @@
 								</a>
 									<ul class='dropdown-menu'>
 										<li><a href='lms/myexam.action'> <i
-												class='icon-signout'></i> 我的云课堂
+												class='icon-signout'></i> 我的云试卷
 										</a></li>
 										<li><a href='lms/mysetting.action'> <i
 												class='icon-signout'></i> 设置

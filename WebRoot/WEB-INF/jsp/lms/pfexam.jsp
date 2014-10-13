@@ -248,11 +248,19 @@
 																</div>
 																<div class='col-xs-2 juzhong'>
 																	<div class='input-group controls-group'>
-																		<input class="form-control" type="text" />
+																		<input class="form-control" type="text" id="textquestion${index}"/>
 																		<span class='input-group-btn'>
-																			<button class='btn btn-danger' type='button'>改分</button>
+																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
 																		</span>
 																	</div>
+																</div>
+															</div>
+															<div class='row'>
+																<div class='col-xs-6 juzhong' style="line-height:40px;height:auto;">
+																	<label>机器答案：<div id="revalue${index}"></div></label>
+																</div>
+																<div class='col-xs-6 juzhong' style="line-height:40px;height:auto;">
+																	<label>用户答案：<div id="numberquestion${index}"></div></label>
 																</div>
 															</div>
 															<div class='h30'></div>
@@ -309,7 +317,7 @@
 																	<div class='input-group controls-group'>
 																		<input class="form-control" type="text" id="textquestion${index}"/>
 																		<span class='input-group-btn'>
-																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.id}','${nn.index+1}','${index}');">改分</button>
+																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
 																		</span>
 																	</div>
 																</div>
@@ -356,7 +364,7 @@
 																	<div class='input-group controls-group'>
 																		<input class="form-control" type="text" id="textquestion${index}"/>
 																		<span class='input-group-btn'>
-																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.id}','${nn.index+1}','${index}');">改分</button>
+																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
 																		</span>
 																	</div>
 																</div>
@@ -404,7 +412,7 @@
 																	<div class='input-group controls-group'>
 																		<input class="form-control" type="text" id="textquestion${index}"/>
 																		<span class='input-group-btn'>
-																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.id}','${nn.index+1}','${index}');">改分</button>
+																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
 																		</span>
 																	</div>
 																</div>
@@ -452,7 +460,7 @@
 																	<div class='input-group controls-group'>
 																		<input class="form-control" type="text" id="textquestion${index}"/>
 																		<span class='input-group-btn'>
-																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.id}','${nn.index+1}','${index}');">改分</button>
+																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
 																		</span>
 																	</div>
 																</div>
@@ -584,9 +592,10 @@
                     <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
                     	<c:forEach var="qd" items="${examq.qdlist}" varStatus="nn">
                     		index ++;
+                    		var qdtype = "${qd.type}";
                     		var questionId = "${qd.id}";
                     		var number = "${nn.index+1}";
-	                    	var data = {examId:examId,questionId:questionId,number:number,index:index,userId:userId};
+	                    	var data = {qdtype:qdtype,examId:examId,questionId:questionId,number:number,index:index,userId:userId};
 	            			$.ajax({
 	            				url : "lms/getUserQuestionAnswer.action",
 	            				type : "post",
@@ -594,10 +603,15 @@
 	            				success : function(s) {
 	            					var a = eval("(" + s + ")");
 	            					if ("sucess" == a.sucess) {
-	            						var answer = a.answer;
+	            						//var answer = a.answer;
 	            						var pfscore = a.pfscore;
-	            						if (answer)
+	            						//if (answer)
             							{
+	            							<c:if test="${qd.type == 6}">
+	            							    $("#numberquestion"+a.index).html(a.answer);
+	            								$("#revalue"+a.index).html(a.revalue);
+        										$("#scorequestion"+a.index).html(pfscore);
+        									</c:if>
 	            							<c:if test="${qd.type == 2}">
             									$("#numberquestion"+a.index+" :radio").each(function(){
 											         if ($(this).val() == a.answer)
@@ -638,12 +652,12 @@
 		}
 		
 		//裁判修改了判分
-		function resetquesstionscore(questionId,number,index)
+		function resetquesstionscore(type,questionId,number,index)
 		{
 			var userId = "${userId}";
 			var examId = "${exam.id}";
 			var pfscore = $("#textquestion"+index).val();
-			var data = {userId:userId,examId:examId,questionId:questionId,number:number,pfscore:pfscore};
+			var data = {type:type,userId:userId,examId:examId,questionId:questionId,number:number,pfscore:pfscore};
 			$.ajax({
 				url : "lms/setquesstionpfscore.action",
 				type : "post",

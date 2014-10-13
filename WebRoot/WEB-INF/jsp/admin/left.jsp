@@ -35,6 +35,12 @@
                 <span>试卷分类管理</span>
               </a>
             </li>
+            <li>
+              <a href='admin/groom.action'>
+                <i class='icon-star'></i>
+                <span>试卷推荐管理</span>
+              </a>
+            </li>
           </ul>
         </div>
       </nav>

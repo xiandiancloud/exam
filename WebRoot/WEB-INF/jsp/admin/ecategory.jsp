@@ -31,7 +31,7 @@
     <!-- / bootstrap [required] -->
     <link href="assets/stylesheets/bootstrap/bootstrap.css" media="all" rel="stylesheet" type="text/css" />
     <!-- / theme file [required] -->
-    <link href="assets/stylesheets/light-theme.css" media="all" id="color-settings-body-color" rel="stylesheet" type="text/css" />
+    <link href="assets/stylesheets/dhllight-theme.css" media="all" id="color-settings-body-color" rel="stylesheet" type="text/css" />
     <!-- / coloring file [optional] (if you are going to use custom contrast color) -->
     <link href="assets/stylesheets/theme-colors.css" media="all" rel="stylesheet" type="text/css" />
     <!-- / demo file [not required!] -->

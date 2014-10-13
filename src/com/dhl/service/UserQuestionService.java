@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dhl.cons.CommonConstant;
 import com.dhl.dao.ExamDao;
 import com.dhl.dao.ExamQuestionDao;
 import com.dhl.dao.ExamVerticalDao;
@@ -221,9 +222,17 @@ public class UserQuestionService {
 	/**
 	 * 提交答案
 	 */
-	public boolean updateQuestion(int userId,int examId,int questionId,int number,String pfscore)
+	public boolean updateQuestion(int type,int userId,int examId,int questionId,int number,String pfscore)
 	{
-		UserQuestion uq = userQuestionDao.getUserQuestionByquestion(userId, examId, questionId);
+		UserQuestion uq;
+		if (type == CommonConstant.QTYPE_6)
+		{
+			uq = userQuestionDao.getUserQuestionBytrain(userId, examId, questionId);
+		}
+		else
+		{
+			uq = userQuestionDao.getUserQuestionByquestion(userId, examId, questionId);
+		}
 		if (uq != null)
 		{
 			UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(userId,number,uq.getId());
