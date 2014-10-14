@@ -1,0 +1,181 @@
+
+*{font-size:12px; font-family:Tahoma,Verdana,微软雅黑,新宋体}
+a{ color:Black; text-decoration:none;}
+a:hover{ color:Red;}
+.textbox03 {border: #878787 1px solid;padding: 4px 3px;font:Verdana, Geneva, sans-serif,宋体;line-height: 14px; background-color: #fff;  height: auto; font-size: 14px;  font-weight: bold; width: 190px; }
+
+.txt01{font:Verdana, Geneva, sans-serif,宋体;padding:3px 2px 2px 2px; border-width:1px; border-color:#ddd;  color:#000;}
+.txt {border: #878787 1px solid;padding: 4px 3px;font:Verdana, Geneva, sans-serif,宋体;line-height: 14px; background-color: #fff;  height: auto; font-size: 14px;}
+.footer{text-align:center;color:#15428B; margin:0px; padding:0px;line-height:23px; font-weight:bold;}
+
+.head a{color:White;text-decoration:underline;}
+
+.easyui-accordion ul{list-style-type:none;margin:0px; padding:5px;}
+.easyui-accordion ul li{ padding:0px;}
+.easyui-accordion ul li a{line-height:24px;}
+.easyui-accordion ul li div{margin:2px 0px;padding-left:10px;padding-top:2px;}
+.easyui-accordion ul li div.hover{border:0px dashed #99BBE8; background:#E0ECFF;cursor:pointer;}
+.easyui-accordion ul li div.hover a{color:#416AA3;}
+.easyui-accordion ul li div.selected{border:1px solid #99BBE8; background:#3EAFE0;cursor:default;}
+.easyui-accordion ul li div.selected a{color:#416AA3; font-weight:bold;}
+
+.topbutton{
+	cursor:pointer!important;
+	cursor:hand;
+	text-align:center;	
+}
+.topbutton img{	
+	vertical-align:middle;	
+}
+.topbutton a{	
+	font:Verdana, Geneva, sans-serif,宋体;line-height: 14px;	
+}
+.topbutton:hover{background:none repeat scroll 0 0 #1B67AF;}
+
+
+.button {
+-moz-border-radius:4px 4px 4px 4px;
+border:1px solid #CCCCCC !important;
+color:#777777 !important;
+cursor:pointer;
+display:inline-block;
+font-family:Tahoma,Arial,sans-serif;
+font-size:11px;
+font-weight:bold;
+padding:5px 10px;
+position:relative;
+text-decoration:none;
+text-shadow:0 1px 1px rgba(255, 255, 255, 0.9);
+text-align:center;
+}
+
+.button:hover, .button:focus, .button:active {
+	outline:medium none;
+	border:1px solid #329ECC !important;
+	opacity:0.9;
+	-khtml-opacity: .9;
+	-moz-opacity: 0.9;
+	-moz-box-shadow:0 0 5px rgba(82, 168, 236, 0.5);
+	-webkit-box-shadow: 0 0 5px rgba(82, 168, 236, 0.5);
+	box-shadow: 0 0 5px rgba(82, 168, 236, 0.5);
+}               
+
+.dhlbutton {
+background-color:#6AB620 !important;
+border:1px solid #749217 !important;
+color:#FFFFFF !important;
+text-shadow:0 1px 1px rgba(0, 0, 0, 0.25);
+}
+.test{width:800px;background:red;overflow-x:scroll;}
+.testdhl{background:red}
+.table3 {border-top:1px solid #d6d6d6; border-left:1px solid #d3d3d3; text-align:right;margin:0 0;}
+.table3 td,.table3 th {border-bottom:1px solid #d3d3d3; border-right:1px solid #d6d6d6;}
+.table3 th { height:30px; background:#e8e8e8;text-align:left;line-height:30px;padding:0px 8px 0px 8px;}
+.table3 td { height:25px; line-height:25px;padding:0px 8px 0px 8px;text-align:left;}
+.none{display:none}
+.table-bordered {
+border:1px solid #DDDDDD;
+}
+bootstrap.min.css (第 9 行)
+.table {
+margin-bottom:20px;
+width:100%;
+}
+bootstrap.min.css (第 9 行)
+table {
+background-color:transparent;
+max-width:100%;
+}
+bootstrap.min.css (第 9 行)
+table {
+border-collapse:collapse;
+border-spacing:0;
+}
+
+
+
+.dhltable{
+outline:#000 solid;
+outline-width:1px;
+}
+.dhltable {border:0px;border-top:0px solid #fff; border-left:0px solid #fff; text-align:right; width:100%; margin:0 0;background:#fff;}
+.dhltable td,.dhltable th {border-bottom:0px solid #fff; border-right:0px solid #fff;}
+.dhltable th { height:30px; background:#fff;}
+.dhltable td { height:25px; line-height:25px;padding:0px 8px 0px 8px;text-align:left;}
+
+.icon-blank{
+	background:url('icons/blank.gif') no-repeat center center;
+}
+.icon-add{
+	background:url('icons/result.png') no-repeat 0px -78px;
+}
+.icon-edit{
+	background:url('icons/result.png') no-repeat 0px -52px;
+}
+.icon-remove{
+	background:url('icons/result.png') no-repeat 0px -104px;
+}
+.icon-save{
+	background:url('icons/result.png') no-repeat 0px -130px;
+}
+.icon-cut{
+	background:url('icons/cut.png') no-repeat center center;
+}
+.icon-ok{
+	background:url('icons/result.png') no-repeat 0px 0px;
+}
+.icon-no{
+	background:url('icons/result.png') no-repeat 0px -292px;
+}
+.icon-cancel{
+	background:url('icons/cancel.png') no-repeat center center;
+}
+.icon-reload{
+	background:url('icons/result.png') no-repeat 0px -26px;
+}
+.icon-search{
+	background:url('icons/search.png') no-repeat center center;
+}
+.icon-print{
+	background:url('icons/result.png') no-repeat 0px -156px;
+}
+.icon-help{
+	background:url('icons/help.png') no-repeat center center;
+}
+.icon-undo{
+	background:url('icons/undo.png') no-repeat center center;
+}
+.icon-redo{
+	background:url('icons/redo.png') no-repeat center center;
+}
+.icon-back{
+	background:url('icons/back.png') no-repeat center center;
+}
+.icon-sum{
+	background:url('icons/sum.png') no-repeat center center;
+}
+.icon-tip{
+	background:url('icons/tip.png') no-repeat center center;
+}
+.icon-filter{
+	background:url('icons/filter.png') no-repeat center center;
+}
+
+.icon-messenger{
+	background:url('icons/result.png') no-repeat 0px -208px;
+}
+.icon-download{
+	background:url('icons/result.png') no-repeat 0px -266px;
+}
+.place{
+	padding:5px;border:0px solid #ddd;background:#EDF6FA;height:25px;
+}
+.place a{
+	position:absolute;
+	width:22px;height:22px;
+	background:url('icons/result.png') no-repeat 0px -234px;
+}
+.place label{
+	position:absolute;
+	margin-top:3px;
+}

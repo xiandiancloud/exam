@@ -43,12 +43,279 @@
       <script src="assets/javascripts/ie/html5shiv.js" type="text/javascript"></script>
       <script src="assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
     <![endif]-->
+	
+	<!-- / jquery [required] -->
+    <script src="assets/javascripts/jquery/jquery.min.js" type="text/javascript"></script>
+    <!-- / jquery mobile (for touch events) -->
+    <script src="assets/javascripts/jquery/jquery.mobile.custom.min.js" type="text/javascript"></script>
+    <!-- / jquery migrate (for compatibility with new jquery) [required] -->
+    <script src="assets/javascripts/jquery/jquery-migrate.min.js" type="text/javascript"></script>
+    <!-- / jquery ui -->
+    <script src="assets/javascripts/jquery/jquery-ui.min.js" type="text/javascript"></script>
+    <!-- / jQuery UI Touch Punch -->
+    <script src="assets/javascripts/plugins/jquery_ui_touch_punch/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
+    <!-- / bootstrap [required] -->
+    <script src="assets/javascripts/bootstrap/bootstrap.js" type="text/javascript"></script>
+    <!-- / modernizr -->
+    <script src="assets/javascripts/plugins/modernizr/modernizr.min.js" type="text/javascript"></script>
+    <!-- / retina -->
+    <script src="assets/javascripts/plugins/retina/retina.js" type="text/javascript"></script>
+    <!-- / theme file [required] -->
+    <script src="assets/javascripts/theme.js" type="text/javascript"></script>
+    <!-- / demo file [not required!] -->
+    <script src="assets/javascripts/demo.js" type="text/javascript"></script>
+    <!-- / START - page related files and scripts [optional] -->
+	<script src="js/inputtext/bootstrap-wysiwyg.js" type="text/javascript"></script>
+	<script src="js/inputtext/jquery.hotkeys.js" type="text/javascript"></script>
+    <!-- / END - page related files and scripts [optional] -->
+    <script src="js/common.js" type="text/javascript"></script>
+    <script src="js/holder.js"></script>
+	<script src="js/jqPaginator.js"></script>
+	
+	<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="easyui/themes/bootstrap/easyui.css">
+
     <style>
 		#editor {overflow:auto;height: 150px;}
+		#leftpanel{margin-right: 5px;border:0;}
+		#editor img{
+			  padding: 4px;
+			  line-height: 1.42857;
+			  background-color: white;
+			  border: 0px solid #dddddd;
+			  border-radius: 4px;
+			  -webkit-transition: all 0.2s ease-in-out;
+			  transition: all 0.2s ease-in-out;
+			  display: inline-block;
+			  max-width: 100%;
+			  height: auto;
+		}
 	</style>
   </head>
-  <body class='contrast-red fixed-header'>
-    <jsp:include page="theader.jsp"></jsp:include>
+<body class='easyui-layout'>
+  
+<div data-options="region:'north',border:false" style="height:60px;padding:0px">
+	<div class="tt"><jsp:include page="theader.jsp"></jsp:include></div>
+</div>
+
+<div data-options="region:'west',split:true" style="width:450px;">
+	<div id="leftpanel">
+			<div id="pagination" class="center"></div>
+			<div class='box box-bordered orange-border box-nomargin cmargin5'>
+		                    <div class='box-header box-header-small orange-background'>
+		                      <div class='title'>实验定义</div>
+		                      <div class='actions'>
+		                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+		                        </a>
+		                        
+		                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+		                        </a>
+		                      </div>
+		                    </div>
+		                    <div class='box-content'>
+					          <form class="form-horizontal" role="form">
+							  <div class="form-group">
+							    <label for="trainname" class="col-sm-2 control-label"><div class="h2font">名称</div></label>
+							    <div class="col-sm-10">
+							      <input type="text" class="form-control" id="trainname" disabled="disabled">
+							    </div>
+							  </div>
+							  <div class="form-group">
+							    <label for="traincode" class="col-sm-2 control-label"><div class="h2font">编号</div></label>
+							    <div class="col-sm-10">
+							      <input type="text" class="form-control" id="traincode" disabled="disabled">
+							    </div>
+							  </div>
+							</form>
+		                    </div>
+		    </div>
+			
+			<div class='box box-bordered orange-border box-nomargin cmargin5'>
+                   <div class='box-header box-header-small orange-background'>
+                     <div class='title'>环境</div>
+                     <div class='actions'>
+                       <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                       </a>
+                       
+                       <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                       </a>
+                     </div>
+                   </div>
+                   <div class='box-content'>
+                    <form class="form-horizontal" role="form">
+					  <div class="form-group">
+					    <label for="trainprename" class="col-sm-2 control-label"><div class="h2font">模板</div></label>
+					    <div class="col-sm-10">
+					      <input type="text" class="form-control" id="trainprename" disabled="disabled">
+					    </div>
+					  </div>
+					  <h6 id="hasenv" class="none">
+							<table class="table table-bordered">
+								<tbody>
+									<tr>
+										<td>ip</td>
+										<td id="ip"></td>
+									</tr>
+									<tr>
+										<td>username</td>
+										<td id="username"></td>
+									</tr>
+									<tr>
+										<td>password</td>
+										<td id="password"></td>
+									</tr>
+									<tr>
+										<td>serverId</td>
+										<td id="ssh"></td>
+									</tr>
+								</tbody>
+							</table>
+						</h6>
+						<a href="javascript:void(0);" id="trainjoin" class="none">
+							<button type="button" class="btn btn-primary">创建环境</button>
+						</a>
+						<img src="images/Loading.gif" class="none" id="imgenv"/>
+					</form>
+                   </div>
+		    </div>
+			
+			<div class='box box-bordered orange-border box-nomargin cmargin5'>
+                    <div class='box-header box-header-small orange-background'>
+                      <div class='title'>题目</div>
+                      <div class='actions'>
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                        </a>
+                        
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class='box-content'>
+                    <!-- <label for="trainname" class="control-label"><div class="h2font">内容</div></label> -->
+		    		<h6 id="traincon" class="trainimg"></h6>
+                    </div>
+		    </div>
+              
+			<div class='box box-bordered orange-border box-nomargin cmargin5'>
+                    <div class='box-header box-header-small orange-background'>
+                      <div class='title'>结果</div>
+                      <div class='actions'>
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                        </a>
+                        
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class='box-content'>
+                    <form role="form">
+						  <div class="form-group">
+						<p><div class="h2font">完成实训后点击下面的按钮,否则机器将无法自动评分</div></p>
+						<a href="javascript:void(0);" id="trainsubmit">
+							<button type="button" class="btn btn-primary" id="trainbutton">提交</button>
+						</a>
+						<img src="images/Loading.gif" class="none" id="imgsubmit"/>
+						</div>
+						</form>
+						<form role="form">
+						  <div class="form-group">
+					<!-- 	    <label for="trainresult"><div class="h2font">内容</div></label>
+						    <textarea class="form-control" rows="6" id="trainresult"></textarea> -->
+						    <label for="useranswer"><div class="h2font">你也可以手工输入你的答案</div></label>
+						    <!-- <textarea class="form-control" rows="3" id="useranswer"></textarea> -->
+						    
+						     <!--  <div class='row'>
+				                <div class='col-sm-12'>
+				                  <div class='box'>
+				                    <div class='box-header purple-background'>
+				                      <div class='title'>Simple WYSIWYG (wysihtml5)</div>
+				                      <div class='actions'>
+				                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+				                        </a>
+				                        
+				                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+				                        </a>
+				                      </div>
+				                    </div>
+				                    <div class='box-content'>
+				                      <textarea class='form-control wysihtml5' id='wysiwyg2' rows='10'><h1>In computing,</h1>
+				                      a WYSIWYG editor is a system in which content (text and graphics) displayed onscreen during editing appears in a form closely corresponding to its appearance when printed or displayed as a finished product,[1] which might be a printed document, web page, or slide presentation. WYSIWYG (pron.: /ˈwɪziwɪɡ/ wiz-ee-wig)[2] is an acronym for "what you see is what you get".</textarea>
+				                    </div>
+				                  </div>
+				                </div>
+				             </div> -->
+							
+							<div>
+								<div id="alerts"></div>
+							    <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
+							      <div class="btn-group">
+							        <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="icon-bold"></i></a>
+							        <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="icon-italic"></i></a>
+							       <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="icon-align-left"></i></a>
+							        <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="icon-align-center"></i></a>
+							        <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="icon-align-right"></i></a>
+							        <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="icon-align-justify"></i></a>
+							         <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="icon-picture"></i></a>
+							        <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
+							      </div>
+							      <input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="">
+							    </div>
+							    <div id="editor">
+							    </div>
+							 </div>
+						    <div class="h10"></div>
+						    <a href="javascript:void(0);" id="usertrainsubmit">
+							<button type="button" class="btn btn-primary" id="usertrainbutton">手工提交</button>
+							</a>
+						  </div>
+						</form>
+                    </div>
+		    </div>
+			
+			<!-- <div class='box box-bordered purple-border box-nomargin cmargin5'>
+                    <div class='box-header box-header-small purple-background'>
+                      <div class='title'>成绩</div>
+                      <div class='actions'>
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                        </a>
+                        
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class='box-content'>
+                    </div>
+		    </div>
+			
+			<div class='box box-bordered muted-border box-nomargin cmargin5'>
+                    <div class='box-header box-header-small muted-background'>
+                      <div class='title'>答案</div>
+                      <div class='actions'>
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                        </a>
+                        
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class='box-content'>
+                    <h6 id="trainanswer"></h6>
+                    </div>
+		    </div> -->
+	</div>
+</div>
+
+<div data-options="region:'south',border:false" style="height:50px;background:#EEEEEE;padding:0px;">
+	<jsp:include page="footer.jsp"></jsp:include>
+</div>
+
+<div data-options="region:'center'" style="padding:0px;overflow:hidden;">
+	<iframe id="iframe" src="http://192.168.1.103:8090/" frameBorder="0"
+						width="100%" scrolling="no" height="100%"></iframe>
+</div>
+
+    <%-- <jsp:include page="theader.jsp"></jsp:include>
     <div id='wrapper' class="top20">
       <section id=''>
 	      <div class="container-fluid">
@@ -271,7 +538,7 @@
       </section>
     </div>
     
-    <jsp:include page="footer.jsp"></jsp:include>
+    <jsp:include page="footer.jsp"></jsp:include> --%>
    <div class="modal fade" id="myModal" data-backdrop="static">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -292,33 +559,6 @@
 			</div>
 		</div>
 	</div>
-    <!-- / jquery [required] -->
-    <script src="assets/javascripts/jquery/jquery.min.js" type="text/javascript"></script>
-    <!-- / jquery mobile (for touch events) -->
-    <script src="assets/javascripts/jquery/jquery.mobile.custom.min.js" type="text/javascript"></script>
-    <!-- / jquery migrate (for compatibility with new jquery) [required] -->
-    <script src="assets/javascripts/jquery/jquery-migrate.min.js" type="text/javascript"></script>
-    <!-- / jquery ui -->
-    <script src="assets/javascripts/jquery/jquery-ui.min.js" type="text/javascript"></script>
-    <!-- / jQuery UI Touch Punch -->
-    <script src="assets/javascripts/plugins/jquery_ui_touch_punch/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
-    <!-- / bootstrap [required] -->
-    <script src="assets/javascripts/bootstrap/bootstrap.js" type="text/javascript"></script>
-    <!-- / modernizr -->
-    <script src="assets/javascripts/plugins/modernizr/modernizr.min.js" type="text/javascript"></script>
-    <!-- / retina -->
-    <script src="assets/javascripts/plugins/retina/retina.js" type="text/javascript"></script>
-    <!-- / theme file [required] -->
-    <script src="assets/javascripts/theme.js" type="text/javascript"></script>
-    <!-- / demo file [not required!] -->
-    <script src="assets/javascripts/demo.js" type="text/javascript"></script>
-    <!-- / START - page related files and scripts [optional] -->
-	<script src="js/inputtext/bootstrap-wysiwyg.js" type="text/javascript"></script>
-	<script src="js/inputtext/jquery.hotkeys.js" type="text/javascript"></script>
-    <!-- / END - page related files and scripts [optional] -->
-    <script src="js/common.js" type="text/javascript"></script>
-    <script src="js/holder.js"></script>
-	<script src="js/jqPaginator.js"></script>
     <script>
     var currentPage;
 	$(function() {
@@ -505,7 +745,7 @@
 	}
 	function gotouppage() {
 		//timeservice(1);
-		location.href = "lms/toexamingtostartexam.action?examId=${exam.id}";
+		location.href = "lms/toexamingtostartexam.action?competionId=${competionId}&examId=${exam.id}";
 	}
 	function gototrain() {
 		$('#myModal').modal('hide');

@@ -565,7 +565,7 @@ public class HavingExamController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/toexamtrainone")
-	public ModelAndView tocourseone(HttpServletRequest request, int examId,
+	public ModelAndView tocourseone(HttpServletRequest request, int competionId,int examId,
 			int everticalId, int trainId) {
 		ModelAndView view = new ModelAndView();
 		User user = getSessionUser(request);
@@ -623,6 +623,7 @@ public class HavingExamController extends BaseController {
 				}
 			}
 		}
+		view.addObject("competionId",competionId);
 		view.addObject("tlist", tlist);
 		view.setViewName("/lms/examtrain");
 		return view;

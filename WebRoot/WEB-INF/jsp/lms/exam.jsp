@@ -237,7 +237,7 @@
 													</form>
 													<hr class='hr-normal'>
 													<div class='form-group col-sm-12'>
-														<a id="hrefnumber${index}" href="javascript:void(0);" onclick="entertrain('${exam.id}','${vertical.id}','${qd.id}','hrefnumber${index}');" target="_blank" class='btn btn-danger'>
+														<a id="hrefnumber${index}" href="javascript:void(0);" onclick="entertrain('${competionId}','${exam.id}','${vertical.id}','${qd.id}','hrefnumber${index}');" target="_blank" class='btn btn-danger'>
 														<i class='icon-circle-arrow-right'></i>进入实训</a>
 													</div>
 												</div>
@@ -793,7 +793,7 @@
 				}
 			});
 		}
-		function entertrain(examId,everticalId,trainId,hrefId)
+		function entertrain(competionId,examId,everticalId,trainId,hrefId)
 		{
 			var isover = examisover();
 			if (!isover)
@@ -801,7 +801,7 @@
 				alert("答题已经结束");
 				return;
 			}
-			$("#"+hrefId).attr("href","lms/toexamtrainone.action?examId="+examId+"&everticalId="+everticalId+"&trainId="+trainId);
+			$("#"+hrefId).attr("href","lms/toexamtrainone.action?competionId="+competionId+"&examId="+examId+"&everticalId="+everticalId+"&trainId="+trainId);
 		}
 		function examisover()
 		{
