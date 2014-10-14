@@ -58,7 +58,7 @@ public class ShellController extends BaseController {
 	@RequestMapping("/myExamShell")
 	public void myExamShell(HttpServletRequest request,
 			HttpServletResponse response, int examId, int trainId,
-			String name, String path,String useranswer) {
+			String name, String path) {
 		try {
 			String rp = request.getSession().getServletContext()
 					.getRealPath("/");
@@ -71,7 +71,6 @@ public class ShellController extends BaseController {
 			String restusername = UtilTools.getConfig().getProperty("RESTHOST_USERNAME");
 			String restpassword = UtilTools.getConfig().getProperty("RESTHOST_PASSWORD");
 			Connection conn = UtilTools.getConnection(restid, restusername, restpassword);
-			System.out.println("shell-------------------------22222222222"+path);
 			if (conn != null) {
 //				Session ssh = conn.openSession();
 				SCPClient scpClient = conn.createSCPClient();
@@ -105,9 +104,9 @@ public class ShellController extends BaseController {
 				
 				UserQuestion uq = userQuestionService.getUserExamTrainQuestion(user.getId(), examId, trainId);
 				if (uq == null) {
-					userQuestionService.saveQuestionTrain(user.getId(), examId, trainId,useranswer,rdata,result);
+					userQuestionService.saveQuestionTrain(user.getId(), examId, trainId,rdata,result);
 				} else {
-					userQuestionService.updateQuestionTrain(uq, user.getId(), examId, trainId, useranswer,rdata,result);
+					userQuestionService.updateQuestionTrain(uq, user.getId(), rdata,result);
 				}
 				String str = "{'sucess':'sucess','result':'" + result + "','revalue':'"
 						+ rdata + "'}";
@@ -172,6 +171,30 @@ public class ShellController extends BaseController {
 		}
 	}
 	
+	/**
+	 * 用户提交自己的答案
+	 * @param useranswer
+	 */
+	@RequestMapping("/submituseranswer")
+	public void submituseranswer(HttpServletRequest request,
+			HttpServletResponse response, int examId, int trainId,String useranswer) {
+		try {
+			PrintWriter out = response.getWriter();
+			User user = getSessionUser(request);
+			
+			UserQuestion uq = userQuestionService.getUserExamTrainQuestion(user.getId(), examId, trainId);
+			if (uq == null) {
+				userQuestionService.saveUserAnswer(user.getId(), examId, trainId,useranswer);
+			} else {
+				userQuestionService.updateUserAnswer(uq, user.getId(), useranswer);
+			}
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	//------------------------------------------------------------
 	
 	@RequestMapping("/myshell")

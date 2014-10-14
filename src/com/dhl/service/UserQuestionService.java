@@ -140,7 +140,33 @@ public class UserQuestionService {
 	 * @param examId
 	 * @param trainId
 	 */
-	public void saveQuestionTrain(int userId,int examId,int trainId,String useranswer,String rdata,String result)
+	public void saveQuestionTrain(int userId,int examId,int trainId,String rdata,String result)
+	{
+		UserQuestion uq = new UserQuestion();
+		uq.setExamId(examId);
+		uq.setQuestion(null);
+		uq.setUserId(userId);
+		uq.setTrain(trainDao.get(trainId));
+		userQuestionDao.save(uq);
+		
+		
+		UserQuestionChild uqc = new UserQuestionChild();
+		uqc.setUserId(userId);
+		uqc.setNumber(1);
+		uqc.setResult(result);
+		uqc.setRevalue(rdata);
+		uqc.setUserquestionId(uq.getId());
+		userQuestionChildDao.save(uqc);
+		
+	}
+	
+	/**
+	 * 保存考试系统的实训答案
+	 * @param userId
+	 * @param examId
+	 * @param trainId
+	 */
+	public void saveUserAnswer(int userId,int examId,int trainId,String useranswer)
 	{
 		UserQuestion uq = new UserQuestion();
 		uq.setExamId(examId);
@@ -154,22 +180,31 @@ public class UserQuestionService {
 		uqc.setUserId(userId);
 		uqc.setNumber(1);
 		uqc.setUseranswer(useranswer);
-		uqc.setResult(result);
-		uqc.setRevalue(rdata);
 		uqc.setUserquestionId(uq.getId());
 		userQuestionChildDao.save(uqc);
 		
 	}
-	
 	/**
 	 * 更新考试系统的实训答案
 	 */
-	public void updateQuestionTrain(UserQuestion uq,int userId,int examId,int questionId,String useranswer,String rdata,String result)
+	public void updateUserAnswer(UserQuestion uq,int userId,String useranswer)
 	{
 		UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(userId,1,uq.getId());
 		if (uqc != null)
 		{
 			uqc.setUseranswer(useranswer);
+			userQuestionChildDao.update(uqc);
+		}
+	}
+	
+	/**
+	 * 更新考试系统的实训答案
+	 */
+	public void updateQuestionTrain(UserQuestion uq,int userId,String rdata,String result)
+	{
+		UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(userId,1,uq.getId());
+		if (uqc != null)
+		{
 			uqc.setResult(result);
 			uqc.setRevalue(rdata);
 			userQuestionChildDao.update(uqc);

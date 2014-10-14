@@ -27,7 +27,8 @@
     <link href='assets/images/meta_icons/apple-touch-icon-114x114.png' rel='apple-touch-icon-precomposed' sizes='114x114'>
     <link href='assets/images/meta_icons/apple-touch-icon-144x144.png' rel='apple-touch-icon-precomposed' sizes='144x144'>
     <!-- / START - page related stylesheets [optional] -->
-    
+	<link href="tcss/inputtext/font-awesome.css" rel="stylesheet"/>
+	<link href="tcss/inputtext/index.css" rel="stylesheet"/>
     <!-- / END - page related stylesheets [optional] -->
     <!-- / bootstrap [required] -->
     <link href="assets/stylesheets/bootstrap/bootstrap.css" media="all" rel="stylesheet" type="text/css" />
@@ -42,6 +43,9 @@
       <script src="assets/javascripts/ie/html5shiv.js" type="text/javascript"></script>
       <script src="assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
     <![endif]-->
+    <style>
+		#editor {overflow:auto;height: 150px;}
+	</style>
   </head>
   <body class='contrast-red fixed-header'>
     <jsp:include page="theader.jsp"></jsp:include>
@@ -54,8 +58,8 @@
 					<div class="panel" id="leftpanel">
 						<div class="panel-body">
 							<div id="pagination" class="center"></div>
-							<div class='box box-bordered blue-border box-nomargin cmargin5'>
-						                    <div class='box-header box-header-small blue-background'>
+							<div class='box box-bordered orange-border box-nomargin cmargin5'>
+						                    <div class='box-header box-header-small orange-background'>
 						                      <div class='title'>实验定义</div>
 						                      <div class='actions'>
 						                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
@@ -83,57 +87,57 @@
 						                    </div>
 						    </div>
 							
-							<div class='box box-bordered green-border box-nomargin cmargin5'>
-						                    <div class='box-header box-header-small green-background'>
-						                      <div class='title'>环境</div>
-						                      <div class='actions'>
-						                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
-						                        </a>
-						                        
-						                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
-						                        </a>
-						                      </div>
-						                    </div>
-						                    <div class='box-content'>
-						                    <form class="form-horizontal" role="form">
-								  <div class="form-group">
-								    <label for="trainprename" class="col-sm-2 control-label"><div class="h2font">模板</div></label>
-								    <div class="col-sm-10">
-								      <input type="text" class="form-control" id="trainprename" disabled="disabled">
-								    </div>
-								  </div>
-								  <h6 id="hasenv" class="none">
-										<table class="table table-bordered">
-											<tbody>
-												<tr>
-													<td>ip</td>
-													<td id="ip"></td>
-												</tr>
-												<tr>
-													<td>username</td>
-													<td id="username"></td>
-												</tr>
-												<tr>
-													<td>password</td>
-													<td id="password"></td>
-												</tr>
-												<tr>
-													<td>serverId</td>
-													<td id="ssh"></td>
-												</tr>
-											</tbody>
-										</table>
-									</h6>
-									<a href="javascript:void(0);" id="trainjoin" class="none">
-										<button type="button" class="btn btn-primary">创建环境</button>
-									</a>
-									<img src="images/Loading.gif" class="none" id="imgenv"/>
-								</form>
-						                    </div>
+							<div class='box box-bordered orange-border box-nomargin cmargin5'>
+			                    <div class='box-header box-header-small orange-background'>
+			                      <div class='title'>环境</div>
+			                      <div class='actions'>
+			                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+			                        </a>
+			                        
+			                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+			                        </a>
+			                      </div>
+			                    </div>
+			                    <div class='box-content'>
+				                    <form class="form-horizontal" role="form">
+									  <div class="form-group">
+									    <label for="trainprename" class="col-sm-2 control-label"><div class="h2font">模板</div></label>
+									    <div class="col-sm-10">
+									      <input type="text" class="form-control" id="trainprename" disabled="disabled">
+									    </div>
+									  </div>
+									  <h6 id="hasenv" class="none">
+											<table class="table table-bordered">
+												<tbody>
+													<tr>
+														<td>ip</td>
+														<td id="ip"></td>
+													</tr>
+													<tr>
+														<td>username</td>
+														<td id="username"></td>
+													</tr>
+													<tr>
+														<td>password</td>
+														<td id="password"></td>
+													</tr>
+													<tr>
+														<td>serverId</td>
+														<td id="ssh"></td>
+													</tr>
+												</tbody>
+											</table>
+										</h6>
+										<a href="javascript:void(0);" id="trainjoin" class="none">
+											<button type="button" class="btn btn-primary">创建环境</button>
+										</a>
+										<img src="images/Loading.gif" class="none" id="imgenv"/>
+									</form>
+			                    </div>
 						    </div>
 							
-							<div class='box box-bordered red-border box-nomargin cmargin5'>
-				                    <div class='box-header box-header-small red-background'>
+							<div class='box box-bordered orange-border box-nomargin cmargin5'>
+				                    <div class='box-header box-header-small orange-background'>
 				                      <div class='title'>题目</div>
 				                      <div class='actions'>
 				                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
@@ -144,7 +148,7 @@
 				                      </div>
 				                    </div>
 				                    <div class='box-content'>
-				                    <label for="trainname" class="control-label"><div class="h2font">内容</div></label>
+				                    <!-- <label for="trainname" class="control-label"><div class="h2font">内容</div></label> -->
 						    		<h6 id="traincon" class="trainimg"></h6>
 				                    </div>
 						    </div>
@@ -161,18 +165,67 @@
 				                      </div>
 				                    </div>
 				                    <div class='box-content'>
-					                    <form role="form">
+				                    <form role="form">
 										  <div class="form-group">
-									<!-- 	    <label for="trainresult"><div class="h2font">内容</div></label>
-										    <textarea class="form-control" rows="6" id="trainresult"></textarea> -->
-										    <label for="useranswer"><div class="h2font">手工输入你的答案</div></label>
-										    <textarea class="form-control" rows="6" id="useranswer"></textarea>
-										  </div>
-										</form>
+										<p><div class="h2font">完成实训后点击下面的按钮,否则机器将无法自动评分</div></p>
 										<a href="javascript:void(0);" id="trainsubmit">
 											<button type="button" class="btn btn-primary" id="trainbutton">提交</button>
 										</a>
 										<img src="images/Loading.gif" class="none" id="imgsubmit"/>
+										</div>
+										</form>
+										<form role="form">
+										  <div class="form-group">
+									<!-- 	    <label for="trainresult"><div class="h2font">内容</div></label>
+										    <textarea class="form-control" rows="6" id="trainresult"></textarea> -->
+										    <label for="useranswer"><div class="h2font">你也可以手工输入你的答案</div></label>
+										    <!-- <textarea class="form-control" rows="3" id="useranswer"></textarea> -->
+										    
+										     <!--  <div class='row'>
+								                <div class='col-sm-12'>
+								                  <div class='box'>
+								                    <div class='box-header purple-background'>
+								                      <div class='title'>Simple WYSIWYG (wysihtml5)</div>
+								                      <div class='actions'>
+								                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+								                        </a>
+								                        
+								                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+								                        </a>
+								                      </div>
+								                    </div>
+								                    <div class='box-content'>
+								                      <textarea class='form-control wysihtml5' id='wysiwyg2' rows='10'><h1>In computing,</h1>
+								                      a WYSIWYG editor is a system in which content (text and graphics) displayed onscreen during editing appears in a form closely corresponding to its appearance when printed or displayed as a finished product,[1] which might be a printed document, web page, or slide presentation. WYSIWYG (pron.: /ˈwɪziwɪɡ/ wiz-ee-wig)[2] is an acronym for "what you see is what you get".</textarea>
+								                    </div>
+								                  </div>
+								                </div>
+								             </div> -->
+											
+											<div>
+												<div id="alerts"></div>
+											    <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
+											      <div class="btn-group">
+											        <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="icon-bold"></i></a>
+											        <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="icon-italic"></i></a>
+											       <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="icon-align-left"></i></a>
+											        <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="icon-align-center"></i></a>
+											        <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="icon-align-right"></i></a>
+											        <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="icon-align-justify"></i></a>
+											         <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="icon-picture"></i></a>
+											        <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
+											      </div>
+											      <input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="">
+											    </div>
+											    <div id="editor">
+											    </div>
+											 </div>
+										    <div class="h10"></div>
+										    <a href="javascript:void(0);" id="usertrainsubmit">
+											<button type="button" class="btn btn-primary" id="usertrainbutton">手工提交</button>
+											</a>
+										  </div>
+										</form>
 				                    </div>
 						    </div>
 							
@@ -260,7 +313,8 @@
     <!-- / demo file [not required!] -->
     <script src="assets/javascripts/demo.js" type="text/javascript"></script>
     <!-- / START - page related files and scripts [optional] -->
-    
+	<script src="js/inputtext/bootstrap-wysiwyg.js" type="text/javascript"></script>
+	<script src="js/inputtext/jquery.hotkeys.js" type="text/javascript"></script>
     <!-- / END - page related files and scripts [optional] -->
     <script src="js/common.js" type="text/javascript"></script>
     <script src="js/holder.js"></script>
@@ -276,11 +330,52 @@
 			myshell();
 			//timeservice(0);
 		});
+		$("#usertrainsubmit").click(function() {
+			submituseranswer();
+			//timeservice(0);
+		});
 		//initClock();
 		//var mainheight = $("#leftpanel").height();
 		//$("#iframe").height(mainheight);
 		initlist();
+		//edit----------
+	    initToolbarBootstrapBindings(); 
+		$('#editor').wysiwyg({ fileUploadError: showErrorAlert} );
 	});
+	function initToolbarBootstrapBindings() {
+      var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier', 
+            'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
+            'Times New Roman', 'Verdana'],
+            fontTarget = $('[title=Font]').siblings('.dropdown-menu');
+      $.each(fonts, function (idx, fontName) {
+          fontTarget.append($('<li><a data-edit="fontName ' + fontName +'" style="font-family:\''+ fontName +'\'">'+fontName + '</a></li>'));
+      });
+      $('a[title]').tooltip({container:'body'});
+    	$('.dropdown-menu input').click(function() {return false;})
+		    .change(function () {$(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');})
+        .keydown('esc', function () {this.value='';$(this).change();});
+
+      $('[data-role=magic-overlay]').each(function () { 
+        var overlay = $(this), target = $(overlay.data('target')); 
+        overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
+      });
+      if ("onwebkitspeechchange"  in document.createElement("input")) {
+        var editorOffset = $('#editor').offset();
+        $('#voiceBtn').css('position','absolute').offset({top: editorOffset.top, left: editorOffset.left+$('#editor').innerWidth()-35});
+      } else {
+        $('#voiceBtn').hide();
+      }
+	};
+	function showErrorAlert (reason, detail) {
+		var msg='';
+		if (reason==='unsupported-file-type') { msg = "Unsupported format " +detail; }
+		else {
+			console.log("error uploading file", reason, detail);
+		}
+		$('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+ 
+		 '<strong>File upload error</strong> '+msg+' </div>').prependTo('#alerts');
+	};
+	
 	function initlist()
 	{
 		var totalPages = "${fn:length(tlist)}";
@@ -424,13 +519,12 @@
 			var examId = parseInt("${exam.id}");
 			var path = "${train.conShell}";
 			var trainId = parseInt("${train.id}");
-			var useranswer = replaceTextarea1($("#useranswer").val());
+			//var useranswer = replaceTextarea1($("#useranswer").val());
 			var data = {
 				examId : examId,
 				trainId : trainId,
 				name : name,
-				path : path,
-				useranswer : useranswer
+				path : path
 			};
 			$.ajax({
 				url : "lms/myExamShell.action",
@@ -450,6 +544,31 @@
 					else
 					{
 						alert(a.msg);
+					}
+				}
+			});
+		}
+		</c:forEach>
+	}
+	function submituseranswer() {
+		<c:forEach items="${tlist}" var="train" varStatus="status">
+		if ("${status.count}" == currentPage) {
+			var examId = parseInt("${exam.id}");
+			var trainId = parseInt("${train.id}");
+			var useranswer = $("#editor").html();
+			var data = {
+				examId : examId,
+				trainId : trainId,
+				useranswer : useranswer
+			};
+			$.ajax({
+				url : "lms/submituseranswer.action",
+				type : "post",
+				data : data,
+				success : function(s) {
+					var a = eval("(" + s + ")");
+					if (a.sucess == "sucess") {
+						alert("提交成功");
 					}
 				}
 			});
@@ -514,7 +633,7 @@
 						$("#username").html(a.username);
 						$("#password").html(a.password);
 						$("#ssh").html(a.ssh);
-						
+						$("#editor").html(a.useranswer);
 					} else {
 						$("#hasenv").hide();
 						$("#trainjoin").show();
