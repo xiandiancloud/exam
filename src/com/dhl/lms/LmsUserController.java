@@ -17,6 +17,7 @@ import com.dhl.domain.Role;
 import com.dhl.domain.UCEnvironment;
 import com.dhl.domain.User;
 import com.dhl.domain.UserCourse;
+import com.dhl.domain.UserEnvironment;
 import com.dhl.domain.UserTrain;
 import com.dhl.service.UCEService;
 import com.dhl.service.UserCourseService;
@@ -256,33 +257,9 @@ public class LmsUserController extends BaseController {
 	@RequestMapping("/myexamenv")
 	public ModelAndView myexamenv(HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
-		// User user = userService.getUserByUserName(userName);
-		// if (user == null)
-		// {
-		// user = userService.add(userName);
-		// }
-		// setSessionUser(request, user);
-		// String url = "redirect:/getAllCourse.action";
-
 		User user = getSessionUser(request);
-		// if (user == null) {
-		// String url = "redirect:/tologin.action";
-		// return new ModelAndView(url);
-		// }
-//		if (index == 2) {
-//			List<UCEnvironment> uce = uceService.getMyUCE(user.getId());
-//			view.addObject("uce", uce);
-//		}
-//		if (index == 3) {
-//			List<UserCourse> having = userCourseService.getMyHavingCourse(user
-//					.getId());
-//			List<UserCourse> finish = userCourseService.getMyFinishCourse(user
-//					.getId());
-//
-//			view.addObject("having", having);
-//			view.addObject("finish", finish);
-//		}
-//		view.addObject("setindex", index);
+		List<UserEnvironment> uce = ueService.getMyUCE(user.getId());
+		view.addObject("uce", uce);
 		view.setViewName("/lms/myenv");
 		return view;
 	}

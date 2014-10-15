@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dhl.bean.QuestionData;
 import com.dhl.cons.CommonConstant;
 import com.dhl.dao.Page;
 import com.dhl.domain.Competion;
@@ -41,6 +42,7 @@ import com.dhl.service.TeacherExamService;
 import com.dhl.service.UserCompetionService;
 import com.dhl.service.UserExamHistoryService;
 import com.dhl.service.UserExamService;
+import com.dhl.util.ParseQuestion;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
 
@@ -185,7 +187,7 @@ public class LmsExamController extends BaseController {
 		int score = 0;
 		Set<ExamChapter> chapterset = exam.getExamchapters();
 		Iterator it = chapterset.iterator();
-		List<Train> tlist = new ArrayList();
+		List<Train> tlist = new ArrayList<Train>();
 		while (it.hasNext()) {
 			ExamChapter chapter = (ExamChapter) it.next();
 			Set<ExamSequential> sequentialset = chapter.getEsequentials();
@@ -197,17 +199,29 @@ public class LmsExamController extends BaseController {
 				Iterator it3 = verticalset.iterator();
 				while (it3.hasNext()) {
 					ExamVertical vertical = (ExamVertical) it3.next();
-					Set<ExamQuestion> vt = vertical.getExamQuestion();//examquestionService.getVerticalTrainList(vertical.getId());
+					Set<ExamQuestion> vt = vertical.getExamQuestion();
 					for (ExamQuestion eq:vt)
 					{
-						index ++;
 						Question q = eq.getQuestion();
 						if (q != null)
 						{
-							
+							List<QuestionData> qdlist = ParseQuestion.changetohtml(q.getContent(), q.getId());
+							if (qdlist != null && qdlist.size() > 0)
+							{
+								for (QuestionData qd:qdlist)
+								{
+									index ++;
+									score += qd.getScore();
+								}
+							}
+							else
+							{
+								index ++;
+							}
 						}
 						else
 						{
+							index ++;
 							Train train = eq.getTrain();
 							if (train != null)
 							{
@@ -415,6 +429,7 @@ public class LmsExamController extends BaseController {
 		view.addObject("category",c);
 		view.addObject("rank",r);
 		view.addObject("search",s);
+		view.addObject("totalcounts",page.getTotalCount());
 		view.setViewName("/lms/online");
 		return view;
 	}

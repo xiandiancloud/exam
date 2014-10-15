@@ -133,7 +133,7 @@
 					<table class="table table-bordered table-hover h5">
 						<caption></caption>
 						<thead>
-							<tr class="danger">
+							<tr class="dhldanger">
 								<th>名称</th>
 								<th>创建时间</th>
 								<th></th>
@@ -144,7 +144,7 @@
 								<tr>
 									<td>${uce.name}</td>
 									<td>${uce.createtime}</td>
-									<td><a href="lms/deleteEnv.action?id=${uce.id}"
+									<td><a href="lms/deleteExamEnv.action?id=${uce.id}"
 										class="glyphicon glyphicon-trash"></a></td>
 								</tr>
 							</c:forEach>

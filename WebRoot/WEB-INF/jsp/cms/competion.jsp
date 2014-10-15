@@ -58,15 +58,15 @@
 					<div class='col-sm-12'>
 						<div class='page-header'>
 							<h1 class='pull-left'>
-								<i class='icon-edit'></i> <span>Forms components</span>
+								<i class='icon-edit'></i> <span>下面是定义的竞赛，请遵守竞赛规则。</span>
 							</h1>
-							<div class='pull-right'>
+<!-- 							<div class='pull-right'>
 								<ul class='breadcrumb'>
 									<li><a href='index.html'> <i class='icon-bar-chart'></i>
 									</a></li>
 									<li class='separator'><i class='icon-angle-right'></i></li>
 								</ul>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
@@ -94,7 +94,7 @@
 										<input class='form-control' id='name' type='text' value="${competion.name}">
 									</div>
 								</div>
-								<hr class='hr-normal'>
+								<div class='h5'></div>
 								<div class='row'>
 									<div class='col-sm-12'>
 										<p>
@@ -104,7 +104,7 @@
 										</select>
 									</div>
 								</div>
-								<hr class='hr-normal'>
+								<div class='h5'></div>
 								<div class='row'>
 									<div class='col-sm-6'>
 										<p>
@@ -133,7 +133,7 @@
 										</div>
 									</div>
 								</div>
-								<hr class='hr-normal'>
+								<div class='h5'></div>
 								<div class='row'>
 									<div class='col-sm-6'>
 										<p>
@@ -162,7 +162,7 @@
 										</div>
 									</div>
 								</div>
-								<hr class='hr-normal'>
+								<div class='h5'></div>
 								<div class='row'>
 									<div class='col-sm-6'>
 										<p>
@@ -191,7 +191,7 @@
 										</div>
 									</div>
 								</div>
-								<hr class='hr-normal'>
+								<div class='h5'></div>
 								<div class='row'>
 									<div class='col-sm-12'>
 										<p>
@@ -203,7 +203,7 @@
 										</select>
 									</div>
 								</div>
-								<hr class='hr-normal'>
+								<div class='h5'></div>
 								<div class='row'>
 									<div class='col-sm-6'>
 										<p>
@@ -218,7 +218,7 @@
 										<input class='form-control' id='passscore' type='text' value="${competion.passscore}">
 									</div>									
 								</div>
-								<hr class='hr-normal'>
+								<div class='h5'></div>
 								<div class='row'>
 									<div class='col-sm-12'>
 										<p>
@@ -227,7 +227,7 @@
 										<textarea class='form-control' id='describle' placeholder='Textarea' rows='3'>${competion.describle}</textarea>
 									</div>
 								</div>
-								<hr class='hr-normal'>
+								<div class='h10'></div>
                           		<div class='row'>
                             		<div class='col-sm-10 col-sm-offset-5'>
                               			<a href="javascript:void(0);" class='btn btn-success' onclick="createcompetion();" id="savebutton">
@@ -500,6 +500,7 @@
 				</div> -->
 			</div>
 		</div>
+		<div class="clear"></div><div class="clear"></div>
 	<jsp:include page="footer.jsp"></jsp:include>
 	
 <div class='modal fade' id='modal-example' tabindex='-1'>

@@ -8,6 +8,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dhl.bean.QuestionData;
+import com.dhl.bean.UserCompetionData;
 import com.dhl.cons.CommonConstant;
 import com.dhl.dao.CompetionDao;
 import com.dhl.dao.CompetionExamDao;
@@ -23,11 +25,9 @@ import com.dhl.domain.ExamQuestion;
 import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Question;
-import com.dhl.domain.QuestionData;
 import com.dhl.domain.Train;
 import com.dhl.domain.User;
 import com.dhl.domain.UserCompetion;
-import com.dhl.domain.UserCompetionData;
 import com.dhl.domain.UserExam;
 import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
@@ -235,92 +235,6 @@ public class UserCompetionService {
 											score += Integer.parseInt(UtilTools.getScore(uq, uqc, number));
 										}
 									}
-//									if (type == CommonConstant.QTYPE_6)
-//									{
-//										UserQuestion uq = userQuestionDao.getUserQuestionBytrain(user.getId(), exam.getId(),qd.getId());
-//										if (uq != null)
-//										{
-//											UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByusertrainId(user.getId(),uq.getId());
-//											if (uqc != null)
-//											{
-//												String useranswer = uqc.getUseranswer();
-//												String pfscore = uqc.getPfscore();
-//												//判分裁判一旦修改了系统判分，采用判分裁判的
-//												if (pfscore != null)
-//												{
-//													score += Integer.parseInt(pfscore);
-//												}
-//												else
-//												{
-//													List<String> answerlist = qd.getAnswer();
-//													if (answerlist != null && answerlist.size() > 0)
-//													{
-//														if (useranswer != null && useranswer.trim().equals(answerlist.get(0).trim()))
-//														{
-//															score += qd.getScore();
-//														}
-//													}
-//												}
-//											}
-//										}
-//									}
-//									else
-//									{
-//										UserQuestion uq = userQuestionDao.getUserQuestionByquestion(user.getId(), exam.getId(), qd.getId());
-//										if (uq != null)
-//										{
-//											UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(user.getId(),number,uq.getId());
-//											if (uqc != null)
-//											{
-//												String useranswer = uqc.getUseranswer();
-//												String pfscore = uqc.getPfscore();
-//												//判分裁判一旦修改了系统判分，采用判分裁判的
-//												if (pfscore != null)
-//												{
-//													score += Integer.parseInt(pfscore);
-//												}
-//												else
-//												{
-//													if (type == CommonConstant.QTYPE_2 || type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5)
-//													{
-//														List<String> answerlist = qd.getAnswer();
-//														if (answerlist != null && answerlist.size() > 0)
-//														{
-//															if (useranswer != null && useranswer.trim().equals(answerlist.get(0).trim()))
-//															{
-//																score += qd.getScore();
-//															}
-//														}
-//													}
-//													else if (type == CommonConstant.QTYPE_3)//多选要匹配答案列表
-//													{
-//														if (useranswer != null)
-//														{
-//															List<String> answerlist = qd.getAnswer();
-//															if (answerlist != null)
-//															{
-//																String[] strs = useranswer.split("#");
-//																int size = answerlist.size();
-//																boolean flag = true;
-//																for (int j=0;j<size;j++)
-//																{
-//																	if (answerlist.get(j).equals(strs[j]))
-//																	{
-//																		flag = false;
-//																		break;
-//																	}
-//																}
-//																if (flag)
-//																{
-//																	score += qd.getScore();
-//																}
-//															}
-//														}
-//													}
-//												}
-//											}
-//										}
-//									}
 								}
 							}
 						}

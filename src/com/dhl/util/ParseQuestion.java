@@ -10,8 +10,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
+import com.dhl.bean.QuestionData;
 import com.dhl.cons.CommonConstant;
-import com.dhl.domain.QuestionData;
 public class ParseQuestion {
 	public static List<Element> getChildNode(Element element){
 		List<Element> childList = element.elements();

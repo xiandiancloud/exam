@@ -32,6 +32,14 @@ public class Competion extends BaseDomain {
 	private String score;
 	private String passscore;
 	private int isstart;//竞赛是否开始
+	private String imgpath;
+	
+	public String getImgpath() {
+		return imgpath;
+	}
+	public void setImgpath(String imgpath) {
+		this.imgpath = imgpath;
+	}
 	public int getIsstart() {
 		return isstart;
 	}

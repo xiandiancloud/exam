@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.dhl.bean.QuestionData;
+
 /**
  * @author dhl
  * 试卷单元下的问题或者实验课程

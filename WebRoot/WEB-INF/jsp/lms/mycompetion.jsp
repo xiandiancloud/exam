@@ -197,7 +197,7 @@
 			</div>
 		</div>
 	</div>
-
+	<div class="clear"></div>
 	<jsp:include page="footer.jsp"></jsp:include>
 	<!-- / jquery [required] -->
 	<script src="assets/javascripts/jquery/jquery.min.js"

@@ -1,4 +1,4 @@
-package com.dhl.domain;
+package com.dhl.bean;
 
 /**
  * 用户竞赛交换数据的类

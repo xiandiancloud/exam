@@ -28,9 +28,9 @@ import org.apache.tools.tar.TarOutputStream;
 
 import ch.ethz.ssh2.Connection;
 
+import com.dhl.bean.QuestionData;
 import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Question;
-import com.dhl.domain.QuestionData;
 import com.dhl.domain.Train;
 import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
@@ -932,7 +932,7 @@ public class UtilTools {
 								boolean flag = true;
 								for (int i=0;i<size;i++)
 								{
-									if (answerlist.get(i).equals(strs[i]))
+									if (!answerlist.get(i).equals(strs[i]))
 									{
 										flag = false;
 										break;

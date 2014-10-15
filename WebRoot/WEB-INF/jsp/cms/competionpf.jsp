@@ -58,15 +58,15 @@
 					<div class='col-sm-12'>
 						<div class='page-header'>
 							<h1 class='pull-left'>
-								<i class='icon-edit'></i> <span>Forms components</span>
+								<i class='icon-edit'></i> <span>下面是定义的竞赛，请遵守竞赛规则。</span>
 							</h1>
-							<div class='pull-right'>
+							<!-- <div class='pull-right'>
 								<ul class='breadcrumb'>
 									<li><a href='index.html'> <i class='icon-bar-chart'></i>
 									</a></li>
 									<li class='separator'><i class='icon-angle-right'></i></li>
 								</ul>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>

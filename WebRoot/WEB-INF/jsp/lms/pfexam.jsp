@@ -114,6 +114,19 @@
 		position:fixed;
 		top:445px; 
 	} 
+	.answerimg{overflow:auto;height:150px;border: 1px solid #dddddd;}
+	.answerimg img{
+		padding: 4px;
+	  line-height: 1.42857;
+	  background-color: white;
+	  border: 0px solid #dddddd;
+	  border-radius: 4px;
+	  -webkit-transition: all 0.2s ease-in-out;
+	  transition: all 0.2s ease-in-out;
+	  display: inline-block;
+	  max-width: 100%;
+	  height: auto;
+	}
 </style>
 
   </head>
@@ -256,11 +269,11 @@
 																</div>
 															</div>
 															<div class='row'>
-																<div class='col-xs-6 juzhong' style="line-height:40px;height:auto;">
-																	<label>机器答案：<div id="revalue${index}"></div></label>
+																<div class='col-xs-12 juzhong' style="line-height:40px;height:auto;">
+																	<label>机器答案：<div id="revalue${index}" class="answerimg"></div></label>
 																</div>
-																<div class='col-xs-6 juzhong' style="line-height:40px;height:auto;">
-																	<label>用户答案：<div id="numberquestion${index}"></div></label>
+																<div class='col-xs-12 juzhong' style="line-height:40px;height:auto;">
+																	<label>用户答案：<div id="numberquestion${index}" class="answerimg"></div></label>
 																</div>
 															</div>
 															<div class='h30'></div>

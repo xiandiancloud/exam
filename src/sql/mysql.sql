@@ -59,6 +59,7 @@ create table t_competion
    id                  int not null AUTO_INCREMENT,
    name                varchar(255) not null,   
    describle           varchar(1000) default null,   
+   imgpath             varchar(255) default null,
    starttime           varchar(255) not null,
    endtime             varchar(255) not null,
    wstarttime          varchar(255) not null,

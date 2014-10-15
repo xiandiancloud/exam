@@ -135,7 +135,7 @@
 							<div class='row none' id="firesult">
 							<div class='col-sm-3'>
 								<div class="advance ">
-									<span class="totalScore">100</span>分
+									<span class="totalScore">${score}</span>分
 								</div>
 							</div>
 							<div class='col-sm-9'>
@@ -147,40 +147,35 @@
 													<thead>
 														<tr>
 															<th></th>
-															<th>第一部分</th>
-															<th>第二部分</th>
-															<th>第三部分</th>
-															<th>第四部分</th>
+															<c:forEach var="ued" items="${uedlist}">
+															<th>${ued.name}</th>
+															</c:forEach>
 														</tr>
 													</thead>
 													<tbody>
 														<tr>
 															<td>答对</td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
+															<c:forEach var="ued" items="${uedlist}">
+															<th>${ued.right}</th>
+															</c:forEach>
 														</tr>
 														<tr>
 															<td>答错</td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
+															<c:forEach var="ued" items="${uedlist}">
+															<th>${ued.wrong}</th>
+															</c:forEach>
 														</tr>
 														<tr>
 															<td>未答</td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
+															<c:forEach var="ued" items="${uedlist}">
+															<th>${ued.noanswer}</th>
+															</c:forEach>
 														</tr>
 														<tr>
 															<td>得分</td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
+															<c:forEach var="ued" items="${uedlist}">
+															<th>${ued.cscore}</th>
+															</c:forEach>
 														</tr>
 													</tbody>
 												</table>
@@ -549,7 +544,7 @@
 		</div>
 
 	</div>
-
+	<div class="clear"></div>
 	<jsp:include page="footer.jsp"></jsp:include>
     <!-- / jquery [required] -->
     <script src="assets/javascripts/jquery/jquery.min.js" type="text/javascript"></script>
@@ -594,9 +589,24 @@
 			else
 			{
 				$("#firesult").hide();
-			}
+			}			
 		});
-	
+		function loadfiresult()
+		{
+ 			var examId = "${exam.id}";
+ 			//var competionId = "${competionId}";
+			var data = {examId:examId};
+			$.ajax({
+				url : "lms/usercounts.action",
+				type : "post",
+				data : data,
+				success : function(s) {
+					var a = eval("(" + s + ")");
+					if ("sucess" == a.sucess) {
+					}
+				}
+			});
+		}
 		//这个方法多次提交，如果性能有问题再优化
 		function initquestion()
 		{

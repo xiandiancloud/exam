@@ -148,7 +148,7 @@
 		
 	</div>
 
-
+	<div class="clear"></div>
 	<jsp:include page="footer.jsp"></jsp:include>
 	
 	<!-- / jquery [required] -->

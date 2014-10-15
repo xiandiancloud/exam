@@ -55,11 +55,7 @@
 	type="text/css" />
 <link href="css/train.css" rel="stylesheet">
 
-
 </head>
-
-
-
 
 <body class='contrast-red fixed-header'>
 
@@ -68,44 +64,59 @@
 	<div id='wrapper'>
 		<section id=''>
 			<div class="container">
+			
 				<div class="row">
-					<div class="col-xs-3">
-						<select class='select2 form-control' name="major" id="category" onchange="loaddata();">
-							<!-- <option value='NY' selected="selected">-专业-</option> -->
-						</select>
+					<div class="col-xs-12 center">
+						<h1 class="h1font"><a id="allcounts"></a>+的试卷，造就你的云梦想！</h1>
 					</div>
-					<div class="col-xs-3">
-						<select class='select2 form-control' name="level" id="rank" onchange="loaddata();">
-							<option value="0" selected="selected">-等级-</option>
-							<option value="1">初级</option>
-							<option value="2">中级</option>
-							<option value="3">高级</option>
-						</select>
-					</div>
-					<div class="col-sm-6">
-						<div class="form-group">
-							<div class="input-group controls-group">
-								<input type="text" name="q" class="form-control"
-									placeholder="Search..." value="" id="search" onkeyup="enterloaddata(event);"><span
-									class="input-group-btn">
-									<button type="button" class="btn" onclick="loaddata();">
-										<i class="icon-search"></i>
-									</button>
-								</span>
+				</div>
+				<div class="clear"></div>
+				<div class="row searchback">
+					<div class="clear"></div>
+					<div class="col-xs-12">
+						<div class="row">
+							<div class="col-xs-1 searchtext">
+								试卷搜索:
+							</div>
+							<div class="col-xs-3">
+								<select class='select2 form-control' name="major" id="category" onchange="loaddata();">
+									<!-- <option value='NY' selected="selected">-专业-</option> -->
+								</select>
+							</div>
+							<div class="col-xs-3">
+								<select class='select2 form-control' name="level" id="rank" onchange="loaddata();">
+									<option value="0" selected="selected">-等级-</option>
+									<option value="1">初级</option>
+									<option value="2">中级</option>
+									<option value="3">高级</option>
+								</select>
+							</div>
+							<div class="col-sm-5">
+								<div class="form-group">
+									<div class="input-group controls-group">
+										<input type="text" name="q" class="form-control"
+											placeholder="Search..." value="" id="search" onkeyup="enterloaddata(event);"><span
+											class="input-group-btn">
+											<button type="button" class="btn" onclick="loaddata();">
+												<i class="icon-search"></i>
+											</button>
+										</span>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-
+					<div class="h5"></div>
 				</div>
 				<div class="clear"></div>
 				<c:forEach var="ec" items="${examlist}">
-				<div class="row wback nospace">
-					<div class="col-sm-3 courseh">
+				<div class="row wback ">
+					<div class="col-xs-3 courseh">
 						<a> <img src="${(empty ec.exam.imgpath)?'images/exam.jpg':ec.exam.imgpath}" width="100%" height="150px;"
 							class="img-rounded">
 						</a>
 					</div>
-					<div class="col-sm-7">
+					<div class="col-xs-7">
 						<p>
 							<h3>${ec.exam.name}</h3>
 						</p>
@@ -113,7 +124,7 @@
 							${ec.exam.describle}
 						</p>
 					</div>
-					<div class="col-sm-2">
+					<div class="col-xs-2">
 						<div class="clear"></div>
 						<div class="wrap">
 							<div class="subwrap">
@@ -129,15 +140,15 @@
 
 					</div>
 				</div>
-				<div class="h5"></div>
+				<div class="clear"></div>
 				</c:forEach>
 				<div class="clear"></div>
 			</div>
 		</section>
 	</div>
-
 	<ul id="pagination" class="center"></ul>
-
+	<div class="clear"></div>
+	<div class="clear"></div>
 	<jsp:include page="footer.jsp"></jsp:include>
 
 	<!-- / jquery [required] -->
@@ -215,6 +226,7 @@
 			{
 				return;
 			}
+			$("#allcounts").html("${totalcounts}");
 			var currentpage = "${currentpage}";
 			currentpage = parseInt(currentpage);
 			//alert(totalpage+"  ,   "+currentpage);

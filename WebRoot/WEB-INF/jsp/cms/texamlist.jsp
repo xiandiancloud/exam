@@ -68,7 +68,7 @@
 					<h2 class="title">欢迎，${USER_CONTEXT.username}！</h2>
 
 					<div class="copy">
-						<p>这里当前您在Studio中可以访问的所有试卷：</p>
+						<p>这里当前您的所有试卷：</p>
 					</div>
 
 				</div>

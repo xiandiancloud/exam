@@ -1669,7 +1669,7 @@ img.MathJax_strut {
 										
 										<div class="add-xblock-component new-component-item adding">
 											<div class="new-component" id="component">
-												<h5>Add New Component</h5>
+												<h5>增加新的题目</h5>
 												<ul class="new-component-type">
 													<li><a onclick="showselect()"
 														class="multiple-templates add-xblock-component-button"

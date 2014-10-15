@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dhl.bean.UserCompetionData;
 import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Competion;
 import com.dhl.domain.CompetionExam;
@@ -29,7 +30,6 @@ import com.dhl.domain.CompetionSchool;
 import com.dhl.domain.TeacherExam;
 import com.dhl.domain.User;
 import com.dhl.domain.UserCompetion;
-import com.dhl.domain.UserCompetionData;
 import com.dhl.service.CompetionService;
 import com.dhl.service.ExamService;
 import com.dhl.service.TeacherExamService;

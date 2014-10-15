@@ -1,4 +1,4 @@
-package com.dhl.domain;
+package com.dhl.bean;
 
 import java.util.List;
 
