@@ -1,54 +1,67 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<div class="navbar navbar-inverse navbar-fixed-top topone" role="navigation">
+<header>
+<nav class="navbar navbar-default" role="navigation">
 	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target=".navbar-collapse">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="" href="getAllCategory.action"><img src="images/logo.png" /></a>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="navbar-header">
+				      <button type="button" class="navbar-toggle" data-toggle="collapse" 
+				         data-target="#example-navbar-collapse">
+				         <span class="sr-only">切换导航</span>
+				         <span class="icon-bar"></span>
+				         <span class="icon-bar"></span>
+				         <span class="icon-bar"></span>
+				      </button>
+					<a class='navbar-brand' href='lms/getteamCategory.action'> <img
+						width="51" height="48" class="logo" src="images/logo.png" /><img width="160" height="30"
+							class="logo" alt="Flatty" src="images/logo-lab.png" />
+					</a>
+				</div>
+				<div class="collapse navbar-collapse" id="example-navbar-collapse">
+					<!--向左对齐-->
+					<ul class="nav navbar-nav navbar-left pleft15">
+						<li><a href="lms/getteamCategory.action">首页</a></li>
+						<li><a href="lms/examlist.action?currentpage=1&c=0&r=0">题库</a></li>
+						<li><a href="lms/competionlist.action?currentpage=1&c=0&r=0">竞赛</a></li>
+						<li><a href="lms/myexam.action">我的云试卷</a></li>
+						<c:if test="${USER_CONTEXT.role.roleName=='老师'}">
+						<li><a href="cms">制作课件</a></li>
+						</c:if>
+					</ul>
+					<!--向右对齐-->
+					<ul class="nav navbar-nav navbar-right">
+						<c:choose>
+							<c:when test="${empty USER_CONTEXT}">
+								<li class='dropdown light only-icon'><a
+									href='lms/tologin.action'> <i class='icon-signin'>登陆</i>
+								</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class='dropdown dark user-menu'><a
+									class='dropdown-toggle' data-toggle='dropdown' href='#'> <img
+										width="23" height="23" alt="" src="images/logo.png" /> <span
+										class='user-name'>${USER_CONTEXT.username}</span> <b
+										class='caret'></b>
+								</a>
+									<ul class='dropdown-menu'>
+										<li><a href='lms/myexam.action'> <i
+												class='icon-signout'></i> 我的云试卷
+										</a></li>
+										<li><a href='lms/mysetting.action'> <i
+												class='icon-signout'></i> 设置
+										</a></li>
+										<li class='divider'></li>
+										<li><a href='lms/loginout.action'> <i
+												class='icon-signout'></i> 退出
+										</a></li>
+									</ul></li>
+							</c:otherwise>
+						</c:choose>
+					</ul>
+				</div>
+			</div>
 		</div>
-		<div class="navbar-collapse collapse">
-			<ul class="nav navbar-nav">
-
-				<li class="<c:if test='${navindex==1}'>active</c:if>"><a href="getAllCategory.action">首页</a></li>
-				<li class="<c:if test='${navindex==2}'>active</c:if>"><a href="mycourse.action">我的云课堂</a></li>
-				
-				<!-- <li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-					<ul class="dropdown-menu">
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else here</a></li>
-						<li class="divider"></li>
-						<li class="dropdown-header">Nav header</li>
-						<li><a href="#">Separated link</a></li>
-						<li><a href="#">One more separated link</a></li>
-					</ul></li> -->
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<c:choose>
-				  <c:when test="${empty USER_CONTEXT}">   
-				    <li class=""><a href="tologin.action">登陆</a></li>
-				  </c:when> 
-				  <c:otherwise>   
-				   <li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown">${USER_CONTEXT.username}<b class="caret"></b></a>
-					<ul class="dropdown-menu">
-						<li><a href="mycourse.action">我的云课堂</a></li>
-						<li><a href="setting.action?index=1">设置</a></li>
-						<li class="divider"></li>
-						<li><a href="loginout.action">退出</a></li>
-					</ul></li>
-				  </c:otherwise> 
-				</c:choose> 
-
-				
-			</ul>
-		</div>
-		<!--/.nav-collapse -->
 	</div>
-</div>
+</nav>
+</header>

@@ -16,7 +16,7 @@
 <!--<![endif]-->
 <head>
 <base href="<%=basePath%>">
-<title>我的设置</title>
+<title>我的云平台</title>
 <meta
 	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
 	name='viewport'>
@@ -73,7 +73,7 @@
     <![endif]-->
 </head>
 <body class='contrast-red fixed-header'>
-	<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="../common/header.jsp"></jsp:include>
 	<div id='wrapper'>
 
 		<div class='container'>
@@ -156,7 +156,7 @@
 		</div>
 	</div>
 
-	<jsp:include page="footer.jsp"></jsp:include>
+	<jsp:include page="../common/footer.jsp"></jsp:include>
 	<!-- / jquery [required] -->
 	<script src="assets/javascripts/jquery/jquery.min.js"
 		type="text/javascript"></script>

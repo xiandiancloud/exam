@@ -45,8 +45,8 @@
 										class='caret'></b>
 								</a>
 									<ul class='dropdown-menu'>
-										<li><a href='lms/myexam.action'> <i
-												class='icon-signout'></i> 我的云试卷
+										<li><a href='lms/mycourse.action'> <i
+												class='icon-signout'></i> 我的云课堂
 										</a></li>
 										<li><a href='lms/mysetting.action'> <i
 												class='icon-signout'></i> 设置

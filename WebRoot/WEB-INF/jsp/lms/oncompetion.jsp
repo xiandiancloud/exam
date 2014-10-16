@@ -17,7 +17,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>题库</title>
+<title>竞赛</title>
 
 <meta
 	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
@@ -76,7 +76,7 @@
 					<div class="col-xs-12">
 						<div class="row">
 							<div class="col-xs-1 searchtext">
-								试卷搜索:
+								竞赛搜索:
 							</div>
 							<div class="col-xs-3">
 								<select class='select2 form-control' name="major" id="category" onchange="loaddata();">
@@ -109,19 +109,19 @@
 					<div class="h5"></div>
 				</div>
 				<div class="clear"></div>
-				<c:forEach var="ec" items="${examlist}">
+				<c:forEach var="ec" items="${competionlist}">
 				<div class="row wback ">
 					<div class="col-xs-3 courseh">
-						<a> <img src="${(empty ec.exam.imgpath)?'images/exam.jpg':ec.exam.imgpath}" width="100%" height="150px;"
+						<a> <img src="${(empty ec.competion.imgpath)?'images/exam.jpg':ec.competion.imgpath}" width="100%" height="150px;"
 							class="img-rounded">
 						</a>
 					</div>
 					<div class="col-xs-7">
 						<p>
-							<h3>${ec.exam.name}</h3>
+							<h3>${ec.competion.name}</h3>
 						</p>
 						<p>
-							${ec.exam.describle}
+							${ec.competion.describle}
 						</p>
 					</div>
 					<div class="col-xs-2">
@@ -130,8 +130,8 @@
 							<div class="subwrap">
 								<div class="content">
 									<p>
-										<a href="lms/toexamintroduce.action?competionId=-1&examId=${ec.exam.id}"><button
-												type="button" class="btn btn-danger">进入考试</button> </a>
+										<a href="lms/entercompetion.action?competionId=${ec.competion.id}"><button
+												type="button" class="btn btn-danger">进入</button> </a>
 
 									</p>
 								</div>
@@ -251,7 +251,7 @@
 										var r = $("#rank").val();
 										var s = $("#search").val();
 										s = encodeURIComponent(s);
-										location.href="lms/examlist.action?currentpage="+num+"&c="+c+"&r="+r+"&s="+s;
+										location.href="lms/competionlist.action?currentpage="+num+"&c="+c+"&r="+r+"&s="+s;
 									}
 								}
 							});
@@ -266,7 +266,7 @@
 			var r = $("#rank").val();
 			var s = $("#search").val();
 			s = encodeURIComponent(s);
-			location.href="lms/examlist.action?currentpage="+currentpage+"&c="+c+"&r="+r+"&s="+s;
+			location.href="lms/competionlist.action?currentpage="+currentpage+"&c="+c+"&r="+r+"&s="+s;
 		}
 		
 		function enterloaddata(event)

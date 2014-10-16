@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dhl.cons.CommonConstant;
+import com.dhl.dao.CompetionCategoryDao;
 import com.dhl.dao.CompetionDao;
 import com.dhl.dao.CompetionExamDao;
 import com.dhl.dao.CompetionSchoolDao;
+import com.dhl.dao.ECategoryDao;
 import com.dhl.dao.ExamDao;
 import com.dhl.dao.UserCompetionDao;
 import com.dhl.domain.Competion;
+import com.dhl.domain.CompetionCategory;
 import com.dhl.domain.CompetionExam;
 import com.dhl.domain.CompetionSchool;
 import com.dhl.domain.Exam;
@@ -29,11 +32,15 @@ public class CompetionService {
 	@Autowired
 	private CompetionExamDao competionExamDao;
 	@Autowired
+	private CompetionCategoryDao competionCategoryDao;
+	@Autowired
 	private UserCompetionDao userCompetionDao;
 	@Autowired
 	private CompetionSchoolDao competionSchoolDao;
 	@Autowired
 	private ExamDao examDao;
+	@Autowired
+	private ECategoryDao ecategoryDao;
 	
 	/**
 	 * 取得竞赛
@@ -121,9 +128,9 @@ public class CompetionService {
 	 * @param courseId
 	 * @return
 	 */
-	public Competion createCompetion(String name, String starttime,
+	public Competion createCompetion(String imgpath,int rank,int categoryId,String name, String starttime,
 			String endtime, String wstarttime, String wendtime,
-			String examstarttime, String examendtime, String type,
+			String examstarttime, String examendtime, int type,
 			String score, String passscore, String describle, String schoolId,User user)
 	{
 		Competion c = new Competion();
@@ -138,7 +145,34 @@ public class CompetionService {
 		c.setScore(passscore);
 		c.setPassscore(passscore);
 		c.setType(type);
+		c.setImgpath(imgpath);
+		if (rank > 0)
+		{
+			String erank = null;
+			if (rank == 1)
+			{
+				erank = CommonConstant.LEVEL_1;
+			}
+			else if (rank == 2)
+			{
+				erank = CommonConstant.LEVEL_2;
+			}
+			else if (rank == 3)
+			{
+				erank = CommonConstant.LEVEL_3;
+			}
+			if (erank != null)
+			c.setRank(erank);
+		}
 		competionDao.save(c);
+		
+		if (categoryId > 0)
+		{
+			CompetionCategory cc = new CompetionCategory();
+			cc.setCompetion(c);
+			cc.setEcategory(ecategoryDao.get(categoryId));
+			competionCategoryDao.save(cc);
+		}
 		
 		CompetionSchool cs = new CompetionSchool();
 		cs.setCompetionId(c.getId());
@@ -154,9 +188,9 @@ public class CompetionService {
 		return c;
 	}
 	
-	public void updateCompetion(int id,String name, String starttime,
+	public void updateCompetion(String imgpath,int rank,int categoryId,int id,String name, String starttime,
 			String endtime, String wstarttime, String wendtime,
-			String examstarttime, String examendtime, String type,
+			String examstarttime, String examendtime, int type,
 			String score, String passscore, String describle, String schoolId)
 	{
 		Competion c = get(id);
@@ -171,11 +205,58 @@ public class CompetionService {
 		c.setScore(passscore);
 		c.setPassscore(passscore);
 		c.setType(type);
+		c.setImgpath(imgpath);
+		if (rank > 0)
+		{
+			String erank = null;
+			if (rank == 1)
+			{
+				erank = CommonConstant.LEVEL_1;
+			}
+			else if (rank == 2)
+			{
+				erank = CommonConstant.LEVEL_2;
+			}
+			else if (rank == 3)
+			{
+				erank = CommonConstant.LEVEL_3;
+			}
+			if (erank != null)
+			c.setRank(erank);
+		}
+		else
+		{
+			c.setRank(null);
+		}
 		competionDao.update(c);
 		
 		CompetionSchool cs = competionSchoolDao.getCompetionSchool(id);
 		cs.setSchoolId(Integer.parseInt(schoolId));
 		competionSchoolDao.update(cs);
+		
+		if (categoryId > 0)
+		{
+			CompetionCategory cc = competionCategoryDao.getCompetionCategory(id);
+			if (cc != null)
+			{
+				cc.setCompetion(c);
+				cc.setEcategory(ecategoryDao.get(categoryId));
+				competionCategoryDao.update(cc);
+			}
+			else
+			{
+				cc = new CompetionCategory();
+				cc.setCompetion(c);
+				cc.setEcategory(ecategoryDao.get(categoryId));
+				competionCategoryDao.save(cc);
+			}
+		}
+		else
+		{
+			CompetionCategory cc = competionCategoryDao.getCompetionCategory(id);
+			if (cc != null)
+			competionCategoryDao.remove(cc);
+		}
 	}
 	
 	/**
@@ -186,5 +267,15 @@ public class CompetionService {
 	public CompetionSchool getCompetionSchool(int competionId)
 	{
 		return competionSchoolDao.getCompetionSchool(competionId);
+	}
+	
+	/**
+	 * 得到竞赛的专业分类
+	 * @param competionId
+	 * @return
+	 */
+	public CompetionCategory getCompetionCategory(int competionId)
+	{
+		return competionCategoryDao.getCompetionCategory(competionId);
 	}
 }

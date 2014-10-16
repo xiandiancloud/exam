@@ -28,12 +28,18 @@ public class Competion extends BaseDomain {
 	private String wendtime;
 	private String examstarttime;
 	private String examendtime;
-	private String type;
+	private int type;//是否公开
 	private String score;
 	private String passscore;
 	private int isstart;//竞赛是否开始
 	private String imgpath;
-	
+	private String rank;
+	public String getRank() {
+		return rank;
+	}
+	public void setRank(String rank) {
+		this.rank = rank;
+	}
 	public String getImgpath() {
 		return imgpath;
 	}
@@ -100,10 +106,10 @@ public class Competion extends BaseDomain {
 	public void setExamendtime(String examendtime) {
 		this.examendtime = examendtime;
 	}
-	public String getType() {
+	public int getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(int type) {
 		this.type = type;
 	}
 	public String getScore() {

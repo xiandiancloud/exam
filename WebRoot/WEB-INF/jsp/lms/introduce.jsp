@@ -71,21 +71,12 @@
       <script src="assets/javascripts/ie/html5shiv.js" type="text/javascript"></script>
       <script src="assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
     <![endif]-->
-
-
-<style type="text/css">
-
-
-
-</style>
 </head>
 <body class='contrast-red fixed-header'>
 	<jsp:include page="header.jsp"></jsp:include>
 
 	<div id='wrapper'>
 		<div class="mask"></div>
-		
-		
 		<div class='container'>
 			<div class='row' id='content-wrapper' style="text-align:center">
 				<div class='col-xs-12'>
@@ -125,8 +116,8 @@
 						<div class='col-sm-3'></div>
 						<div class='col-sm-6'>
 							<p class="text-left">再开始答题前，请考生关注下列事项：</p>
-							<p class="text-left">一、本试题卷分析题中的一道小题可以选用中文或英文解答，请仔细阅读答题要求。如果使用英文解答，须全部使用英文。</p>
-							<p class="text-left">二、<a>本试题卷使用的现值及终值系数表点此查看。</a></p>
+							<p class="text-left">${exam.describle}</p>
+							<!-- <p class="text-left">二、<a>本试题卷使用的现值及终值系数表点此查看。</a></p> -->
 						</div>
 					</div>
 					<div class='row'>
@@ -137,7 +128,7 @@
 						<div class='col-sm-4'>
 							<div class='box'>
 								<div class='box-content' style="padding:0">
-									<a class="btn btn-success btn-block btn-lg" href="lms/toexamingtostartexam.action?competionId=${competionId}&examId=${examId}">立即开始</a>
+									<a class="btn btn-success btn-block btn-lg" href="lms/toexamingtostartexam.action?competionId=${competionId}&examId=${exam.id}">立即开始</a>
 								</div>
 							</div>
 						</div>

@@ -41,7 +41,7 @@ create table t_coursecategory
    UNIQUE KEY (name)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-/*试卷定义分类*/
+/*试卷分类*/
 drop table if exists t_examcategory;
 create table t_examcategory
 (
@@ -70,6 +70,7 @@ create table t_competion
    score               varchar(255) not null,
    passscore           varchar(255) not null,
    isstart             int(10) default 0,
+   rank                varchar(255) default null,
    primary key (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -176,6 +177,19 @@ create table t_exam_category
    UNIQUE KEY (examId),
    CONSTRAINT receivet_exam_category_ibfk_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE,
    CONSTRAINT receivet_exam_category_ibfk_2 FOREIGN KEY (ecategoryId) REFERENCES t_examcategory (id) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+/*竞赛属于分类定义*/
+drop table if exists t_competion_category;
+create table t_competion_category
+(
+   id                  int not null AUTO_INCREMENT,
+   competionId              int(10) not null,
+   ecategoryId         int(10) not null,
+   primary key (id),
+   UNIQUE KEY (examId),
+   CONSTRAINT receivet_competion_category_ibfk_1 FOREIGN KEY (competionId) REFERENCES t_competion (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_competion_category_2 FOREIGN KEY (ecategoryId) REFERENCES t_examcategory (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*实验章节定义*/

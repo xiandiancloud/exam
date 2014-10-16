@@ -4,7 +4,7 @@
   <header class="primary" role="banner">
 
     <div class="wrapper wrapper-l">
-      <h1 class="branding"><a href="cms/totexamlist.action"><img src="" alt="edX Studio" /></a></h1>
+      <h1 class="branding"><a href="cms/totexamlist.action"><img src="images/cmslogo.png"/></a></h1>
 
       
       <h2 class="info-course">

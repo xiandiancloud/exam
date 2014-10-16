@@ -40,6 +40,7 @@
     <!-- / demo file [not required!] -->
     <link href="assets/stylesheets/demo.css" media="all" rel="stylesheet" type="text/css" />
     <link href="css/train.css" media="all" rel="stylesheet" type="text/css">
+    <link href="css/fineuploader.css" rel="stylesheet">
     <!--[if lt IE 9]>
       <script src="assets/javascripts/ie/html5shiv.js" type="text/javascript"></script>
       <script src="assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
@@ -48,7 +49,7 @@
 
 
 <body class='contrast-red fixed-header'>
-	<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="../common/header.jsp"></jsp:include>
 
 
 		<div class='container'>
@@ -86,25 +87,57 @@
 							</div>
 							<div class='box-content'>
 								<div class='row'>
-									<div class='col-sm-12'>
+									<div class='col-sm-6'>
 										<p>
 											<strong>赛项名称</strong>
 										</p>
 										<input type="hidden" class='form-control' id='competionId' value="${competion.id}">
 										<input class='form-control' id='name' type='text' value="${competion.name}">
 									</div>
+									<div class='col-sm-6'>
+										<p>
+											<strong>赛项图片</strong>
+										</p>
+										<div class='row'>
+										
+										<div class='col-sm-10'>
+										<input class='form-control' type='text' id="imgpath" disabled="disabled" value="${competion.imgpath}">
+										</div>
+										<div class='col-sm-2'>
+										<div class="upload-button" id="bootstrapped-fine-uploader"></div>
+										</div>
+										</div>
+									</div>
 								</div>
-								<div class='h5'></div>
+								<div class='h10'></div>
 								<div class='row'>
-									<div class='col-sm-12'>
+									<div class='col-sm-4'>
 										<p>
 											<strong>举办方</strong>
 										</p>
 										<select class='form-control' id="school">
 										</select>
 									</div>
+								  <div class='col-sm-4'>
+										<p>
+											<strong>专业</strong>
+										</p>
+										<select class='select2 form-control' name="major" id="category">
+										</select>
+									</div>
+									<div class='col-sm-4'>
+										<p>
+											<strong>等级</strong>
+										</p>
+										<select class='select2 form-control' name="level" id="rank">
+										<option value="0" selected="selected">-等级-</option>
+										<option value="1">初级</option>
+										<option value="2">中级</option>
+										<option value="3">高级</option>
+										</select>
+									</div>
 								</div>
-								<div class='h5'></div>
+								<div class='h10'></div>
 								<div class='row'>
 									<div class='col-sm-6'>
 										<p>
@@ -133,7 +166,7 @@
 										</div>
 									</div>
 								</div>
-								<div class='h5'></div>
+								<div class='h10'></div>
 								<div class='row'>
 									<div class='col-sm-6'>
 										<p>
@@ -162,7 +195,7 @@
 										</div>
 									</div>
 								</div>
-								<div class='h5'></div>
+								<div class='h10'></div>
 								<div class='row'>
 									<div class='col-sm-6'>
 										<p>
@@ -191,19 +224,19 @@
 										</div>
 									</div>
 								</div>
-								<div class='h5'></div>
+								<div class='h10'></div>
 								<div class='row'>
 									<div class='col-sm-12'>
 										<p>
 											<strong>是否公开</strong>
 										</p>
 										<select class='select2 form-control' id="type" value="${competion.type}">
-											<option value='DV'>开发竞赛</option>
-											<option value='SP'>指定竞赛</option>
+											<option value='0'>是</option>
+											<option value='1'>否</option>
 										</select>
 									</div>
 								</div>
-								<div class='h5'></div>
+								<div class='h10'></div>
 								<div class='row'>
 									<div class='col-sm-6'>
 										<p>
@@ -218,7 +251,7 @@
 										<input class='form-control' id='passscore' type='text' value="${competion.passscore}">
 									</div>									
 								</div>
-								<div class='h5'></div>
+								<div class='h10'></div>
 								<div class='row'>
 									<div class='col-sm-12'>
 										<p>
@@ -229,7 +262,7 @@
 								</div>
 								<div class='h10'></div>
                           		<div class='row'>
-                            		<div class='col-sm-10 col-sm-offset-5'>
+                            		<div class='col-sm-12 center'>
                               			<a href="javascript:void(0);" class='btn btn-success' onclick="createcompetion();" id="savebutton">
                                 		<i class='icon-save'></i>
                                 		保存赛事
@@ -293,7 +326,7 @@
 				                          </table>
 											<hr class="hr-normal">
 											<div class='row'>
-                          						<div class='col-md-10 col-md-offset-5'>
+                          						<div class='col-sm-12 center'>
                             						<a href="#modal-example" data-toggle='modal' class='btn btn-success'>
                               							<i class="icon-plus"></i>
                               							增加裁判
@@ -361,7 +394,7 @@
 				                          </table>
 											<hr class="hr-normal">
 											<div class='row'>
-                          						<div class='col-md-10 col-md-offset-5'>
+                          						<div class='col-sm-12 center'>
                             						<a href="javascript:void(0);" onclick="showexamdialog();" class='btn btn-success'>
                               							<i class="icon-plus"></i>
                               							增加试卷
@@ -452,7 +485,7 @@
 				                          </table>
 											<hr class="hr-normal">
 											<div class='row'>
-                          						<div class='col-md-10 col-md-offset-4'>
+                          						<div class='col-sm-12 center'>
                           						   <a href="javascript:void(0);" onclick="showuserdialog();" class='btn btn-success'>
                               							<i class="icon-plus"></i>
                               							增加考生
@@ -501,7 +534,7 @@
 			</div>
 		</div>
 		<div class="clear"></div><div class="clear"></div>
-	<jsp:include page="footer.jsp"></jsp:include>
+	<jsp:include page="../common/footer.jsp"></jsp:include>
 	
 <div class='modal fade' id='modal-example' tabindex='-1'>
                       <div class='modal-dialog'>
@@ -634,6 +667,7 @@
     <script src="assets/javascripts/plugins/sparklines/jquery.sparkline.min.js" type="text/javascript"></script>
     <script src="assets/javascripts/plugins/flot/flot.pie.js" type="text/javascript"></script>
     <script src="assets/javascripts/plugins/dynatree/jquery.dynatree.min.js" type="text/javascript"></script>
+    <script src="js/fineuploader.js"></script>
     <script src="js/common.js"></script>
     <script type="text/javascript">
       /* var data, dataset, gd, options, previousLabel, previousPoint, showTooltip, ticks;
@@ -683,7 +717,6 @@
     </script>
     
     <script src="assets/javascripts/plugins/fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
-    <script src="assets/javascripts/plugins/select2/select2.js" type="text/javascript"></script>
     <script src="assets/javascripts/plugins/bootstrap_colorpicker/bootstrap-colorpicker.min.js" type="text/javascript"></script>
     <script src="assets/javascripts/plugins/bootstrap_daterangepicker/bootstrap-daterangepicker.js" type="text/javascript"></script>
     <script src="assets/javascripts/plugins/common/moment.min.js" type="text/javascript"></script>
@@ -703,7 +736,101 @@
 	$(function() {
 		//$('.progress-bar').css({'width':'80%'}).find('span').html('80%');
 		initschool();
+		initcategory();
+		var trank = 0;
+		if ("初级" == "${competion.rank}")
+		{
+			trank = 1;
+		}
+		else if ("中级" == "${competion.rank}")
+		{
+			trank = 2;
+		}
+		else if ("高级" == "${competion.rank}")
+		{
+			trank = 3;
+		}
+		$("#rank").attr("value",trank);
+		//初始化上传控件
+		createUploader();
 	});
+	
+	function createUploader() { 
+    	var uploader = new qq.FineUploader({ 
+    	element: document.getElementById('bootstrapped-fine-uploader'), 
+    	request: { 
+    	endpoint: 'lms/importcompetionimg.action' 
+    	}, 
+    	text: { 
+    	uploadButton: '<button class="btn btn-warning"><i class="icon-upload"></i>上传</button>' 
+    	}, 
+    	validation:{
+    		allowedExtensions: ['jpeg', 'jpg', 'gif', 'png']
+    	},
+    	template: 
+    	'<div class="qq-uploader">' + 
+    	'<pre class="qq-upload-drop-area"><span>{dragZoneText}</span></pre>' + 
+    	'<div class="qq-upload-button btn" style="width: auto;">{uploadButtonText}</div>' + 
+    	'<span class="qq-drop-processing"><span>{dropProcessingText}</span>'+ 
+    	'<span class="qq-drop-processing-spinner"></span></span>' + 
+    	'<ul class="qq-upload-list" style="margin-top: 10px; text-align: center;display:none"></ul>' + 
+    	'</div>', 
+    	classes: { 
+    	success: 'alert alert-success', 
+    	fail: 'alert alert-error' 
+    	}, 
+    	callbacks:{
+    		onComplete: function(id,  fileName,  responseJSON){		
+    			if (responseJSON.success == "true")
+    			{
+    				$("#imgpath").attr("value",responseJSON.imgpath);
+    			}
+    		}
+    	}
+    	}); 
+    }
+	
+	function initcategory()
+	{
+		$.ajax({
+			url:"lms/getAllExamCategory.action",
+			type:"post",
+			success:function(s){
+				var a=eval("("+s+")");
+				var row = a.rows;
+				var tmp ='<option value="0" selected="selected">-专业-</option>';
+				for ( var i = 0; i < row.length; i++) {
+					var category = row[i];
+					var id = category.id;
+					var name = category.name;
+					tmp += '<option value='+id+'>'+name+'</option>';
+				}
+				$("#category").html(tmp);
+				selectcategory();
+			}
+		}); 
+	}
+	function selectcategory()
+	{
+		var id = $("#competionId").attr("value");
+		if (id)
+		{
+			var competionId = parseInt(id);
+			var data={competionId:competionId};
+			$.ajax({
+				url : "cms/getCompetionCategory.action",
+				type : "post",
+				data:data,
+				success : function(s) {
+					var a = eval("(" + s + ")");
+					if ("sucess" == a.sucess)
+					{
+						$("#category").val(a.categoryId);
+					}
+				}
+			});
+		}
+	}
 	function selectschool()
 	{
 		var id = $("#competionId").attr("value");
@@ -833,6 +960,9 @@
 		var passscore = $("#passscore").attr("value");
 		var describle = $("#describle").attr("value");
 		var schoolId = $("#school").val();
+		var categoryId = $("#category").val();
+		var rank = $("#rank").val();
+		var imgpath = $("#imgpath").attr("value");
 		if (isNull(name))	
 		{
 			alert("名称不能为空");
@@ -848,7 +978,7 @@
 			alert("是否公开不能为空");
 			return ;
 		}
-		var data={name:name,starttime:starttime,endtime:endtime,wstarttime:wstarttime,wendtime:wendtime,examstarttime:examstarttime,examendtime:examendtime,type:type,score:score,passscore:passscore,describle:describle,schoolId:schoolId};
+		var data={imgpath:imgpath,rank:rank,categoryId:categoryId,name:name,starttime:starttime,endtime:endtime,wstarttime:wstarttime,wendtime:wendtime,examstarttime:examstarttime,examendtime:examendtime,type:type,score:score,passscore:passscore,describle:describle,schoolId:schoolId};
 		$.ajax({
 			url : "cms/createcompetion.action",
 			type : "post",
@@ -880,6 +1010,9 @@
 		var passscore = $("#passscore").attr("value");
 		var describle = $("#describle").attr("value");
 		var schoolId = $("#school").val();
+		var categoryId = $("#category").val();
+		var rank = $("#rank").val();
+		var imgpath = $("#imgpath").attr("value");
 		if (isNull(name))	
 		{
 			alert("名称不能为空");
@@ -895,7 +1028,7 @@
 			alert("是否公开不能为空");
 			return ;
 		}
-		var data={competionId:competionId,name:name,starttime:starttime,endtime:endtime,wstarttime:wstarttime,wendtime:wendtime,examstarttime:examstarttime,examendtime:examendtime,type:type,score:score,passscore:passscore,describle:describle,schoolId:schoolId};
+		var data={imgpath:imgpath,rank:rank,categoryId:categoryId,competionId:competionId,name:name,starttime:starttime,endtime:endtime,wstarttime:wstarttime,wendtime:wendtime,examstarttime:examstarttime,examendtime:examendtime,type:type,score:score,passscore:passscore,describle:describle,schoolId:schoolId};
 		$.ajax({
 			url : "cms/updatecompetion.action",
 			type : "post",

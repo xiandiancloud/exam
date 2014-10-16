@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.dhl.bean.UserCompetionData;
 import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Competion;
+import com.dhl.domain.CompetionCategory;
 import com.dhl.domain.CompetionExam;
 import com.dhl.domain.CompetionSchool;
 import com.dhl.domain.TeacherExam;
@@ -256,15 +257,15 @@ public class CompetionController extends BaseController {
 	 */
 	@RequestMapping("/createcompetion")
 	public void createcompetion(HttpServletRequest request,
-			HttpServletResponse response, String name, String starttime,
+			HttpServletResponse response,String imgpath,int rank,int categoryId, String name, String starttime,
 			String endtime, String wstarttime, String wendtime,
-			String examstarttime, String examendtime, String type,
+			String examstarttime, String examendtime, int type,
 			String score, String passscore, String describle, String schoolId) {
 		try {
 			PrintWriter out = response.getWriter();
 			User user = getSessionUser(request);
 			if (user != null) {
-				Competion c = competionService.createCompetion(name, starttime,
+				Competion c = competionService.createCompetion(imgpath, rank, categoryId,name, starttime,
 						endtime, wstarttime, wendtime, examstarttime,
 						examendtime, type, score, passscore, describle,
 						schoolId, user);
@@ -287,13 +288,13 @@ public class CompetionController extends BaseController {
 	 */
 	@RequestMapping("/updatecompetion")
 	public void updatecompetion(HttpServletRequest request,
-			HttpServletResponse response,int competionId, String name, String starttime,
+			HttpServletResponse response,String imgpath,int rank,int categoryId,int competionId, String name, String starttime,
 			String endtime, String wstarttime, String wendtime,
-			String examstarttime, String examendtime, String type,
+			String examstarttime, String examendtime, int type,
 			String score, String passscore, String describle, String schoolId) {
 		try {
 			PrintWriter out = response.getWriter();
-			competionService.updateCompetion(competionId,name, starttime,
+			competionService.updateCompetion(imgpath, rank,categoryId,competionId,name, starttime,
 					endtime, wstarttime, wendtime, examstarttime,
 					examendtime, type, score, passscore, describle,
 					schoolId);
@@ -590,6 +591,30 @@ public class CompetionController extends BaseController {
 			CompetionSchool cp = competionService.getCompetionSchool(competionId);
 			//examService.createExam(name, userId, competionId);
 			String str = "{'sucess':'sucess','schoolId':"+cp.getSchoolId()+"}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 得到竞赛的隶属装也
+	 * @param request
+	 * @param response
+	 * @param competionId
+	 */
+	@RequestMapping("/getCompetionCategory")
+	public void getCompetionCategory(HttpServletRequest request,
+			HttpServletResponse response,int competionId) {
+		try {
+			PrintWriter out = response.getWriter();
+			CompetionCategory cp = competionService.getCompetionCategory(competionId);
+			int id = 0;
+			if (cp != null)
+			{
+				id = cp.getEcategory().getId();
+			}
+			String str = "{'sucess':'sucess','categoryId':"+id+"}";
 			out.write(str);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -35,7 +35,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	<link href="css/bootfineuploader.css" rel="stylesheet" type="text/css" />
+	<link href="css/fineuploader.css" rel="stylesheet" type="text/css" />
 	<script src="js/fineuploader.js"></script>
 	<script src="js/common.js"></script>
   </head>
@@ -116,8 +116,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                  <div style="float:left;width:70%;margin-bottom:2%;margin-left:5px;">
 	                  <div class="box-content"style="display:inline-talbe;float:left;width:100%;margin-top:2%;">
 	                  <!-- <iframe width="100%" scrolling="yes"  frameborder="0"   src="fileupload.html" onload="this.height=84;var fdh=(this.Document?this.Document.body.scrollHeight:this.contentDocument.body.offsetHeight);this.height=(fdh>84?fdh:84)"></iframe> -->
+	                  <input type="text" id="conShell" disabled="disabled"/>
 	                  <div id="result-uploader"></div>
-	                  <input type="hidden" id="conShell"/>
+	                 
 	                  </div>
 	                  
 	                  </div>
@@ -136,7 +137,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        	 成绩
                       </div>
                     </div>
-                    <div class='box-content' style="height:285px;">
+                    <div class='box-content' style="height:200px;">
                     <div>
                   <div style="float:left;text-align:right;margin-right:5px;width:20%;border:1px;font-size:14px;font-weight:bold;margin-top:2%;">分值</div>
                   <div style="float:left;width:70%;margin-left:5px;"><input id="score" type="text" value="" style="margin-bottom:1%; width:8%;height:35px;margin-top:1.5%;"/></div>
@@ -157,7 +158,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </div>
                   </div>
                   </div>
-                 <div>
+<!--                   <div>
                   <div style="float:left;text-align:right;margin-right:5px;width:20%;border:1px;font-size:14px;font-weight:bold;margin-top:6%;">判分脚本</div>
                   
                   <div style="float:left;width:70%;margin-bottom:2%;margin-left:5px;margin-top:2%;">
@@ -165,7 +166,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <iframe width="100%" scrolling="yes"  frameborder="0"   src="fileupload.html" onload="this.height=85;var fdh=(this.Document?this.Document.body.scrollHeight:this.contentDocument.body.offsetHeight);this.height=(fdh>85?fdh:85)"></iframe>
                   </div>
                   </div>
-                  </div>
+                  </div> -->
                     </div>
                   </div>
                   </div>
@@ -206,7 +207,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          <script>
     	$(function() {
     		createUploader();
-    		
 		});
     	function createUploader() { 
     		var uploader = new qq.FineUploader({ 
@@ -226,7 +226,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	    		  '<div class="qq-upload-button btn btn-success" style="width: auto;">{uploadButtonText}</div>' +
     	    		  '<span class="qq-drop-processing" style="display:none"><span>{dropProcessingText}</span>'+
     	    		  '<span class="qq-drop-processing-spinner"></span></span>' +
-    	    		  '<ul class="qq-upload-list" style="margin-top: 10px; text-align: center;"></ul>' +
+    	    		  '<ul class="qq-upload-list" style="margin-top: 10px; text-align: center;display:none"></ul>' +
     	    		  '</div>', 
     	    	classes: { 
     	    	success: 'alert alert-success', 
@@ -240,8 +240,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	    				$("#conShell").attr("value",responseJSON.shell);
     	    			}
     	    		}
-    	    	},
-    	    	debug: true 
+    	    	}
     	    	}); 
     	}
     	function inittrainbyid(id)

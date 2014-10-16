@@ -18,6 +18,7 @@ import com.dhl.bean.QuestionData;
 import com.dhl.cons.CommonConstant;
 import com.dhl.dao.Page;
 import com.dhl.domain.Competion;
+import com.dhl.domain.CompetionCategory;
 import com.dhl.domain.CompetionExam;
 import com.dhl.domain.ECategory;
 import com.dhl.domain.Exam;
@@ -33,6 +34,7 @@ import com.dhl.domain.User;
 import com.dhl.domain.UserCompetion;
 import com.dhl.domain.UserExam;
 import com.dhl.domain.UserExamHistory;
+import com.dhl.service.CompetionCategoryService;
 import com.dhl.service.CompetionService;
 import com.dhl.service.ECategoryService;
 import com.dhl.service.ExamCategoryService;
@@ -71,6 +73,8 @@ public class LmsExamController extends BaseController {
 	private ECategoryService ecategoryService;
 	@Autowired
 	private ExamCategoryService examCategoryService;
+	@Autowired
+	private CompetionCategoryService competionCategoryService;
 	@Autowired
 	private ExamQuestionService examquestionService;
 	/**
@@ -166,8 +170,8 @@ public class LmsExamController extends BaseController {
 			return new ModelAndView(url);
 		}
 		ModelAndView view = new ModelAndView();
-		view.addObject("examId", examId);
 		Exam exam = examService.get(examId);
+		view.addObject("exam", exam);
 		String s = exam.getStarttimedetail();
 		String e = exam.getEndtimedetail();
 		if (s==null || e== null || "".equals(s) || "".equals(e))
@@ -431,6 +435,42 @@ public class LmsExamController extends BaseController {
 		view.addObject("search",s);
 		view.addObject("totalcounts",page.getTotalCount());
 		view.setViewName("/lms/online");
+		return view;
+	}
+	
+	/**
+	 * 竞赛列表
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/competionlist")
+	public ModelAndView competionlist(HttpServletRequest request, int currentpage,int c,int r,String s) {
+		ModelAndView view = new ModelAndView();
+		if (s != null)
+		s=UtilTools.converStr(s);
+		Page page = competionCategoryService.searchExam(c, r, s, currentpage, CommonConstant.EXAMLIST_PAGE_SIZE);
+		List<CompetionCategory> courses = page.getResult();
+		int totalpage = (int) page.getTotalPageCount();
+		view.addObject("competionlist", courses);
+		view.addObject("totalpage", totalpage);
+		view.addObject("currentpage", currentpage);
+		view.addObject("category",c);
+		view.addObject("rank",r);
+		view.addObject("search",s);
+		view.addObject("totalcounts",page.getTotalCount());
+		view.setViewName("/lms/oncompetion");
+		return view;
+	}
+	
+	/**
+	 * 进入竞赛
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/entercompetion")
+	public ModelAndView entercompetion(HttpServletRequest request, int competionId) {
+		ModelAndView view = new ModelAndView();
+		view.setViewName("/lms/oncompetion");
 		return view;
 	}
 	

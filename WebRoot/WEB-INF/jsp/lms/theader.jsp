@@ -91,7 +91,7 @@
 					<ul class="nav navbar-nav navbar-left pleft15">
 						<li><a href="lms/getteamCategory.action">首页</a></li>
 						<li><a href="lms/examlist.action?currentpage=1&c=0&r=0">题库</a></li>
-						<!-- <li><a href="cms/totcompetion.action">竞赛</a></li> -->
+						<li><a href="cms/competionlist.action">竞赛</a></li>
 						<li><a href="lms/myexam.action">我的云试卷</a></li>
 						<c:if test="${USER_CONTEXT.role.roleName=='老师'}">
 						<li><a href="cms">制作课件</a></li>

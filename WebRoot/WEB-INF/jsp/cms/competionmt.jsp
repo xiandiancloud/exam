@@ -48,7 +48,7 @@
 
 
 <body class='contrast-red fixed-header'>
-	<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="../common/header.jsp"></jsp:include>
 
 
 		<div class='container'>
@@ -75,7 +75,7 @@
 					<div class='col-sm-12'>
 						<div class='box bordered-box'>
 							<div class='box-header red-background'>
-								<div class='title'>赛事介绍</div>
+								<div class='title'>定义赛事</div>
 								<div class='actions'>
 									<a class="btn box-remove btn-xs btn-link" href="#">
 										<i class='icon-remove'></i> 
@@ -86,25 +86,49 @@
 							</div>
 							<div class='box-content'>
 								<div class='row'>
-									<div class='col-sm-12'>
+									<div class='col-sm-6'>
 										<p>
 											<strong>赛项名称</strong>
 										</p>
 										<input type="hidden" class='form-control' id='competionId' value="${competion.id}">
 										<input class='form-control' id='name' type='text' value="${competion.name}">
 									</div>
+									<div class='col-sm-6'>
+										<p>
+											<strong>赛项图片</strong>
+										</p>
+										<input class='form-control' type='text' id="imgpath" disabled="disabled" value="${competion.imgpath}">
+									</div>
 								</div>
-								<hr class='hr-normal'>
+								<div class='h10'></div>
 								<div class='row'>
-									<div class='col-sm-12'>
+									<div class='col-sm-4'>
 										<p>
 											<strong>举办方</strong>
 										</p>
 										<select class='form-control' id="school">
 										</select>
 									</div>
+								  <div class='col-sm-4'>
+										<p>
+											<strong>专业</strong>
+										</p>
+										<select class='select2 form-control' name="major" id="category">
+										</select>
+									</div>
+									<div class='col-sm-4'>
+										<p>
+											<strong>等级</strong>
+										</p>
+										<select class='select2 form-control' name="level" id="rank">
+										<option value="0" selected="selected">-等级-</option>
+										<option value="1">初级</option>
+										<option value="2">中级</option>
+										<option value="3">高级</option>
+										</select>
+									</div>
 								</div>
-								<hr class='hr-normal'>
+								<div class='h10'></div>
 								<div class='row'>
 									<div class='col-sm-6'>
 										<p>
@@ -133,7 +157,7 @@
 										</div>
 									</div>
 								</div>
-								<hr class='hr-normal'>
+								<div class='h10'></div>
 								<div class='row'>
 									<div class='col-sm-6'>
 										<p>
@@ -162,7 +186,7 @@
 										</div>
 									</div>
 								</div>
-								<hr class='hr-normal'>
+								<div class='h10'></div>
 								<div class='row'>
 									<div class='col-sm-6'>
 										<p>
@@ -191,19 +215,19 @@
 										</div>
 									</div>
 								</div>
-								<hr class='hr-normal'>
+								<div class='h10'></div>
 								<div class='row'>
 									<div class='col-sm-12'>
 										<p>
 											<strong>是否公开</strong>
 										</p>
 										<select class='select2 form-control' id="type" value="${competion.type}">
-											<option value='DV'>开发竞赛</option>
-											<option value='SP'>指定竞赛</option>
+											<option value='0'>是</option>
+											<option value='1'>否</option>
 										</select>
 									</div>
 								</div>
-								<hr class='hr-normal'>
+								<div class='h10'></div>
 								<div class='row'>
 									<div class='col-sm-6'>
 										<p>
@@ -218,7 +242,7 @@
 										<input class='form-control' id='passscore' type='text' value="${competion.passscore}">
 									</div>									
 								</div>
-								<hr class='hr-normal'>
+								<div class='h10'></div>
 								<div class='row'>
 									<div class='col-sm-12'>
 										<p>
@@ -292,7 +316,8 @@
 					</div>
 			</div>
 		</div>
-	<jsp:include page="footer.jsp"></jsp:include>
+		<div class="clear"></div><div class="clear"></div>
+	<jsp:include page="../common/footer.jsp"></jsp:include>
 	
 <div class='modal fade' id='modal-example' tabindex='-1'>
                       <div class='modal-dialog'>
@@ -474,7 +499,6 @@
     </script>
     
     <script src="assets/javascripts/plugins/fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
-    <script src="assets/javascripts/plugins/select2/select2.js" type="text/javascript"></script>
     <script src="assets/javascripts/plugins/bootstrap_colorpicker/bootstrap-colorpicker.min.js" type="text/javascript"></script>
     <script src="assets/javascripts/plugins/bootstrap_daterangepicker/bootstrap-daterangepicker.js" type="text/javascript"></script>
     <script src="assets/javascripts/plugins/common/moment.min.js" type="text/javascript"></script>
@@ -494,7 +518,63 @@
 	$(function() {
 		//$('.progress-bar').css({'width':'80%'}).find('span').html('80%');
 		initschool();
+		initcategory();
+		var trank = 0;
+		if ("初级" == "${competion.rank}")
+		{
+			trank = 1;
+		}
+		else if ("中级" == "${competion.rank}")
+		{
+			trank = 2;
+		}
+		else if ("高级" == "${competion.rank}")
+		{
+			trank = 3;
+		}
+		$("#rank").attr("value",trank);
 	});
+	function initcategory()
+	{
+		$.ajax({
+			url:"lms/getAllExamCategory.action",
+			type:"post",
+			success:function(s){
+				var a=eval("("+s+")");
+				var row = a.rows;
+				var tmp ='<option value="0" selected="selected">-专业-</option>';
+				for ( var i = 0; i < row.length; i++) {
+					var category = row[i];
+					var id = category.id;
+					var name = category.name;
+					tmp += '<option value='+id+'>'+name+'</option>';
+				}
+				$("#category").html(tmp);
+				selectcategory();
+			}
+		}); 
+	}
+	function selectcategory()
+	{
+		var id = $("#competionId").attr("value");
+		if (id)
+		{
+			var competionId = parseInt(id);
+			var data={competionId:competionId};
+			$.ajax({
+				url : "cms/getCompetionCategory.action",
+				type : "post",
+				data:data,
+				success : function(s) {
+					var a = eval("(" + s + ")");
+					if ("sucess" == a.sucess)
+					{
+						$("#category").val(a.categoryId);
+					}
+				}
+			});
+		}
+	}
 	function selectschool()
 	{
 		var competionId = parseInt($("#competionId").attr("value"));

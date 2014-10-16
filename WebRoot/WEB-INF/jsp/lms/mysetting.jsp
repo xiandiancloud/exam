@@ -73,7 +73,7 @@
     <![endif]-->
 </head>
 <body class='contrast-red fixed-header'>
-	<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="../common/header.jsp"></jsp:include>
 	<div id='wrapper'>
 
 		<div class='container'>
@@ -317,7 +317,7 @@
 		</div>
 	</div>
 
-	<jsp:include page="footer.jsp"></jsp:include>
+	<jsp:include page="../common/footer.jsp"></jsp:include>
 	<!-- / jquery [required] -->
 	<script src="assets/javascripts/jquery/jquery.min.js"
 		type="text/javascript"></script>

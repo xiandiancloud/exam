@@ -5,7 +5,7 @@
 
 		<div class="wrapper wrapper-l">
 			<h1 class="branding">
-				<a href="cms/totexamlist.action"><img src="" alt="edX Studio" /></a>
+				<a href="cms/totexamlist.action"><img src="images/cmslogo.png"/></a>
 			</h1>
 
 		</div>
