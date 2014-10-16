@@ -449,9 +449,17 @@ public class LmsExamController extends BaseController {
 		if (s != null)
 		s=UtilTools.converStr(s);
 		Page page = competionCategoryService.searchExam(c, r, s, currentpage, CommonConstant.EXAMLIST_PAGE_SIZE);
-		List<CompetionCategory> courses = page.getResult();
+		List<CompetionCategory> cclist = page.getResult();
+		
+		User user = getSessionUser(request);
+		for (CompetionCategory cc:cclist)
+		{
+			Competion com = cc.getCompetion();
+			List<UserCompetion> uclist = userCompetionService.getMyCompetionByuserIdAndCompetionId(user.getId(), com.getId());
+			cc.setUclist(uclist);
+		}
 		int totalpage = (int) page.getTotalPageCount();
-		view.addObject("competionlist", courses);
+		view.addObject("competionlist", cclist);
 		view.addObject("totalpage", totalpage);
 		view.addObject("currentpage", currentpage);
 		view.addObject("category",c);
@@ -470,6 +478,10 @@ public class LmsExamController extends BaseController {
 	@RequestMapping("/entercompetion")
 	public ModelAndView entercompetion(HttpServletRequest request, int competionId) {
 		ModelAndView view = new ModelAndView();
+		
+		User user = getSessionUser(request);
+		//
+		
 		view.setViewName("/lms/oncompetion");
 		return view;
 	}

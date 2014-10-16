@@ -331,7 +331,8 @@
 				</div> -->
 			</div>
 		</div>
-	<jsp:include page="../common/footer.jsp"></jsp:include>
+		<div class="clear"></div><div class="clear"></div>
+		<jsp:include page="../common/footer.jsp"></jsp:include>
 	
 <div class='modal fade' id='modal-example' tabindex='-1'>
                       <div class='modal-dialog'>

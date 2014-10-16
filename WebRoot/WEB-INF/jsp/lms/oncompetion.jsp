@@ -67,7 +67,7 @@
 			
 				<div class="row">
 					<div class="col-xs-12 center">
-						<h1 class="h1font"><a id="allcounts"></a>+的试卷，造就你的云梦想！</h1>
+						<h1 class="h1font"><a id="allcounts"></a>+的竞赛，造就你的云梦想！</h1>
 					</div>
 				</div>
 				<div class="clear"></div>
@@ -129,11 +129,32 @@
 						<div class="wrap">
 							<div class="subwrap">
 								<div class="content">
-									<p>
-										<a href="lms/entercompetion.action?competionId=${ec.competion.id}"><button
-												type="button" class="btn btn-danger">进入</button> </a>
-
-									</p>
+									<c:forEach var="usercompetion" items="${ec.uclist}">
+									<c:if test="${usercompetion.job=='主裁判'}">
+										<p>
+											<a href="cms/totcompetion.action?competionId=${ec.competion.id}"><button
+													type="button" class="btn btn-danger">主裁判进入</button> </a>
+										</p>
+									</c:if>
+									<c:if test="${usercompetion.job=='命题裁判'}">
+										<p>
+											<a href="cms/totcompetionmt.action?competionId=${ec.competion.id}"><button
+													type="button" class="btn btn-danger">命题裁判进入</button> </a>
+										</p>
+									</c:if>
+									<c:if test="${usercompetion.job=='判分裁判'}">
+										<p>
+											<a href="cms/totcompetionpf.action?competionId=${ec.competion.id}"><button
+													type="button" class="btn btn-danger">判分裁判进入</button> </a>
+										</p>
+									</c:if>
+									<c:if test="${usercompetion.job=='考生'}">
+										<p>
+											<a href="javascript:void(0);" onclick="starttocompetion(${ec.competion.id});"><button
+													type="button" class="btn btn-danger">考生进入</button> </a>
+										</p>
+									</c:if>
+									</c:forEach>
 								</div>
 							</div>
 						</div>
@@ -147,8 +168,7 @@
 		</section>
 	</div>
 	<ul id="pagination" class="center"></ul>
-	<div class="clear"></div>
-	<div class="clear"></div>
+	<div class="clear"></div><div class="clear"></div>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 
 	<!-- / jquery [required] -->
@@ -277,19 +297,26 @@
 			 }
 		}
 		
-		/* function pageexamlist(currentpage)
+		function starttocompetion(competionId)
 		{
+			var data={competionId:competionId};
 			$.ajax({
-				url : "lms/examlist2.action?currentpage="+currentpage,
+				url : "lms/isstartcompetion.action",
 				type : "post",
+				data :data,
 				success : function(s) {
 					var a = eval("(" + s + ")");
-					if ("sucess" == a.sucess) {
-						
+					if ("sucess" == a.sucess)
+					{
+						location.href = "lms/toexamintroduce.action?competionId="+competionId+"&examId="+a.examId;
+					}
+					else
+					{
+						alert(a.msg);
 					}
 				}
 			});
-		} */
+		}
 	</script>
 </body>
 </html>

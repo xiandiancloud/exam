@@ -1,5 +1,7 @@
 package com.dhl.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * @author dhl
@@ -30,6 +33,16 @@ public class CompetionCategory extends BaseDomain {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ecategoryId")
 	private ECategory ecategory;
+	@Transient
+	private List<UserCompetion> uclist;
+	
+	public List<UserCompetion> getUclist() {
+		return uclist;
+	}
+
+	public void setUclist(List<UserCompetion> uclist) {
+		this.uclist = uclist;
+	}
 
 	public ECategory getEcategory() {
 		return ecategory;

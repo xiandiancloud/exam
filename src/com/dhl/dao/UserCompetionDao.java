@@ -15,6 +15,11 @@ public class UserCompetionDao extends BaseDao<UserCompetion> {
 		return find(hql);
 	}
 
+	public List<UserCompetion> getMyCompetionByuserIdAndCompetionId(int userId,int competionId) {
+		String hql = "from UserCompetion where userId = " + userId +" and competionId = "+competionId;
+		return find(hql);
+	}
+	
 	public List<UserCompetion> getCompetionByJob(String job) {
 		String hql = "from UserCompetion where job = '" + job + "'";
 		return find(hql);

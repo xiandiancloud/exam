@@ -99,7 +99,10 @@ public class UserCompetionService {
 	public List<UserCompetion> getMyAllCompetion(int userId) {
 		return userCompetionDao.getMyAllCompetion(userId);
 	}
-	
+	public List<UserCompetion> getMyCompetionByuserIdAndCompetionId(int userId,int competionId)
+	{
+		return userCompetionDao.getMyCompetionByuserIdAndCompetionId(userId,competionId);
+	}
 	/**
 	 * 根据职务来查找相关的
 	 * @param job
