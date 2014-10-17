@@ -1374,7 +1374,7 @@ img.MathJax_strut {
 
 					<nav class="nav-actions">
 						<h3 class="sr">Page Actions</h3>
-						<ul>
+						<!-- <ul>
 							<li class="action-item action-view nav-item"><a
 								href="#"
 								class="button button-view action-button" rel="external"
@@ -1389,7 +1389,7 @@ img.MathJax_strut {
 								target="_blank"> <span class="action-button-text">Preview
 										Changes</span>
 							</a></li>
-						</ul>
+						</ul> -->
 					</nav>
 				</header>
 			</div>
@@ -1681,7 +1681,7 @@ img.MathJax_strut {
 														class="multiple-templates add-xblock-component-button"
 														data-type="experiment"> <span
 															class="large-template-icon large-experiment-icon"></span>
-															<span class="name">实验</span>
+															<span class="name">试卷</span>
 													</a></li>
 												</ul>
 											</div>
@@ -1725,7 +1725,7 @@ img.MathJax_strut {
 										</div>
 										<a class="cancel-button" onclick="problemshowconcel()" >取消</a>
 										</div>
-										<!--实验列表-->
+										<!--试卷列表-->
 										<div class="new-component-templates new-component-problem" id="exam_select" style="display: none;">
 											<div class="tab-group tabs ui-tabs ui-widget ui-widget-content ui-corner-all">
 											<ul class="problem-type-tabs nav-tabs ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">
@@ -1736,7 +1736,7 @@ img.MathJax_strut {
 											<div id="tab1" class="tab current ui-tabs-panel ui-widget-content ui-corner-bottom" aria-labelledby="ui-id-1" role="tabpanel" style="display: block;" aria-expanded="true" aria-hidden="false">
 												<ul class="new-component-template">
 													<li>
-														<input class="exam_button exam_button_blue" type="button" value="添加实验" onclick="showtrain();resettrain();"/> 
+														<input class="exam_button exam_button_blue" type="button" value="添加试卷" onclick="showtrain();resettrain();"/> 
 													</li>
 													<div id="trainlistli"></div>
 												    <!--注意实训系统的开启  动态载入 -->
@@ -1762,7 +1762,7 @@ img.MathJax_strut {
 							<div class="ui-loading is-hidden">
 								<p>
 									<span class="spin"><i class="icon-refresh"></i></span> <span
-										class="copy">Loading...</span>
+										class="copy"><!-- Loading... --></span>
 								</p>
 							</div>
 						</article>
@@ -1771,26 +1771,24 @@ img.MathJax_strut {
 
 								<div class="bit-publishing is-staff-only is-scheduled">
 									<h3 class="bar-mod-title pub-status">
-										<span class="sr">Publishing Status</span> Visible to Staff
-										Only
+										<span class="sr">Publishing Status</span>我在这个页面能做什么？
 									</h3>
 
 									<div class="wrapper-last-draft bar-mod-content">
 										<p class="copy meta">
 
-											Draft saved on <span class="date">Aug 24, 2014 at
-												03:28 UTC</span> by <span class="user">staff</span>
-
+											 <span class="date">您可以在单元中添加新的试卷，定义试卷编号、试卷名称,试卷分值、上传判分脚本。</span> <span class="user">您还修改试卷名称、试卷题目、试卷答案.</span>
 										</p>
+										<p class="copy meta"><span>此外，您可以在一个单元中添加多个试卷，或者删除冗余的试卷。</span></p>
 									</div>
 
 									<div class="wrapper-release bar-mod-content">
-										<h5 class="title">Release:</h5>
+										<h5 class="title"><!-- Release: --></h5>
 										<p class="copy">
 
 
-											<span class="release-date">Jan 01, 2014 at 00:00 UTC</span>
-											with <span class="release-with">Section "Section1"</span>
+											<span class="release-date"></span>
+											 <span class="release-with"></span>
 
 										</p>
 									</div>
@@ -1799,12 +1797,12 @@ img.MathJax_strut {
 
 									<div class="wrapper-pub-actions bar-mod-actions">
 										<ul class="action-list">
-											<li class="action-item"><a
-												class="action-publish action-primary " href="">Publish </a>
+											<li class="action-item"><!-- <a
+												class="action-publish action-primary " href="">Publish </a> -->
 											</li>
-											<li class="action-item"><a
+											<li class="action-item"><!-- <a
 												class="action-discard action-secondary " href="">Discard
-													Changes </a></li>
+													Changes </a> --></li>
 										</ul>
 									</div>
 								</div>
@@ -1815,8 +1813,8 @@ img.MathJax_strut {
 
 								<div class="wrapper-last-publish">
 									<p class="copy">
-										Last published <span class="date">Aug 20, 2014 at 01:21
-											UTC</span> by <span class="user">staff</span>
+										<!-- Last published  --><span class="date"><!-- Aug 20, 2014 at 01:21 -->
+											<!-- UTC --></span><!--  by --> <span class="user"><!-- staff --></span>
 									</p>
 								</div>
 
@@ -1849,7 +1847,7 @@ img.MathJax_strut {
 		<ul class="list-actions list-cta">
 			<li class="action-item"><a href="#sock"
 				class="cta cta-show-sock"><i class="icon-question-sign"></i> <span
-					class="copy">Looking for help with Studio?</span></a></li>
+					class="copy">向云考试平台求助?</span></a></li>
 		</ul>
 
 		<div class="wrapper-inner wrapper">
@@ -3044,14 +3042,14 @@ require(['tender']);
 </div>
 
 </div>
-<!--实验编辑-->
+<!--试卷编辑-->
  <div  id="exam_editor" style="display:none;">
     <div class="wrapper wrapper-modal-window wrapper-modal-window-edit-xblock" aria-describedby="modal-window-description" aria-labelledby="modal-window-title" aria-hidden="" role="dialog">
     <div class="modal-window-overlay"></div>
     <div class="modal-window modal-editor confirm modal-lg modal-type-discussion" style="top: 31.39999999999999px; left: 202.5px;position:fixed;">
         <div class="edit-xblock-modal">
             <div class="modal-header">
-                <h2 class="title modal-window-title">编辑：实验</h2>
+                <h2 class="title modal-window-title">编辑：试卷</h2>
                 <ul class="editor-modes action-list action-modes">
                 </ul>
             </div>

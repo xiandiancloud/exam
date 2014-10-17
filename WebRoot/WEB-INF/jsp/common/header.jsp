@@ -34,7 +34,7 @@
 						<c:choose>
 							<c:when test="${empty USER_CONTEXT}">
 								<li class='dropdown light only-icon'><a
-									href='lms/tologin.action'> <i class='icon-signin'>登陆</i>
+									href='lms/tologin.action'> <i class='icon-signin'>登录</i>
 								</a></li>
 							</c:when>
 							<c:otherwise>

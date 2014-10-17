@@ -12,7 +12,7 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <base href="<%=basePath%>">
-<title>我的课程 |edX Studio</title>
+<title>我的试卷 </title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="path_prefix" content="">
 <link type="text/css" rel="stylesheet" href="tcss/normalize.css">
@@ -118,7 +118,7 @@
 										id="org" type="text" name="new-course-org"
 										aria-required="true"
 										placeholder="例如：UniversityX 或 OrganizationX" /> <span
-										class="tip">资助本课程的机构名称。 <strong>注意：这是你课程URL的一部分，请勿使用空格或特殊字符。</strong>
+										class="tip">资助本平台的机构名称。 <strong>注意：这是你课程URL的一部分，请勿使用空格或特殊字符。</strong>
 											这将不能被更改，但是您可以稍后在高级设置中设置不同的显示名称。
 									</span> <span class="tip tip-error is-hiding"></span></li>
 
@@ -184,21 +184,23 @@
 
 				</article> <aside class="content-supplementary" role="complimentary">
 				<div class="bit">
-					<h3 class="title title-3">New to edX Studio?</h3>
-					<p>Click Help in the upper-right corner to get more information
+					<h3 class="title title-3">对考试平台还不熟悉?</h3>
+					<p><!-- Click Help in the upper-right corner to get more information
 						about the Studio page you are viewing. You can also use the links
 						at the bottom of the page to access our continously updated
-						documentation and other Studio resources.</p>
+						documentation and other Studio resources. -->
+						点击右上角的帮助按钮，从而获得更多您访问的平台页面信息.您也可以使用在页面底部的链接，从而进入我们不断更新的文件和其他一些平台资源。</p>
 
 					<ol class="list-actions">
 						<li class="action-item"><a
 							href="http://edx.readthedocs.org/projects/edx-partner-course-staff/en/latest/getting_started/get_started.html"
-							target="_blank">Getting Started with edX Studio</a></li>
+							target="_blank"><!-- Getting Started with edX Studio -->从云考试平台开始</a></li>
 						<li class="action-item"><a
 							href="http://help.edge.edx.org/discussion/new"
 							class="show-tender"
-							title="Use our feedback tool, Tender, to request help">Request
-								help with edX Studio</a></li>
+							title="Use our feedback tool, Tender, to request help"><!-- Request
+								help with edX Studio -->
+								向云实训平台求助</a></li>
 					</ol>
 				</div>
 
@@ -214,7 +216,7 @@
 			<ul class="list-actions list-cta">
 				<li class="action-item"><a href="#sock"
 					class="cta cta-show-sock"><i class="icon-question-sign"></i> <span
-						class="copy">Looking for help with Studio?</span></a></li>
+						class="copy">向云平台求助?</span></a></li>
 			</ul>
 
 			<div class="wrapper-inner wrapper">

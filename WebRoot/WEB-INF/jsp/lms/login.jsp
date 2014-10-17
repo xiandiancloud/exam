@@ -67,7 +67,7 @@
 						</br>
 						<h3>
 							<p>
-								<a>请登陆</a>
+								<a>请登录</a>
 							</p>
 							<p class="left40">来访问你的云试卷</p>
 						</h3>
@@ -91,7 +91,7 @@
 								<div class="clear"></div>
 								<div class="clear"></div>
 								<button type="button" class="btn btn-danger btn-lg btn-block" onclick="login();">
-									登陆+进入我的试卷</button>
+									登录+进入我的试卷</button>
 							</div>
 						</form>
 					</div>
@@ -99,13 +99,13 @@
 					<a>尚未注册？</a></br>
 					<div class="clear"></div>
 					<p>
-					现在就注册加入<a href="lms/toregeister.action">Your Platform Name Here！</a> 
+					现在就注册加入<a href="lms/toregeister.action" class="hrefcolor">在这儿注册您的云平台账号！</a> 
 					</p>
 					<div class="clear"></div>
 					<a>需要帮助？</a></br>
 					<div class="clear"></div>
 					<p>
-					寻找关于登录您的 Your Platform Name Here 账户的帮助？<a>查看帮助部分来获得常见问题的解答。</a> 
+					寻找关于登录您的您的云平台账户的帮助？<a>查看帮助部分来获得常见问题的解答。</a> 
 					</p>
 					</div>
 				</div>

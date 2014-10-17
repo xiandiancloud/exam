@@ -343,7 +343,7 @@
 			<ul class="list-actions list-cta">
 				<li class="action-item"><a href="#sock"
 					class="cta cta-show-sock"><i class="icon-question-sign"></i> <span
-						class="copy">Looking for help with Studio?</span></a></li>
+						class="copy">向云平台求助?</span></a></li>
 			</ul>
 
 			<div class="wrapper-inner wrapper">

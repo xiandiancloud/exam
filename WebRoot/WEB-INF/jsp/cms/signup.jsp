@@ -11,9 +11,9 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>注册 |edX Studio</title>
+<title>注册考试平台账号</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>Sign In | edX Studio</title>
+<title>登录考试平台</title>
 <link type="text/css" rel="stylesheet" href="tcss/normalize.css">
 <link type="text/css" rel="stylesheet" href="tcss/font-awesome.css">
 <link type="text/css" rel="stylesheet" href="tcss/number-polyfill.css">
@@ -44,16 +44,16 @@
 		<div id="content">
 			<div class="wrapper-content wrapper">
 				<section class="content"> <header>
-				<h1 class="title title-1">注册edX Studio</h1>
-				<a href="cms/totlogin.action" class="action action-signin">如果您已经有Studio账号，请直接登录</a>
+				<h1 class="title title-1">注册</h1>
+				<a href="cms/totlogin.action" class="action action-signin">如果您已经有考试平台账号，请直接登录</a>
 				</header>
-				<p class="introduction">如果您已准备好创建在线课程，请在下面注册并创建您的第一个edX课程。</p>
+				<p class="introduction">如果您已准备好创建在线试卷，请在下面注册并创建您的第一个考试。</p>
 				<article class="content-primary" role="main">
 				<form id="register_form" method="post">
 					<div id="register_error" name="register_error"
 						class="message message-status message-status error"></div>
 					<fieldset>
-						<legend class="sr">注册edX Studio所需的信息</legend>
+						<legend class="sr">注册考试所需的信息</legend>
 						<ol class="list-input">
 							<li class="field text required" id="field-email"><label
 								for="email">电子邮件地址</label> <input id="email" type="email"
@@ -64,7 +64,7 @@
 							<li class="field text required" id="field-username"><label
 								for="username">公开用户名</label> <input id="username" type="text"
 								name="username" placeholder="e.g. janedoe" /> <span
-								class="tip tip-stacked">这将会被用于您课程的公开讨论中以及我们edX101课程的支持论坛</span>
+								class="tip tip-stacked">这将会被用于您的公开讨论中以及我们考试平台的支持论坛</span>
 							</li>
 							<li class="field text required" id="field-password"><label
 								for="password">密码</label> <input id="password" type="password"
@@ -223,7 +223,7 @@
 								for="mailing_address">邮寄地址</label> <textarea class="" rows="3"
 									id="mailing_address"></textarea></li>
 							<li class="field text required" id="field-goals"><label
-								for="goals">请告诉我们您注册 Your Platform Name Here的原因</label> <textarea
+								for="goals">请告诉我们您注册 考试平台的原因</label> <textarea
 									class="" rows="3" id="goals"></textarea></li>
 							<!-- 							<li class="field-group">
 								<div class="field text" id="field-location">
@@ -245,7 +245,7 @@
 
 					<div class="form-actions">
 						<button type="button" class="action action-primary"
-							onclick="tregeister();">创建我的账号 &amp;开始创建课程</button>
+							onclick="tregeister();">创建我的账号 &amp;开始创建</button>
 					</div>
 
 					<!-- no honor code for CMS, but need it because we're using the lms student object -->
@@ -253,21 +253,21 @@
 						checked="true" hidden="true">
 				</form>
 				</article> <aside class="content-supplementary" role="complimentary">
-				<h2 class="sr">关于Studio的常见问题</h2>
+				<h2 class="sr">关于考试平台的常见问题</h2>
 
 				<div class="bit">
-					<h3 class="title-3">Studio是为谁服务的？</h3>
-					<p>Studio面向任何希望使用全球化edX平台创建在线课程的用户，这些用户通常是院系教师、助教及教学技术小组。</p>
+					<h3 class="title-3">考试平台是为谁服务的？</h3>
+					<p>考试平台面向任何希望使用全球化考试创建在线的用户，这些用户通常是院系教师、助教及教学技术小组。</p>
 				</div>
 
 				<div class="bit">
-					<h3 class="title-3">在Studio创建课程需要掌握哪些技术？</h3>
-					<p>对几乎所有熟悉网上编辑环境(例如WordPress，Moodle)的人而言，Studio都是很容易使用的。它无需任何编程知识，不过拥有技术背景会对使用一些高级特性有所帮助。我们会一如既往地为您提供帮助，不要犹豫赶快加入吧。</p>
+					<h3 class="title-3">在考试平台创建需要掌握哪些技术？</h3>
+					<p>对几乎所有熟悉网上编辑环境(例如WordPress，Moodle)的人而言，考试平台都是很容易使用的。它无需任何编程知识，不过拥有技术背景会对使用一些高级特性有所帮助。我们会一如既往地为您提供帮助，不要犹豫赶快加入吧。</p>
 				</div>
 
 				<div class="bit">
-					<h3 class="title-3">我以前从来没创建过在线课程，可以帮帮我吗？</h3>
-					<p>当然。我们创建了一个在线课程：edX101，它介绍了一些创建在线课程的最佳实践：从拍摄视频，创建练习到开展在线教学的基础。另外，我们会尽力提供所需帮助，需要时请随时给我们留言。</p>
+					<h3 class="title-3">我以前从来没创建过在线，可以帮帮我吗？</h3>
+					<p>当然。我们创建了一个在线：试卷，它介绍了一些创建在线的最佳实践：从拍摄视频，创建练习到开展在线教学的基础。另外，我们会尽力提供所需帮助，需要时请随时给我们留言。</p>
 				</div>
 				</aside> </section>
 			</div>

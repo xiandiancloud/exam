@@ -43,7 +43,7 @@
     <![endif]-->
   </head>
   <body class='contrast-red fixed-header'>
-    <jsp:include page="header.jsp"></jsp:include>
+    <jsp:include page="../common/header.jsp"></jsp:include>
     <div id='wrapper'>
       <section id=''>
       <div class="container cpading">
@@ -54,7 +54,7 @@
 					<p>
 						<a>欢迎！</a>
 					</p>
-					<p class="left40">注册以创建你在 Your Platform Name Here的账户</p>
+					<p class="left40">注册以创建你在云考试平台的账户</p>
 				</h3>
 
 			</div>
@@ -403,13 +403,13 @@
 						<div class="h5"></div>
 						<textarea class="form-control" rows="3" id="mailing_address"></textarea>
 						<div class="clear"></div>
-						<a>请告诉我们您注册 Your Platform Name Here的原因</a>
+						<a>请告诉我们您注册 云考试平台的原因</a>
 						<div class="h5"></div>
 						<textarea class="form-control" rows="3" id="goals"></textarea>
 						<div class="clear"></div>
 						<div class="clear"></div>
-						<button type="button" class="btn btn-primary btn-lg btn-block"
-							onclick="regeister();">注册我的 Your Platform Name Here账户</button>
+						<button type="button" class="btn btn-danger btn-lg btn-block"
+							onclick="regeister();">注册我的云运考试平台账户</button>
 					</div>
 				</form>
 			</div>
@@ -417,20 +417,21 @@
 				<a>已经注册过了？</a></br>
 				<div class="clear"></div>
 				<p>
-					<a href="lms/tologin.action">点击这里登录</a>
+					<a href="lms/tologin.action" class="hrefcolor">点击这里登录</a>
 				</p>
 				<div class="clear"></div>
 				<a>需要帮助？</a></br>
 				<div class="clear"></div>
 				<p>
-					寻找关于登录您的 Your Platform Name Here 账户的帮助？<a>查看帮助部分来获得常见问题的解答。</a>
+					寻找关于登录您的云考试平台账户的帮助？<a>查看帮助部分来获得常见问题的解答。</a>
 				</p>
 			</div>
 		</div>
 	</div>
       </section>
     </div>
-    <jsp:include page="footer.jsp"></jsp:include>
+    <div class="clear"></div><div class="clear"></div><div class="clear"></div>
+    <jsp:include page="../common/footer.jsp"></jsp:include>
     <!-- / jquery [required] -->
     <script src="assets/javascripts/jquery/jquery.min.js" type="text/javascript"></script>
     <!-- / jquery mobile (for touch events) -->
