@@ -132,17 +132,14 @@
 									<p>
 										<a href="lms/toexamintroduce.action?competionId=-1&examId=${ec.exam.id}"><button
 												type="button" class="btn btn-danger">进入考试</button> </a>
-
 									</p>
 								</div>
 							</div>
 						</div>
-
 					</div>
 				</div>
 				<div class="clear"></div>
 				</c:forEach>
-				<div class="clear"></div>
 			</div>
 		</section>
 	</div>
