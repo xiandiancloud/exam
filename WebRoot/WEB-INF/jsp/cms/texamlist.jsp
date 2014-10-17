@@ -200,7 +200,7 @@
 							class="show-tender"
 							title="Use our feedback tool, Tender, to request help"><!-- Request
 								help with edX Studio -->
-								向云实训平台求助</a></li>
+								向云考试平台求助</a></li>
 					</ol>
 				</div>
 

@@ -307,7 +307,7 @@
 </div>
 
 <div data-options="region:'south',border:false" style="height:50px;background:#EEEEEE;padding:0px;">
-	<jsp:include page="footer.jsp"></jsp:include>
+	<jsp:include page="../common/footer.jsp"></jsp:include>
 </div>
 
 <div data-options="region:'center'" style="padding:0px;overflow:hidden;">

@@ -1681,7 +1681,7 @@ img.MathJax_strut {
 														class="multiple-templates add-xblock-component-button"
 														data-type="experiment"> <span
 															class="large-template-icon large-experiment-icon"></span>
-															<span class="name">试卷</span>
+															<span class="name">实验</span>
 													</a></li>
 												</ul>
 											</div>
@@ -1736,7 +1736,7 @@ img.MathJax_strut {
 											<div id="tab1" class="tab current ui-tabs-panel ui-widget-content ui-corner-bottom" aria-labelledby="ui-id-1" role="tabpanel" style="display: block;" aria-expanded="true" aria-hidden="false">
 												<ul class="new-component-template">
 													<li>
-														<input class="exam_button exam_button_blue" type="button" value="添加试卷" onclick="showtrain();resettrain();"/> 
+														<input class="exam_button exam_button_blue" type="button" value="添加实验" onclick="showtrain();resettrain();"/> 
 													</li>
 													<div id="trainlistli"></div>
 												    <!--注意实训系统的开启  动态载入 -->
