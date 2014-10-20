@@ -582,7 +582,7 @@ public class CmsController extends BaseController {
     		
 			String str = "{'sucess':'sucess','name':'"+t.getName()+"','codenum':'"+t.getCodenum()
 					+"','envname':'"+t.getEnvname()+"','conContent':'"+t.getConContent()+"','conShell':'"
-					+t.getConShell()+"','conAnswer':'"+t.getConAnswer()+"','score':'"+t.getScore()+"'}";
+					+t.getConShell()+"','conAnswer':'"+t.getConAnswer()+"','scoretag':'"+t.getScoretag()+"','score':'"+t.getScore()+"'}";
 			out.write(str);
 		} catch (Exception e) {
 			e.printStackTrace();

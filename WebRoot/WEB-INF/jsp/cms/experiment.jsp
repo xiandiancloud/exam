@@ -35,13 +35,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	<link href="css/fineuploader.css" rel="stylesheet" type="text/css" />
+	<!-- <link href="css/fineuploader.css" rel="stylesheet" type="text/css" /> -->
 	<script src="js/fineuploader.js"></script>
 	<script src="js/common.js"></script>
 	
+	<style>
+	.right{float:right;}
+	.btn{height:45px;}
+	.qq-upload-button {
+    	height:45px;
+    	margin-right: 130px;
+	}
+	.qq-upload-button-hover {
+	    background: none;
+	}
+	</style>
   </head>
   <body>
-  
+   <input type="hidden" id="vtrainid">
    <div class="tabs-wrapper">
         <div class="component-tab" id="">
 			<div class="wrapper-comp-settings basic_metadata_edit" data-metadata="">
@@ -78,7 +89,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				        <div class="wrapper-comp-setting">
 							<label class="label setting-label">验证脚本</label>
 							<input type="text" id="conShell" disabled="disabled"/>
-	                  		<div id="result-uploader"></div>	                 
+	                  		<div id="result-uploader" class="right"></div>	                 
 						</div>
 				    </li>
 				    <li class="field comp-setting-entry metadata_entry">
@@ -90,12 +101,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				    <li class="field comp-setting-entry metadata_entry">
 				        <div class="wrapper-comp-setting">
 							<label class="label setting-label">判分标准</label>
-							<input id="score" type="text" value="Classic,Classic"/>
-							<label class="label setting-label"></label>
-			                  	<button class="btn btn-success" type="submit">
+							<input id="scoretag" type="text" value=""/>
+							<!-- <div class="qq-upload-button right">
+			                  	<button class="btn btn-success">
 			                         <i class="icon-plus"></i>
 			                    </button>
+			                </div> -->
+			                <span>以，号分割字符</span>
 						</div>
+						
 				    </li>
 				    <li class="field comp-setting-entry metadata_entry">
 				        <div class="wrapper-comp-setting">
@@ -174,7 +188,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						$("#conAnswer").contents().find("#editor").html(conAnswer);
 						//conAnswer = replaceTextarea1(conAnswer);
 						$("#score").attr("value",a.score);
-						//var scoretag = "";
+						$("#scoretag").attr("value",a.scoretag);
 					}
 				}
 			});
@@ -195,7 +209,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$("#conAnswer").contents().find("#editor").html(conAnswer);
 			//conAnswer = replaceTextarea1(conAnswer);
 			$("#score").attr("value",score);
-			//var scoretag = "";
+			$("#scoretag").attr("value",scoretag);
 			$("#savebutton").hide();
 			$("#editbutton").show();
     	}
@@ -210,6 +224,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$("#conShell").attr("value","");
 			$("#conAnswer").contents().find("#editor").html("");
 			$("#score").attr("value","");
+			$("#scoretag").attr("value","");
 			$("#savebutton").show();
 			$("#editbutton").hide();
     	}
@@ -244,7 +259,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				return ;
 			}
 			var score = parseInt(temp);
-			var scoretag = "";
+			var scoretag = $("#scoretag").val();
 			//alert("name --- "+name+" , "+codenum+"  ,  "+envname);
 			//$('#editor').wysiwyg();
 			var data = {name:name,codenum:codenum,envname:envname,conContent:conContent,conShell:conShell,conAnswer:conAnswer,score:score,scoretag:scoretag,examId:examId,everticalId:verticalId};
@@ -302,7 +317,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				return ;
 			}
 			var score = parseInt(temp);
-			var scoretag = "";
+			var scoretag = $("#scoretag").val();
 			//alert("name --- "+name+" , "+codenum+"  ,  "+envname);
 			//$('#editor').wysiwyg();
 			var data = {trainId:trainId,name:name,codenum:codenum,envname:envname,conContent:conContent,conShell:conShell,conAnswer:conAnswer,score:score,scoretag:scoretag};
