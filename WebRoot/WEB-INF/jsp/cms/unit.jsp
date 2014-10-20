@@ -3054,18 +3054,20 @@ require(['tender']);
                 </ul>
             </div>
 				<div class="modal-content">
-						
-						
-					
-					
-						<div id="traindiv" style="display:block;">
-				<!-- <iframe width="100%" scrolling="no" height="1729" frameborder="0"   src="experiment.jsp" ></iframe> -->
-				<jsp:include page="experiment.jsp"></jsp:include>
-				</div>
-					
+						<div class="xblock-editor">
+							<div class="xblock xblock-studio_view xmodule_edit xmodule_VideoDescriptor xblock-initialized">
+								<div class="wrapper-comp-editor">
+									 <section class="editor-with-tabs">
+									 	<div id="traindiv" style="display:block;">
+										<jsp:include page="experiment.jsp"></jsp:include>
+										</div>
+									 </section>
+								</div>
+							</div>
+						</div>
 					</div>
 					
-					</div>
+		</div>
 								
             
             <div class="modal-actions" style="display: block;">

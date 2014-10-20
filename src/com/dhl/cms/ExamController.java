@@ -667,7 +667,7 @@ public class ExamController extends BaseController {
 			}
 			out.write(str);
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 	
