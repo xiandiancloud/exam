@@ -24,15 +24,58 @@
 <link type="text/css" rel="stylesheet" href="tcss/jquery.qtip.min.css">
 <link type="text/css" rel="stylesheet" href="tcss/style.css">
 <link type="text/css" rel="stylesheet" href="tcss/content.min.css">
-<link type="text/css" rel="stylesheet"
-	href="tcss/tinymce-studio-content.css">
+<link type="text/css" rel="stylesheet" href="tcss/tinymce-studio-content.css">
 <link type="text/css" rel="stylesheet" href="tcss/skin.min.css">
 <link type="text/css" rel="stylesheet" href="tcss/style-app.css">
 <link type="text/css" rel="stylesheet" href="tcss/style-app-extend1.css">
 <link type="text/css" rel="stylesheet" href="tcss/style-xmodule.css">
 
-	<script src="js/jquery-1.11.1.js"></script>
-	<script src="js/index.js"></script>
+<script src="js/jquery-1.11.1.js"></script>
+<script src="js/index.js"></script>
+
+<style>
+.dhlselect
+ {
+height: 100%;
+width: 100%;
+width: 45%;
+min-width: 100px;
+padding: 10px;
+border-radius: 3px;
+border: 1px solid #b2b2b2;
+text-overflow: ellipsis;
+-webkit-appearance: menulist;
+box-sizing: border-box;
+align-items: center;
+border: 1px solid;
+border-image-source: initial;
+border-image-slice: initial;
+border-image-width: initial;
+border-image-outset: initial;
+border-image-repeat: initial;
+white-space: pre;
+-webkit-rtl-ordering: logical;
+cursor: default;
+
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+background-color: #f2f2f2;
+background-image: -webkit-linear-gradient(#f2f2f2,#fff);
+background-image: linear-gradient(#f2f2f2,#fff);
+border: 1px solid #b2b2b2;
+border-radius: 2px;
+background-color: #f2f2f2;
+box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+color: #4c4c4c;
+outline: 0;
+}
+.dhlselect:focus
+{background-color:#fffcf1;
+background-image:-webkit-linear-gradient(#fffcf1,#fffefd);
+background-image:linear-gradient(#fffcf1,#fffefd);
+outline:0}
+</style>
 </head>
 
 <body class="is-signedin index view-dashboard hide-wip lang_zh-cn">
@@ -101,15 +144,21 @@
 										for="name">试卷专业</label> <!-- <input
 										class="new-course-category" id="category" type="text"
 										name="new-course-category" aria-required="true"
-										placeholder="例如，计算机" /> --> <select class="short"	id="category"></select><span class="tip">The
+										placeholder="例如，计算机" /> --> <select class="dhlselect" id="category"></select><span class="tip">The
 											public display name for your course. This cannot be changed,
 											but you can set a different display name in Advanced Settings
 											later.</span> <span class="tip tip-error is-hiding"></span></li>
 									<li class="field text required" id="field-course-rank"><label
-										for="name">等级</label> <input
+										for="name">等级</label> 
+										<select class="dhlselect" id="rank">
+											<option value="高级 ">高级 </option>
+											<option value="中级 ">中级 </option>
+											<option value="低级 ">低级 </option>
+										</select>
+										<!-- <input
 										class="new-course-rank" id="rank" type="text"
 										name="new-course-rank" aria-required="true"
-										placeholder="例如，高级 中级  低级" /> <span class="tip">The
+										placeholder="例如，高级 中级  低级" /> --> <span class="tip">The
 											public display name for your course. This cannot be changed,
 											but you can set a different display name in Advanced Settings
 											later.</span> <span class="tip tip-error is-hiding"></span></li>
