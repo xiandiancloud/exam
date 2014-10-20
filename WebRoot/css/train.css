@@ -528,7 +528,7 @@ input:placeholder {
 
 .highlighted-courses .courses .course .meta-infos p,.find-courses .courses .course .meta-infos p {
 	color: #fff;
-	font-style: italic;
+	font-style: normal;
 	line-height: 1.2em;
 	padding: 4px 12px 5px
 }
@@ -581,7 +581,7 @@ input:placeholder {
 .highlighted-courses .courses .course header.course-preview hgroup h2,.find-courses .courses .course header.course-preview hgroup h2 {
 	color: #3c3c3c;
 	display: table-cell;
-	font-family: "Open Sans",Verdana,Geneva,sans-serif,sans-serif;
+	font-family: Î¢ÈíÑÅºÚ, "Times New Roman", Times, serif;
 	font-size: 0.8em;
 	font-weight: 700;
 	height: 48px;
@@ -657,7 +657,7 @@ input:placeholder {
 
 .highlighted-courses .courses .course .infos .descs section,.find-courses .courses .course .infos .descs section {
 	color: #3c3c3c;
-	font: normal 1em/1.6em Georgia,Cambria,"Times New Roman",Times,serif;
+	font: normal 1em/1.6em Î¢ÈíÑÅºÚ, "Times New Roman", Times, serif;
 	margin: 0px;
 	height: 100%;
 	overflow: hidden;

@@ -62,7 +62,7 @@ public class ExamCategoryDao extends BaseDao<ExamCategory> {
 		return pagedQuery(hql, pageNo, pageSize);
 	}
 	
-	public ExamCategory getCourseCategoryByCourseId(int examId)
+	public ExamCategory getExamCategoryByExamId(int examId)
 	{
 		String hql = "from ExamCategory where examId = "+examId;
 		List<ExamCategory> list = find(hql);

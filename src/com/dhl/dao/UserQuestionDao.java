@@ -47,4 +47,14 @@ public class UserQuestionDao extends BaseDao<UserQuestion> {
 		String hql = "delete from UserQuestion where userId = "+userId+" and examId = "+examId;
 		this.getSession().createQuery(hql).executeUpdate();
 	}
+	
+	/**
+	 * 删除试卷下的所有用户信息
+	 * @param courseId
+	 */
+	public void removeUserQuestionByExamId(int examId)
+	{
+		String hql = "delete from UserQuestion where examId = "+examId;
+		this.getSession().createQuery(hql).executeUpdate();
+	}
 }

@@ -77,7 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         <ul class="list-actions">
           <li class="item-action">
-            <a class="action action-export action-primary" href="cms/exportCourse.action?courseId=${courseId}">
+            <a class="action action-export action-primary" href="cms/exportExam.action?examId=${examId}">
               <i class="icon-download"></i>
               <span class="copy">导出试卷内容</span>
             </a>

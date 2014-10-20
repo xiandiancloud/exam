@@ -120,7 +120,7 @@ function createUploader() {
 	var uploader = new qq.FineUploader({ 
 	element: document.getElementById('bootstrapped-fine-uploader'), 
 	request: { 
-	endpoint: 'cms/importCourse.action?examId='+${examId}
+	endpoint: 'cms/importExam.action?examId=${examId}'
 	}, 
 	text: { 
 	uploadButton: '<button class="btn btn-warning"><i class="icon-upload"></i>选择要导入的文件</button>' 

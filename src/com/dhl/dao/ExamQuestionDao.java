@@ -25,7 +25,7 @@ public class ExamQuestionDao extends BaseDao<ExamQuestion> {
     	return find(hql);
 	}
 	
-	public void removeVTByCourseId(int examId)
+	public void removeExamQuestionByExamId(int examId)
 	{
 		String hql = "delete from ExamQuestion where examId = "+examId;
 		this.getSession().createQuery(hql).executeUpdate();

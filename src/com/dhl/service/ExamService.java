@@ -1,6 +1,7 @@
 package com.dhl.service;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -17,36 +18,32 @@ import org.springframework.stereotype.Service;
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.SCPClient;
 
-import com.dhl.dao.ChapterDao;
 import com.dhl.dao.CompetionExamDao;
 import com.dhl.dao.ECategoryDao;
 import com.dhl.dao.ExamCategoryDao;
+import com.dhl.dao.ExamChapterDao;
 import com.dhl.dao.ExamDao;
 import com.dhl.dao.ExamQuestionDao;
+import com.dhl.dao.ExamSequentialDao;
 import com.dhl.dao.ExamVerticalDao;
 import com.dhl.dao.Page;
 import com.dhl.dao.QuestionDao;
-import com.dhl.dao.SequentialDao;
 import com.dhl.dao.TeacherExamDao;
 import com.dhl.dao.TrainDao;
-import com.dhl.dao.UserCourseDao;
 import com.dhl.dao.UserDao;
-import com.dhl.dao.UserTrainDao;
-import com.dhl.dao.VerticalDao;
-import com.dhl.dao.VerticalTrainDao;
-import com.dhl.domain.Chapter;
+import com.dhl.dao.UserExamDao;
+import com.dhl.dao.UserQuestionDao;
 import com.dhl.domain.CompetionExam;
-import com.dhl.domain.Course;
 import com.dhl.domain.ECategory;
 import com.dhl.domain.Exam;
 import com.dhl.domain.ExamCategory;
+import com.dhl.domain.ExamChapter;
 import com.dhl.domain.ExamQuestion;
+import com.dhl.domain.ExamSequential;
+import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Question;
-import com.dhl.domain.Sequential;
 import com.dhl.domain.TeacherExam;
 import com.dhl.domain.Train;
-import com.dhl.domain.Vertical;
-import com.dhl.domain.VerticalTrain;
 import com.dhl.util.UtilTools;
 
 /**
@@ -64,21 +61,21 @@ public class ExamService {
 	@Autowired
 	private ExamCategoryDao examCategoryDao;
 	@Autowired
-	private ChapterDao chapterDao;
+	private ExamChapterDao chapterDao;
 	@Autowired
-	private SequentialDao sequentialDao;
+	private ExamSequentialDao sequentialDao;
 	@Autowired
-	private VerticalDao verticalDao;
+	private ExamVerticalDao verticalDao;
 	@Autowired
-	private VerticalTrainDao vtDao;
+	private ExamQuestionDao examQuestionDao;
 	@Autowired
 	private TrainDao trainDao;
 	@Autowired
 	private UserDao userDao;
 	@Autowired
-	private UserTrainDao utDao;
+	private UserQuestionDao userQuestionDao;
 	@Autowired
-	private UserCourseDao userCourseDao;
+	private UserExamDao userExamDao;
 	@Autowired
 	private TeacherExamDao teacherExamDao;
 	@Autowired
@@ -151,8 +148,8 @@ public class ExamService {
 	 * 
 	 * @return
 	 */
-	public ExamCategory getCourseCategoryByCourseId(int courseId) {
-		return examCategoryDao.getCourseCategoryByCourseId(courseId);
+	public ExamCategory getExamCategoryByExamId(int examId) {
+		return examCategoryDao.getExamCategoryByExamId(examId);
 	}
 
 	/**
@@ -423,9 +420,9 @@ public class ExamService {
 	 * @param courseId
 	 * @param rootelement
 	 */
-	public void updateCourse(int courseId, String path, String rootelement) {/*
+	public void updateCourse(int examId, String path, String rootelement) {
 		File rootxml = new File(rootelement + File.separator + "course.xml");
-		Course course = get(courseId);
+		Exam course = get(examId);
 		// 更新试卷
 		if (course != null && rootxml.exists()) {
 			SAXReader reader = new SAXReader();
@@ -491,32 +488,31 @@ public class ExamService {
 					}
 
 					// 删除试卷下的章节
-					chapterDao.removeChapterByCourseId(courseId);
+					chapterDao.removeChapterByExamId(examId);
 					// 删除试卷下的实验
-					vtDao.removeVTByCourseId(courseId);
-					// 删除试卷下的用户对应的实验信息
-					utDao.removeUTByCourseId(courseId);
+					examQuestionDao.removeExamQuestionByExamId(examId);
+					// 删除试卷下的用户对应的实验问题等信息
+					userQuestionDao.removeUserQuestionByExamId(examId);
 					// 更新所有用户对应的试卷信息
-					userCourseDao.updateUserCourse(courseId);
+					userExamDao.updateUserExam(examId);
 					update(course);
-					Category ct = categoryDao.getCategoryByname(category);
+					ECategory ct = ecategoryDao.getCategoryByname(category);
 					if (ct == null) {
-						ct = new Category();
+						ct = new ECategory();
 						ct.setName(category);
 						ct.setDescrible(category);
-						categoryDao.save(ct);
+						ecategoryDao.save(ct);
 					}
-					CourseCategory ccc = courseCategoryDao
-							.getCourseCategoryByCourseId(courseId);
+					ExamCategory ccc = examCategoryDao.getExamCategoryByExamId(examId);
 					if (ccc != null) {
-						ccc.setCategory(ct);
-						ccc.setCourse(course);
-						courseCategoryDao.update(ccc);
+						ccc.setEcategory(ct);
+						ccc.setExam(course);
+						examCategoryDao.update(ccc);
 					} else {
-						ccc = new CourseCategory();
-						ccc.setCategory(ct);
-						ccc.setCourse(course);
-						courseCategoryDao.save(ccc);
+						ccc = new ExamCategory();
+						ccc.setEcategory(ct);
+						ccc.setExam(course);
+						examCategoryDao.save(ccc);
 					}
 					// 新建对应的章节等信息
 					Iterator iter = rt.elementIterator("chapter");
@@ -534,9 +530,9 @@ public class ExamService {
 				e.printStackTrace();
 			}
 		}
-	*/}
+	}
 
-	private void createChapter(Course course, String path, String rootelement,
+	private void createChapter(Exam course, String path, String rootelement,
 			String url_name) {
 
 		File rootxml = new File(rootelement + File.separator + "chapter"
@@ -548,9 +544,9 @@ public class ExamService {
 				Element rt = document.getRootElement();
 				String display_name = rt.attributeValue("display_name");
 
-				Chapter chapter = new Chapter();
+				ExamChapter chapter = new ExamChapter();
 				chapter.setName(display_name);
-				chapter.setCourse(course);
+				chapter.setExam(course);
 				chapterDao.save(chapter);
 				Iterator iter = rt.elementIterator("sequential");
 				while (iter.hasNext()) {
@@ -567,7 +563,7 @@ public class ExamService {
 		}
 	}
 
-	private void createSequential(Course course, Chapter c, String path,
+	private void createSequential(Exam course, ExamChapter c, String path,
 			String rootelement, String url_name) {
 
 		File rootxml = new File(rootelement + File.separator + "sequential"
@@ -579,9 +575,9 @@ public class ExamService {
 				Element rt = document.getRootElement();
 				String display_name = rt.attributeValue("display_name");
 
-				Sequential s = new Sequential();
+				ExamSequential s = new ExamSequential();
 				s.setName(display_name);
-				s.setChapter(c);
+				s.setEchapter(c);
 				sequentialDao.save(s);
 				Iterator iter = rt.elementIterator("vertical");
 				while (iter.hasNext()) {
@@ -598,7 +594,7 @@ public class ExamService {
 		}
 	}
 
-	private void createVertical(Course course, Sequential c, String path,
+	private void createVertical(Exam course, ExamSequential c, String path,
 			String rootelement, String url_name) {
 
 		File rootxml = new File(rootelement + File.separator + "vertical"
@@ -610,25 +606,71 @@ public class ExamService {
 				Element rt = document.getRootElement();
 				String display_name = rt.attributeValue("display_name");
 
-				Vertical v = new Vertical();
+				ExamVertical v = new ExamVertical();
 				v.setName(display_name);
-				v.setSequential(c);
+				v.setEsequential(c);
 				verticalDao.save(v);
 				Iterator iter = rt.elementIterator("train");
-				while (iter.hasNext()) {
-					Element recordEle = (Element) iter.next();
-					String chapter_url_name = recordEle
-							.attributeValue("url_name");
-					createTrain(course, v, path, rootelement, chapter_url_name);
+				if (iter != null)
+				{
+					while (iter.hasNext()) {
+						Element recordEle = (Element) iter.next();
+						String chapter_url_name = recordEle
+								.attributeValue("url_name");
+						createTrain(course, v, path, rootelement, chapter_url_name);
+					}
 				}
+				else
+				{
+					Iterator iter2 = rt.elementIterator("question");
+					if (iter2 != null)
+					{
+						while (iter2.hasNext()) {
+							Element recordEle = (Element) iter.next();
+							String chapter_url_name = recordEle
+									.attributeValue("url_name");
+							createQuestion(course, v, path, rootelement, chapter_url_name);
+						}
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void createQuestion(Exam course, ExamVertical v, String path,
+			String rootelement, String url_name) {
+
+		File rootxml = new File(rootelement + File.separator + "question"
+				+ File.separator + url_name + ".xml");
+		if (rootxml.exists()) {
+			SAXReader reader = new SAXReader();
+			try {
+				Document document = reader.read(rootxml);
+				Element rt = document.getRootElement();
+				String content = rt.attributeValue("content");
+				String lowcontent = rt.attributeValue("lowcontent");
+				String type = rt.attributeValue("type");
+
+				Question q = new Question();
+				q.setContent(content);
+				q.setLowcontent(lowcontent);
+				q.setType(Integer.parseInt(type));
+				questionDao.save(q);
+				ExamQuestion vt = new ExamQuestion();
+				vt.setExam(course);
+				vt.setExamVertical(v);
+				vt.setQuestion(q);
+				examQuestionDao.save(vt);
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
-
-	private void createTrain(Course course, Vertical v, String path,
+	
+	private void createTrain(Exam course, ExamVertical v, String path,
 			String rootelement, String url_name) {
 
 		File rootxml = new File(rootelement + File.separator + "train"
@@ -667,13 +709,12 @@ public class ExamService {
 					train.setScore(Integer.parseInt(score));
 					train.setScoretag(scoretag);
 					trainDao.save(train);
-
 				}
-				VerticalTrain vt = new VerticalTrain();
-				vt.setCourse(course);
-				vt.setVertical(v);
+				ExamQuestion vt = new ExamQuestion();
+				vt.setExam(course);
+				vt.setExamVertical(v);
 				vt.setTrain(train);
-				vtDao.save(vt);
+				examQuestionDao.save(vt);
 
 			} catch (Exception e) {
 				e.printStackTrace();

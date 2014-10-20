@@ -29,18 +29,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.dhl.domain.Chapter;
-import com.dhl.domain.Course;
-import com.dhl.domain.CourseCategory;
 import com.dhl.domain.Exam;
+import com.dhl.domain.ExamCategory;
 import com.dhl.domain.ExamChapter;
 import com.dhl.domain.ExamQuestion;
 import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
-import com.dhl.domain.Sequential;
+import com.dhl.domain.Question;
 import com.dhl.domain.Train;
-import com.dhl.domain.Vertical;
-import com.dhl.domain.VerticalTrain;
 import com.dhl.service.CourseService;
 import com.dhl.service.ExamService;
 import com.dhl.util.UtilTools;
@@ -114,18 +110,13 @@ public class CmsUploadExamController extends BaseController {
 	
 	/**
 	 * 导入课程
-	 * 
-	 * @param request
-	 * @param response
-	 * @param file
-	 * @param courseId
 	 */
 	@RequestMapping("/importExam")
 	public void importExam(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value = "qqfile", required = true) MultipartFile file,
-			int courseId) {
+			int examId) {
 		response.setContentType("text/html");
 		PrintWriter out = null;
 		try {
@@ -162,7 +153,7 @@ public class CmsUploadExamController extends BaseController {
 					String rootelement = rootpath + File.separator
 							+ rootfile.getName();
 					// User user = getSessionUser(request);
-					courseService.updateCourse(courseId, upath, rootelement);
+					examService.updateCourse(examId,  rootpath, rootelement);
 				}
 
 				// 删除文件夹
@@ -259,7 +250,7 @@ public class CmsUploadExamController extends BaseController {
 	 */
 	@RequestMapping("/exportExam")
 	public void exportExam(HttpServletRequest request,
-			HttpServletResponse response, int courseId) {
+			HttpServletResponse response, int examId) {
 
 		try {
 			response.setContentType("text/html;charset=UTF-8");
@@ -270,17 +261,15 @@ public class CmsUploadExamController extends BaseController {
 			String path = request.getSession().getServletContext()
 					.getRealPath("/");
 			String ctxPath = path + "export";
-
-			CourseCategory cc = courseService
-					.getCourseCategoryByCourseId(courseId);
-			Course c = cc.getCourse();
+			
+			ExamCategory cc = examService.getExamCategoryByExamId(examId);
+			Exam c = cc.getExam();
 			String rootname = ctxPath + File.separator + c.getStarttime();
 
 			UtilTools.deletefile(rootname);
 
 			// 创建course.xml文件
-			createRootXMl(path, rootname, "course.xml", cc.getCategory()
-					.getName(), c);
+			createRootXMl(path, rootname, "course.xml", cc.getEcategory().getName(), c);
 
 			// 打包生成tar.gz文件
 			File tarfile = new File(rootname + ".tar");
@@ -317,7 +306,7 @@ public class CmsUploadExamController extends BaseController {
 	}
 
 	private void createRootXMl(String path, String coursepath, String xml,
-			String category, Course c) {
+			String category, Exam c) {
 		// 创建document对象
 		Document document = DocumentHelper.createDocument();
 		// 定义根节点Element
@@ -348,11 +337,11 @@ public class CmsUploadExamController extends BaseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		createCourseXMl(path, coursepath, c.getStarttime() + ".xml", c);
-		createCourseAbout(coursepath, c.getDescrible());
+		createExamXMl(path, coursepath, c.getStarttime() + ".xml", c);
+		createExamAbout(coursepath, c.getDescrible());
 	}
 
-	private void createCourseAbout(String coursepath, String desc) {
+	private void createExamAbout(String coursepath, String desc) {
 		try {
 			String tt = coursepath + File.separator + "about";
 			File filedir = new File(tt);
@@ -369,8 +358,8 @@ public class CmsUploadExamController extends BaseController {
 		}
 	}
 
-	private void createCourseXMl(String path, String coursepath, String xml,
-			Course c) {
+	private void createExamXMl(String path, String coursepath, String xml,
+			Exam c) {
 		// 创建document对象
 		Document document = DocumentHelper.createDocument();
 		// 定义根节点Element
@@ -390,33 +379,15 @@ public class CmsUploadExamController extends BaseController {
 				coursepath + File.separator + "static" + File.separator
 						+ imgpath);
 
-		Set<Chapter> set = c.getChapters();
-		Iterator<Chapter> it = set.iterator();
+		Set<ExamChapter> set = c.getExamchapters();
+		Iterator<ExamChapter> it = set.iterator();
 		while (it.hasNext()) {
-			Chapter chapter = it.next();
+			ExamChapter chapter = it.next();
 
 			Element childElement = rootGen.addElement("chapter");
 			String uuid = UUID.randomUUID().toString();
 			childElement.addAttribute("url_name", uuid);
 			createChapterXMl(path, coursepath, uuid + ".xml", chapter);
-			// Set<Sequential> sequentialset = chapter.getSequentials();
-			// Iterator it2 = sequentialset.iterator();
-			//
-			// while (it2.hasNext()) {
-			// Sequential sequential = (Sequential) it2.next();
-			// Set<Vertical> verticalset = sequential.getVerticals();
-			// Iterator it3 = verticalset.iterator();
-			// while (it3.hasNext()) {
-			// Vertical vertical = (Vertical) it3.next();
-			// Set<VerticalTrain> verticalTrainset = vertical
-			// .getVerticalTrains();
-			// Iterator it4 = verticalTrainset.iterator();
-			// while (it4.hasNext()) {
-			// VerticalTrain vt = (VerticalTrain) it4.next();
-			// Train train = vt.getTrain();
-			// }
-			// }
-			// }
 		}
 		OutputFormat format = null;
 		XMLWriter xmlwriter = null;
@@ -442,18 +413,18 @@ public class CmsUploadExamController extends BaseController {
 	}
 
 	private void createChapterXMl(String path, String coursepath, String xml,
-			Chapter chapter) {
+			ExamChapter chapter) {
 		// 创建document对象
 		Document document = DocumentHelper.createDocument();
 		// 定义根节点Element
 		Element rootGen = document.addElement("chapter");
 		rootGen.addAttribute("display_name", chapter.getName());
 
-		Set<Sequential> sequentialset = chapter.getSequentials();
-		Iterator<Sequential> it = sequentialset.iterator();
+		Set<ExamSequential> sequentialset = chapter.getEsequentials();
+		Iterator<ExamSequential> it = sequentialset.iterator();
 
 		while (it.hasNext()) {
-			Sequential sequential = it.next();
+			ExamSequential sequential = it.next();
 			Element childElement = rootGen.addElement("sequential");
 			String uuid = UUID.randomUUID().toString();
 			childElement.addAttribute("url_name", uuid);
@@ -483,17 +454,17 @@ public class CmsUploadExamController extends BaseController {
 	}
 
 	private void createSequentialXMl(String path, String coursepath,
-			String xml, Sequential sequential) {
+			String xml, ExamSequential sequential) {
 		// 创建document对象
 		Document document = DocumentHelper.createDocument();
 		// 定义根节点Element
 		Element rootGen = document.addElement("sequential");
 		rootGen.addAttribute("display_name", sequential.getName());
 
-		Set<Vertical> verticalset = sequential.getVerticals();
-		Iterator<Vertical> it = verticalset.iterator();
+		Set<ExamVertical> verticalset = sequential.getExamVerticals();
+		Iterator<ExamVertical> it = verticalset.iterator();
 		while (it.hasNext()) {
-			Vertical vertical = it.next();
+			ExamVertical vertical = it.next();
 
 			Element childElement = rootGen.addElement("vertical");
 			String uuid = UUID.randomUUID().toString();
@@ -524,23 +495,34 @@ public class CmsUploadExamController extends BaseController {
 	}
 
 	private void createVerticalXMl(String path, String coursepath, String xml,
-			Vertical vertical) {
+			ExamVertical vertical) {
 		// 创建document对象
 		Document document = DocumentHelper.createDocument();
 		// 定义根节点Element
 		Element rootGen = document.addElement("vertical");
 		rootGen.addAttribute("display_name", vertical.getName());
 
-		Set<VerticalTrain> verticalTrainset = vertical.getVerticalTrains();
-		Iterator<VerticalTrain> it = verticalTrainset.iterator();
+		Set<ExamQuestion> verticalTrainset = vertical.getExamQuestion();
+		Iterator<ExamQuestion> it = verticalTrainset.iterator();
 		while (it.hasNext()) {
-			VerticalTrain vt = it.next();
-			Train train = vt.getTrain();
+			ExamQuestion vt = it.next();
+			Question question = vt.getQuestion();
+			if (question != null)
+			{
+				Element childElement = rootGen.addElement("question");
+				String uuid = UUID.randomUUID().toString();
+				childElement.addAttribute("url_name", uuid);
+				createQuestionXMl(path, coursepath, uuid + ".xml", question);
+			}
+			else
+			{
+				Train train = vt.getTrain();
 
-			Element childElement = rootGen.addElement("train");
-			String uuid = UUID.randomUUID().toString();
-			childElement.addAttribute("url_name", uuid);
-			createTrainXMl(path, coursepath, uuid + ".xml", train);
+				Element childElement = rootGen.addElement("train");
+				String uuid = UUID.randomUUID().toString();
+				childElement.addAttribute("url_name", uuid);
+				createTrainXMl(path, coursepath, uuid + ".xml", train);
+			}
 		}
 		OutputFormat format = null;
 		XMLWriter xmlwriter = null;
@@ -565,6 +547,39 @@ public class CmsUploadExamController extends BaseController {
 		}
 	}
 
+	private void createQuestionXMl(String path, String coursepath, String xml,
+			Question question) {
+		// 创建document对象
+		Document document = DocumentHelper.createDocument();
+		// 定义根节点Element
+		Element rootGen = document.addElement("question");
+		rootGen.addAttribute("content", question.getContent());
+		rootGen.addAttribute("lowcontent", question.getLowcontent());
+		rootGen.addAttribute("type", question.getType()+"");
+
+		OutputFormat format = null;
+		XMLWriter xmlwriter = null;
+		try {
+			// 进行格式化
+			format = OutputFormat.createPrettyPrint();
+			// 设定编码
+			format.setEncoding("UTF-8");
+			String tt = coursepath + File.separator + "question";
+			File filedir = new File(tt);
+			if (!filedir.exists())
+				filedir.mkdir();
+			File file = new File(tt + File.separator + xml);
+			if (!file.exists())
+				file.createNewFile();
+			xmlwriter = new XMLWriter(new FileOutputStream(file), format);
+			xmlwriter.write(document);
+			xmlwriter.flush();
+			xmlwriter.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private void createTrainXMl(String path, String coursepath, String xml,
 			Train train) {
 		// 创建document对象
