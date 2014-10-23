@@ -21,6 +21,7 @@ import com.dhl.service.UCEService;
 import com.dhl.service.UserCourseService;
 import com.dhl.service.UserEnvironmentService;
 import com.dhl.service.UserTrainService;
+import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
 import com.xiandian.cai.UserInterface;
 import com.xiandian.model.Role;
@@ -118,8 +119,16 @@ public class LmsUserController extends BaseController {
 	@RequestMapping("/loginout")
 	public ModelAndView loginout(HttpServletRequest request) {
 		setSessionUser(request, null);
-		String url = "redirect:/lms/getteamCategory.action";
-
+		String url;
+		int type = Integer.parseInt(UtilTools.getConfig().getProperty("SSO_TYPE"));
+		if (type == CommonConstant.SSO_CAS)
+		{
+			url = UtilTools.getConfig().getProperty("SSO_LOGOUT");
+		}
+		else
+		{
+			url = "redirect:/lms/getteamCategory.action";
+		}
 		return new ModelAndView(url);
 	}
 
@@ -216,33 +225,7 @@ public class LmsUserController extends BaseController {
 	@RequestMapping("/mysetting")
 	public ModelAndView mysetting(HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
-		// User user = userService.getUserByUserName(userName);
-		// if (user == null)
-		// {
-		// user = userService.add(userName);
-		// }
-		// setSessionUser(request, user);
-		// String url = "redirect:/getAllCourse.action";
-
-		User user = getSessionUser(request);
-		// if (user == null) {
-		// String url = "redirect:/tologin.action";
-		// return new ModelAndView(url);
-		// }
-//		if (index == 2) {
-//			List<UCEnvironment> uce = uceService.getMyUCE(user.getId());
-//			view.addObject("uce", uce);
-//		}
-//		if (index == 3) {
-//			List<UserCourse> having = userCourseService.getMyHavingCourse(user
-//					.getId());
-//			List<UserCourse> finish = userCourseService.getMyFinishCourse(user
-//					.getId());
-//
-//			view.addObject("having", having);
-//			view.addObject("finish", finish);
-//		}
-//		view.addObject("setindex", index);
+//		User user = getSessionUser(request);
 		view.setViewName("/lms/mysetting");
 		return view;
 	}
@@ -280,7 +263,6 @@ public class LmsUserController extends BaseController {
 		try {
 			User user = getSessionUser(request);
 			PrintWriter out = response.getWriter();
-			// if (user != null) {
 			UCEnvironment uce = uceService.getMyUCE(user.getId(), courseId,
 					name);
 			UserTrain userTrain = userTrainService.getUserTrain(user.getId(),
@@ -300,10 +282,6 @@ public class LmsUserController extends BaseController {
 						+ "','revalue':'" + revalue + "'}";
 				out.write(str);
 			}
-			// } else {
-			// String result = "{'sucess':'fail'}";
-			// out.write(result);
-			// }
 		} catch (Exception e) {
 
 		}

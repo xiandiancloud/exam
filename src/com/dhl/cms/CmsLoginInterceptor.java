@@ -14,15 +14,18 @@ import com.xiandian.model.User;
 
 /**
  * 老师登录的拦截器
+ * 
  * @author dhl
- *
+ * 
  */
-public class CmsLoginInterceptor extends BaseController implements HandlerInterceptor {
+public class CmsLoginInterceptor extends BaseController implements
+		HandlerInterceptor {
 
 	private static final String CMS_FILTERED_REQUEST = "@cms@session_context_filtered_request";
 
-	private static final String[] INHERENT_ESCAPE_URIS = { "/totlogin.action",
-			"/tlogin.action", "/totregeister.action","tregeister.action","getAllSchool.action", "/bbb.action" };
+	private static final String[] INHERENT_ESCAPE_URIS = { "totlogin.action",
+			"tlogin.action", "totregeister.action", "tregeister.action",
+			"getAllSchool.action" };
 
 	@Override
 	public void afterCompletion(HttpServletRequest arg0,
@@ -38,7 +41,8 @@ public class CmsLoginInterceptor extends BaseController implements HandlerInterc
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object arg2) throws Exception {
-		if (request != null && request.getAttribute(CMS_FILTERED_REQUEST) != null) {
+		if (request != null
+				&& request.getAttribute(CMS_FILTERED_REQUEST) != null) {
 			return true;
 		} else {
 
@@ -60,8 +64,9 @@ public class CmsLoginInterceptor extends BaseController implements HandlerInterc
 				return false;
 			}
 
-			//如果用户登录，且不是老师，除了不需要登录的action，其他都要跳转到登录
-			if (user != null && !isURILogin(httpRequest.getRequestURI(), httpRequest)) {
+			// 如果用户登录，且不是老师，除了不需要登录的action，其他都要跳转到登录
+			if (user != null
+					&& !isURILogin(httpRequest.getRequestURI(), httpRequest)) {
 				Role role = user.getRole();
 				if (!CommonConstant.ROLE_T.equals(role.getRoleName())) {
 					String toUrl = httpRequest.getRequestURL().toString();
@@ -72,7 +77,8 @@ public class CmsLoginInterceptor extends BaseController implements HandlerInterc
 					httpRequest.getSession().setAttribute(
 							CommonConstant.CMS_LOGIN_TO_URL, toUrl);
 					response.sendRedirect(contextPath + "/cms/totlogin.action");
-//					request.getRequestDispatcher(contextPath + "/cms/totlogin.action").forward(request, response);
+					// request.getRequestDispatcher(contextPath +
+					// "/cms/totlogin.action").forward(request, response);
 					return false;
 				}
 			}

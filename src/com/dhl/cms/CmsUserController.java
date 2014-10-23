@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.cons.CommonConstant;
+import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
 import com.xiandian.cai.UserInterface;
 import com.xiandian.model.Role;
@@ -91,8 +92,16 @@ public class CmsUserController extends BaseController {
 	@RequestMapping("/tloginout")
 	public ModelAndView tloginout(HttpServletRequest request) {
 		setSessionUser(request, null);
-		String url = "redirect:/cms/totexamlist.action";
-
+		String url;
+		int type = Integer.parseInt(UtilTools.getConfig().getProperty("SSO_TYPE"));
+		if (type == CommonConstant.SSO_CAS)
+		{
+			url = UtilTools.getConfig().getProperty("SSO_LOGOUT");
+		}
+		else
+		{
+			url = "redirect:/cms/totexamlist.action";
+		}
 		return new ModelAndView(url);
 	}
 

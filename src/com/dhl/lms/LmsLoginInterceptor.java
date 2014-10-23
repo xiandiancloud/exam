@@ -22,10 +22,12 @@ public class LmsLoginInterceptor extends BaseController implements HandlerInterc
 	private static final String FILTERED_REQUEST = "@@session_context_filtered_request";
 
 	private static final String[] INHERENT_ESCAPE_URIS = {
-		"/getAllCategory.action", "getCourse.action", "/tologin.action","getteamCategory.action",
-		"/login.action", "getCourseByCategoryId.action","getexamByCategoryId.action","examlist.action",
-		"recentcourse.action", "toregeister.action","regeister.action", "getAllSchool.action","getAllExamCategory.action",
-		"/bbb.action" };
+			"getAllCategory.action", "getCourse.action", "tologin.action",
+			"getteamCategory.action", "login.action",
+			"getCourseByCategoryId.action", "getexamByCategoryId.action",
+			"examlist.action", "recentcourse.action", "toregeister.action",
+			"regeister.action", "getAllSchool.action",
+			"getAllExamCategory.action", };
 
 	@Override
 	public void afterCompletion(HttpServletRequest arg0,
