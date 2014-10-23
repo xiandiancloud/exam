@@ -30,7 +30,6 @@ import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Question;
 import com.dhl.domain.TeacherExam;
 import com.dhl.domain.Train;
-import com.dhl.domain.User;
 import com.dhl.domain.UserCompetion;
 import com.dhl.domain.UserExam;
 import com.dhl.domain.UserExamHistory;
@@ -47,6 +46,7 @@ import com.dhl.service.UserExamService;
 import com.dhl.util.ParseQuestion;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
+import com.xiandian.model.User;
 
 /**
  * 

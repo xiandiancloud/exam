@@ -21,20 +21,18 @@ import com.dhl.domain.Course;
 import com.dhl.domain.Sequential;
 import com.dhl.domain.TeacherCourse;
 import com.dhl.domain.Train;
-import com.dhl.domain.User;
 import com.dhl.domain.Vertical;
 import com.dhl.domain.VerticalTrain;
 import com.dhl.service.CategoryService;
 import com.dhl.service.ChapterService;
 import com.dhl.service.CourseService;
-import com.dhl.service.SchoolService;
 import com.dhl.service.SequentialService;
 import com.dhl.service.TeacherCourseService;
 import com.dhl.service.TrainService;
-import com.dhl.service.UserService;
 import com.dhl.service.VerticalService;
 import com.dhl.service.VerticalTrainService;
 import com.dhl.web.BaseController;
+import com.xiandian.model.User;
 
 /**
  * 老师定义课程，使用等使用
@@ -65,10 +63,10 @@ public class CmsController extends BaseController {
 	private TeacherCourseService teacherCourseService;
 	@Autowired
 	private CategoryService categoryService;
-	@Autowired
-	private UserService userService;
-	@Autowired
-	private SchoolService schoolService;
+//	@Autowired
+//	private UserInterface userInterface;
+//	@Autowired
+//	private SchoolInterface schoolInterface;
 
 	
 	

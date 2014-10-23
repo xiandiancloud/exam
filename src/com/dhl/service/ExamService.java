@@ -30,7 +30,6 @@ import com.dhl.dao.Page;
 import com.dhl.dao.QuestionDao;
 import com.dhl.dao.TeacherExamDao;
 import com.dhl.dao.TrainDao;
-import com.dhl.dao.UserDao;
 import com.dhl.dao.UserExamDao;
 import com.dhl.dao.UserQuestionDao;
 import com.dhl.domain.CompetionExam;
@@ -45,6 +44,8 @@ import com.dhl.domain.Question;
 import com.dhl.domain.TeacherExam;
 import com.dhl.domain.Train;
 import com.dhl.util.UtilTools;
+import com.xiandian.dao.UserDao;
+import com.xiandian.model.User;
 
 /**
  *
@@ -330,7 +331,7 @@ public class ExamService {
 	}
 
 	public void createExam(String name, String org, String coursecode,
-			String starttime, int userId, int categoryId, String rank) {
+			String starttime, User user, int categoryId, String rank) {
 		Exam c = new Exam();
 		c.setName(name);
 		c.setOrg(org);
@@ -345,7 +346,7 @@ public class ExamService {
 		examCategoryDao.save(cc);
 		TeacherExam tc = new TeacherExam();
 		tc.setExam(c);
-		tc.setUser(userDao.get(userId));
+		tc.setUser(user);
 		teacherExamDao.save(tc);
 
 	}
@@ -356,7 +357,7 @@ public class ExamService {
 	 * @param userId
 	 * @param competionId
 	 */
-	public void createExam(String name,int userId, int competionId) {
+	public void createExam(String name,User user, int competionId) {
 		Exam c = new Exam();
 		c.setName(name);
 		c.setIsnormal(1);
@@ -369,7 +370,7 @@ public class ExamService {
 		
 		TeacherExam tc = new TeacherExam();
 		tc.setExam(c);
-		tc.setUser(userDao.get(userId));
+		tc.setUser(user);
 		teacherExamDao.save(tc);
 
 	}

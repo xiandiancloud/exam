@@ -4,24 +4,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.cons.CommonConstant;
-import com.dhl.domain.Role;
-import com.dhl.domain.User;
-import com.dhl.service.UserService;
+import com.dhl.web.BaseController;
+import com.xiandian.model.Role;
+import com.xiandian.model.User;
 
 /**
  * 老师登录的拦截器
  * @author dhl
  *
  */
-public class AdminLoginInterceptor implements HandlerInterceptor {
-
-	@Autowired
-	private UserService userService;
+public class AdminLoginInterceptor extends BaseController implements HandlerInterceptor {
 
 	private static final String ADMIN_FILTERED_REQUEST = "@admin@session_context_filtered_request";
 
@@ -66,7 +62,7 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
 
 			//如果用户登录，且不是管理員，除了不需要登录的action，其他都要跳转到登录
 			if (user != null && !isURILogin(httpRequest.getRequestURI(), httpRequest)) {
-				Role role = userService.getUserRoleByuserId(user.getId());
+				Role role = user.getRole();
 				if (!CommonConstant.ROLE_A.equals(role.getRoleName())) {
 					String toUrl = httpRequest.getRequestURL().toString();
 					if (!StringUtils.isEmpty(httpRequest.getQueryString())) {
@@ -102,10 +98,5 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
 			}
 		}
 		return false;
-	}
-
-	protected User getSessionUser(HttpServletRequest request) {
-		return (User) request.getSession().getAttribute(
-				CommonConstant.USER_CONTEXT);
 	}
 }

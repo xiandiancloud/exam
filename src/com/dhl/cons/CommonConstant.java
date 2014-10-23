@@ -64,4 +64,8 @@ public class CommonConstant
    public static final String LEVEL_1 = "初级";
    public static final String LEVEL_2 = "中级";
    public static final String LEVEL_3 = "高级";
+   
+   //是否是单点登录  默认0的话不是单点登录
+   public static final int SSO_NO = 0;
+   public static final int SSO_CAS = 1;
 }

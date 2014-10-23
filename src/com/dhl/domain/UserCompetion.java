@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.xiandian.model.User;
+
 /**
  * 用户对应的竞赛
  * 

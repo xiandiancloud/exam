@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.cons.CommonConstant;
-import com.dhl.domain.Role;
-import com.dhl.domain.User;
-import com.dhl.service.UserService;
-import com.dhl.util.MD5;
 import com.dhl.web.BaseController;
+import com.xiandian.cai.UserInterface;
+import com.xiandian.model.Role;
+import com.xiandian.model.User;
+import com.xiandian.util.MD5;
 
 /**
  * 
@@ -30,7 +30,7 @@ public class AdminUserController extends BaseController {
 	 * 自动注入
 	 */
 	@Autowired
-	private UserService userService;
+	private UserInterface userInterface;
 
 	/**
 	 * 跳轉到管理员登錄介面
@@ -46,7 +46,7 @@ public class AdminUserController extends BaseController {
 			view.setViewName("/admin/signin");
 			return view;
 		}
-		Role role = userService.getUserRoleByuserId(user.getId());
+		Role role = user.getRole();
 		if (!CommonConstant.ROLE_A.equals(role.getRoleName())) {
 			ModelAndView view = new ModelAndView();
 			view.setViewName("/admin/signin");
@@ -73,7 +73,7 @@ public class AdminUserController extends BaseController {
 			view.setViewName("/admin/signin");
 			return view;
 		}
-		Role role = userService.getUserRoleByuserId(user.getId());
+		Role role = user.getRole();
 		if (!CommonConstant.ROLE_A.equals(role.getRoleName())) {
 			ModelAndView view = new ModelAndView();
 			view.setViewName("/admin/signin");
@@ -111,7 +111,7 @@ public class AdminUserController extends BaseController {
 			String email, String password) {
 		try {
 			PrintWriter out = response.getWriter();
-			User user = userService.getUserBymail(email);
+			User user = userInterface.getUserBymail(email);
 			if (user == null) {
 				String result = "{'sucess':'fail','msg':'电子邮件不对'}";
 				out.write(result);
@@ -125,7 +125,7 @@ public class AdminUserController extends BaseController {
 				return;
 			}
 			
-			Role role = userService.getUserRoleByuserId(user.getId());
+			Role role = user.getRole();
 			if (!CommonConstant.ROLE_A.equals(role.getRoleName()))
 			{
 				String result = "{'sucess':'fail','msg':'登陆邮件不是管理员身份'}";

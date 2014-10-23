@@ -29,13 +29,14 @@ import com.dhl.domain.CompetionCategory;
 import com.dhl.domain.CompetionExam;
 import com.dhl.domain.CompetionSchool;
 import com.dhl.domain.TeacherExam;
-import com.dhl.domain.User;
 import com.dhl.domain.UserCompetion;
 import com.dhl.service.CompetionService;
 import com.dhl.service.ExamService;
 import com.dhl.service.TeacherExamService;
 import com.dhl.service.UserCompetionService;
 import com.dhl.web.BaseController;
+import com.xiandian.cai.UserInterface;
+import com.xiandian.model.User;
 
 /**
  * 定义竞赛等使用
@@ -55,6 +56,9 @@ public class CompetionController extends BaseController {
 	private ExamService examService;
 	@Autowired
 	private TeacherExamService teacherExamService;
+	@Autowired
+	private UserInterface userInterface;
+	
 	/**
 	 * 跳转到竞赛页面
 	 * 
@@ -320,7 +324,7 @@ public class CompetionController extends BaseController {
 			String job) {
 		try {
 			PrintWriter out = response.getWriter();
-			usercompetionService.save(userId, competionId, job);
+			usercompetionService.save(userInterface.getUserById(userId), competionId, job);
 			String str = "{'sucess':'sucess'}";
 			out.write(str);
 		} catch (Exception e) {
@@ -358,7 +362,7 @@ public class CompetionController extends BaseController {
 			HttpServletResponse response,int userId,int competionId, String name) {
 		try {
 			PrintWriter out = response.getWriter();
-			examService.createExam(name, userId, competionId);
+			examService.createExam(name, userInterface.getUserById(userId), competionId);
 			String str = "{'sucess':'sucess'}";
 			out.write(str);
 		} catch (Exception e) {
@@ -502,7 +506,7 @@ public class CompetionController extends BaseController {
 				int len = strs.length;
 				for (int i=0;i<len;i++)
 				{
-					usercompetionService.save(Integer.parseInt(strs[0]), competionId, CommonConstant.CROLE_5);
+					usercompetionService.save(userInterface.getUserById(Integer.parseInt(strs[0])), competionId, CommonConstant.CROLE_5);
 				}
 			}
 			//examService.createExam(name, userId, competionId);

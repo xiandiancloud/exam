@@ -25,7 +25,6 @@ import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Question;
 import com.dhl.domain.Train;
-import com.dhl.domain.User;
 import com.dhl.domain.UserEnvironment;
 import com.dhl.domain.UserExam;
 import com.dhl.domain.UserExamHistory;
@@ -38,10 +37,10 @@ import com.dhl.service.UserEnvironmentService;
 import com.dhl.service.UserExamHistoryService;
 import com.dhl.service.UserExamService;
 import com.dhl.service.UserQuestionService;
-import com.dhl.service.UserService;
 import com.dhl.util.ParseQuestion;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
+import com.xiandian.model.User;
 
 /**
  * 开始考试使用
@@ -52,8 +51,6 @@ import com.dhl.web.BaseController;
 @RequestMapping("/lms")
 public class HavingExamController extends BaseController {
 
-	@Autowired
-	private UserService userService;
 	@Autowired
 	private UserExamService userExamService;
 	@Autowired
@@ -838,8 +835,7 @@ public class HavingExamController extends BaseController {
 			HttpServletResponse response,int type,int userId, int examId,int questionId,int number,String pfscore) {
 		try {
 			
-			User user = userService.getUserById(userId);
-			boolean flag = userQuestionService.updateQuestion(type,user.getId(),examId,questionId, number,pfscore);
+			boolean flag = userQuestionService.updateQuestion(type,userId,examId,questionId, number,pfscore);
 			String str = flag?"{'sucess':'sucess'}":"{'sucess':'fail','msg':'"+CommonConstant.ERROR_7+"'}";
 			PrintWriter out = response.getWriter();
 			out.write(str);

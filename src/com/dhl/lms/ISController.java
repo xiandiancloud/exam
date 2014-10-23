@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.domain.UCEnvironment;
-import com.dhl.domain.User;
 import com.dhl.domain.UserEnvironment;
 import com.dhl.service.UCEService;
 import com.dhl.service.UserEnvironmentService;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
+import com.xiandian.model.User;
 
 /**
  * 创建环境的control

@@ -13,19 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.cons.CommonConstant;
-import com.dhl.domain.Role;
 import com.dhl.domain.UCEnvironment;
-import com.dhl.domain.User;
 import com.dhl.domain.UserCourse;
 import com.dhl.domain.UserEnvironment;
 import com.dhl.domain.UserTrain;
 import com.dhl.service.UCEService;
 import com.dhl.service.UserCourseService;
 import com.dhl.service.UserEnvironmentService;
-import com.dhl.service.UserService;
 import com.dhl.service.UserTrainService;
-import com.dhl.util.MD5;
 import com.dhl.web.BaseController;
+import com.xiandian.cai.UserInterface;
+import com.xiandian.model.Role;
+import com.xiandian.model.User;
+import com.xiandian.util.MD5;
 
 /**
  * 
@@ -39,7 +39,7 @@ public class LmsUserController extends BaseController {
 	 * 自动注入
 	 */
 	@Autowired
-	private UserService userService;
+	private UserInterface userInterface;
 	@Autowired
 	private UCEService uceService;
 	@Autowired
@@ -91,19 +91,19 @@ public class LmsUserController extends BaseController {
 			String major, String class_name, String admission_time) {
 		try {
 			PrintWriter out = response.getWriter();
-			User user = userService.getUserBymail(email);
+			User user = userInterface.getUserBymail(email);
 			if (user != null) {
 				String result = "{'sucess':'fail','msg':'电子邮件已经注册'}";
 				out.write(result);
 				return;
 			}
-			user = userService.getUserByUserName(username);
+			user = userInterface.getUserByUserName(username);
 			if (user != null) {
 				String result = "{'sucess':'fail','msg':'公开用户名已经注册'}";
 				out.write(result);
 				return;
 			}
-			user = userService.save(roleName, email, password, username, name,
+			user = userInterface.save(roleName, email, password, username, name,
 					gender, mailing_address, year_of_birth, level_of_education,
 					goals, school_name, major, class_name, admission_time);
 			setSessionUser(request, user);
@@ -136,7 +136,7 @@ public class LmsUserController extends BaseController {
 			String email, String password) {
 		try {
 			PrintWriter out = response.getWriter();
-			User user = userService.getUserBymail(email);
+			User user = userInterface.getUserBymail(email);
 			if (user == null) {
 				String result = "{'sucess':'fail','msg':'电子邮件不对'}";
 				out.write(result);
@@ -149,7 +149,7 @@ public class LmsUserController extends BaseController {
 				out.write(result);
 				return;
 			}
-			Role role = userService.getUserRoleByuserId(user.getId());
+			Role role = user.getRole();
 			user.setRole(role);
 			setSessionUser(request, user);
 			String toUrl = (String) request.getSession().getAttribute(

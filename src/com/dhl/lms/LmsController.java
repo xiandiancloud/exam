@@ -22,7 +22,6 @@ import com.dhl.domain.Course;
 import com.dhl.domain.CourseCategory;
 import com.dhl.domain.Sequential;
 import com.dhl.domain.Train;
-import com.dhl.domain.User;
 import com.dhl.domain.UserCourse;
 import com.dhl.domain.UserTrain;
 import com.dhl.domain.UserTrainHistory;
@@ -37,6 +36,7 @@ import com.dhl.service.UserTrainService;
 import com.dhl.service.VerticalService;
 import com.dhl.service.VerticalTrainService;
 import com.dhl.web.BaseController;
+import com.xiandian.model.User;
 
 /**
  * 

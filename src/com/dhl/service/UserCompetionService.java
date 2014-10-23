@@ -14,7 +14,6 @@ import com.dhl.cons.CommonConstant;
 import com.dhl.dao.CompetionDao;
 import com.dhl.dao.CompetionExamDao;
 import com.dhl.dao.UserCompetionDao;
-import com.dhl.dao.UserDao;
 import com.dhl.dao.UserExamDao;
 import com.dhl.dao.UserQuestionChildDao;
 import com.dhl.dao.UserQuestionDao;
@@ -26,13 +25,13 @@ import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Question;
 import com.dhl.domain.Train;
-import com.dhl.domain.User;
 import com.dhl.domain.UserCompetion;
 import com.dhl.domain.UserExam;
 import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
 import com.dhl.util.ParseQuestion;
 import com.dhl.util.UtilTools;
+import com.xiandian.model.User;
 
 /**
  *
@@ -46,8 +45,6 @@ public class UserCompetionService {
 	private CompetionDao competionDao;
 	@Autowired
 	private CompetionExamDao competionExamDao;
-	@Autowired
-	private UserDao userDao;
 	@Autowired
 	private UserExamDao userExamDao;
 	@Autowired
@@ -65,10 +62,10 @@ public class UserCompetionService {
 	 * @param competionId
 	 * @param job
 	 */
-	public void save(int userId,int competionId,String job)
+	public void save(User user,int competionId,String job)
 	{
 		UserCompetion uc = new UserCompetion();
-		uc.setUser(userDao.get(userId));
+		uc.setUser(user);
 		uc.setCompetion(competionDao.get(competionId));
 		uc.setJob(job);
 		userCompetionDao.save(uc);

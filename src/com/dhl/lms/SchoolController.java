@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.dhl.domain.School;
-import com.dhl.service.SchoolService;
 import com.dhl.web.BaseController;
+import com.xiandian.cai.SchoolInterface;
+import com.xiandian.model.School;
 
 /**
  * 
@@ -26,12 +26,12 @@ public class SchoolController extends BaseController {
 	 * 自动注入
 	 */
 	@Autowired
-	private SchoolService schoolService;
+	private SchoolInterface schoolInterface;
 	
 	@RequestMapping("/getAllSchool")
 	public void getAllSchool(HttpServletRequest request,HttpServletResponse response) {
 		try {
-			List<School> list = schoolService.getAllSchool();
+			List<School> list = schoolInterface.getAllSchool();
 			String str = getProjectViewStr(list);
 			PrintWriter out = response.getWriter();
 			out.write(str);

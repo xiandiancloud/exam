@@ -28,12 +28,7 @@ import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Question;
 import com.dhl.domain.RestTrain;
-import com.dhl.domain.Role;
-import com.dhl.domain.School;
 import com.dhl.domain.TeacherExam;
-import com.dhl.domain.User;
-import com.dhl.domain.UserProfile;
-import com.dhl.domain.UserRole;
 import com.dhl.service.CourseService;
 import com.dhl.service.ECategoryService;
 import com.dhl.service.ExamChapterService;
@@ -41,13 +36,16 @@ import com.dhl.service.ExamQuestionService;
 import com.dhl.service.ExamSequentialService;
 import com.dhl.service.ExamService;
 import com.dhl.service.ExamVerticalService;
-import com.dhl.service.SchoolService;
 import com.dhl.service.TeacherExamService;
 import com.dhl.service.TrainService;
-import com.dhl.service.UserService;
 import com.dhl.util.ParseQuestion;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
+import com.xiandian.cai.SchoolInterface;
+import com.xiandian.cai.UserInterface;
+import com.xiandian.model.Role;
+import com.xiandian.model.School;
+import com.xiandian.model.User;
 
 /**
  * 老师定义试卷，使用等使用
@@ -84,9 +82,9 @@ public class ExamController extends BaseController {
 	private ECategoryService ecategoryService;
 	
 	@Autowired
-	private UserService userService;
+	private UserInterface userInterface;
 	@Autowired
-	private SchoolService schoolService;
+	private SchoolInterface schoolInterface;
 
 	//定义单元内容的时候取实训系统的课程
 	@Autowired
@@ -126,7 +124,7 @@ public class ExamController extends BaseController {
 			String url = "redirect:/cms/totlogin.action";
 			return new ModelAndView(url);
 		}
-		Role role = userService.getUserRoleByuserId(user.getId());
+		Role role = user.getRole();
 		if (!CommonConstant.ROLE_T.equals(role.getRoleName())) {
 			String url = "redirect:/cms/totlogin.action";
 			return new ModelAndView(url);
@@ -245,7 +243,7 @@ public class ExamController extends BaseController {
 			PrintWriter out = response.getWriter();
 			User user = getSessionUser(request);
 			examService.createExam(name, org, coursecode, starttime,
-					user.getId(), Integer.parseInt(category), rank);
+					user, Integer.parseInt(category), rank);
 
 			String str = "{'sucess':'sucess'}";
 			out.write(str);
@@ -875,7 +873,7 @@ public class ExamController extends BaseController {
 		
 		try {
 			PrintWriter out = response.getWriter();
-			List<UserRole> school = userService.getAllTeacher();
+			List<User> school = userInterface.getAllTeacher(CommonConstant.ROLE_T);
 			String str = getTeacherStr(school);
 			out.write(str);
 			// }
@@ -889,13 +887,13 @@ public class ExamController extends BaseController {
 	 * @param list
 	 * @return
 	 */
-	private String getTeacherStr(List<UserRole> list) {
+	private String getTeacherStr(List<User> list) {
 		StringBuffer buffer = new StringBuffer();
 		int count = list.size();
 		buffer.append("{\"total\":" + count + ",\"rows\":[");
 		for (int i = 0; i < count; i++) {
-			UserRole p = list.get(i);
-			User user = userService.getUserById(p.getUserId());
+			User user = list.get(i);
+//			User user = userService.getUserById(p.getUserId());
 			buffer.append("{");
 			buffer.append("\"id\":");
 			buffer.append("\"" + user.getId() + "\"");
@@ -925,7 +923,7 @@ public class ExamController extends BaseController {
 		
 		try {
 			PrintWriter out = response.getWriter();
-			List<School> school = schoolService.getAllSchool();
+			List<School> school = schoolInterface.getAllSchool();
 			String str = getSchoolStr(school);
 			out.write(str);
 			// }
@@ -945,7 +943,7 @@ public class ExamController extends BaseController {
 			buffer.append("\"id\":");
 			buffer.append("\"" + p.getId() + "\"");
 			String sn = p.getSchool_name();
-			List<UserProfile> uplist = userService.getUserBySchoolName(sn);
+			List<User> uplist = userInterface.getStudentBySchoolName(CommonConstant.ROLE_S,sn);
 			buffer.append(",\"user\":"+getUserStr(uplist));
 			buffer.append(",\"name\":");
 			buffer.append("\"" +sn+ "\"");
@@ -961,22 +959,22 @@ public class ExamController extends BaseController {
 			return str;
 		}
 	}
-	private String getUserStr(List<UserProfile> list) {
+	private String getUserStr(List<User> list) {
 		StringBuffer buffer = new StringBuffer();
 		int count = list.size();
 		buffer.append("[");
 		
 		for (int i = 0; i < count; i++) {
-			UserProfile p = list.get(i);
-			int userId = p.getUser_id();
-			Role r = userService.getUserRoleByuserId(userId);
-			if (CommonConstant.ROLE_S.equals(r.getRoleName()))
+			User p = list.get(i);
+//			int userId = p.getUser_id();
+//			Role r = userService.getUserRoleByuserId(userId);
+//			if (CommonConstant.ROLE_S.equals(r.getRoleName()))
 			{
 				buffer.append("{");
 				buffer.append("\"id\":");
-				buffer.append("\"" + userId + "\"");
+				buffer.append("\"" + p.getId() + "\"");
 				buffer.append(",\"name\":");
-				buffer.append("\"" +p.getName()+ "\"");
+				buffer.append("\"" +p.getUsername()+ "\"");
 				buffer.append("},");
 			}
 		}
@@ -991,67 +989,6 @@ public class ExamController extends BaseController {
 		}
 	}
 	
-//	/**
-//	 * 创建实验
-//	 * 
-//	 * @param request
-//	 * @param response
-//	 */
-//	@RequestMapping("/createTrain")
-//	public void createTrain(HttpServletRequest request,
-//			HttpServletResponse response, String name, String codenum,
-//			String envname, String conContent, String conShell,
-//			String conAnswer, int score, String scoretag, int courseId,
-//			int verticalId) {
-//
-//		try {
-//			PrintWriter out = response.getWriter();
-//			String msg = trainService.save(name, codenum, envname, conContent,
-//					conShell, conAnswer, score, scoretag, courseId, verticalId);
-//			if (msg != null) {
-//				String str = "{'sucess':'fail','msg':'" + msg + "'}";
-//				out.write(str);
-//
-//			} else {
-//				String str = "{'sucess':'sucess'}";
-//				out.write(str);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-
-//	@RequestMapping("/uploadshell")
-//	public void uploadshell(HttpServletRequest request,
-//			HttpServletResponse response,
-//			@RequestParam(value = "qqfile", required = true) MultipartFile file) {
-//		response.setContentType("text/html");
-//		PrintWriter out = null;
-//		try {
-//			out = response.getWriter();
-//		} catch (IOException e1) {
-//			out.print("{\"success\": \"false\"}");
-//		}
-//		try {
-//			if (!file.isEmpty()) {
-//				byte[] bytes = file.getBytes();
-//				String upath = request.getSession().getServletContext()
-//						.getRealPath("/");
-//				String path = "shell/" + file.getOriginalFilename();
-//				FileOutputStream fos = new FileOutputStream(upath + path);
-//				fos.write(bytes);
-//				fos.close();
-//
-//				out.print("{\"success\": \"true\"}");
-//				// out.write("<script>parent.callback('sucess')</script>");
-//			} else {
-//				out.print("{\"success\": \"false\"}");
-//			}
-//		} catch (Exception e) {
-//			out.print("{\"success\": \"false\"}");
-//		}
-//	}
-
 	private String getProjectViewStr(List<ECategory> list) {
 		StringBuffer buffer = new StringBuffer();
 		int count = list.size();

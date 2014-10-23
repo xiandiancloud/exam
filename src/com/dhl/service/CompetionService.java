@@ -18,8 +18,8 @@ import com.dhl.domain.CompetionCategory;
 import com.dhl.domain.CompetionExam;
 import com.dhl.domain.CompetionSchool;
 import com.dhl.domain.Exam;
-import com.dhl.domain.User;
 import com.dhl.domain.UserCompetion;
+import com.xiandian.model.User;
 
 /**
  * 竞赛

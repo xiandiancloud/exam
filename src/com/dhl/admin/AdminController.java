@@ -15,12 +15,12 @@ import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Category;
 import com.dhl.domain.ECategory;
 import com.dhl.domain.Exam;
-import com.dhl.domain.School;
 import com.dhl.service.CategoryService;
 import com.dhl.service.ECategoryService;
 import com.dhl.service.ExamService;
-import com.dhl.service.SchoolService;
 import com.dhl.web.BaseController;
+import com.xiandian.cai.SchoolInterface;
+import com.xiandian.model.School;
 
 /**
  * 管理员使用
@@ -39,7 +39,7 @@ public class AdminController extends BaseController {
 	@Autowired
 	private ECategoryService ecategoryService;
 	@Autowired
-	private SchoolService schoolService;
+	private SchoolInterface schoolInterface;
 	@Autowired
 	private ExamService examService;
 	
@@ -120,7 +120,7 @@ public class AdminController extends BaseController {
 	public ModelAndView school(HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
 
-		List<School> school = schoolService.getAllSchool();
+		List<School> school = schoolInterface.getAllSchool();
 		view.addObject("schoollist", school);
 		view.setViewName("/admin/school");
 		return view;
@@ -136,7 +136,7 @@ public class AdminController extends BaseController {
 	@RequestMapping("/delschool")
 	public ModelAndView delschool(HttpServletRequest request,
 			HttpServletResponse response, int schoolId) {
-		schoolService.remove(schoolId);
+		schoolInterface.remove(schoolId);
 		String url = "redirect:/admin/school.action";
 		return new ModelAndView(url);
 	}
@@ -156,7 +156,7 @@ public class AdminController extends BaseController {
 		PrintWriter out = null;
 		try {
 			out = response.getWriter();
-			String str = schoolService.saveSchool(name);
+			String str = schoolInterface.saveSchool(name);
 			if (CommonConstant.ERROR_2.equals(str)) {
 				result = "{'sucess':'sucess','msg':'" + str + "'}";
 				out.write(result);
