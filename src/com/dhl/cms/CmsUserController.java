@@ -138,7 +138,7 @@ public class CmsUserController extends BaseController {
 				out.write(result);
 				return;
 			}
-			user.setRole(role);
+//			user.setRole(role);
 			setSessionUser(request, user);
 			String toUrl = (String)request.getSession().getAttribute(CommonConstant.CMS_LOGIN_TO_URL);
 			request.getSession().removeAttribute(CommonConstant.CMS_LOGIN_TO_URL);

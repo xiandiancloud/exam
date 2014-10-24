@@ -63,85 +63,6 @@ public class CmsController extends BaseController {
 	private TeacherCourseService teacherCourseService;
 	@Autowired
 	private CategoryService categoryService;
-//	@Autowired
-//	private UserInterface userInterface;
-//	@Autowired
-//	private SchoolInterface schoolInterface;
-
-	
-	
-//	/**
-//	 * 所有学校
-//	 * 
-//	 * @param request
-//	 * @param index
-//	 * @return
-//	 */
-//	@RequestMapping("/getAllSchool")
-//	public void getAllSchool(HttpServletRequest request,HttpServletResponse response) {
-//		
-//		try {
-//			PrintWriter out = response.getWriter();
-//			List<School> school = schoolService.getAllSchool();
-//			String str = getSchoolStr(school);
-//			out.write(str);
-//			// }
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-//
-//	private String getSchoolStr(List<School> list) {
-//		StringBuffer buffer = new StringBuffer();
-//		int count = list.size();
-//		buffer.append("{\"total\":" + count + ",\"rows\":[");
-//		for (int i = 0; i < count; i++) {
-//			School p = list.get(i);
-//			buffer.append("{");
-//			buffer.append("\"id\":");
-//			buffer.append("\"" + p.getId() + "\"");
-//			buffer.append(",\"name\":");
-//			buffer.append("\"" + p.getSchool_name() + "\"");
-//			buffer.append("},");
-//		}
-//		if (count > 0) {
-//			String str = buffer.substring(0, buffer.length() - 1) + "]}";
-//			str = str.replaceAll("null", "");
-//			return str;
-//		} else {
-//			String str = buffer.toString() + "]}";
-//			str = str.replaceAll("null", "");
-//			return str;
-//		}
-//	}
-//	
-//	
-//	/**
-//	 * 跳转到老师课程页面
-//	 * 
-//	 * @param request
-//	 * @return
-//	 */
-//	@RequestMapping("/cms")
-//	public ModelAndView cms(HttpServletRequest request) {
-//
-//		User user = getSessionUser(request);
-//		if (user == null) {
-//			String url = "redirect:/cms/totlogin.action";
-//			return new ModelAndView(url);
-//		}
-//		Role role = userService.getUserRoleByuserId(user.getId());
-//		if (!CommonConstant.ROLE_T.equals(role.getRoleName())) {
-//			String url = "redirect:/cms/totlogin.action";
-//			return new ModelAndView(url);
-//		}
-//		ModelAndView view = new ModelAndView();
-//		List<TeacherCourse> tcourselist = teacherCourseService
-//				.getMyTCourse(user.getId());
-//		view.addObject("tcourselist", tcourselist);
-//		view.setViewName("/cms/tcourselist");
-//		return view;
-//	}
 
 	/**
 	 * 跳转到老师课程页面
@@ -160,31 +81,6 @@ public class CmsController extends BaseController {
 		return view;
 	}
 
-//	/**
-//	 * 跳转到老师登陆页面
-//	 * 
-//	 * @param request
-//	 * @return
-//	 */
-//	@RequestMapping("/totlogin")
-//	public ModelAndView totlogin(HttpServletRequest request) {
-//		ModelAndView view = new ModelAndView();
-//		view.setViewName("/cmscourse/signin");
-//		return view;
-//	}
-//
-//	/**
-//	 * 跳转到老师注册页面
-//	 * 
-//	 * @param request
-//	 * @return
-//	 */
-//	@RequestMapping("/totregeister")
-//	public ModelAndView totregeister(HttpServletRequest request) {
-//		ModelAndView view = new ModelAndView();
-//		view.setViewName("/cmscourse/signup");
-//		return view;
-//	}
 
 	/**
 	 * 跳转到老师课程页面

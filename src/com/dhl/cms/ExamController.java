@@ -163,7 +163,17 @@ public class ExamController extends BaseController {
 	@RequestMapping("/totlogin")
 	public ModelAndView totlogin(HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
-		view.setViewName("/cms/signin");
+		String url;
+		int type = Integer.parseInt(UtilTools.getConfig().getProperty("SSO_TYPE"));
+		if (type == CommonConstant.SSO_CAS)
+		{
+			url = "redirect:/cms/totexamlist.action";
+		}
+		else
+		{
+			url = "/cms/signin";
+		}
+		view.setViewName(url);
 		return view;
 	}
 
