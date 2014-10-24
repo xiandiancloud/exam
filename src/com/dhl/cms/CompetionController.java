@@ -97,7 +97,7 @@ public class CompetionController extends BaseController {
 		for (CompetionExam ce:celist)
 		{
 			TeacherExam te = teacherExamService.getTeacherExamByExamId(ce.getExam().getId());
-			ce.setExamuser(te.getUser().getUsername());
+			ce.setExamuser(userInterface.getUserById(te.getUserId()).getUsername());
 			if (ce.getSelectexam() == 1)
 			{
 				view.addObject("sexam", ce);
@@ -219,8 +219,9 @@ public class CompetionController extends BaseController {
 		for (CompetionExam ce:list)
 		{
 			TeacherExam te = teacherExamService.getTeacherExamByExamId(ce.getExam().getId());
-			ce.setExamuser(te.getUser().getUsername());
-			if (user.getId() == te.getUser().getId())
+			
+			ce.setExamuser(userInterface.getUserById(te.getUserId()).getUsername());
+			if (user.getId() == te.getUserId())
 			{
 				celist.add(ce);
 			}
@@ -324,7 +325,7 @@ public class CompetionController extends BaseController {
 			String job) {
 		try {
 			PrintWriter out = response.getWriter();
-			usercompetionService.save(userInterface.getUserById(userId), competionId, job);
+			usercompetionService.save(userId, competionId, job);
 			String str = "{'sucess':'sucess'}";
 			out.write(str);
 		} catch (Exception e) {
@@ -362,7 +363,7 @@ public class CompetionController extends BaseController {
 			HttpServletResponse response,int userId,int competionId, String name) {
 		try {
 			PrintWriter out = response.getWriter();
-			examService.createExam(name, userInterface.getUserById(userId), competionId);
+			examService.createExam(name, userId, competionId);
 			String str = "{'sucess':'sucess'}";
 			out.write(str);
 		} catch (Exception e) {
@@ -472,9 +473,10 @@ public class CompetionController extends BaseController {
 			UserCompetion p = list.get(i);
 			buffer.append("{");
 			buffer.append("\"id\":");
-			buffer.append("\"" + p.getUser().getId() + "\"");
+			buffer.append("\"" + p.getUserId() + "\"");
 			buffer.append(",\"name\":");
-			buffer.append("\"" + p.getUser().getUsername() + "\"");
+			String name = userInterface.getUserById(p.getUserId()).getUsername();
+			buffer.append("\"" + name + "\"");
 			buffer.append("},");
 		}
 		if (count > 0) {
@@ -506,7 +508,7 @@ public class CompetionController extends BaseController {
 				int len = strs.length;
 				for (int i=0;i<len;i++)
 				{
-					usercompetionService.save(userInterface.getUserById(Integer.parseInt(strs[0])), competionId, CommonConstant.CROLE_5);
+					usercompetionService.save(Integer.parseInt(strs[0]), competionId, CommonConstant.CROLE_5);
 				}
 			}
 			//examService.createExam(name, userId, competionId);

@@ -48,7 +48,7 @@ public class AuthenticationFilter extends AbstractCasFilter {
 			"getexamByCategoryId.action", "examlist.action",
 			"recentcourse.action", "toregeister.action", "regeister.action",
 			"getAllSchool.action", "getAllExamCategory.action",
-			"tlogin.action", "totregeister.action", "tregeister.action" };
+			"tlogin.action", "totregeister.action", "tregeister.action","loginout.action","tloginout.action" };
 
 	/**
 	 * The URL to the CAS Server login.

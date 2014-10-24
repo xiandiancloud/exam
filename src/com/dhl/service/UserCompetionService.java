@@ -31,6 +31,7 @@ import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
 import com.dhl.util.ParseQuestion;
 import com.dhl.util.UtilTools;
+import com.xiandian.cai.UserInterface;
 import com.xiandian.model.User;
 
 /**
@@ -52,6 +53,9 @@ public class UserCompetionService {
 	@Autowired
 	private UserQuestionChildDao userQuestionChildDao;
 	
+	@Autowired
+	private UserInterface userInterface;
+	
 	public UserCompetion get(int id)
 	{
 		return userCompetionDao.get(id);
@@ -62,10 +66,10 @@ public class UserCompetionService {
 	 * @param competionId
 	 * @param job
 	 */
-	public void save(User user,int competionId,String job)
+	public void save(int userId,int competionId,String job)
 	{
 		UserCompetion uc = new UserCompetion();
-		uc.setUser(user);
+		uc.setUserId(userId);
 		uc.setCompetion(competionDao.get(competionId));
 		uc.setJob(job);
 		userCompetionDao.save(uc);
@@ -143,7 +147,7 @@ public class UserCompetionService {
 			{
 				UserCompetionData ucd = new UserCompetionData();
 				ucd.setUserCompetionId(uc.getId());
-				User user = uc.getUser();
+				User user = userInterface.getUserById(uc.getUserId());//uc.getUser();
 				ucd.setUsername(user.getUsername());
 				ucd.setUserId(user.getId());
 				//用户对应的竞赛试卷			

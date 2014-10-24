@@ -180,7 +180,7 @@ public class CompetionService {
 		competionSchoolDao.save(cs);
 		
 		UserCompetion uc = new UserCompetion();
-		uc.setUser(user);
+		uc.setUserId(user.getId());
 		uc.setCompetion(c);
 		uc.setJob(CommonConstant.CROLE_2);
 		userCompetionDao.save(uc);

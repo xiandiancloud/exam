@@ -10,8 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.xiandian.model.User;
-
 /**
  * 用户对应的竞赛
  * 
@@ -27,10 +25,10 @@ public class UserCompetion extends BaseDomain {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-	// private int userId;
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "userId")
-	private User user;
+	private int userId;
+//	@ManyToOne(fetch = FetchType.EAGER)
+//	@JoinColumn(name = "userId")
+//	private User user;
 
 	// private int competionId;
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -38,13 +36,13 @@ public class UserCompetion extends BaseDomain {
 	private Competion competion;
 	private String job;
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
+//	public User getUser() {
+//		return user;
+//	}
+//
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
 
 	public int getId() {
 		return id;
@@ -68,5 +66,12 @@ public class UserCompetion extends BaseDomain {
 
 	public void setCompetion(Competion competion) {
 		this.competion = competion;
+	}
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 }

@@ -331,7 +331,7 @@ public class ExamService {
 	}
 
 	public void createExam(String name, String org, String coursecode,
-			String starttime, User user, int categoryId, String rank) {
+			String starttime, int userId, int categoryId, String rank) {
 		Exam c = new Exam();
 		c.setName(name);
 		c.setOrg(org);
@@ -346,7 +346,7 @@ public class ExamService {
 		examCategoryDao.save(cc);
 		TeacherExam tc = new TeacherExam();
 		tc.setExam(c);
-		tc.setUser(user);
+		tc.setUserId(userId);
 		teacherExamDao.save(tc);
 
 	}
@@ -357,7 +357,7 @@ public class ExamService {
 	 * @param userId
 	 * @param competionId
 	 */
-	public void createExam(String name,User user, int competionId) {
+	public void createExam(String name,int userId, int competionId) {
 		Exam c = new Exam();
 		c.setName(name);
 		c.setIsnormal(1);
@@ -370,7 +370,7 @@ public class ExamService {
 		
 		TeacherExam tc = new TeacherExam();
 		tc.setExam(c);
-		tc.setUser(user);
+		tc.setUserId(userId);
 		teacherExamDao.save(tc);
 
 	}

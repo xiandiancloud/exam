@@ -63,7 +63,7 @@ public class CompetionCategoryDao extends BaseDao<CompetionCategory> {
 		}
 		if (categoryId > 0 && rank > 0 && search != null && !"".equals(search))
 		{
-			hql = "from CompetionCategory wherecompetion.type = 0 and ecategory.id = "+categoryId+" and competion.rank = '"+r+"' and (competion.name like '%"+search+"%' or competion.describle like '%"+search+"%')";
+			hql = "from CompetionCategory where competion.type = 0 and ecategory.id = "+categoryId+" and competion.rank = '"+r+"' and (competion.name like '%"+search+"%' or competion.describle like '%"+search+"%')";
 		}
 		return pagedQuery(hql, pageNo, pageSize);
 	}

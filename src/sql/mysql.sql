@@ -1,3 +1,4 @@
+/*
 drop table if exists t_role;
 create table t_role
 (
@@ -29,6 +30,10 @@ create table t_school_user
   CONSTRAINT receivet_school_user_ibfk_1 FOREIGN KEY (userId) REFERENCES auth_user (id) ON DELETE CASCADE,
   CONSTRAINT receivet_school_user_ibfk_2 FOREIGN KEY (schoolId) REFERENCES auth_school (id) ON DELETE CASCADE
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+*/
+
+drop database if exists exam;
+create database exam character set utf8;
 
 /*实验课程定义分类*/
 drop table if exists t_coursecategory;

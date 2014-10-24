@@ -243,7 +243,7 @@ public class ExamController extends BaseController {
 			PrintWriter out = response.getWriter();
 			User user = getSessionUser(request);
 			examService.createExam(name, org, coursecode, starttime,
-					user, Integer.parseInt(category), rank);
+					user.getId(), Integer.parseInt(category), rank);
 
 			String str = "{'sucess':'sucess'}";
 			out.write(str);
