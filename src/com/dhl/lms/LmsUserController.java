@@ -58,9 +58,19 @@ public class LmsUserController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/tologin")
-	public ModelAndView tologin(HttpServletRequest request, String url) {
+	public ModelAndView tologin(HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
-		view.setViewName("/lms/login");
+		String url;
+		int type = Integer.parseInt(UtilTools.getConfig().getProperty("SSO_TYPE"));
+		if (type == CommonConstant.SSO_CAS)
+		{
+			url = "redirect:/lms/getteamCategory.action";
+		}
+		else
+		{
+			url = "/lms/login";
+		}
+		view.setViewName(url);
 		return view;
 	}
 
@@ -184,19 +194,8 @@ public class LmsUserController extends BaseController {
 	@RequestMapping("/setting")
 	public ModelAndView setting(HttpServletRequest request, int index) {
 		ModelAndView view = new ModelAndView();
-		// User user = userService.getUserByUserName(userName);
-		// if (user == null)
-		// {
-		// user = userService.add(userName);
-		// }
-		// setSessionUser(request, user);
-		// String url = "redirect:/getAllCourse.action";
 
 		User user = getSessionUser(request);
-		// if (user == null) {
-		// String url = "redirect:/tologin.action";
-		// return new ModelAndView(url);
-		// }
 		if (index == 2) {
 			List<UCEnvironment> uce = uceService.getMyUCE(user.getId());
 			view.addObject("uce", uce);
