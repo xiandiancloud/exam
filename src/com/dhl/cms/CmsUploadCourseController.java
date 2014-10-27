@@ -359,7 +359,10 @@ public class CmsUploadCourseController extends BaseController {
 		// 定义根节点Element
 		Element rootGen = document.addElement("course");
 		String imgpath = c.getImgpath();
-		imgpath = imgpath.substring(imgpath.indexOf('/')+1);
+		if (imgpath != null)
+		{
+			imgpath = imgpath.substring(imgpath.indexOf('/')+1);
+		}
 		rootGen.addAttribute("course_image", imgpath);
 		rootGen.addAttribute("display_name", c.getName());
 		rootGen.addAttribute("start", c.getStarttime());
