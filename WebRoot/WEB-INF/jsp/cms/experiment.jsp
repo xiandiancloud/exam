@@ -74,8 +74,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<label class="label setting-label">环境模板</label>
 							<select id="envname">
 			                  	<option value="创建虚拟机">创建虚拟机</option>
-			                  	<option value="创建虚拟机2">创建虚拟机2</option>
-			                  	<option value="创建虚拟机3">创建虚拟机3</option>
 		                  	</select>
 						</div>
 				    </li>

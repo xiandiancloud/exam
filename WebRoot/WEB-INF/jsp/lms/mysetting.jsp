@@ -134,24 +134,24 @@
 						<div class="form-group">
 							<a>电子邮件</a>
 							<div class="h5"></div>
-							<input type="text" class="form-control" disabled="disabled" value="${USER_CONTEXT.email}">
+							<input type="text" class="form-control" disabled="disabled" id="email" value="${USER_CONTEXT.email}">
 							<div class="clear"></div>
-							<a>密码</a>
+							<%-- <a>密码</a>
 							<div class="h5"></div>
 							<input type="password" class="form-control" id="password" value="${USER_CONTEXT.password}"
-								placeholder="文本输入">
+								placeholder="文本输入"> --%>
 							<div class="clear"></div>
 							<a>公开用户名</a>
 							<div class="h5"></div>
-							<input type="text" class="form-control" id="rn" placeholder="文本输入">
+							<input type="text" class="form-control" id="username" value="${USER_CONTEXT.username}">
 							<div class="clear"></div>
 							<a>全名</a>
 							<div class="h5"></div>
-							<input type="text" class="form-control" id="un" placeholder="文本输入">
+							<input type="text" class="form-control" id="name" value="${up.name}">
 							<div class="clear"></div>
 							<a>最高教育程度</a>
 							<div class="h5"></div>
-							<select class="form-control w80">
+							<select class="form-control w80" id="level_of_education">
 						        <option value="">--</option>
 				                <option value="p">博士</option>
 				                <option value="m">硕士</option>
@@ -166,7 +166,7 @@
 							<div class="clear"></div>
 							<a>性别</a>
 							<div class="h5"></div>
-							<select class="form-control w80">
+							<select class="form-control w80" id="gender">
 						        <option value="">--</option>
 				                <option value="m">男</option>
 				                <option value="f">女</option>
@@ -175,7 +175,7 @@
 							<div class="clear"></div>
 							<a>出生年份</a>
 							<div class="h5"></div>
-							<select class="form-control w80">
+							<select class="form-control w80" id="year_of_birth">
 						        <option value="">--</option>
 				                <option value="2014">2014</option>
 				                <option value="2013">2013</option>
@@ -301,15 +301,15 @@
 							<div class="clear"></div>
 							<a>邮寄地址</a>
 							<div class="h5"></div>
-							<textarea class="form-control" rows="3"></textarea>
+							<textarea class="form-control" rows="3" id="mailing_address"></textarea>
 							<div class="clear"></div>
 							<a>请告诉我们您注册 Your Platform Name Here的原因</a>
 							<div class="h5"></div>
-							<textarea class="form-control" rows="3"></textarea>
+							<textarea class="form-control" rows="3" id="goals"></textarea>
 							<div class="clear"></div>
 							<div class="clear"></div>
 							<button type="button" class="btn btn-danger btn-lg btn-block"
-								onclick="">修改</button>
+								onclick="update();">修改</button>
 						</div>
 					</form>
 				</div>
@@ -353,7 +353,51 @@
 	<script src="js/common.js" type="text/javascript"></script>
 	<script src="js/holder.js" type="text/javascript"></script>
 	<script>
-		
+	$(function() {
+    	$("#level_of_education").val("${up.level_of_education}");
+    	$("#gender").val("${up.gender}");
+    	$("#year_of_birth").val("${up.year_of_birth}");
+    	var mailing_address = replaceTextarea2("${up.mailing_address}");
+    	$("#mailing_address").val(mailing_address);
+    	var goals = replaceTextarea2("${up.goals}");
+    	$("#goals").val(goals);
+	});
+    
+    function update() {
+		var email = $("#email").val();
+		var username = $("#username").val();
+		var name = $("#name").val();
+		var gender = $("#gender").val();
+		var mailing_address = $("#mailing_address").val();
+		mailing_address = replaceTextarea1(mailing_address);
+		var year_of_birth = $("#year_of_birth").val();
+		var level_of_education = $("#level_of_education").val();
+		var goals = $("#goals").val();
+		goals = replaceTextarea1(goals);
+		var data = {
+			email : email,
+			username : username,
+			name : name,
+			gender : gender,
+			mailing_address : mailing_address,
+			year_of_birth : year_of_birth,
+			level_of_education : level_of_education,
+			goals : goals
+		};
+		$.ajax({
+			url : "lms/update.action",
+			type : "post",
+			data : data,
+			success : function(s) {
+				var a = eval("(" + s + ")");
+				
+				if (a.sucess == "sucess") {
+					location.reload();
+					alert("修改成功");
+				}
+			}
+		});
+	}
 	</script>
 </body>
 </html>

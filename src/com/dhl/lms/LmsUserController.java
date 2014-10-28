@@ -26,6 +26,7 @@ import com.dhl.web.BaseController;
 import com.xiandian.cai.UserInterface;
 import com.xiandian.model.Role;
 import com.xiandian.model.User;
+import com.xiandian.model.UserProfile;
 import com.xiandian.util.MD5;
 
 /**
@@ -126,6 +127,32 @@ public class LmsUserController extends BaseController {
 		}
 	}
 
+	/**
+	 * 更新用户
+	 * 
+	 * @param name
+	 *            ：全名(真实姓名)
+	 */
+	@RequestMapping("/update")
+	public void update(HttpServletRequest request,
+			HttpServletResponse response, String email,
+			String username, String name, String gender,
+			String mailing_address, String year_of_birth,
+			String level_of_education, String goals) {
+		try {
+			PrintWriter out = response.getWriter();
+			userInterface.update(email,username, name, gender,
+				mailing_address, year_of_birth,level_of_education, goals);
+			User user = getSessionUser(request);
+			user.setUsername(username);
+			setSessionUser(request, user);
+			String result = "{'sucess':'sucess'}";
+			out.write(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@RequestMapping("/loginout")
 	public ModelAndView loginout(HttpServletRequest request) {
 		setSessionUser(request, null);
@@ -184,35 +211,35 @@ public class LmsUserController extends BaseController {
 		}
 	}
 
-	/**
-	 * 个人设置，环境准备，个人课程情况等等总结信息
-	 * 
-	 * @param request
-	 * @param index
-	 * @return
-	 */
-	@RequestMapping("/setting")
-	public ModelAndView setting(HttpServletRequest request, int index) {
-		ModelAndView view = new ModelAndView();
-
-		User user = getSessionUser(request);
-		if (index == 2) {
-			List<UCEnvironment> uce = uceService.getMyUCE(user.getId());
-			view.addObject("uce", uce);
-		}
-		if (index == 3) {
-			List<UserCourse> having = userCourseService.getMyHavingCourse(user
-					.getId());
-			List<UserCourse> finish = userCourseService.getMyFinishCourse(user
-					.getId());
-
-			view.addObject("having", having);
-			view.addObject("finish", finish);
-		}
-		view.addObject("setindex", index);
-		view.setViewName("/lms/setting");
-		return view;
-	}
+//	/**
+//	 * 个人设置，环境准备，个人课程情况等等总结信息
+//	 * 
+//	 * @param request
+//	 * @param index
+//	 * @return
+//	 */
+//	@RequestMapping("/setting")
+//	public ModelAndView setting(HttpServletRequest request, int index) {
+//		ModelAndView view = new ModelAndView();
+//
+//		User user = getSessionUser(request);
+//		if (index == 2) {
+//			List<UCEnvironment> uce = uceService.getMyUCE(user.getId());
+//			view.addObject("uce", uce);
+//		}
+//		if (index == 3) {
+//			List<UserCourse> having = userCourseService.getMyHavingCourse(user
+//					.getId());
+//			List<UserCourse> finish = userCourseService.getMyFinishCourse(user
+//					.getId());
+//
+//			view.addObject("having", having);
+//			view.addObject("finish", finish);
+//		}
+//		view.addObject("setindex", index);
+//		view.setViewName("/lms/setting");
+//		return view;
+//	}
 
 	/**
 	 * 个人设置，环境准备，个人课程情况等等总结信息
@@ -224,7 +251,9 @@ public class LmsUserController extends BaseController {
 	@RequestMapping("/mysetting")
 	public ModelAndView mysetting(HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
-//		User user = getSessionUser(request);
+		User user = getSessionUser(request);
+		UserProfile up = userInterface.getUserProfileByuserId(user.getId());
+		view.addObject("up", up);
 		view.setViewName("/lms/mysetting");
 		return view;
 	}
