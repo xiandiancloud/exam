@@ -60,22 +60,6 @@ public class CompetionController extends BaseController {
 	private UserInterface userInterface;
 	
 	/**
-	 * 跳转到竞赛页面
-	 * 
-	 * @param request
-	 * @return
-	 */
-//	@RequestMapping("/totcompetion")
-//	public ModelAndView totcompetion(HttpServletRequest request) {
-//		ModelAndView view = new ModelAndView();
-//		// view.addObject("examId", examId);
-//		// Exam course = examService.get(examId);
-//		// view.addObject("exam", course);
-//		view.setViewName("/cms/competion");
-//		return view;
-//	}
-
-	/**
 	 * 到竞赛页面
 	 * @param request
 	 * @param competionId
@@ -89,6 +73,11 @@ public class CompetionController extends BaseController {
 		view.addObject("competion", competion);
 		//竞赛裁判
 		List<UserCompetion> uclist = usercompetionService.getCompetionjudgment(competionId);
+		for (UserCompetion uc:uclist)
+		{
+			User user = userInterface.getUserById(uc.getUserId());
+			uc.setUser(user);
+		}
 		view.addObject("judgmentlist", uclist);
 		// Exam course = examService.get(examId);
 		// view.addObject("exam", course);
@@ -104,9 +93,6 @@ public class CompetionController extends BaseController {
 			}
 		}
 		view.addObject("celist", celist);
-		//竞赛学生
-//		List<UserCompetion> ucslist = usercompetionService.getCompetionStudent(competionId);
-//		view.addObject("studentlist", ucslist);
 		//竞赛学生
 		List<UserCompetionData> ucslist = usercompetionService.getCompetionStudentData(competionId);
 		view.addObject("studentlist", ucslist);

@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.xiandian.model.User;
 
 /**
  * 用户对应的竞赛
@@ -35,14 +38,15 @@ public class UserCompetion extends BaseDomain {
 	@JoinColumn(name = "competionId")
 	private Competion competion;
 	private String job;
+	@Transient
+	private User user;
+	public User getUser() {
+		return user;
+	}
 
-//	public User getUser() {
-//		return user;
-//	}
-//
-//	public void setUser(User user) {
-//		this.user = user;
-//	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public int getId() {
 		return id;
