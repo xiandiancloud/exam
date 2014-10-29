@@ -336,7 +336,7 @@
 					var a = eval("(" + s + ")");
 
 					if (a.sucess == "sucess") {
-						location.href = "cms/totcourselist.action";
+						location.href = "cms/totexamlist.action";
 					} else {
 						alert(a.msg);
 					}

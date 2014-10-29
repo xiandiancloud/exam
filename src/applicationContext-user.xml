@@ -31,26 +31,26 @@
 	<bean id="defaultLobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler"
 		lazy-init="true" />
 		
-	<bean id="transactionManager"
+	<bean id="transactionManager2"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
 		p:dataSource-ref="dataSource2"/>
 	
-<!-- 	    使用强大的切点表达式语言轻松定义目标方法
+	<!-- 使用强大的切点表达式语言轻松定义目标方法-->
 	<aop:config>
-	    通过aop定义事务增强切面
-		<aop:pointcut id="serviceMethod"
-			expression="execution(* com.xiandian.*.*.*(..))" />
-		 引用事务增强
-		<aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice" />
+	    <!-- 通过aop定义事务增强切面 -->
+		<aop:pointcut id="serviceMethod2"
+			expression="execution(* com.xiandian.dao.*.*(..))" />
+		<!--  引用事务增强 -->
+		<aop:advisor pointcut-ref="serviceMethod2" advice-ref="txAdvice2" />
 	</aop:config>
 	
-	事务增强
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
-		 事务属性定义
+	<!-- 事务增强 -->
+	<tx:advice id="txAdvice2" transaction-manager="transactionManager2">
+		<!--  事务属性定义 -->
 		<tx:attributes>
 			<tx:method name="*" />
 		</tx:attributes>
-	</tx:advice> -->
+	</tx:advice> 
 	
 	<!-- CAS MYSQL 配置  ，LDAP的实训在这儿切换具体实现类-->
 	<bean id="userInterface" class="com.xiandian.cai.impl.UserImpl">
