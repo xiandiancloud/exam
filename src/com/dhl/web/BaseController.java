@@ -2,6 +2,7 @@ package com.dhl.web;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.jasig.cas.client.util.AssertionHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dhl.cons.CommonConstant;

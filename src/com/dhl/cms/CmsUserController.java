@@ -96,7 +96,7 @@ public class CmsUserController extends BaseController {
 		int type = Integer.parseInt(UtilTools.getConfig().getProperty("SSO_TYPE"));
 		if (type == CommonConstant.SSO_CAS)
 		{
-			url = "redirect:"+UtilTools.getConfig().getProperty("SSO_LOGOUT_T");
+			url = "redirect:"+UtilTools.getConfig().getProperty("SSO_LOGOUT");
 		}
 		else
 		{

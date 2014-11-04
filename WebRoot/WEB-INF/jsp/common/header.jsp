@@ -26,13 +26,16 @@
 						<li><a href="lms/competionlist.action?currentpage=1&c=0&r=0">竞赛</a></li>
 						<li><a href="lms/myexam.action">我的云试卷</a></li>
 						<c:if test="${USER_CONTEXT.role.roleName=='老师'}">
-						<li><a href="cms">制作课件</a></li>
+						<li><a href="cms">制作试卷</a></li>
 						</c:if>
 					</ul>
 					<!--向右对齐-->
 					<ul class="nav navbar-nav navbar-right">
 						<c:choose>
 							<c:when test="${empty USER_CONTEXT}">
+								<li class='dropdown light only-icon'><a
+									href='lms/toregeister.action'> <i class='icon-signin'>注册</i>
+								</a></li>
 								<li class='dropdown light only-icon'><a
 									href='lms/tologin.action'> <i class='icon-signin'>登录</i>
 								</a></li>

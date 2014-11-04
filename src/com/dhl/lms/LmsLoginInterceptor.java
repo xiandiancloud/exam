@@ -23,7 +23,7 @@ public class LmsLoginInterceptor extends BaseController implements HandlerInterc
 
 	private static final String[] INHERENT_ESCAPE_URIS = {
 			"getAllCategory.action", "getCourse.action", "tologin.action",
-			"getteamCategory.action", "login.action",
+			"getteamCategory.action", "login.action","sleepfront.action",
 			"getCourseByCategoryId.action", "getexamByCategoryId.action",
 			"examlist.action", "recentcourse.action", "toregeister.action",
 			"regeister.action", "getAllSchool.action",
@@ -65,7 +65,7 @@ public class LmsLoginInterceptor extends BaseController implements HandlerInterc
 				return false;
 			}
 			
-			if (user != null && !isURILogin(httpRequest.getRequestURI(), httpRequest)) {
+			/*if (user != null && !isURILogin(httpRequest.getRequestURI(), httpRequest)) {
 				Role role = user.getRole();
 				if (CommonConstant.ROLE_C.equals(role.getRoleName()) || CommonConstant.ROLE_A.equals(role.getRoleName())) {
 					String toUrl = httpRequest.getRequestURL().toString();
@@ -78,7 +78,7 @@ public class LmsLoginInterceptor extends BaseController implements HandlerInterc
 					response.sendRedirect(contextPath + "/lms/tologin.action");
 					return false;
 				}
-			}
+			}*/
 			return true;
 		}
 	}

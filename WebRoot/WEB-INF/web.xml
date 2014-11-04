@@ -11,10 +11,10 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
-	<!-- CAS SINGLE SIGN OUT FILTER 	
+	<!-- CAS SINGLE SIGN OUT FILTER 	-->
 	<context-param>
 		<param-name>serverName</param-name>
-		<param-value>http://localhost</param-value>
+		<param-value>http://192.168.2.105</param-value>
 	</context-param>
 
 	<filter>
@@ -35,6 +35,20 @@
 	</listener>
 	
 	<filter>
+		<filter-name>CAS Validation Filter</filter-name>
+		<filter-class>
+			org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter
+		</filter-class>
+		<init-param>
+			<param-name>casServerUrlPrefix</param-name>
+			<param-value>http://192.168.2.45/cas</param-value>
+		</init-param>
+		<init-param>
+			<param-name>exceptionOnValidationFailure</param-name>
+			<param-value>false</param-value>
+		</init-param>
+	</filter>
+	<filter>
 		<filter-name>CAS Authentication Filter</filter-name>
 		<filter-class>
 			org.jasig.cas.client.authentication.AuthenticationFilter
@@ -42,25 +56,11 @@
 		<init-param>
 			<param-name>casServerLoginUrl</param-name>
 			<param-value>
-				http://localhost:8081/cas/login
+				http://192.168.2.45/cas/login
 			</param-value>
 		</init-param>
 	</filter>
 	
-	<filter>
-		<filter-name>CAS Validation Filter</filter-name>
-		<filter-class>
-			org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter
-		</filter-class>
-		<init-param>
-			<param-name>casServerUrlPrefix</param-name>
-			<param-value>http://localhost:8081/cas</param-value>
-		</init-param>
-		<init-param>
-			<param-name>exceptionOnValidationFailure</param-name>
-			<param-value>false</param-value>
-		</init-param>
-	</filter>
 	<filter>
 		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
 		<filter-class>
@@ -80,7 +80,7 @@
 		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
--->
+
 	<filter>
 		<filter-name>hibernateFilter</filter-name>
 		<filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>

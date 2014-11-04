@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -151,6 +152,16 @@ public class LmsUserController extends BaseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping("/sleepfront")
+	public ModelAndView sleepfront(HttpServletRequest request) {
+		
+		setSessionUser(request, null);
+		HttpSession session = request.getSession(false);
+		session.setAttribute("_const_cas_assertion_", null);
+		String url = "redirect:/lms/getteamCategory.action";
+		return new ModelAndView(url);
 	}
 	
 	@RequestMapping("/loginout")
