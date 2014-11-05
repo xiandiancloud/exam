@@ -71,7 +71,8 @@ public class AdminLoginInterceptor extends BaseController implements HandlerInte
 
 					httpRequest.getSession().setAttribute(
 							CommonConstant.ADMIN_LOGIN_TO_URL, toUrl);
-					response.sendRedirect(contextPath + "/admin/toalogin.action");
+//					response.sendRedirect(contextPath + "/admin/toalogin.action");
+					response.sendRedirect(contextPath + "/lms/getteamCategory.action");
 //					request.getRequestDispatcher(contextPath + "/cms/totlogin.action").forward(request, response);
 					return false;
 				}

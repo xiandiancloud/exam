@@ -87,7 +87,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0078a5', endC
 <script src="js/bootstrap.min.js"></script>
 <script src="js/convert.js"></script>
 <script src="js/common.js"></script>
-<script type="text/javascript" language="javascript" src="js/jquery-1.5.1.min.js"></script>
+<!-- <script type="text/javascript" language="javascript" src="js/jquery-1.5.1.min.js"></script> -->
 <script type="text/javascript" src="js/insertsome.js"></script>
 <script type="text/javascript">
 $(function additem(){
@@ -263,7 +263,7 @@ function advanced_cancel(){
 			'[问题解释]';
 		}
 		
-		$("#lowedittextarea").attr("value",tmp);
+		$("#lowedittextarea").html(tmp);//("value",tmp);
 		showeditor();
 		}
 		/*A checkboxes problem presents checkbox buttons for student input. Students can select more than one option presented.
@@ -290,15 +290,13 @@ function isinter(xml)
 }
 function savequestion()
 {
-	
 	resetadvice();
 	var everticalId = parseInt("${verticalId}");
 	var examId = parseInt("${examId}");
-	var content = $("#advanceedittextarea").attr("value");
-	var id = $("#editinput").attr("value",id);
+	var content = $("#advanceedittextarea").val();
+	var id = $("#editinput").attr("value");
 	content = replaceTextarea1(content);
-	
-	var lowcontent = $("#lowedittextarea").attr("value");
+	var lowcontent = $("#lowedittextarea").val();
 	lowcontent = replaceTextarea1(lowcontent);
 	var data={id:id,content:content,lowcontent:lowcontent,examId:examId,everticalId:everticalId};
 	$.ajax({
@@ -318,8 +316,8 @@ function saveadvicequestion()
 {
 	var everticalId = parseInt("${verticalId}");
 	var examId = parseInt("${examId}");
-	var content = $("#advanceedittextarea").attr("value");
-	var id = $("#editinput").attr("value",id);
+	var content = $("#advanceedittextarea").val();
+	var id = $("#editinput").attr("value");
 	content = replaceTextarea1(content);
 	var data={id:id,content:content,examId:examId,everticalId:everticalId};
 	$.ajax({
@@ -341,7 +339,7 @@ function savehtmlquestion()
 	var examId = parseInt("${examId}");
 	var content = $("#htmledit").contents().find("#editor").html();
 	content = replaceTextarea1(content);
-	var id = $("#editinput").attr("value",id);
+	var id = $("#editinput").attr("value");
 	var data={id:id,content:content,examId:examId,everticalId:everticalId};
 	$.ajax({
 		url : "cms/createhtmlExamQuestion.action",
@@ -422,17 +420,17 @@ function showquestiondialog(id)
 				{
 					var con = a.advicecontent;
 					con = replaceTextarea2(con);
-					$("#advanceedittextarea").attr("value",con);
+					$("#advanceedittextarea").html(con);
 					var lowcon = a.lowcontent;					
 					lowcon = replaceTextarea2(lowcon);
-					$("#lowedittextarea").attr("value",lowcon);
+					$("#lowedittextarea").html(lowcon);
 					showeditor();
 				}
 				else
 				{
 					var con = a.advicecontent;
 					con = replaceTextarea2(con);
-					$("#advanceedittextarea").attr("value",con);
+					$("#advanceedittextarea").html(con);
 					showadvanceeditor();
 				}
 				$("#editinput").attr("value",id);

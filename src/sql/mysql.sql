@@ -284,6 +284,7 @@ create table t_question
    id                  int not null AUTO_INCREMENT,
    content             varchar(3000) not null,
    lowcontent          varchar(3000) default null,
+   type                int(10) default null,
    primary key (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

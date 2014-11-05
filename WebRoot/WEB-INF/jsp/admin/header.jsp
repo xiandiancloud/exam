@@ -3,7 +3,7 @@
  <header>
       <nav class='navbar navbar-default navbar-fixed-top'>
         <a class='navbar-brand' href='admin/school.action'>
-          <img width="81" height="21" class="logo" alt="Flatty" src="assets/images/logo.svg" />
+          <img width="51" height="21" class="logo" alt="Flatty" src="images/logo.png" />
           <img width="21" height="21" class="logo-xs" alt="Flatty" src="assets/images/logo_xs.svg" />
         </a>
         <a class='toggle-nav btn pull-left' href='#'>

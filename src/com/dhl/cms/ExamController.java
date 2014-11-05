@@ -126,7 +126,7 @@ public class ExamController extends BaseController {
 		}
 		Role role = user.getRole();
 		if (!CommonConstant.ROLE_T.equals(role.getRoleName())) {
-			String url = "redirect:/cms/totlogin.action";
+			String url = "redirect:/lms/getteamCategory.action";
 			return new ModelAndView(url);
 		}
 		ModelAndView view = new ModelAndView();
@@ -598,7 +598,6 @@ public class ExamController extends BaseController {
 		view.addObject("vtlist", vt);
 		ExamVertical vertical = examverticalService.get(verticalId);
 		view.addObject("vertical", vertical);
-		
 		/*List<Train> courselists = new ArrayList<Train>();
 		try
 		{
