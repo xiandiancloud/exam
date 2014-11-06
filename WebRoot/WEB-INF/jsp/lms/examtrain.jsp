@@ -102,8 +102,8 @@
 <div data-options="region:'west',split:true" style="width:450px;">
 	<div id="leftpanel">
 			<div id="pagination" class="center"></div>
-			<div class='box box-bordered orange-border box-nomargin cmargin5'>
-		                    <div class='box-header box-header-small orange-background'>
+			<div class='box box-bordered searchback box-nomargin cmargin5'>
+		                    <div class='box-header box-header-small searchback'>
 		                      <div class='title'>实验定义</div>
 		                      <div class='actions'>
 		                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
@@ -131,8 +131,8 @@
 		                    </div>
 		    </div>
 			
-			<div class='box box-bordered orange-border box-nomargin cmargin5'>
-                   <div class='box-header box-header-small orange-background'>
+			<div class='box box-bordered searchback box-nomargin cmargin5'>
+                   <div class='box-header box-header-small searchback'>
                      <div class='title'>环境</div>
                      <div class='actions'>
                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
@@ -180,8 +180,8 @@
                    </div>
 		    </div>
 			
-			<div class='box box-bordered orange-border box-nomargin cmargin5'>
-                    <div class='box-header box-header-small orange-background'>
+			<div class='box box-bordered searchback box-nomargin cmargin5'>
+                    <div class='box-header box-header-small searchback'>
                       <div class='title'>题目</div>
                       <div class='actions'>
                         <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
@@ -197,8 +197,8 @@
                     </div>
 		    </div>
               
-			<div class='box box-bordered orange-border box-nomargin cmargin5'>
-                    <div class='box-header box-header-small orange-background'>
+			<div class='box box-bordered searchback box-nomargin cmargin5'>
+                    <div class='box-header box-header-small searchback'>
                       <div class='title'>结果</div>
                       <div class='actions'>
                         <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
@@ -311,7 +311,7 @@
 </div>
 
 <div data-options="region:'center'" style="padding:0px;overflow:hidden;">
-	<iframe id="iframe" src="http://192.168.1.103:8090/" frameBorder="0"
+	<iframe id="iframe" src="http://192.168.1.109:8090/" frameBorder="0"
 						width="100%" scrolling="no" height="100%"></iframe>
 </div>
 

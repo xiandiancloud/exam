@@ -363,7 +363,7 @@ create table t_user_questionchild
    useranswer          longtext default null,
    revalue             longtext default null,
    result              varchar(255) default null,
-   pfscore             int(10) not null,
+   pfscore             int(10) default null,
    primary key (id),
    CONSTRAINT receivet_user_questionchild_ibfk_1 FOREIGN KEY (userquestionId) REFERENCES t_user_question (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

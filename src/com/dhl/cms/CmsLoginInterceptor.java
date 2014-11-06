@@ -76,7 +76,7 @@ public class CmsLoginInterceptor extends BaseController implements
 
 					httpRequest.getSession().setAttribute(
 							CommonConstant.CMS_LOGIN_TO_URL, toUrl);
-					response.sendRedirect(contextPath + "/cms/totlogin.action");
+					response.sendRedirect(contextPath + "/lms/getteamCategory.action");
 					// request.getRequestDispatcher(contextPath +
 					// "/cms/totlogin.action").forward(request, response);
 					return false;

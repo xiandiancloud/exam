@@ -120,7 +120,7 @@
 					<div class="clear"></div>
 					<c:forEach var="groom" items="${groomlist}">
 						<div class="col-xs-3">
-							<a href="lms/toexamintroduce.action?competionId=-1&examId=${groom.id}" class=""><img src="${(empty groom.imgpath)?'images/exam.jpg':groom.imgpath}" width="100%" height="250px;"><h4>${groom.name}</h4></a>
+							<a href="lms/toexamintroduce.action?competionId=-1&examId=${groom.id}" class=""><img src="${(empty groom.imgpath)?'images/exam.jpg':groom.imgpath}" class="img-thumbnail"><h4>${groom.name}</h4></a>
 						</div>
 					</c:forEach>
 				</div>
