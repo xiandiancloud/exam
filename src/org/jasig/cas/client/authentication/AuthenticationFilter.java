@@ -160,7 +160,6 @@ public class AuthenticationFilter extends AbstractCasFilter {
 
 		final HttpServletRequest request = (HttpServletRequest) servletRequest;
 		final HttpServletResponse response = (HttpServletResponse) servletResponse;
-		System.out.println("exam sessionId ---- "+request.getSession().getId());
 		if (isRequestUrlExcluded(request)) {
 			logger.debug("Request is ignored.");
 			filterChain.doFilter(request, response);

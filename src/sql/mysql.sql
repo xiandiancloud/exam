@@ -271,7 +271,7 @@ create table t_train
    envname             varchar(255) not null,    
    conContent          longtext not null,
    conShell            varchar(255) default null,
-   conAnswer           varchar(3000) default null,
+   conAnswer           longtext default null,
    score               int(10) not null,
    scoretag            varchar(255) default null,
    primary key (id)
@@ -282,8 +282,8 @@ drop table if exists t_question;
 create table t_question
 (
    id                  int not null AUTO_INCREMENT,
-   content             varchar(3000) not null,
-   lowcontent          varchar(3000) default null,
+   content             longtext not null,
+   lowcontent          longtext default null,
    type                int(10) default null,
    primary key (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -328,7 +328,7 @@ create table user_train
    courseId            int(10) not null,
    trainId             int(10) not null,
    counts              int(10) default 0,
-   revalue             varchar(3000) default null,
+   revalue             longtext default null,
    result              varchar(255) default null,
    primary key (id),
    UNIQUE KEY (courseId,trainId),
@@ -483,7 +483,7 @@ create table user_train_history
    courseId            int(10) not null,
    trainId             int(10) not null,
    counts              int(10) default 0,
-   revalue             varchar(3000) default null,
+   revalue             longtext default null,
    result              varchar(255) default null,
    docounts            int(10) not null,
    usetime             varchar(255) default 0,

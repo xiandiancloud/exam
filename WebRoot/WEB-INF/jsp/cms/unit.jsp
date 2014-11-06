@@ -3095,15 +3095,15 @@ require(['tender']);
     <div class="modal-window modal-editor confirm modal-lg modal-type-html" style="top: 31.39999999999999px; left: 202.5px;position:fixed;">
         <div class="edit-xblock-modal">
             <div class="modal-header">
-                <h2 class="title modal-window-title">编辑：HTML</h2>
-                <ul class="editor-modes action-list action-modes">
+                <h2 class="title modal-window-title">编辑：</h2>
+                <!-- <ul class="editor-modes action-list action-modes">
 					<li class="action-item" data-mode="editor">
 					<a href="#" class="editor-button is-set">编辑器</a>
 					</li>
 					<li class="action-item" data-mode="settings">
 					<a href="#" class="settings-button">设置</a>
 					</li>
-				</ul>
+				</ul> -->
             </div>
 			<div style="float:left;width:99.1%;margin-top:1.5%;margin-left:5px;"><iframe width="100%" height="340" scrolling="no"  frameborder="0" id="htmledit" src="input.html" ></iframe></div>
             <div class="modal-actions" style="display: block;">
