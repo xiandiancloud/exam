@@ -290,12 +290,19 @@ public class HavingExamController extends BaseController {
 														String[] strs = useranswer.split("#");
 														int size = answerlist.size();
 														boolean flag = true;
-														for (int j=0;j<size;j++)
+														if (size != strs.length)
 														{
-															if (!answerlist.get(j).equals(strs[j]))
+															flag = false;
+														}
+														else
+														{
+															for (int j=0;j<size;j++)
 															{
-																flag = false;
-																break;
+																if (!answerlist.get(j).equals(strs[j]))
+																{
+																	flag = false;
+																	break;
+																}
 															}
 														}
 														if (flag)
@@ -328,12 +335,19 @@ public class HavingExamController extends BaseController {
 														String[] strs = useranswer.split("#");
 														int size = answerlist.size();
 														boolean flag = true;
-														for (int j=0;j<size;j++)
+														if (size != strs.length)
 														{
-															if (!answerlist.get(j).equals(strs[j]))
+															flag = false;
+														}
+														else
+														{
+															for (int j=0;j<size;j++)
 															{
-																flag = false;
-																break;
+																if (!answerlist.get(j).equals(strs[j]))
+																{
+																	flag = false;
+																	break;
+																}
 															}
 														}
 														if (flag)
@@ -361,12 +375,19 @@ public class HavingExamController extends BaseController {
 														String[] strs = useranswer.split("#");
 														int size = answerlist.size();
 														boolean flag = true;
-														for (int j=0;j<size;j++)
+														if (size != strs.length)
 														{
-															if (!answerlist.get(j).equals(strs[j]))
+															flag = false;
+														}
+														else
+														{
+															for (int j=0;j<size;j++)
 															{
-																flag = false;
-																break;
+																if (!answerlist.get(j).equals(strs[j]))
+																{
+																	flag = false;
+																	break;
+																}
 															}
 														}
 														if (!flag)
