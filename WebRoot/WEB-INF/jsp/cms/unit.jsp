@@ -902,29 +902,6 @@ div.MathJax_MathML {
 }
 
 </style>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="date"
-	src="/static/acf03d7/js/vendor/date.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/models/metadata"
-	src="/static/acf03d7/js/models/metadata.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/views/abstract_editor"
-	src="/static/acf03d7/js/views/abstract_editor.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/models/uploads"
-	src="/static/acf03d7/js/models/uploads.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="js/views/uploads"
-	src="/static/acf03d7/js/views/uploads.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="js/views/video/transcripts/metadata_videolist"
-	src="/static/acf03d7/js/views/video/transcripts/metadata_videolist.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="js/views/video/translations_editor"
-	src="/static/acf03d7/js/views/video/translations_editor.js"></script>
 <style type="text/css">
 .MathJax_Display {
 	text-align: center;
@@ -1084,21 +1061,6 @@ img.MathJax_strut {
 	border: 1px solid
 }
 </style>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="js/views/video/transcripts/utils"
-	src="/static/acf03d7/js/views/video/transcripts/utils.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="js/views/video/transcripts/message_manager"
-	src="/static/acf03d7/js/views/video/transcripts/message_manager.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_"
-	data-requiremodule="js/views/video/transcripts/file_uploader"
-	src="/static/acf03d7/js/views/video/transcripts/file_uploader.js"></script>
-<script type="text/javascript" charset="utf-8" async=""
-	data-requirecontext="_" data-requiremodule="jquery.ajaxQueue"
-	src="/static/acf03d7/js/vendor/jquery.ajaxQueue.js"></script>
 </head>
 
 
@@ -1159,17 +1121,17 @@ img.MathJax_strut {
 
             // externally hosted files
             "tender": [
-                "//edxedge.tenderapp.com/tender_widget",
+                "",
                 // if tender fails to load, fallback on a local file
                 // so that require doesn't fall over
                 "tender_fallback"
             ],
-            "mathjax": "//edx-static.s3.amazonaws.com/mathjax-MathJax-727332c/MathJax.js?config=TeX-MML-AM_HTMLorMML-full&delayStartupUntil=configured",
+            "mathjax": "",
             "youtube": [
                 // youtube URL does not end in ".js". We add "?noext" to the path so
                 // that require.js adds the ".js" to the query component of the URL,
                 // and leaves the path component intact.
-                "//www.youtube.com/player_api?noext",
+                "",
                 // if youtube fails to load, fallback on a local file
                 // so that require doesn't fall over
                 "youtube_fallback"

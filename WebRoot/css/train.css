@@ -2,14 +2,14 @@
  * Globals
  */
 body {
-	font-family: Î¢ÈíÑÅºÚ, "Times New Roman", Times, serif;
+	font-family: å¾®è½¯é›…é»‘, "Times New Roman", Times, serif;
 	/* color: #eeeeee; */
 	background-color: #f9f9f9;
 }
 
 h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5,h6,.h6 {
 	margin-top: 0;
-	font-family: Î¢ÈíÑÅºÚ, "Times New Roman", Times, serif;
+	font-family: å¾®è½¯é›…é»‘, "Times New Roman", Times, serif;
 	font-weight: normal;
 	color: #333;
 }
@@ -95,7 +95,7 @@ li {
 }
 .numberfont {
 	margin-top: 0px;
-	font-family: Î¢ÈíÑÅºÚ, "Times New Roman", Times, serif;
+	font-family: å¾®è½¯é›…é»‘, "Times New Roman", Times, serif;
 	font-weight: bold;
 	font-size:20px;
 	color: #333;
@@ -105,14 +105,14 @@ li {
 .h1font{font-size:40px;}
 .hfont {
 	margin-top: 0px;
-	font-family: Î¢ÈíÑÅºÚ, "Times New Roman", Times, serif;
+	font-family: å¾®è½¯é›…é»‘, "Times New Roman", Times, serif;
 	font-weight: bold;
 	font-size:14px;
 	color: #fff;
 }
 .h2font {
 	margin-top: 0px;
-	font-family: Î¢ÈíÑÅºÚ, "Times New Roman", Times, serif;
+	font-family: å¾®è½¯é›…é»‘, "Times New Roman", Times, serif;
 	font-weight: bold;
 	font-size:12px;
 	color: #333;
@@ -581,7 +581,7 @@ input:placeholder {
 .highlighted-courses .courses .course header.course-preview hgroup h2,.find-courses .courses .course header.course-preview hgroup h2 {
 	color: #3c3c3c;
 	display: table-cell;
-	font-family: Î¢ÈíÑÅºÚ, "Times New Roman", Times, serif;
+	font-family: å¾®è½¯é›…é»‘, "Times New Roman", Times, serif;
 	font-size: 0.8em;
 	font-weight: 700;
 	height: 48px;
@@ -657,7 +657,7 @@ input:placeholder {
 
 .highlighted-courses .courses .course .infos .descs section,.find-courses .courses .course .infos .descs section {
 	color: #3c3c3c;
-	font: normal 1em/1.6em Î¢ÈíÑÅºÚ, "Times New Roman", Times, serif;
+	font: normal 1em/1.6em å¾®è½¯é›…é»‘, "Times New Roman", Times, serif;
 	margin: 0px;
 	height: 100%;
 	overflow: hidden;
@@ -708,29 +708,3 @@ input:placeholder {
 .highlighted-courses .university-courses .course:nth-child(3n+3),.find-courses .university-courses .course:nth-child(3n+3) {
 	margin-right: 0
 }
-
-/*
- *¾ÓÖÐ
- */
-/* .wrap {
-	display: table;
-	_position: relative;
-	overflow: hidden;
-	height: 150px;
-}
-
-.subwrap {
-	vertical-align: middle;
-	display: table-cell;
-	_position: absolute;
-	_top: 50%;
-}
-
-.content {
-	_position: relative;
-	_top: -50%;
-}
-
-.autoh {
-	overflow-y: visible
-} */

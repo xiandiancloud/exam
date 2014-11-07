@@ -561,6 +561,8 @@ public class ExamController extends BaseController {
 			int sequentialId, int verticalId) {
 		ModelAndView view = new ModelAndView();
 		view.addObject("examId", examId);
+		Exam course = examService.get(examId);
+		view.addObject("exam", course);
 		view.addObject("sequentialId", sequentialId);
 		view.addObject("verticalId", verticalId);
 
@@ -867,7 +869,9 @@ public class ExamController extends BaseController {
 			{
 				lowcontent = "";
 			}
-			String str = "{'sucess':'sucess','advicecontent':'"+q.getContent()+"','lowcontent':'"+lowcontent+"'}";
+			lowcontent = UtilTools.replaceBackett(lowcontent);
+			String con = UtilTools.replaceBackett(q.getContent());
+			String str = "{'sucess':'sucess','advicecontent':'"+con+"','lowcontent':'"+lowcontent+"'}";
 			out.write(str);
 		} catch (Exception e) {
 			e.printStackTrace();

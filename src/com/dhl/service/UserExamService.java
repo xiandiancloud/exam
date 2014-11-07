@@ -96,7 +96,7 @@ public class UserExamService {
 					uqch.setRevalue(uqc.getRevalue());
 					uqch.setUseranswer(uqc.getUseranswer());
 					uqch.setUserId(uqc.getUserId());
-					uqch.setUserquestionId(uqh.getId());//应该是历史记录的id
+					uqch.setUserquestionId(uqc.getUserquestionId());//应该是历史记录的id
 					userQuestionChildHistoryDao.save(uqch);
 				}
 			}
