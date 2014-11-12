@@ -119,22 +119,25 @@ public class ExamController extends BaseController {
 	@RequestMapping("/cms")
 	public ModelAndView cms(HttpServletRequest request) {
 
-		User user = getSessionUser(request);
-		if (user == null) {
-			String url = "redirect:/cms/totlogin.action";
-			return new ModelAndView(url);
-		}
-		Role role = user.getRole();
-		if (!CommonConstant.ROLE_T.equals(role.getRoleName())) {
-			String url = "redirect:/lms/getteamCategory.action";
-			return new ModelAndView(url);
-		}
-		ModelAndView view = new ModelAndView();
-		List<TeacherExam> tcourselist = teacherExamService
-				.getMyTCourse(user.getId());
-		view.addObject("texamlist", tcourselist);
-		view.setViewName("/cms/texamlist");
-		return view;
+//		User user = getSessionUser(request);
+//		if (user == null) {
+//			String url = "redirect:/cms/totlogin.action";
+//			return new ModelAndView(url);
+//		}
+//		Role role = user.getRole();
+//		if (!CommonConstant.ROLE_T.equals(role.getRoleName())) {
+//			String url = "redirect:/lms/getteamCategory.action";
+//			return new ModelAndView(url);
+//		}
+//		ModelAndView view = new ModelAndView();
+//		List<TeacherExam> tcourselist = teacherExamService
+//				.getMyTCourse(user.getId());
+//		view.addObject("texamlist", tcourselist);
+//		view.setViewName("/cms/texamlist");
+//		return view;
+		
+		String url = "redirect:/cms/totexamlist.action";
+		return new ModelAndView(url);
 	}
 
 	/**
@@ -558,6 +561,8 @@ public class ExamController extends BaseController {
 			int sequentialId, int verticalId) {
 		ModelAndView view = new ModelAndView();
 		view.addObject("examId", examId);
+		Exam course = examService.get(examId);
+		view.addObject("exam", course);
 		view.addObject("sequentialId", sequentialId);
 		view.addObject("verticalId", verticalId);
 
@@ -864,7 +869,9 @@ public class ExamController extends BaseController {
 			{
 				lowcontent = "";
 			}
-			String str = "{'sucess':'sucess','advicecontent':'"+q.getContent()+"','lowcontent':'"+lowcontent+"'}";
+			lowcontent = UtilTools.replaceBackett(lowcontent);
+			String con = UtilTools.replaceBackett(q.getContent());
+			String str = "{'sucess':'sucess','advicecontent':'"+con+"','lowcontent':'"+lowcontent+"'}";
 			out.write(str);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -160,7 +160,6 @@ public class AuthenticationFilter extends AbstractCasFilter {
 
 		final HttpServletRequest request = (HttpServletRequest) servletRequest;
 		final HttpServletResponse response = (HttpServletResponse) servletResponse;
-		System.out.println("exam sessionId ---- "+request.getSession().getId());
 		if (isRequestUrlExcluded(request)) {
 			logger.debug("Request is ignored.");
 			filterChain.doFilter(request, response);
@@ -255,8 +254,15 @@ public class AuthenticationFilter extends AbstractCasFilter {
 				|| (request.getContextPath() + "/")
 						.equalsIgnoreCase(requestURI))
 			return true;
+		
+		String temp = requestURI;
+		int index = requestURI.lastIndexOf("/");
+		if (index != -1)
+		{
+			temp = requestURI.substring(index+1);
+		}
 		for (String uri : INHERENT_ESCAPE_URIS) {
-			if (requestURI != null && requestURI.indexOf(uri) >= 0) {
+			if (requestURI != null && temp.equals(uri)) {
 				return true;
 			}
 		}

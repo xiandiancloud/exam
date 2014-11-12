@@ -9,7 +9,7 @@
       
       <h2 class="info-course">
         <span class="sr">当前试卷</span>
-        <a class="course-link" href="cms/totexam.action?courseId=${examId}">
+        <a class="course-link" href="cms/totexam.action?examId=${examId}">
           <span class="course-org">${exam.org}</span><span class="course-number">${exam.coursecode}</span>
           <span class="course-title" title="edX Demonstration Course">${exam.name}</span>
         </a>

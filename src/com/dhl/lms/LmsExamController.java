@@ -261,6 +261,7 @@ public class LmsExamController extends BaseController {
 		
 		view.addObject("examId", examId);
 		Exam exam = examService.get(examId);
+		view.addObject("exam", exam);
 		String s = exam.getStarttimedetail();
 		String e = exam.getEndtimedetail();
 		if (s==null || e== null || "".equals(s) || "".equals(e))
