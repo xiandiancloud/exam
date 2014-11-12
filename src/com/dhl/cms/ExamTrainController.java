@@ -38,7 +38,6 @@ public class ExamTrainController extends BaseController {
 			HttpServletResponse response) {
 		try {
 			PrintWriter out = response.getWriter();
-
 			RestTrain rs = new RestTrain();
 			HttpEntity<RestTrain> entity = new HttpEntity<RestTrain>(rs);
 
@@ -51,7 +50,7 @@ public class ExamTrainController extends BaseController {
 			
 			String str = JSONArray.fromObject(list).toString();
 			
-			System.out.println("---------------------- "+str);
+//			System.out.println("---------------------- "+str);
 			/*String str = "{'sucess':'sucess','result':'" + result
 					+ "','revalue':'" + rdata + "'}";*/
 

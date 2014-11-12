@@ -190,7 +190,9 @@ public class CmsUploadExamController extends BaseController {
 					.getRealPath("/");
 			String ctxPath = path + "export";
 			Exam exam = examService.get(examId);
-			WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.createPackage();
+			String inputfilepath = "e:\\template.docx";
+			WordprocessingMLPackage wordMLPackage =
+					WordprocessingMLPackage.load(new java.io.File(inputfilepath));
 			WordTools.writeTitle(wordMLPackage, exam);
 			Set<ExamChapter> chapterset = exam.getExamchapters();
 			Iterator it = chapterset.iterator();
@@ -208,9 +210,12 @@ public class CmsUploadExamController extends BaseController {
 						ExamVertical vertical = (ExamVertical) it3.next();
 						WordTools.writeVertical(wordMLPackage, vertical);
 						Set<ExamQuestion> vt = vertical.getExamQuestion();
+						int i=0;
 						for (ExamQuestion eq:vt)
 						{
-							WordTools.writeQuestion(wordMLPackage, eq);
+							
+							i=i+1;
+							WordTools.writeQuestion(wordMLPackage,i,eq);
 						}
 					}
 				}

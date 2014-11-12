@@ -35,11 +35,9 @@ public class Question extends BaseDomain {
 	public String getLowcontent() {
 		return lowcontent;
 	}
-
 	public void setLowcontent(String lowcontent) {
 		this.lowcontent = lowcontent;
 	}
-
 	public String getContent() {
 		return content;
 	}
