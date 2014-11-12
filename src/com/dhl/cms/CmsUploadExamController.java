@@ -190,9 +190,23 @@ public class CmsUploadExamController extends BaseController {
 					.getRealPath("/");
 			String ctxPath = path + "export";
 			Exam exam = examService.get(examId);
-			String inputfilepath = "e:\\template.docx";
+			 //获得WebRoot的路径  
+			ClassLoader classLoader = Thread.currentThread()  
+		            .getContextClassLoader();  
+		    if (classLoader == null) {  
+		        classLoader = ClassLoader.getSystemClassLoader();  
+		    }  
+		    java.net.URL url = classLoader.getResource("");  
+		    String ROOT_CLASS_PATH = url.getPath() + "/";  
+		    File rootFile = new File(ROOT_CLASS_PATH);  
+		    String WEB_INFO_DIRECTORY_PATH = rootFile.getParent() + "/";  
+		    File webInfoDir = new File(WEB_INFO_DIRECTORY_PATH);  
+		    String SERVLET_CONTEXT_PATH = webInfoDir.getParent() + "/";  
+		    String filepath = SERVLET_CONTEXT_PATH + "template/template.docx";  
+		    System.out.println("file"+filepath);
+//			String inputfilepath = "e:\\template.docx";
 			WordprocessingMLPackage wordMLPackage =
-					WordprocessingMLPackage.load(new java.io.File(inputfilepath));
+					WordprocessingMLPackage.load(new java.io.File(filepath));
 			WordTools.writeTitle(wordMLPackage, exam);
 			Set<ExamChapter> chapterset = exam.getExamchapters();
 			Iterator it = chapterset.iterator();
@@ -498,7 +512,7 @@ public class CmsUploadExamController extends BaseController {
 			e.printStackTrace();
 		}
 	}
-
+	
 	private void createVerticalXMl(String path, String coursepath, String xml,
 			ExamVertical vertical) {
 		// 创建document对象

@@ -89,7 +89,7 @@ public class WordTools {
 			if (endtext!=0) {
 				String foretext=contents.substring(0, endtext);
 				mdp.addStyledParagraphOfText("a", foretext);
-				System.out.println("wenzi"+foretext);
+//				System.out.println("wenzi"+foretext);
 			}
 			//处理图片
 			Matcher m=p.matcher(contents);
@@ -103,7 +103,6 @@ public class WordTools {
 			String strcontent=HtmlText(contents);
 			String behindtext=strcontent.substring(endtext,strcontent.length());
 			mdp.addStyledParagraphOfText("a", behindtext); 
-//			parseImgContent(eq.getQuestion().getContent());
 		}
 		else 
 		{
