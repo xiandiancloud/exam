@@ -1,0 +1,1 @@
+<% response.sendRedirect("lms/getteamCategory.action"); %>

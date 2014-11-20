@@ -232,7 +232,7 @@
 													</form>
 													<hr class='hr-normal'>
 													<div class='form-group col-sm-12'>
-														<a id="hrefnumber${index}" href="javascript:void(0);" onclick="entertrain('${competionId}','${exam.id}','${vertical.id}','${qd.id}','hrefnumber${index}');" target="_blank" class='btn btn-danger'>
+														<a id="hrefnumber${index}" href="javascript:void(0);" onclick="entertrain('${competionId}','${exam.id}','${vertical.id}','${qd.id}','hrefnumber${index}','${index}');" target="_blank" class='btn btn-danger'>
 														<i class='icon-circle-arrow-right'></i>进入实训</a>
 													</div>
 												</div>
@@ -265,7 +265,7 @@
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
 																<label class='radio'>
-																	<input type="radio" name="${qd.id}" onclick="submitquesstion('${qd.id}','${nn.index+1}','${qdcontent}');" value="${qdcontent}"/>${qdcontent}
+																	<input type="radio" name="${qd.id}" onclick="submitquesstion('${qd.id}','${nn.index+1}','${qdcontent}','${index}');" value="${qdcontent}"/>${qdcontent}
 																</label> 
 															</div>
 														</c:forEach>
@@ -317,7 +317,7 @@
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
 																<label class='checkbox'>
-																	<input type="checkbox" name="${qd.id}" onclick="submitmultiquesstion('${qd.id}','${nn.index+1}','${examq.id}${qd.id}');" value="${qdcontent}"/>${qdcontent}
+																	<input type="checkbox" name="${qd.id}" onclick="submitmultiquesstion('${qd.id}','${nn.index+1}','${examq.id}${qd.id}','${index}');" value="${qdcontent}"/>${qdcontent}
 																</label> 
 															</div>
 														</c:forEach>
@@ -372,7 +372,7 @@
 														<hr class='hr-normal'>
 														<div class='form-group'>
 															<div class='col-sm-12'>
-																<input class='form-control' type="text" id="numberquestion${index}" onblur="submittextquesstion('${qd.id}','${nn.index+1}',this);" />
+																<input class='form-control' type="text" id="numberquestion${index}" onblur="submittextquesstion('${qd.id}','${nn.index+1}',this,'${index}');" />
 															</div>
 														</div>
 														<%-- <hr class='hr-normal nospace'>
@@ -425,7 +425,7 @@
 														<hr class='hr-normal'>
 														<div class='form-group'>
 															<div class='col-sm-12'>
-																<textarea class='form-control' rows='5' id="numberquestion${index}" onblur="submittextareaquesstion('${qd.id}','${nn.index+1}',this);"></textarea>
+																<textarea class='form-control' rows='5' id="numberquestion${index}" onblur="submittextareaquesstion('${qd.id}','${nn.index+1}',this,'${index}');"></textarea>
 															</div>
 														</div>
 														<%-- <hr class='hr-normal nospace'>
@@ -508,7 +508,7 @@
 										                 		<c:forEach var="qd" items="${examq.qdlist}">
 										                 		<!-- <li> -->
 										                 		<c:set value="${sum + 1}" var="sum" /> 
-										                 		<a href="javascript:void(0)" onclick="document.getElementById('number${sum}').scrollIntoView();" class="j-item item  f-fl">
+										                 		<a href="javascript:void(0)" onclick="document.getElementById('number${sum}').scrollIntoView();" class="j-item item  f-fl" id="index${sum}">
 										                 		${sum}
 										                 		</a>
 										                 		<!-- </li> -->
@@ -684,7 +684,7 @@
 		timer = setInterval("CountDown()", 1000); */
 		
 		//提交答案------单选
-		function submitquesstion(questionId,number,useranswer)
+		function submitquesstion(questionId,number,useranswer,index)
 		{
 			var isover = examisover();
 			if (!isover)
@@ -702,7 +702,8 @@
 				success : function(s) {
 					var a = eval("(" + s + ")");
 					if ("sucess" == a.sucess) {
-						alert("提交了");
+						//alert("提交了");
+						$("#index"+index).css("background","#999999");
 					}
 					else
 					{
@@ -712,7 +713,7 @@
 			});
 		}
 		//提交答案------多选
-		function submitmultiquesstion(questionId,number,id)
+		function submitmultiquesstion(questionId,number,id,index)
 		{
 			var isover = examisover();
 			if (!isover)
@@ -737,7 +738,8 @@
 				success : function(s) {
 					var a = eval("(" + s + ")");
 					if ("sucess" == a.sucess) {
-						alert("提交了");
+						//alert("提交了");
+						$("#index"+index).css("background","#999999");
 					}
 					else
 					{
@@ -747,7 +749,7 @@
 			});
 		}
 		//提交答案------文本输入
-		function submittextquesstion(questionId,number,element)
+		function submittextquesstion(questionId,number,element,index)
 		{
 			var isover = examisover();
 			if (!isover)
@@ -765,7 +767,8 @@
 				success : function(s) {
 					var a = eval("(" + s + ")");
 					if ("sucess" == a.sucess) {
-						alert("提交了");
+						//alert("提交了");
+						$("#index"+index).css("background","#999999");
 					}
 					else
 					{
@@ -775,7 +778,7 @@
 			});
 		}
 		//提交答案------论述题输入
-		function submittextareaquesstion(questionId,number,element)
+		function submittextareaquesstion(questionId,number,element,index)
 		{
 			var isover = examisover();
 			if (!isover)
@@ -794,7 +797,8 @@
 				success : function(s) {
 					var a = eval("(" + s + ")");
 					if ("sucess" == a.sucess) {
-						alert("提交了");
+						//alert("提交了");
+						$("#index"+index).css("background","#999999");
 					}
 					else
 					{
@@ -803,7 +807,7 @@
 				}
 			});
 		}
-		function entertrain(competionId,examId,everticalId,trainId,hrefId)
+		function entertrain(competionId,examId,everticalId,trainId,hrefId,index)
 		{
 			var isover = examisover();
 			if (!isover)
@@ -811,6 +815,7 @@
 				alert("答题已经结束");
 				return;
 			}
+			$("#index"+index).css("background","#999999");
 			$("#"+hrefId).attr("href","lms/toexamtrainone.action?competionId="+competionId+"&examId="+examId+"&everticalId="+everticalId+"&trainId="+trainId);
 		}
 		function examisover()
