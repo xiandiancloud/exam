@@ -9,22 +9,39 @@ import javax.persistence.Table;
 
 /**
  * @author dhl
- * 实验分类
+ * 
  */
-
 @Entity
-@Table(name= "t_coursecategory")
-public class Category extends BaseDomain {
+@Table(name = "t_cloud")
+public class Cloud extends BaseDomain {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-	private String name;	
-	private String describle;
-//	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "category")
-//	@OrderBy(value="id ASC")
-//	private Set<Course> course;
+	private String ip;
+	private String name;
+	private String password;
+	private int userId;
+	
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	public String getIp() {
+		return ip;
+	}
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public int getId() {
 		return id;
 	}
@@ -37,17 +54,4 @@ public class Category extends BaseDomain {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDescrible() {
-		return describle;
-	}
-	public void setDescrible(String describle) {
-		this.describle = describle;
-	}
-/*	public Set<Course> getCourse() {
-		return course;
-	}
-	public void setCourse(Set<Course> course) {
-		this.course = course;
-	}*/
-	
 }

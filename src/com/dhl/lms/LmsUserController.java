@@ -14,14 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.cons.CommonConstant;
-import com.dhl.domain.UCEnvironment;
-import com.dhl.domain.UserCourse;
 import com.dhl.domain.UserEnvironment;
-import com.dhl.domain.UserTrain;
 import com.dhl.service.UCEService;
-import com.dhl.service.UserCourseService;
 import com.dhl.service.UserEnvironmentService;
-import com.dhl.service.UserTrainService;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
 import com.xiandian.cai.UserInterface;
@@ -47,10 +42,10 @@ public class LmsUserController extends BaseController {
 	private UCEService uceService;
 	@Autowired
 	private UserEnvironmentService ueService;
-	@Autowired
-	private UserTrainService userTrainService;
-	@Autowired
-	private UserCourseService userCourseService;
+//	@Autowired
+//	private UserTrainService userTrainService;
+//	@Autowired
+//	private UserCourseService userCourseService;
 
 	/**
 	 * 跳转到登陆界面
@@ -286,43 +281,43 @@ public class LmsUserController extends BaseController {
 		return view;
 	}
 	
-	/**
-	 * 判断环境是否已经准备好
-	 * 
-	 * @param request
-	 * @param response
-	 * @param courseId
-	 * @param name
-	 *            :环境名称
-	 */
-	@RequestMapping("/hasenv")
-	public void hasenv(HttpServletRequest request,
-			HttpServletResponse response, int courseId, int trainId, String name) {
-
-		try {
-			User user = getSessionUser(request);
-			PrintWriter out = response.getWriter();
-			UCEnvironment uce = uceService.getMyUCE(user.getId(), courseId,
-					name);
-			UserTrain userTrain = userTrainService.getUserTrain(user.getId(),
-					courseId, trainId);
-			String result = userTrain == null ? "" : userTrain.getResult();
-			String revalue = userTrain == null ? "" : userTrain.getRevalue();
-			if (uce != null) {
-
-				String str = "{'sucess':'sucess','ip':'" + uce.getHostname()
-						+ "','username':'" + uce.getUsername() + "','result':'"
-						+ result + "','revalue':'" + revalue + "','password':'"
-						+ uce.getPassword() + "','ssh':'" + uce.getServerId()
-						+ "'}";
-				out.write(str);
-			} else {
-				String str = "{'sucess':'fail','result':'" + result
-						+ "','revalue':'" + revalue + "'}";
-				out.write(str);
-			}
-		} catch (Exception e) {
-
-		}
-	}
+//	/**
+//	 * 判断环境是否已经准备好
+//	 * 
+//	 * @param request
+//	 * @param response
+//	 * @param courseId
+//	 * @param name
+//	 *            :环境名称
+//	 */
+//	@RequestMapping("/hasenv")
+//	public void hasenv(HttpServletRequest request,
+//			HttpServletResponse response, int courseId, int trainId, String name) {
+//
+//		try {
+//			User user = getSessionUser(request);
+//			PrintWriter out = response.getWriter();
+//			UCEnvironment uce = uceService.getMyUCE(user.getId(), courseId,
+//					name);
+//			UserTrain userTrain = userTrainService.getUserTrain(user.getId(),
+//					courseId, trainId);
+//			String result = userTrain == null ? "" : userTrain.getResult();
+//			String revalue = userTrain == null ? "" : userTrain.getRevalue();
+//			if (uce != null) {
+//
+//				String str = "{'sucess':'sucess','ip':'" + uce.getHostname()
+//						+ "','username':'" + uce.getUsername() + "','result':'"
+//						+ result + "','revalue':'" + revalue + "','password':'"
+//						+ uce.getPassword() + "','ssh':'" + uce.getServerId()
+//						+ "'}";
+//				out.write(str);
+//			} else {
+//				String str = "{'sucess':'fail','result':'" + result
+//						+ "','revalue':'" + revalue + "'}";
+//				out.write(str);
+//			}
+//		} catch (Exception e) {
+//
+//		}
+//	}
 }

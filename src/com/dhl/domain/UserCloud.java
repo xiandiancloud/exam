@@ -9,22 +9,18 @@ import javax.persistence.Table;
 
 /**
  * @author dhl
- *
+ * 
  */
-
 @Entity
-@Table(name= "user_course_time")
-public class UserCourseTime extends BaseDomain {
+@Table(name = "t_user_cloud")
+public class UserCloud extends BaseDomain {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 	private int userId;
-	private int courseId;
-	private String usetime;
-	private int docounts;
-	
+	private int cloudId;
 	public int getId() {
 		return id;
 	}
@@ -37,22 +33,10 @@ public class UserCourseTime extends BaseDomain {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public int getCourseId() {
-		return courseId;
+	public int getCloudId() {
+		return cloudId;
 	}
-	public void setCourseId(int courseId) {
-		this.courseId = courseId;
-	}
-	public String getUsetime() {
-		return usetime;
-	}
-	public void setUsetime(String usetime) {
-		this.usetime = usetime;
-	}
-	public int getDocounts() {
-		return docounts;
-	}
-	public void setDocounts(int docounts) {
-		this.docounts = docounts;
+	public void setCloudId(int cloudId) {
+		this.cloudId = cloudId;
 	}
 }

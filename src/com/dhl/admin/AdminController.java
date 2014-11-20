@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.cons.CommonConstant;
-import com.dhl.domain.Category;
 import com.dhl.domain.ECategory;
 import com.dhl.domain.Exam;
-import com.dhl.service.CategoryService;
 import com.dhl.service.ECategoryService;
 import com.dhl.service.ExamService;
 import com.dhl.web.BaseController;
@@ -31,11 +29,8 @@ import com.xiandian.model.School;
 @Controller
 @RequestMapping("/admin")
 public class AdminController extends BaseController {
-	/**
-	 * 自动注入
-	 */
-	@Autowired
-	private CategoryService categoryService;
+//	@Autowired
+//	private CategoryService categoryService;
 	@Autowired
 	private ECategoryService ecategoryService;
 	@Autowired
@@ -43,22 +38,22 @@ public class AdminController extends BaseController {
 	@Autowired
 	private ExamService examService;
 	
-	/**
-	 * 管理员到课程分类頁面
-	 * 
-	 * @param request
-	 * @param index
-	 * @return
-	 */
-	@RequestMapping("/category")
-	public ModelAndView category(HttpServletRequest request) {
-		ModelAndView view = new ModelAndView();
-
-		List<Category> categorylist = categoryService.getAllCategory();
-		view.addObject("categorylist", categorylist);
-		view.setViewName("/admin/category");
-		return view;
-	}
+//	/**
+//	 * 管理员到课程分类頁面
+//	 * 
+//	 * @param request
+//	 * @param index
+//	 * @return
+//	 */
+//	@RequestMapping("/category")
+//	public ModelAndView category(HttpServletRequest request) {
+//		ModelAndView view = new ModelAndView();
+//
+//		List<Category> categorylist = categoryService.getAllCategory();
+//		view.addObject("categorylist", categorylist);
+//		view.setViewName("/admin/category");
+//		return view;
+//	}
 
 	/**
 	 * 管理员到试卷分类頁面
@@ -170,34 +165,34 @@ public class AdminController extends BaseController {
 		}
 	}
 
-	/**
-	 * 添加分类
-	 * 
-	 * @param request
-	 * @param response
-	 * @param name
-	 */
-	@RequestMapping("/addcategory")
-	public void addcategory(HttpServletRequest request,
-			HttpServletResponse response, String name) {
-		String result = "{'sucess':'sucess','msg':'" + CommonConstant.ERROR_0
-				+ "'}";
-		PrintWriter out = null;
-		try {
-			out = response.getWriter();
-			String str = categoryService.saveCategory(name);
-			if (CommonConstant.ERROR_2.equals(str)) {
-				result = "{'sucess':'sucess','msg':'" + str + "'}";
-				out.write(result);
-			} else {
-				result = "{'sucess':'fail','msg':'" + str + "'}";
-				out.write(result);
-			}
-		} catch (Exception e) {
-			if (out != null)
-				out.write(result);
-		}
-	}
+//	/**
+//	 * 添加分类
+//	 * 
+//	 * @param request
+//	 * @param response
+//	 * @param name
+//	 */
+//	@RequestMapping("/addcategory")
+//	public void addcategory(HttpServletRequest request,
+//			HttpServletResponse response, String name) {
+//		String result = "{'sucess':'sucess','msg':'" + CommonConstant.ERROR_0
+//				+ "'}";
+//		PrintWriter out = null;
+//		try {
+//			out = response.getWriter();
+//			String str = categoryService.saveCategory(name);
+//			if (CommonConstant.ERROR_2.equals(str)) {
+//				result = "{'sucess':'sucess','msg':'" + str + "'}";
+//				out.write(result);
+//			} else {
+//				result = "{'sucess':'fail','msg':'" + str + "'}";
+//				out.write(result);
+//			}
+//		} catch (Exception e) {
+//			if (out != null)
+//				out.write(result);
+//		}
+//	}
 
 	/**
 	 * 添加试卷分类
@@ -228,20 +223,20 @@ public class AdminController extends BaseController {
 		}
 	}
 	
-	/**
-	 * 根据id删除分类
-	 * 
-	 * @param request
-	 * @param response
-	 * @param categoryId
-	 */
-	@RequestMapping("/delcategory")
-	public ModelAndView delcategory(HttpServletRequest request,
-			HttpServletResponse response, int categoryId) {
-		categoryService.remove(categoryId);
-		String url = "redirect:/admin/category.action";
-		return new ModelAndView(url);
-	}
+//	/**
+//	 * 根据id删除分类
+//	 * 
+//	 * @param request
+//	 * @param response
+//	 * @param categoryId
+//	 */
+//	@RequestMapping("/delcategory")
+//	public ModelAndView delcategory(HttpServletRequest request,
+//			HttpServletResponse response, int categoryId) {
+//		categoryService.remove(categoryId);
+//		String url = "redirect:/admin/category.action";
+//		return new ModelAndView(url);
+//	}
 	
 	/**
 	 * 根据id删除试卷分类

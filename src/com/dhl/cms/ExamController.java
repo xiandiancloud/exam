@@ -29,7 +29,6 @@ import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Question;
 import com.dhl.domain.RestTrain;
 import com.dhl.domain.TeacherExam;
-import com.dhl.service.CourseService;
 import com.dhl.service.ECategoryService;
 import com.dhl.service.ExamChapterService;
 import com.dhl.service.ExamQuestionService;
@@ -43,7 +42,6 @@ import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
 import com.xiandian.cai.SchoolInterface;
 import com.xiandian.cai.UserInterface;
-import com.xiandian.model.Role;
 import com.xiandian.model.School;
 import com.xiandian.model.User;
 
@@ -90,8 +88,8 @@ public class ExamController extends BaseController {
 	@Autowired
 	private RestTemplate restTemplate;
 	
-	@Autowired
-	private CourseService courseService;
+//	@Autowired
+//	private CourseService courseService;
 	
 	
 	//判断是否是竞赛试卷，并且试卷锁定
@@ -688,34 +686,34 @@ public class ExamController extends BaseController {
 		return ParseQuestion.changetohtml(content,id);
 	}
 	
-	/**
-	 * 复制实训系统的课程
-	 * @param request
-	 * @param response
-	 */
-	@RequestMapping("/copycourse")
-	public void copycourse(HttpServletRequest request,
-			HttpServletResponse response,int courseId,int examId,int everticalId) {
-
-		try {
-			PrintWriter out = response.getWriter();
-			
-			RestTrain rs = new RestTrain();
-			rs.setCourseId(courseId);
-			HttpEntity<RestTrain> entity = new HttpEntity<RestTrain>(rs);
-
-			String resturl = UtilTools.getConfig().getProperty("REST_URL_COURSE");
-			ResponseEntity<RestTrain> res = restTemplate.postForEntity(resturl,
-					entity, RestTrain.class);
-			RestTrain e = res.getBody();
-			User user = getSessionUser(request);
-			courseService.copyCourse(e.getCourse(),user.getId(),examId,everticalId);
-			String str = "{'sucess':'sucess'}";
-			out.write(str);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	/**
+//	 * 复制实训系统的课程
+//	 * @param request
+//	 * @param response
+//	 */
+//	@RequestMapping("/copycourse")
+//	public void copycourse(HttpServletRequest request,
+//			HttpServletResponse response,int courseId,int examId,int everticalId) {
+//
+//		try {
+//			PrintWriter out = response.getWriter();
+//			
+//			RestTrain rs = new RestTrain();
+//			rs.setCourseId(courseId);
+//			HttpEntity<RestTrain> entity = new HttpEntity<RestTrain>(rs);
+//
+//			String resturl = UtilTools.getConfig().getProperty("REST_URL_COURSE");
+//			ResponseEntity<RestTrain> res = restTemplate.postForEntity(resturl,
+//					entity, RestTrain.class);
+//			RestTrain e = res.getBody();
+//			User user = getSessionUser(request);
+//			courseService.copyCourse(e.getCourse(),user.getId(),examId,everticalId);
+//			String str = "{'sucess':'sucess'}";
+//			out.write(str);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	/**
 	 * 复制实训系统的实验

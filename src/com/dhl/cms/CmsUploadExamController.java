@@ -37,7 +37,6 @@ import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Question;
 import com.dhl.domain.Train;
-import com.dhl.service.CourseService;
 import com.dhl.service.ExamService;
 import com.dhl.util.UtilTools;
 import com.dhl.util.WordTools;
@@ -52,9 +51,7 @@ import com.dhl.web.BaseController;
 @Controller
 @RequestMapping("/cms")
 public class CmsUploadExamController extends BaseController {
-	// 课程
-	@Autowired
-	private CourseService courseService;
+
 	@Autowired
 	private ExamService examService;
 
