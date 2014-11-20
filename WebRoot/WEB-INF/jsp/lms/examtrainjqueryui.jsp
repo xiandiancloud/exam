@@ -339,7 +339,7 @@
 </div>
 
 <div class="ui-layout-south">
-	<jsp:include page="footer.jsp"></jsp:include>
+	<jsp:include page="../common/footer.jsp"></jsp:include>
 </div>
 
 <div class="ui-layout-center">

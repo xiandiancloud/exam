@@ -73,6 +73,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				        <div class="wrapper-comp-setting">
 							<label class="label setting-label">环境模板</label>
 							<select id="envname">
+								<option value="无">无</option>
 			                  	<option value="创建虚拟机">创建虚拟机</option>
 		                  	</select>
 						</div>

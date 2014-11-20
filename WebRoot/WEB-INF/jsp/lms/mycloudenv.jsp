@@ -16,7 +16,7 @@
 <!--<![endif]-->
 <head>
 <base href="<%=basePath%>">
-<title>错误页面</title>
+<title>设置</title>
 <meta
 	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
 	name='viewport'>
@@ -57,21 +57,85 @@
       <script src="assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
     <![endif]-->
 </head>
-<body class='contrast-red fixed-header'>
+<body class='contrast-green fixed-header'>
 	<jsp:include page="../common/header.jsp"></jsp:include>
 	<div id='wrapper'>
 		<section id=''>
-			<div class="container">
-					<div class="row">
-						<div class="col-xs-12 left nospace">
-							<h1>非法错误或非法权限</h1>
+		<div class="container">
+		<div class="row">
+<%-- 			<div class="col-sm-3">
+				<div class="list-group">
+					<a href="lms/setting.action?index=1"
+						class="list-group-item list-group-item-success <c:if test='${setindex == 1}'>active</c:if>">
+						个人 设置 </a> <a href="lms/setting.action?index=2"
+						class="list-group-item list-group-item-success <c:if test='${setindex == 2}'>active</c:if>">我的云平台</a>
+					<a href="lms/setting.action?index=3"
+						class="list-group-item list-group-item-success <c:if test='${setindex == 3}'>active</c:if>">我的实验</a>
+				</div>
+			</div> --%>
+			<div class='col-xs-3'>
+					<div class='row'>
+						<div class='col-sm-12 box'>
+							<div class='box-content'>
+								<div style="text-align:center">
+									<img src="images/user.jpg">
+								</div>
+								<div style="text-align:center">
+									<a class="btn btn-link">${USER_CONTEXT.username} </a>
+								</div>
+								<div style="text-align:center">
+									<a class="btn btn-link">你的角色 </a> <a class="btn btn-link">
+										${USER_CONTEXT.role.roleName}</a>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="clear"></div>
-
-			</div>
+					<div class='row'>
+						<div class='col-sm-12 box'>
+							<div class="box bordered-box blue-border box-nomargin">
+								<div class="box-header green-background">
+									<i class="icon-book"></i> 我的信息
+								</div>
+								<div class="box-content">
+									<a href="lms/mysetting.action" class="list-group-item"> <i class='icon-plus'></i> 个人设置
+									</a>
+									<a href="lms/mycloudenv.action" class="list-group-item active"> <i class='icon-plus'></i> 我的云平台
+									</a>
+									<a href="lms/myexamenv.action" class="list-group-item"> <i class='icon-plus'></i> 我的云虚机
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-9 panel panel-default">
+					<div class="cmargin">
+						<div class="h10"></div>
+						<form role="form">
+							<div class="form-group">
+								<a>云平台IP</a>
+								<div class="h5"></div>
+								<input type="text" class="form-control" id="ip" value="${uc.ip}">
+								<div class="clear"></div>
+								<a>登录用户名</a>
+								<div class="h5"></div>
+								<input type="text" class="form-control" id="name" value="${uc.name}">
+								<div class="clear"></div>
+								<a>登录密码</a>
+								<div class="h5"></div>
+								<input type="password" class="form-control" id="password" value="${uc.password}">
+								<div class="clear"></div>
+								<button type="button" class="btn btn-success btn-lg btn-block"
+									onclick="update();">保存</button>
+							</div>
+						</form>
+					</div>
+				</div>
+		</div>
+	</div>
 		</section>
 	</div>
+	<div class="clear"></div><div class="clear"></div>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 	<!-- / jquery [required] -->
 	<script src="assets/javascripts/jquery/jquery.min.js"
@@ -108,7 +172,36 @@
 	<script src="js/common.js" type="text/javascript"></script>
 	<script src="js/holder.js"></script>
 	<script>
-	
+    $(function() {
+    	
+	});
+    
+    function update() {
+		var ip = $("#ip").val();
+		var name = $("#name").val();
+		var password = $("#password").val();
+		var data = {
+			ip : ip,
+			name : name,
+			password : password
+		};
+		$.ajax({
+			url : "lms/updatemycloudenv.action",
+			type : "post",
+			data : data,
+			success : function(s) {
+				var a = eval("(" + s + ")");
+				
+				if (a.sucess == "sucess") {
+					alert("保存成功");
+				}
+				else
+				{
+					alert("云平台已经存在");
+				}
+			}
+		});
+	}
 	</script>
 </body>
 </html>

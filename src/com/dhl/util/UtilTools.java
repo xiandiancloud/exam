@@ -185,243 +185,224 @@ public class UtilTools {
 		str = str.replaceAll("\"","\\\\\"");  
 		return str;
 	}
-	public static String[] createServer(String serverName) {
-		Keystone keystone = new Keystone(Configuration.KEYSTONE_AUTH_URL);
-		Access access = keystone
-				.tokens()
-				.authenticate(
-						new UsernamePassword(Configuration.KEYSTONE_USERNAME,
-								Configuration.KEYSTONE_PASSWORD))
-				.withTenantName("admin").execute();
-
-		keystone.token(access.getToken().getId());
-
-		Nova nova = new Nova(Configuration.NOVA_ENDPOINT.concat("/").concat(
-				access.getToken().getTenant().getId()));
-		nova.setTokenProvider(new OpenStackSimpleTokenProvider(access
-				.getToken().getId()));
-
-		// KeyPairs keysPairs = nova.keyPairs().list().execute();
-		//
-		// Images images = nova.images().list(true).execute();
-		//
-		// Flavors flavors = nova.flavors().list(true).execute();
-
-		ServerForCreate serverForCreate = new ServerForCreate();
-		serverForCreate.setName(serverName);
-		serverForCreate.setFlavorRef("2");
-		serverForCreate.setImageRef("fd6f5232-7564-4f1c-b597-2f4e29478597");
-		serverForCreate.setKeyName("hello_key");
-		serverForCreate.getSecurityGroups().add(
-				new ServerForCreate.SecurityGroup("default"));
-
-		Server server = nova.servers().boot(serverForCreate).execute();
-		String[] strs = new String[4];
-		String ip = null;
-		boolean flag = true;
-		while (flag) {
-			// System.out.println("status ------- "+server.getStatus()+"    ,   "+server.getTaskState()+"   ,   "+server.getAddresses()+"   ,  "+getServerIP(server.getId()));
-			try {
-				ip = getServerIP(server.getId());
-				if (ip != null) {
-					flag = false;
-				}
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		strs[0] = ip;
-		strs[1] = "root";
-		strs[2] = "000000";
-		strs[3] = server.getId();
-		return strs;
-		// String[] strs = new String[4];
-
-		// Map<String,List<Address>> address =
-		// server.getAddresses().getAddresses();
-		// List<Address> alist = address.get("flatnet");
-		// if (alist.size() > 0)
-		// {
-		// String ip = alist.get(0).getAddr();
-		// strs[0] = ip;
-		// }
-		// else
-		// {
-		// strs[0] = "";
-		// }
-		// strs[0] = getServerIP(server.getId());
-		// strs[1] = "root";
-		// strs[2] = "123456";
-		// strs[3] = server.getId();
-		// return strs;
-	}
-
-	public static void getServer(String serverId) {
-		// 9b087620-aa6f-4d55-abc4-0307eb6a9826
-		Keystone keystone = new Keystone(Configuration.KEYSTONE_AUTH_URL);
-		Access access = keystone
-				.tokens()
-				.authenticate(
-						new UsernamePassword(Configuration.KEYSTONE_USERNAME,
-								Configuration.KEYSTONE_PASSWORD))
-				.withTenantName("admin").execute();
-
-		keystone.token(access.getToken().getId());
-
-		Nova nova = new Nova(Configuration.NOVA_ENDPOINT.concat("/").concat(
-				access.getToken().getTenant().getId()));
-		nova.setTokenProvider(new OpenStackSimpleTokenProvider(access
-				.getToken().getId()));
-
-		Servers servers = nova.servers().list(true).execute();
-		for (Server server : servers) {
-			if (server != null && server.getId().equals(serverId)) {
-				if (server.getAddresses() == null) {
-				}
-				Map<String, List<Address>> address = server.getAddresses()
-						.getAddresses();
-				// for(String dataKey : address.keySet()) {
-				// System.out.println(dataKey );
-				// }
-				List<Address> alist = address.get("flatnet");
-				if (alist == null) {
-				}
-				if (alist.size() > 0) {
-					String ip = alist.get(0).getAddr();
-					System.out.println("getserver ip----------------------"
-							+ ip);
-				}
-
-				// for(Map.Entry<String, List<Address>> entry:
-				// address.entrySet()) {
-				// System.out.print(entry.getKey() + ":" + entry.getValue() +
-				// "\t");
-				// }
-				// address.getAddresses()
-
-			}
-		}
-	}
-
-	public static String getServerIP(String serverId) {
-		// 9b087620-aa6f-4d55-abc4-0307eb6a9826
-		Keystone keystone = new Keystone(Configuration.KEYSTONE_AUTH_URL);
-		Access access = keystone
-				.tokens()
-				.authenticate(
-						new UsernamePassword(Configuration.KEYSTONE_USERNAME,
-								Configuration.KEYSTONE_PASSWORD))
-				.withTenantName("admin").execute();
-
-		keystone.token(access.getToken().getId());
-
-		Nova nova = new Nova(Configuration.NOVA_ENDPOINT.concat("/").concat(
-				access.getToken().getTenant().getId()));
-		nova.setTokenProvider(new OpenStackSimpleTokenProvider(access
-				.getToken().getId()));
-
-		Servers servers = nova.servers().list(true).execute();
-		for (Server server : servers) {
-			if (server != null && server.getId().equals(serverId)) {
-				if (server.getAddresses() == null) {
-					return null;
-				}
-				Map<String, List<Address>> address = server.getAddresses()
-						.getAddresses();
-				// for(String dataKey : address.keySet()) {
-				// System.out.println(dataKey );
-				// }
-				List<Address> alist = address.get("flatnet");
-				if (alist == null) {
-					return null;
-				}
-				if (alist.size() > 0) {
-					String ip = alist.get(0).getAddr();
-					System.out.println("getserver ip----------------------"
-							+ ip);
-					return ip;
-				}
-				// for(Map.Entry<String, List<Address>> entry:
-				// address.entrySet()) {
-				// System.out.print(entry.getKey() + ":" + entry.getValue() +
-				// "\t");
-				// }
-				// address.getAddresses()
-
-			}
-		}
-		return null;
-	}
-
-	public static void startServer(String serverId) {
-		// 9b087620-aa6f-4d55-abc4-0307eb6a9826
-		Keystone keystone = new Keystone(Configuration.KEYSTONE_AUTH_URL);
-		Access access = keystone
-				.tokens()
-				.authenticate(
-						new UsernamePassword(Configuration.KEYSTONE_USERNAME,
-								Configuration.KEYSTONE_PASSWORD))
-				.withTenantName("admin").execute();
-
-		keystone.token(access.getToken().getId());
-
-		Nova nova = new Nova(Configuration.NOVA_ENDPOINT.concat("/").concat(
-				access.getToken().getTenant().getId()));
-		nova.setTokenProvider(new OpenStackSimpleTokenProvider(access
-				.getToken().getId()));
-
-		ServersResource.StartServer startServer = nova.servers()
-				.start(serverId);
-		startServer.endpoint(Configuration.NOVA_ENDPOINT);
-		startServer.execute();
-		System.out.println("start finish----------------------");
-	}
-
-	public static void stopServer(String serverId) {
-		// 9b087620-aa6f-4d55-abc4-0307eb6a9826
-		Keystone keystone = new Keystone(Configuration.KEYSTONE_AUTH_URL);
-		Access access = keystone
-				.tokens()
-				.authenticate(
-						new UsernamePassword(Configuration.KEYSTONE_USERNAME,
-								Configuration.KEYSTONE_PASSWORD))
-				.withTenantName("admin").execute();
-
-		keystone.token(access.getToken().getId());
-
-		Nova nova = new Nova(Configuration.NOVA_ENDPOINT.concat("/").concat(
-				access.getToken().getTenant().getId()));
-		nova.setTokenProvider(new OpenStackSimpleTokenProvider(access
-				.getToken().getId()));
-
-		ServersResource.StopServer stopServer = nova.servers().stop(serverId);
-		stopServer.endpoint(Configuration.NOVA_ENDPOINT);
-		stopServer.execute();
-	}
-
-	public static void delServer(String serverId) {
-		// 9b087620-aa6f-4d55-abc4-0307eb6a9826
-		Keystone keystone = new Keystone(Configuration.KEYSTONE_AUTH_URL);
-		Access access = keystone
-				.tokens()
-				.authenticate(
-						new UsernamePassword(Configuration.KEYSTONE_USERNAME,
-								Configuration.KEYSTONE_PASSWORD))
-				.withTenantName("admin").execute();
-
-		keystone.token(access.getToken().getId());
-
-		Nova nova = new Nova(Configuration.NOVA_ENDPOINT.concat("/").concat(
-				access.getToken().getTenant().getId()));
-		nova.setTokenProvider(new OpenStackSimpleTokenProvider(access
-				.getToken().getId()));
-
-		ServersResource.Delete startServer = nova.servers().delete(serverId);
-		startServer.endpoint(Configuration.NOVA_ENDPOINT);
-		startServer.execute();
-		System.out.println("del finish----------------------");
-	}
+//	public static String[] createServer(String serverName) {
+//		Keystone keystone = new Keystone(Configuration.KEYSTONE_AUTH_URL);
+//		Access access = keystone
+//				.tokens()
+//				.authenticate(
+//						new UsernamePassword(Configuration.KEYSTONE_USERNAME,
+//								Configuration.KEYSTONE_PASSWORD))
+//				.withTenantName("admin").execute();
+//
+//		keystone.token(access.getToken().getId());
+//
+//		Nova nova = new Nova(Configuration.NOVA_ENDPOINT.concat("/").concat(
+//				access.getToken().getTenant().getId()));
+//		nova.setTokenProvider(new OpenStackSimpleTokenProvider(access
+//				.getToken().getId()));
+//
+//		// KeyPairs keysPairs = nova.keyPairs().list().execute();
+//		//
+//		// Images images = nova.images().list(true).execute();
+//		//
+//		// Flavors flavors = nova.flavors().list(true).execute();
+//
+//		ServerForCreate serverForCreate = new ServerForCreate();
+//		serverForCreate.setName(serverName);
+//		serverForCreate.setFlavorRef("2");
+//		serverForCreate.setImageRef("fd6f5232-7564-4f1c-b597-2f4e29478597");
+//		serverForCreate.setKeyName("hello_key");
+//		serverForCreate.getSecurityGroups().add(
+//				new ServerForCreate.SecurityGroup("default"));
+//
+//		Server server = nova.servers().boot(serverForCreate).execute();
+//		String[] strs = new String[4];
+//		String ip = null;
+//		boolean flag = true;
+//		while (flag) {
+//			// System.out.println("status ------- "+server.getStatus()+"    ,   "+server.getTaskState()+"   ,   "+server.getAddresses()+"   ,  "+getServerIP(server.getId()));
+//			try {
+//				ip = getServerIP(server.getId());
+//				if (ip != null) {
+//					flag = false;
+//				}
+//				Thread.sleep(1000);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		strs[0] = ip;
+//		strs[1] = "root";
+//		strs[2] = "000000";
+//		strs[3] = server.getId();
+//		return strs;
+//	}
+//
+//	public static void getServer(String serverId) {
+//		// 9b087620-aa6f-4d55-abc4-0307eb6a9826
+//		Keystone keystone = new Keystone(Configuration.KEYSTONE_AUTH_URL);
+//		Access access = keystone
+//				.tokens()
+//				.authenticate(
+//						new UsernamePassword(Configuration.KEYSTONE_USERNAME,
+//								Configuration.KEYSTONE_PASSWORD))
+//				.withTenantName("admin").execute();
+//
+//		keystone.token(access.getToken().getId());
+//
+//		Nova nova = new Nova(Configuration.NOVA_ENDPOINT.concat("/").concat(
+//				access.getToken().getTenant().getId()));
+//		nova.setTokenProvider(new OpenStackSimpleTokenProvider(access
+//				.getToken().getId()));
+//
+//		Servers servers = nova.servers().list(true).execute();
+//		for (Server server : servers) {
+//			if (server != null && server.getId().equals(serverId)) {
+//				if (server.getAddresses() == null) {
+//				}
+//				Map<String, List<Address>> address = server.getAddresses()
+//						.getAddresses();
+//				// for(String dataKey : address.keySet()) {
+//				// System.out.println(dataKey );
+//				// }
+//				List<Address> alist = address.get("flatnet");
+//				if (alist == null) {
+//				}
+//				if (alist.size() > 0) {
+//					String ip = alist.get(0).getAddr();
+//					System.out.println("getserver ip----------------------"
+//							+ ip);
+//				}
+//
+//				// for(Map.Entry<String, List<Address>> entry:
+//				// address.entrySet()) {
+//				// System.out.print(entry.getKey() + ":" + entry.getValue() +
+//				// "\t");
+//				// }
+//				// address.getAddresses()
+//
+//			}
+//		}
+//	}
+//
+//	public static String getServerIP(String serverId) {
+//		// 9b087620-aa6f-4d55-abc4-0307eb6a9826
+//		Keystone keystone = new Keystone(Configuration.KEYSTONE_AUTH_URL);
+//		Access access = keystone
+//				.tokens()
+//				.authenticate(
+//						new UsernamePassword(Configuration.KEYSTONE_USERNAME,
+//								Configuration.KEYSTONE_PASSWORD))
+//				.withTenantName("admin").execute();
+//
+//		keystone.token(access.getToken().getId());
+//
+//		Nova nova = new Nova(Configuration.NOVA_ENDPOINT.concat("/").concat(
+//				access.getToken().getTenant().getId()));
+//		nova.setTokenProvider(new OpenStackSimpleTokenProvider(access
+//				.getToken().getId()));
+//
+//		Servers servers = nova.servers().list(true).execute();
+//		for (Server server : servers) {
+//			if (server != null && server.getId().equals(serverId)) {
+//				if (server.getAddresses() == null) {
+//					return null;
+//				}
+//				Map<String, List<Address>> address = server.getAddresses()
+//						.getAddresses();
+//				// for(String dataKey : address.keySet()) {
+//				// System.out.println(dataKey );
+//				// }
+//				List<Address> alist = address.get("flatnet");
+//				if (alist == null) {
+//					return null;
+//				}
+//				if (alist.size() > 0) {
+//					String ip = alist.get(0).getAddr();
+//					System.out.println("getserver ip----------------------"
+//							+ ip);
+//					return ip;
+//				}
+//				// for(Map.Entry<String, List<Address>> entry:
+//				// address.entrySet()) {
+//				// System.out.print(entry.getKey() + ":" + entry.getValue() +
+//				// "\t");
+//				// }
+//				// address.getAddresses()
+//
+//			}
+//		}
+//		return null;
+//	}
+//
+//	public static void startServer(String serverId) {
+//		// 9b087620-aa6f-4d55-abc4-0307eb6a9826
+//		Keystone keystone = new Keystone(Configuration.KEYSTONE_AUTH_URL);
+//		Access access = keystone
+//				.tokens()
+//				.authenticate(
+//						new UsernamePassword(Configuration.KEYSTONE_USERNAME,
+//								Configuration.KEYSTONE_PASSWORD))
+//				.withTenantName("admin").execute();
+//
+//		keystone.token(access.getToken().getId());
+//
+//		Nova nova = new Nova(Configuration.NOVA_ENDPOINT.concat("/").concat(
+//				access.getToken().getTenant().getId()));
+//		nova.setTokenProvider(new OpenStackSimpleTokenProvider(access
+//				.getToken().getId()));
+//
+//		ServersResource.StartServer startServer = nova.servers()
+//				.start(serverId);
+//		startServer.endpoint(Configuration.NOVA_ENDPOINT);
+//		startServer.execute();
+//		System.out.println("start finish----------------------");
+//	}
+//
+//	public static void stopServer(String serverId) {
+//		// 9b087620-aa6f-4d55-abc4-0307eb6a9826
+//		Keystone keystone = new Keystone(Configuration.KEYSTONE_AUTH_URL);
+//		Access access = keystone
+//				.tokens()
+//				.authenticate(
+//						new UsernamePassword(Configuration.KEYSTONE_USERNAME,
+//								Configuration.KEYSTONE_PASSWORD))
+//				.withTenantName("admin").execute();
+//
+//		keystone.token(access.getToken().getId());
+//
+//		Nova nova = new Nova(Configuration.NOVA_ENDPOINT.concat("/").concat(
+//				access.getToken().getTenant().getId()));
+//		nova.setTokenProvider(new OpenStackSimpleTokenProvider(access
+//				.getToken().getId()));
+//
+//		ServersResource.StopServer stopServer = nova.servers().stop(serverId);
+//		stopServer.endpoint(Configuration.NOVA_ENDPOINT);
+//		stopServer.execute();
+//	}
+//
+//	public static void delServer(String serverId) {
+//		// 9b087620-aa6f-4d55-abc4-0307eb6a9826
+//		Keystone keystone = new Keystone(Configuration.KEYSTONE_AUTH_URL);
+//		Access access = keystone
+//				.tokens()
+//				.authenticate(
+//						new UsernamePassword(Configuration.KEYSTONE_USERNAME,
+//								Configuration.KEYSTONE_PASSWORD))
+//				.withTenantName("admin").execute();
+//
+//		keystone.token(access.getToken().getId());
+//
+//		Nova nova = new Nova(Configuration.NOVA_ENDPOINT.concat("/").concat(
+//				access.getToken().getTenant().getId()));
+//		nova.setTokenProvider(new OpenStackSimpleTokenProvider(access
+//				.getToken().getId()));
+//
+//		ServersResource.Delete startServer = nova.servers().delete(serverId);
+//		startServer.endpoint(Configuration.NOVA_ENDPOINT);
+//		startServer.execute();
+//		System.out.println("del finish----------------------");
+//	}
 
 	public static Connection getConnection(String hostname, String username,
 			String password) {

@@ -972,7 +972,7 @@ public class HavingExamController extends BaseController {
 		try {
 			User user = getSessionUser(request);
 			PrintWriter out = response.getWriter();
-			UserEnvironment uce = userEnvironmentService.getMyUCE(user.getId(), name);
+			UserEnvironment uce = userEnvironmentService.getMyUCE(user.getId(), examId,trainId);
 			UserQuestionChild userTrain = userQuestionService.getUserExamTrainQuestionChild(user.getId(),
 					examId, trainId);
 			String result = userTrain == null ? "" : userTrain.getResult();

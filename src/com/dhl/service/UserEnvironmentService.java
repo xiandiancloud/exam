@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dhl.dao.ExamDao;
+import com.dhl.dao.TrainDao;
 import com.dhl.dao.UserEnvironmentDao;
 import com.dhl.domain.UserEnvironment;
 import com.dhl.util.UtilTools;
@@ -18,13 +20,17 @@ public class UserEnvironmentService {
 	
 	@Autowired
 	private UserEnvironmentDao uceDao;
+	@Autowired
+	private ExamDao examDao;
+	@Autowired
+	private TrainDao trainDao;
 	
 	public UserEnvironment get(int id) {
 		return uceDao.get(id);
 	}
 	
-	public UserEnvironment getMyUCE(int userId,String name) {
-		return uceDao.getMyUCE(userId,name);
+	public UserEnvironment getMyUCE(int userId,int examId,int trainId) {
+		return uceDao.getMyUCE(userId,examId,trainId);
 	}
 	
 	public List<UserEnvironment> getMyUCE(int userId) {
@@ -40,10 +46,12 @@ public class UserEnvironmentService {
 		uceDao.update(uce);
 	}
 	
-	public void save(int userId,String name,String hostname,String username,String password,String serverId)
+	public void save(int userId,int examId,int trainId,String name,String hostname,String username,String password,String serverId)
 	{
 		UserEnvironment uce = new UserEnvironment();
 		uce.setUserId(userId);
+		uce.setExam(examDao.get(examId));
+		uce.setTrain(trainDao.get(trainId));
 		uce.setName(name);
 		uce.setHostname(hostname);
 		uce.setUsername(username);

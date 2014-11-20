@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.cons.CommonConstant;
+import com.dhl.domain.Cloud;
 import com.dhl.domain.UserEnvironment;
 import com.dhl.service.UCEService;
+import com.dhl.service.UserCloudService;
 import com.dhl.service.UserEnvironmentService;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
@@ -42,6 +44,8 @@ public class LmsUserController extends BaseController {
 	private UCEService uceService;
 	@Autowired
 	private UserEnvironmentService ueService;
+	@Autowired
+	private UserCloudService userCloudService;
 //	@Autowired
 //	private UserTrainService userTrainService;
 //	@Autowired
@@ -262,6 +266,42 @@ public class LmsUserController extends BaseController {
 		view.addObject("up", up);
 		view.setViewName("/lms/mysetting");
 		return view;
+	}
+	
+	/**
+	 * 我的云平台
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/mycloudenv")
+	public ModelAndView mycloudenv(HttpServletRequest request) {
+		ModelAndView view = new ModelAndView();
+		User user = getSessionUser(request);
+		Cloud uc = userCloudService.getMyCloud(user.getId());
+		view.addObject("uc", uc);
+		view.setViewName("/lms/mycloudenv");
+		return view;
+	}
+	
+	/**
+	 * 更新我的云平台
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/updatemycloudenv")
+	public void updatemycloudenv(HttpServletRequest request,HttpServletResponse response,String ip,String name,String password) {
+		try
+		{
+			PrintWriter out = response.getWriter();
+			User user = getSessionUser(request);
+			boolean flag = userCloudService.save(user.getId(), ip, name, password);
+			String temp = flag?"sucess":"fail";
+			String str = "{'sucess':'"+temp+"'}";
+			out.write(str);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	/**

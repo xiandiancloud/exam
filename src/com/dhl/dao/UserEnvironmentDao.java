@@ -14,8 +14,9 @@ public class UserEnvironmentDao extends BaseDao<UserEnvironment> {
 		return find(hql);
 	}
 	
-	public UserEnvironment getMyUCE(int userId,String name) {
-		String hql = "from UserEnvironment where userId = " + userId +" and name = '"+name+"'";
+	public UserEnvironment getMyUCE(int userId,int examId,int trainId) {
+//		String hql = "from UserEnvironment where userId = " + userId +" and name = '"+name+"'";
+		String hql = "from UserEnvironment where userId = " + userId +" and examId = "+examId+" and trainId = "+trainId;
 		List<UserEnvironment> list = find(hql);
 		if (list != null && list.size() > 0)
 		{

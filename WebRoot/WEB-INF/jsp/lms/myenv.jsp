@@ -109,20 +109,12 @@
 									<i class="icon-book"></i> 我的信息
 								</div>
 								<div class="box-content">
-									<a href="lms/mysetting.action"> <i class='icon-add'></i> 我的信息
+									<a href="lms/mysetting.action" class="list-group-item"> <i class='icon-plus'></i> 个人设置
 									</a>
-									<hr class="hr-normal">
-									<a href="lms/myexamenv.action"> <i class='icon-add'></i> 我的云平台
+									<a href="lms/mycloudenv.action" class="list-group-item"> <i class='icon-plus'></i> 我的云平台
 									</a>
-									<%-- <hr class="hr-normal">
-									<c:if test="${USER_CONTEXT.role.roleName=='老师'}">
-									<a href="cms" class='btn btn-success'> <i
-										class='icon-add'></i> 增加试卷
+									<a href="lms/myexamenv.action" class="list-group-item active"> <i class='icon-plus'></i> 我的云虚机
 									</a>
-									<a href="cms/totcompetion.action?competionId=-1" class='btn btn-primary'> <i
-										class='icon-add'></i> 增加竞赛
-									</a>
-									</c:if> --%>
 								</div>
 							</div>
 						</div>

@@ -75,7 +75,7 @@ public class ShellController extends BaseController {
 			}
 			conn.close();
 			System.out.println("path ---------- " + path);
-			UserEnvironment uce = userEnvironmenteService.getMyUCE(user.getId(), name);
+			UserEnvironment uce = userEnvironmenteService.getMyUCE(user.getId(), examId, trainId);
 			if (uce != null)
 			{
 				String ip = uce.getHostname();
