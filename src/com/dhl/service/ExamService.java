@@ -348,7 +348,6 @@ public class ExamService {
 		tc.setExam(c);
 		tc.setUserId(userId);
 		teacherExamDao.save(tc);
-
 	}
 
 	/**
