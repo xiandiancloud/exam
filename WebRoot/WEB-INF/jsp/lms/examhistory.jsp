@@ -112,7 +112,7 @@
 </style>
 
   </head>
-  <body data-spy="scroll" data-target="#myScrollspy" class='contrast-red fixed-header'>
+  <body data-spy="scroll" class='contrast-red fixed-header'>
     <jsp:include page="../common/header.jsp"></jsp:include>
 	<div id='wrapper'>
 		<div class='container'>
@@ -130,7 +130,7 @@
 							<div class='row' id="firesult">
 							<div class='col-sm-3'>
 								<div class="advance ">
-									<span class="totalScore">100</span>分
+									<span class="totalScore">${score}</span>分
 								</div>
 							</div>
 							<div class='col-sm-9'>
@@ -142,40 +142,35 @@
 													<thead>
 														<tr>
 															<th></th>
-															<th>第一部分</th>
-															<th>第二部分</th>
-															<th>第三部分</th>
-															<th>第四部分</th>
+															<c:forEach var="ued" items="${uedlist}">
+															<th>${ued.name}</th>
+															</c:forEach>
 														</tr>
 													</thead>
 													<tbody>
 														<tr>
 															<td>答对</td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
+															<c:forEach var="ued" items="${uedlist}">
+															<th>${ued.right}</th>
+															</c:forEach>
 														</tr>
 														<tr>
 															<td>答错</td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
+															<c:forEach var="ued" items="${uedlist}">
+															<th>${ued.wrong}</th>
+															</c:forEach>
 														</tr>
 														<tr>
 															<td>未答</td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
+															<c:forEach var="ued" items="${uedlist}">
+															<th>${ued.noanswer}</th>
+															</c:forEach>
 														</tr>
 														<tr>
 															<td>得分</td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
+															<c:forEach var="ued" items="${uedlist}">
+															<th>${ued.cscore}</th>
+															</c:forEach>
 														</tr>
 													</tbody>
 												</table>
@@ -198,21 +193,21 @@
                     <c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
                       <ol class='dd-list'>
                         <li class='dd-item' data-id='2'>
-                          <div class='dd-handle'>
+                          <div class='dd-handle noborder'>
                             <i class='icon-backward text-purple'></i>
                             ${chapter.name}
                           </div>
                           <c:forEach var="sequential" items="${chapter.esequentials}" varStatus="j">
                           <ol class='dd-list'>
                             <li class='dd-item' data-id='3'>
-                              <div class='dd-handle'>
-                                <i class='icon-camera-retro text-orange'></i>
+                              <div class='dd-handle noborder'>
+                                <i class='icon-backward text-orange'></i>
                                 ${sequential.name}
                               </div>
                               <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
                               <ol class='dd-list'>
                                 <li class='dd-item' data-id='4'>
-                                  <div class='dd-handle'>${vertical.name}</div>
+                                  <div class='dd-handle noborder'>${vertical.name}</div>
                                   <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
 			                 		<c:forEach var="qd" items="${examq.qdlist}" varStatus="nn">
 			                 			<%-- 实训 --%>
@@ -231,10 +226,41 @@
 														</c:forEach>
 													</form>
 													<hr class='hr-normal'>
-													<div class='form-group col-sm-12'>
+													<%-- <div class='form-group col-sm-12'>
 														<a id="hrefnumber${index}" href="javascript:void(0);" onclick="entertrain('${exam.id}','${vertical.id}','${qd.id}','hrefnumber${index}');" target="_blank" class='btn btn-danger'>
 														<i class='icon-circle-arrow-right'></i>进入实训</a>
-													</div>
+													</div> --%>
+													<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
+															<div class='h30'></div>											
+															<div class='row'>
+																<div class='col-xs-6 juzhong' style="line-height:40px;">
+																	<label >正确答案：${qd.answer}</label>
+																</div>
+																<div class='col-xs-2 juzhong'>
+																	本题满分：<span>${qd.score}</span>
+																</div>
+																<div class='col-xs-2 juzhong'>
+																	得分：<span id="scorequestion${index}"></span>
+																</div>
+<%-- 																<div class='col-xs-2 juzhong'>
+																	<div class='input-group controls-group'>
+																		<input class="form-control" type="text" id="textquestion${index}"/>
+																		<span class='input-group-btn'>
+																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
+																		</span>
+																	</div>
+																</div> --%>
+															</div>
+															<div class='row'>
+																<div class='col-xs-12 juzhong' style="line-height:40px;height:auto;">
+																	<label>机器答案：<div id="revalue${index}" class="answerimg"></div></label>
+																</div>
+																<div class='col-xs-12 juzhong' style="line-height:40px;height:auto;">
+																	<label>用户答案：<div id="numberquestion${index}" class="answerimg"></div></label>
+																</div>
+															</div>
+															<div class='h30'></div>
+														</div>
 												</div>
 											</div>
 							   			</c:if>
@@ -270,35 +296,30 @@
 															</div>
 														</c:forEach>
 														</div>
-														<%-- <hr class='hr-normal nospace'>
+														<hr class='hr-normal nospace'>
 														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<label >正确答案：${qd.answer}</label>
-															<div class='row'>
-															<div class='col-xs-12 h30'></div>
-															</div>												
+															<div class='h30'></div>											
 															<div class='row'>
 																<div class='col-xs-6 juzhong' style="line-height:40px;">
 																	<label >正确答案：${qd.answer}</label>
 																</div>
 																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>10</span>
+																	本题满分：<span>${qd.score}</span>
 																</div>
 																<div class='col-xs-2 juzhong'>
-																	您的得分：<span>5</span>
+																	得分：<span id="scorequestion${index}"></span>
 																</div>
-																<div class='col-xs-2 juzhong'>
+																<%-- <div class='col-xs-2 juzhong'>
 																	<div class='input-group controls-group'>
-																		<input class="form-control" type="text" />
+																		<input class="form-control" type="text" id="textquestion${index}"/>
 																		<span class='input-group-btn'>
-																			<button class='btn' type='submit'>改分</button>
+																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
 																		</span>
 																	</div>
-																</div>
+																</div> --%>
 															</div>
-															<div class='row'>
-																<div class='col-xs-12 h30'></div>
-															</div>
-														</div> --%>
+															<div class='h30'></div>
+														</div>
 													</form>
 												</div>
 											</div>
@@ -322,35 +343,30 @@
 															</div>
 														</c:forEach>
 														</div>
-														<%-- <hr class='hr-normal nospace'>
+														<hr class='hr-normal nospace'>
 														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<label >正确答案：${qd.answer}</label>
-															<div class='row'>
-															<div class='col-xs-12 h30'></div>
-															</div>												
+															<div class='h30'></div>											
 															<div class='row'>
 																<div class='col-xs-6 juzhong' style="line-height:40px;">
 																	<label >正确答案：${qd.answer}</label>
 																</div>
 																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>10</span>
+																	本题满分：<span>${qd.score}</span>
 																</div>
 																<div class='col-xs-2 juzhong'>
-																	您的得分：<span>5</span>
+																	得分：<span id="scorequestion${index}"></span>
 																</div>
-																<div class='col-xs-2 juzhong'>
+																<%-- <div class='col-xs-2 juzhong'>
 																	<div class='input-group controls-group'>
-																		<input class="form-control" type="text" />
+																		<input class="form-control" type="text" id="textquestion${index}"/>
 																		<span class='input-group-btn'>
-																			<button class='btn' type='submit'>改分</button>
+																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
 																		</span>
 																	</div>
-																</div>
+																</div> --%>
 															</div>
-															<div class='row'>
-																<div class='col-xs-12 h30'></div>
-															</div>
-														</div> --%>													
+															<div class='h30'></div>
+														</div>												
 													</form>
 												</div>
 											</div>
@@ -375,35 +391,30 @@
 																<input class='form-control' type="text" id="numberquestion${index}" onblur="submittextquesstion('${qd.id}','${nn.index+1}',this);" />
 															</div>
 														</div>
-														<%-- <hr class='hr-normal nospace'>
+														<hr class='hr-normal nospace'>
 														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<label >正确答案：${qd.answer}</label>
-															<div class='row'>
-															<div class='col-xs-12 h30'></div>
-															</div>												
+															<div class='h30'></div>											
 															<div class='row'>
 																<div class='col-xs-6 juzhong' style="line-height:40px;">
 																	<label >正确答案：${qd.answer}</label>
 																</div>
 																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>10</span>
+																	本题满分：<span>${qd.score}</span>
 																</div>
 																<div class='col-xs-2 juzhong'>
-																	您的得分：<span>5</span>
+																	得分：<span id="scorequestion${index}"></span>
 																</div>
-																<div class='col-xs-2 juzhong'>
+																<%-- <div class='col-xs-2 juzhong'>
 																	<div class='input-group controls-group'>
-																		<input class="form-control" type="text" />
+																		<input class="form-control" type="text" id="textquestion${index}"/>
 																		<span class='input-group-btn'>
-																			<button class='btn' type='submit'>改分</button>
+																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
 																		</span>
 																	</div>
-																</div>
+																</div> --%>
 															</div>
-															<div class='row'>
-																<div class='col-xs-12 h30'></div>
-															</div>
-														</div> --%>
+															<div class='h30'></div>
+														</div>
 													</form>
 												</div>
 											</div>
@@ -428,35 +439,30 @@
 																<textarea class='form-control' rows='5' id="numberquestion${index}" onblur="submittextareaquesstion('${qd.id}','${nn.index+1}',this);"></textarea>
 															</div>
 														</div>
-														<%-- <hr class='hr-normal nospace'>
+														<hr class='hr-normal nospace'>
 														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<label >正确答案：${qd.answer}</label>
-															<div class='row'>
-															<div class='col-xs-12 h30'></div>
-															</div>												
+															<div class='h30'></div>												
 															<div class='row'>
 																<div class='col-xs-6 juzhong' style="line-height:40px;">
 																	<label >正确答案：${qd.answer}</label>
 																</div>
 																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>10</span>
+																	本题满分：<span>${qd.score}</span>
 																</div>
 																<div class='col-xs-2 juzhong'>
-																	您的得分：<span>5</span>
+																	得分：<span id="scorequestion${index}"></span>
 																</div>
 																<div class='col-xs-2 juzhong'>
 																	<div class='input-group controls-group'>
-																		<input class="form-control" type="text" />
+																		<input class="form-control" type="text" id="textquestion${index}"/>
 																		<span class='input-group-btn'>
-																			<button class='btn' type='submit'>改分</button>
+																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
 																		</span>
 																	</div>
 																</div>
 															</div>
-															<div class='row'>
-																<div class='col-xs-12 h30'></div>
-															</div>
-														</div> --%>
+															<div class='h30'></div>
+														</div>
 													</form>
 												</div>
 											</div>
@@ -479,12 +485,11 @@
                   </div>
 				</div>																																			
 					
-				<div class="col-xs-3" id="myScrollspy">
-					<div class='row' data-spy="affix">
-						<div class='col-xs-12'>
+				<div class="col-xs-3" id="scroll1">
+				<div class="fixtop" id="scroll2">
 							<div class='box bordered-box blue-border'>
 								<div class='box-content'>
-<!-- 									<div class='row'>
+									<!-- <div class='row'>
 										<div class='col-xs-3'>
 											<div id="timer" style="color:green;font-family:Arial;font-size:170%;"></div>
 										</div>
@@ -494,8 +499,8 @@
 												<a href="lms/myexam.action" class="btn">下次再做</a>
 											</div>
 										</div>
-									</div>
-									<hr class='hr-normal'> -->
+									</div> 
+									<hr class='hr-normal'>-->
 									<div class='row'>
 										<div class='col-xs-12'>
 											<div data-offset-top="125" class="nav nav-tabs nav-stacked section">
@@ -509,7 +514,7 @@
 										                 		<c:forEach var="qd" items="${examq.qdlist}">
 										                 		<!-- <li> -->
 										                 		<c:set value="${sum + 1}" var="sum" /> 
-										                 		<a href="javascript:void(0)" onclick="document.getElementById('number${sum}').scrollIntoView();" class="j-item item  f-fl">
+										                 		<a href="javascript:void(0)" onclick="document.getElementById('number${sum}').scrollIntoView();" class="j-item item  f-fl" id="index${sum}">
 										                 		${sum}
 										                 		</a>
 										                 		<!-- </li> -->
@@ -526,19 +531,20 @@
 									<div class='row'>
 										<div class='col-xs-12'>
 											<div class='box-content' style="padding:0">
-												<%-- <c:if test="${userexam.state == 0}">
+												<c:if test="${userexam.state == 0}">
 													<a class="btn btn-danger btn-block btn-lg" href="javascript:void(0);" onclick="submitallquesstion();">提交试卷</a>
-												</c:if> --%>
-												<%-- <c:if test="${userexam.state == 1}"> --%>
-													<a class="btn btn-danger btn-block btn-lg" href="lms/toagainexamintroduce.action?examId=${exam.id}">再做一次</a>
-												<%-- </c:if> --%>
+												</c:if>
+												<c:if test="${userexam.state == 1}">
+													<c:if test="${exam.isnormal == 0}">
+														<a class="btn btn-danger btn-block btn-lg" href="lms/toagainexamintroduce.action?competionId=${competionId}&examId=${exam.id}">再做一次</a>
+													</c:if>
+												</c:if>
 											</div>
 										</div>
 									</div>									
 								</div>
 							</div>
-						</div>
-					</div>
+		        </div>
 		        </div>
 			</div>
 		</div>
@@ -574,6 +580,7 @@
 
 	<script type="text/javascript">
 		$(function() {
+			$("#scroll2").width($("#scroll1").width());
 			//填充试卷内容，判断对错，或者是否已经做过
 			initquestion();
 		});

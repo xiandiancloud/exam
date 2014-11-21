@@ -172,73 +172,12 @@ public class LmsExamController extends BaseController {
 		ModelAndView view = new ModelAndView();
 		Exam exam = examService.get(examId);
 		view.addObject("exam", exam);
-		String s = exam.getStarttimedetail();
-		String e = exam.getEndtimedetail();
-		if (s==null || e== null || "".equals(s) || "".equals(e))
-		{
-			view.addObject("mm", "无限制");
-		}
-		else
-		{
-			long startT = UtilTools.fromDateStringToLong(s);
-			long endT = UtilTools.fromDateStringToLong(e);
-			long ss=(startT-endT)/(1000); //共计秒数
-			int mm = (int)ss/60;   //共计分钟数
-			view.addObject("mm", mm);
-		}
-		int size = exam.getExamchapters().size();
-		int index = 0;
-		int score = 0;
-		Set<ExamChapter> chapterset = exam.getExamchapters();
-		Iterator it = chapterset.iterator();
-		List<Train> tlist = new ArrayList<Train>();
-		while (it.hasNext()) {
-			ExamChapter chapter = (ExamChapter) it.next();
-			Set<ExamSequential> sequentialset = chapter.getEsequentials();
-			Iterator it2 = sequentialset.iterator();
-
-			while (it2.hasNext()) {
-				ExamSequential sequential = (ExamSequential) it2.next();
-				Set<ExamVertical> verticalset = sequential.getExamVerticals();
-				Iterator it3 = verticalset.iterator();
-				while (it3.hasNext()) {
-					ExamVertical vertical = (ExamVertical) it3.next();
-					Set<ExamQuestion> vt = vertical.getExamQuestion();
-					for (ExamQuestion eq:vt)
-					{
-						Question q = eq.getQuestion();
-						if (q != null)
-						{
-							List<QuestionData> qdlist = ParseQuestion.changetohtml(q.getContent(), q.getId());
-							if (qdlist != null && qdlist.size() > 0)
-							{
-								for (QuestionData qd:qdlist)
-								{
-									index ++;
-									score += qd.getScore();
-								}
-							}
-							else
-							{
-								index ++;
-							}
-						}
-						else
-						{
-							index ++;
-							Train train = eq.getTrain();
-							if (train != null)
-							{
-								score += train.getScore();
-							}
-						}
-					}
-				}
-			}
-		}
-		view.addObject("score", score);
-		view.addObject("size", size);
-		view.addObject("index", index);
+		
+		List clist = userExamService.getUserExamCount2(exam);
+		view.addObject("score", clist.get(0));
+		view.addObject("index", clist.get(1));
+		view.addObject("size", clist.get(2));
+		view.addObject("mm", clist.get(3));
 		view.addObject("competionId",competionId);
 		view.setViewName("/lms/introduce");
 		return view;
@@ -262,61 +201,13 @@ public class LmsExamController extends BaseController {
 		view.addObject("examId", examId);
 		Exam exam = examService.get(examId);
 		view.addObject("exam", exam);
-		String s = exam.getStarttimedetail();
-		String e = exam.getEndtimedetail();
-		if (s==null || e== null || "".equals(s) || "".equals(e))
-		{
-			view.addObject("mm", "无限制");
-		}
-		else
-		{
-			long startT = UtilTools.fromDateStringToLong(s);
-			long endT = UtilTools.fromDateStringToLong(e);
-			long ss=(startT-endT)/(1000); //共计秒数
-			int mm = (int)ss/60;   //共计分钟数
-			view.addObject("mm", mm);
-		}
-		int size = exam.getExamchapters().size();
-		int index = 0;
-		int score = 0;
-		Set<ExamChapter> chapterset = exam.getExamchapters();
-		Iterator it = chapterset.iterator();
-		List<Train> tlist = new ArrayList();
-		while (it.hasNext()) {
-			ExamChapter chapter = (ExamChapter) it.next();
-			Set<ExamSequential> sequentialset = chapter.getEsequentials();
-			Iterator it2 = sequentialset.iterator();
 
-			while (it2.hasNext()) {
-				ExamSequential sequential = (ExamSequential) it2.next();
-				Set<ExamVertical> verticalset = sequential.getExamVerticals();
-				Iterator it3 = verticalset.iterator();
-				while (it3.hasNext()) {
-					ExamVertical vertical = (ExamVertical) it3.next();
-					Set<ExamQuestion> vt = vertical.getExamQuestion();//examquestionService.getVerticalTrainList(vertical.getId());
-					for (ExamQuestion eq:vt)
-					{
-						index ++;
-						Question q = eq.getQuestion();
-						if (q != null)
-						{
-							
-						}
-						else
-						{
-							Train train = eq.getTrain();
-							if (train != null)
-							{
-								score += train.getScore();
-							}
-						}
-					}
-				}
-			}
-		}
-		view.addObject("score", score);
-		view.addObject("size", size);
-		view.addObject("index", index);
+		List clist = userExamService.getUserExamCount2(exam);
+		view.addObject("score", clist.get(0));
+		view.addObject("index", clist.get(1));
+		view.addObject("size", clist.get(2));
+		view.addObject("mm", clist.get(3));
+		
 		view.addObject("competionId",competionId);
 		view.setViewName("/lms/introduce");
 		return view;

@@ -821,8 +821,10 @@
 		if ("${status.count}" == currentPage) {
 			var name = "${train.envname}";
 			var examId = parseInt("${exam.id}");
+			var trainId = "${train.id}";
 			var data = {
 				examId : examId,
+				trainId : trainId,
 				name : name
 			};
 			$.ajax({

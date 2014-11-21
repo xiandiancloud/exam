@@ -1,0 +1,67 @@
+#!/bin/bash
+
+#set -x
+#1.yum
+ADDRESS="`cat /etc/yum.repos.d/*.repo |grep 192.168.2.10`"
+echo $ADDRESS
+#echo "&&&&&&"
+REPO="centos6.5 epel6 foreman openstack-havana puppetlabs "
+ANSWER="True"
+for i in $REPO
+do
+echo "$ADDRESS" |grep -q "$i" 
+if [ $? -eq 1 ];
+then 
+ANSWER="False"
+break
+fi
+done
+#echo $ANSWER
+
+#2.mysql
+mysqlrpm="`rpm -qa |grep mysql`"
+echo $mysqlrpm
+if [ -z "$mysqlrpm" ] ;
+then
+ANSWER="False"
+fi
+
+mysqllogin="`mysql -uroot -p000000 -Dmysql -e"show tables;" 2>/dev/null`"
+if [ -z "$mysqllogin" ];
+then
+ANSWER="False"
+fi
+
+#3.qpid
+qpidrpm="`rpm -qa |grep qpid`"
+echo $qpidrpm
+if [ -z "$qpidrpm" ] ;
+then
+ANSWER="False"
+fi
+
+#4.keystone
+keystonerpm="`rpm -qa |grep openstack-keystone`"
+echo "$keystonerpm"
+if [ -z "$keystonerpm" ] ;
+then
+ANSWER="False"
+fi
+
+#5.keystone db
+keystoneconf="`grep \"connection = mysql://keystone:000000@controller/keystone\" /etc/keystone/keystone.conf`"
+echo "$keystoneconf"
+if [ -z "$keystoneconf" ];
+then
+ANSWER="False"
+fi
+
+keystonedb="`mysql -uroot -p000000 -Dkeystone -e\"show tables;\" 2>/dev/null`"
+echo "$keystonedb"
+if [ -z "$keystonedb" ];
+then
+ANSWER="False"
+fi
+
+echo "&&&&&&"
+echo "$ANSWER"

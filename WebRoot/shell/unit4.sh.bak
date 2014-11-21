@@ -1,0 +1,59 @@
+#!/bin/bash
+
+#set -x
+ANSWER="True"
+ADMIN_TOKEN=`openstack-config --get /etc/keystone/keystone.conf DEFAULT admin_token`
+OS_SERVICE_TOKEN=$ADMIN_TOKEN
+OS_SERVICE_ENDPOINT=http://$HOSTNAME:35357/v2.0
+#1.user
+USER="`keystone user-list | awk '/admin/'`"
+echo "$USER"
+DEFU="admin@example.com "
+for i in $DEFU
+do
+echo "$USER" |grep -q "$i"
+if [ $? -eq 1 ];
+then
+ANSWER="False"
+break
+fi
+done
+
+#2.tenant
+TENANT="`keystone tenant-list |awk '/demo/'`"
+echo "$TENANT"
+DEFT="Tenant Demo"
+
+echo "$TENANT" |grep -q "$DEFT"
+if [ $? -eq 1 ];
+then
+ANSWER="False"
+fi
+
+#3.role
+ROLE="`keystone role-list | awk '/badrole/'`"
+echo "$ROLE"
+if [ $? -eq 1 ];
+then
+ANSWER="False"
+fi
+
+#4.services
+USERROLE="`keystone user-role-list |awk '/admin/'`"
+echo "$USERROLE"
+if [ $? -eq 1 ];
+then
+ANSWER="False"
+fi
+
+#5.endpoint
+ENDPOINT="`keystone endpoint-list`"
+echo "$ENDPOINT"
+if [ $? -eq 1 ];
+then
+ANSWER="False"
+fi
+
+
+echo "&&&&&&"
+echo "$ANSWER"

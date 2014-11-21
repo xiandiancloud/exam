@@ -126,6 +126,8 @@
 						<caption></caption>
 						<thead>
 							<tr class="dhldanger">
+								<th>试卷名称</th>
+								<th>实验名称</th>
 								<th>名称</th>
 								<th>创建时间</th>
 								<th></th>
@@ -134,6 +136,8 @@
 						<tbody>
 							<c:forEach var="uce" items="${uce}">
 								<tr>
+									<td>${uce.exam.name}</td>
+									<td>${uce.train.name}</td>
 									<td>${uce.name}</td>
 									<td>${uce.createtime}</td>
 									<td><a href="lms/deleteExamEnv.action?id=${uce.id}"

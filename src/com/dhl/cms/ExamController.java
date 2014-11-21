@@ -669,7 +669,6 @@ public class ExamController extends BaseController {
 	            str += "{'id':"+id+",'name':'"+name+"'},";
 	        }  
 //			view.addObject("trainlist", courselists);
-			
 			if (str.length() > 1)
 			{
 				str = str.substring(0, str.length() - 1) + "]";
@@ -677,7 +676,7 @@ public class ExamController extends BaseController {
 			}
 			out.write(str);
 		} catch (Exception e) {
-//			e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 	

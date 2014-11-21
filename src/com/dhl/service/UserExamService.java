@@ -1,23 +1,37 @@
 package com.dhl.service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dhl.bean.QuestionData;
+import com.dhl.bean.UserExamData;
+import com.dhl.cons.CommonConstant;
 import com.dhl.dao.UserExamDao;
 import com.dhl.dao.UserExamHistoryDao;
 import com.dhl.dao.UserQuestionChildDao;
 import com.dhl.dao.UserQuestionChildHistoryDao;
 import com.dhl.dao.UserQuestionDao;
 import com.dhl.dao.UserQuestionHistoryDao;
+import com.dhl.domain.Exam;
+import com.dhl.domain.ExamChapter;
+import com.dhl.domain.ExamQuestion;
+import com.dhl.domain.ExamSequential;
+import com.dhl.domain.ExamVertical;
+import com.dhl.domain.Question;
+import com.dhl.domain.Train;
 import com.dhl.domain.UserExam;
 import com.dhl.domain.UserExamHistory;
 import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
 import com.dhl.domain.UserQuestionChildHistory;
 import com.dhl.domain.UserQuestionHistory;
+import com.dhl.util.ParseQuestion;
 import com.dhl.util.UtilTools;
 
 /**
@@ -146,5 +160,492 @@ public class UserExamService {
 	
 	public List<UserExam> getMyHavingExam(int userId) {
 		return userExamDao.getMyHavingExam(userId);
+	}
+	
+	
+	///////////////////////////////////////////////////////////////////////
+	//用户试卷分析情况
+	public List getUserExamCount(int userId,Exam exam)
+	{
+		List<UserExamData> uedlist = new ArrayList<UserExamData>();
+		//总分
+		int allscore = 0;
+		Set<ExamChapter> chapterset = exam.getExamchapters();
+		Iterator it = chapterset.iterator();
+		while (it.hasNext()) {
+			ExamChapter chapter = (ExamChapter) it.next();
+			Set<ExamSequential> sequentialset = chapter.getEsequentials();
+			Iterator it2 = sequentialset.iterator();
+			UserExamData ued = new UserExamData();
+			ued.setName(chapter.getName());
+			int right = 0;//答对
+			int wrong = 0;//答错
+			int noanswer = 0;//未答
+			int cscore = 0;//得分
+			while (it2.hasNext()) {
+				ExamSequential sequential = (ExamSequential) it2.next();
+				Set<ExamVertical> verticalset = sequential.getExamVerticals();
+				Iterator it3 = verticalset.iterator();
+				while (it3.hasNext()) {
+					ExamVertical vertical = (ExamVertical) it3.next();
+					Set<ExamQuestion> vt = vertical.getExamQuestion();
+					for (ExamQuestion eq:vt)
+					{
+						Question q = eq.getQuestion();
+						//问题
+						if (q != null)
+						{
+							String content = q.getContent();
+							if (q.getType() == 1)
+							{
+								List<QuestionData> qtlist = new ArrayList();
+								QuestionData qd = new QuestionData(q.getId());
+								qd.setTitle(content);
+								qd.setType(CommonConstant.QTYPE_1);
+								qtlist.add(qd);
+								eq.setQdlist(qtlist);
+								//html问题描述 不用分析
+							}
+							else
+							{
+								
+								List<QuestionData> qdlist = ParseQuestion.changetohtml(content,q.getId());
+								eq.setQdlist(qdlist);
+								
+								//------------分析问题--------可以拆分出去
+								int len = qdlist.size();
+								for (int i=0;i<len;i++)
+								{
+									int number = i+1;
+									QuestionData qd = qdlist.get(i);
+									
+									int quscore = qd.getScore();
+									allscore += quscore;
+									
+									UserQuestion uq = userQuestionDao.getUserQuestionByquestion(userId, exam.getId(), q.getId());
+									UserQuestionChild uqc = null;
+									if (uq != null)
+									{
+										uqc = userQuestionChildDao.getUserQuestionByuserquestionId(userId,number,uq.getId());
+									}
+//									UserQuestionChild uqc = userQuestionService.getQuestionChild(userId, exam.getId(), q.getId(), number);
+									if (uqc != null)
+									{
+										String useranswer = uqc.getUseranswer();
+										int type = qd.getType();
+										if (type == CommonConstant.QTYPE_2 || type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5)
+										{
+											//得分，取裁判分
+											String pfscore = uqc.getPfscore();										
+											if (pfscore != null)
+											{
+												cscore += Integer.parseInt(pfscore);
+											}
+											else
+											{
+												List<String> answerlist = qd.getAnswer();
+												if (answerlist != null && answerlist.size() > 0)
+												{
+													//用户答案跟标准答案相同
+													if (useranswer != null && useranswer.trim().equals(answerlist.get(0).trim()))
+													{
+														cscore += quscore;
+													}
+												}
+											}
+											//未答
+											if (useranswer == null)
+											{
+												noanswer ++;
+											}
+											//答对
+											if (pfscore != null)
+											{
+												if (Integer.parseInt(pfscore) == quscore)
+												{
+													right ++;
+												}
+											}
+											else
+											{
+												List<String> answerlist = qd.getAnswer();
+												if (answerlist != null && answerlist.size() > 0)
+												{
+													//用户答案跟标准答案相同
+													if (useranswer != null && useranswer.trim().equals(answerlist.get(0).trim()))
+													{
+														right ++;
+													}
+												}
+											}
+											//答错
+											if (pfscore != null)
+											{
+												if (Integer.parseInt(pfscore) != quscore)
+												{
+													wrong ++;
+												}
+											}
+											else
+											{
+												if (useranswer != null)
+												{
+													List<String> answerlist = qd.getAnswer();
+													if (answerlist != null && answerlist.size() > 0)
+													{
+														//用户答案跟标准答案相同
+														if (useranswer != null && !useranswer.trim().equals(answerlist.get(0).trim()))
+														{
+															wrong ++;
+														}
+													}
+												}
+												else
+												{
+													wrong ++;
+												}
+											}
+										}
+										else if (type == CommonConstant.QTYPE_3)//多选要匹配答案列表
+										{
+											//得分，取裁判分
+											String pfscore = uqc.getPfscore();										
+											if (pfscore != null)
+											{
+												cscore += Integer.parseInt(pfscore);
+											}
+											else
+											{
+												if (useranswer != null)
+												{
+													List<String> answerlist = qd.getAnswer();
+													if (answerlist != null)
+													{
+														String[] strs = useranswer.split("#");
+														int size = answerlist.size();
+														boolean flag = true;
+														if (size != strs.length)
+														{
+															flag = false;
+														}
+														else
+														{
+															for (int j=0;j<size;j++)
+															{
+																if (!answerlist.get(j).equals(strs[j]))
+																{
+																	flag = false;
+																	break;
+																}
+															}
+														}
+														if (flag)
+														{
+															cscore = quscore;
+														}
+													}
+												}
+											}
+											//未答
+											if (useranswer == null)
+											{
+												noanswer ++;
+											}
+											//答对
+											if (pfscore != null)
+											{
+												if (Integer.parseInt(pfscore) == quscore)
+												{
+													right ++;
+												}
+											}
+											else
+											{
+												if (useranswer != null)
+												{
+													List<String> answerlist = qd.getAnswer();
+													if (answerlist != null)
+													{
+														String[] strs = useranswer.split("#");
+														int size = answerlist.size();
+														boolean flag = true;
+														if (size != strs.length)
+														{
+															flag = false;
+														}
+														else
+														{
+															for (int j=0;j<size;j++)
+															{
+																if (!answerlist.get(j).equals(strs[j]))
+																{
+																	flag = false;
+																	break;
+																}
+															}
+														}
+														if (flag)
+														{
+															right++;
+														}
+													}
+												}
+											}
+											//答错
+											if (pfscore != null)
+											{
+												if (Integer.parseInt(pfscore) != quscore)
+												{
+													wrong ++;
+												}
+											}
+											else
+											{
+												if (useranswer != null)
+												{
+													List<String> answerlist = qd.getAnswer();
+													if (answerlist != null)
+													{
+														String[] strs = useranswer.split("#");
+														int size = answerlist.size();
+														boolean flag = true;
+														if (size != strs.length)
+														{
+															flag = false;
+														}
+														else
+														{
+															for (int j=0;j<size;j++)
+															{
+																if (!answerlist.get(j).equals(strs[j]))
+																{
+																	flag = false;
+																	break;
+																}
+															}
+														}
+														if (!flag)
+														{
+															wrong++;
+														}
+													}
+												}
+												else
+												{
+													wrong ++;
+												}
+											}
+										}
+									}
+									else
+									{
+										noanswer ++;
+									}
+								}
+							}
+						}
+						else//实训
+						{
+							Train t = eq.getTrain();
+							if (t != null)
+							{
+								List<QuestionData> trainList = new ArrayList<QuestionData>();
+								QuestionData qd = new QuestionData(t.getId());
+								qd.setTitle(t.getName());
+								List<String> qs = new ArrayList<String>();
+								qs.add(t.getConContent());
+								qd.setContent(qs);
+								qd.setType(CommonConstant.QTYPE_6);
+								trainList.add(qd);
+								eq.setQdlist(trainList);
+								
+								//---------------分析实训--------可以拆分出去
+								allscore += t.getScore();
+								
+								UserQuestion uq = userQuestionDao.getUserQuestionBytrain(userId, exam.getId(), t.getId());
+								UserQuestionChild uqc = null;
+								if (uq != null)
+								{
+									uqc = userQuestionChildDao.getUserQuestionByusertrainId(userId,uq.getId());
+								}
+//								UserQuestionChild uqc = userQuestionService.getUserExamTrainQuestionChild(userId,exam.getId(),t.getId());
+								if (uqc != null)
+								{
+									String useranswer = uqc.getUseranswer();
+									String tanswer = t.getConAnswer();
+									String result = uqc.getResult();
+									int quscore = t.getScore();
+									int tmpscore = 0;
+									//得分，取裁判分
+									String pfscore = uqc.getPfscore();										
+									if (pfscore != null)
+									{
+										cscore += Integer.parseInt(pfscore);
+									}
+									else
+									{										
+										if (useranswer != null && tanswer != null && useranswer.trim().equals(tanswer.trim()))
+										{
+											cscore += quscore;
+										}
+										else
+										{
+											//判断机器评分
+											if (result != null && "True".equals(result))
+											{
+												cscore += quscore;
+											}
+										}
+									}
+									//未答
+									if (useranswer == null && result == null)
+									{
+										noanswer ++;
+									}
+									//答对
+									if (pfscore != null)
+									{
+										if (Integer.parseInt(pfscore) == quscore)
+										{
+											right ++;
+										}
+									}
+									else
+									{
+										if (useranswer != null && tanswer != null && useranswer.trim().equals(tanswer.trim()))
+										{
+											right ++;
+										}
+										else
+										{
+											//判断机器评分
+											if (result != null && "True".equals(result))
+											{
+												right ++;
+											}
+										}
+									}
+									//答错
+									if (pfscore != null)
+									{
+										if (Integer.parseInt(pfscore) != quscore)
+										{
+											wrong ++;
+										}
+									}
+									else
+									{
+										if (useranswer != null && tanswer != null && !useranswer.trim().equals(tanswer.trim()))
+										{
+											wrong ++;
+										}
+										else
+										{
+											//判断机器评分
+											if (result != null && "False".equals(result))
+											{
+												wrong ++;
+											}
+										}
+									}
+								}
+								else
+								{
+									noanswer ++;
+								}
+							}
+						}
+					}
+				}
+			}
+			ued.setRight(right);
+			ued.setWrong(wrong);
+			ued.setNoanswer(noanswer);
+			ued.setCscore(cscore);
+			uedlist.add(ued);
+		}
+		
+		List list = new ArrayList();
+		list.add(allscore);
+		list.add(uedlist);
+		return list;
+	}
+	
+	//试卷开始前的介绍页面，提供试卷总体信息
+	public List getUserExamCount2(Exam exam)
+	{
+		int index = 0;
+		int score = 0;
+		Set<ExamChapter> chapterset = exam.getExamchapters();
+		Iterator it = chapterset.iterator();
+		List<Train> tlist = new ArrayList<Train>();
+		while (it.hasNext()) {
+			ExamChapter chapter = (ExamChapter) it.next();
+			Set<ExamSequential> sequentialset = chapter.getEsequentials();
+			Iterator it2 = sequentialset.iterator();
+
+			while (it2.hasNext()) {
+				ExamSequential sequential = (ExamSequential) it2.next();
+				Set<ExamVertical> verticalset = sequential.getExamVerticals();
+				Iterator it3 = verticalset.iterator();
+				while (it3.hasNext()) {
+					ExamVertical vertical = (ExamVertical) it3.next();
+					Set<ExamQuestion> vt = vertical.getExamQuestion();
+					for (ExamQuestion eq:vt)
+					{
+						Question q = eq.getQuestion();
+						if (q != null)
+						{
+							List<QuestionData> qdlist = ParseQuestion.changetohtml(q.getContent(), q.getId());
+							if (qdlist != null && qdlist.size() > 0)
+							{
+								for (QuestionData qd:qdlist)
+								{
+									index ++;
+									score += qd.getScore();
+								}
+							}
+							else
+							{
+								index ++;
+							}
+						}
+						else
+						{
+							index ++;
+							Train train = eq.getTrain();
+							if (train != null)
+							{
+								score += train.getScore();
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		String mmm;
+		String s = exam.getStarttimedetail();
+		String e = exam.getEndtimedetail();
+		if (s==null || e== null || "".equals(s) || "".equals(e))
+		{
+			mmm = "n";
+		}
+		else
+		{
+			long startT = UtilTools.fromDateStringToLong(s);
+			long endT = UtilTools.fromDateStringToLong(e);
+			long ss=(startT-endT)/(1000); //共计秒数
+			int mm = (int)ss/60;   //共计分钟数
+			mmm = mm+"";
+		}
+		int size = exam.getExamchapters().size();
+		
+		List list = new ArrayList();
+		list.add(score);
+		list.add(index);
+		list.add(size);
+		list.add(mmm);
+		return list;
 	}
 }

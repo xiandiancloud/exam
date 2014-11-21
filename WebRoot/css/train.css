@@ -166,6 +166,7 @@ li {
 .conheight{overflow-y:auto;max-height: 150px;}
 .fheight{height:550px;}
 .nospace{margin: 0px;padding: 0px;}
+.noborder{border: 0px;}
 .nospacebody{margin: 5px 20px;padding: 0px;background:#f2f2f2;}
 .vbody:hover{background:#e5f5fc;}
 .tbody:hover{background:#e5f5fc;}

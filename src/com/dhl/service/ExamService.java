@@ -2,6 +2,9 @@ package com.dhl.service;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -94,9 +97,55 @@ public class ExamService {
 	 */
 	public void copyTrain(String trainstr,int examId,int everticalId)
 	{
+//		String tmpstr = UtilTools.replaceBackett(trainstr);
 		JSONObject jsonObject = JSONObject.fromObject(trainstr);
 		//原创文件的相对路径
 		String conShell = (String)jsonObject.get("conShell");
+		
+		boolean flag = copyshell(conShell);
+		if (flag)
+		{
+			Train t = new Train();
+			
+			String name = (String)jsonObject.get("name");
+			String codenum = (String)jsonObject.get("codenum");
+			String envname = (String)jsonObject.get("envname");
+			String conContent = (String)jsonObject.get("conContent");
+			try {
+				conContent = URLDecoder.decode(conContent, "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			String conAnswer = (String)jsonObject.get("conAnswer");
+			try {
+				conAnswer = URLDecoder.decode(conAnswer, "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			String score = (String)jsonObject.get("score");
+			String scoretag = (String)jsonObject.get("scoretag");
+			
+			t.setName(name);
+			t.setCodenum(codenum);
+			t.setEnvname(envname);
+			t.setConContent(conContent);
+			t.setConShell(conShell);
+			t.setConAnswer(conAnswer);
+			t.setScore(Integer.parseInt(score));
+			t.setScoretag(scoretag);
+			trainDao.save(t);
+			
+			//保存考试系统下单元下对应的课程
+	        ExamQuestion eq = new ExamQuestion();
+	        eq.setTrain(t);
+	        eq.setExam(examDao.get(examId));
+	        eq.setExamVertical(examVerticalDao.get(everticalId));
+	        examquestionDao.save(eq);
+		}
+	}
+	
+	private boolean copyshell(String conShell)
+	{
 		//到实训系统远程下载检测脚本		
 		String ip = UtilTools.getConfig().getProperty("TRAINHOST_IP");
 		String userName = UtilTools.getConfig().getProperty("TRAINHOST_USERNAME");
@@ -109,41 +158,11 @@ public class ExamService {
 			SCPClient scpClient = conn.createSCPClient();
 			scpClient.get(remoteFile+conShell, localFile);
 			conn.close();
+			return true;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		}
-		
-		//
-		Train t = new Train();
-		
-		String name = (String)jsonObject.get("name");
-		String codenum = (String)jsonObject.get("codenum");
-		String envname = (String)jsonObject.get("envname");
-		String conContent = (String)jsonObject.get("conContent");
-		
-		String conAnswer = (String)jsonObject.get("conAnswer");
-		String score = (String)jsonObject.get("score");
-		String scoretag = (String)jsonObject.get("scoretag");
-		
-		t.setName(name);
-		t.setCodenum(codenum);
-		t.setEnvname(envname);
-		t.setConContent(conContent);
-		t.setConShell(conShell);
-		t.setConAnswer(conAnswer);
-		t.setScore(Integer.parseInt(score));
-		t.setScoretag(scoretag);
-		trainDao.save(t);
-		
-		//保存考试系统下单元下对应的课程
-        ExamQuestion eq = new ExamQuestion();
-        eq.setTrain(t);
-        eq.setExam(examDao.get(examId));
-        eq.setExamVertical(examVerticalDao.get(everticalId));
-        examquestionDao.save(eq);
 	}
-	
 	/**
 	 * 根据试卷id取得分类
 	 * 

@@ -31,6 +31,7 @@
 	<link href="assets/stylesheets/plugins/bootstrap_datetimepicker/bootstrap-datetimepicker.min.css" media="all" rel="stylesheet" type="text/css" />
 	<link href="assets/stylesheets/plugins/bootstrap_switch/bootstrap-switch.css" media="all" rel="stylesheet" type="text/css" />
 	<link href="assets/stylesheets/plugins/common/bootstrap-wysihtml5.css" media="all" rel="stylesheet" type="text/css" />
+	<link href="assets/stylesheets/plugins/jgrowl/jquery.jgrowl.min.css" media="all" rel="stylesheet" type="text/css" />
 	<!-- / END - page related stylesheets [optional] -->
 	<!-- / bootstrap [required] -->
 	<link href="assets/stylesheets/bootstrap/bootstrap.css" media="all" rel="stylesheet" type="text/css" />
@@ -198,21 +199,21 @@
                     <c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
                       <ol class='dd-list'>
                         <li class='dd-item' data-id='2'>
-                          <div class='dd-handle'>
+                          <div class='dd-handle noborder'>
                             <i class='icon-backward text-purple'></i>
                             ${chapter.name}
                           </div>
                           <c:forEach var="sequential" items="${chapter.esequentials}" varStatus="j">
                           <ol class='dd-list'>
                             <li class='dd-item' data-id='3'>
-                              <div class='dd-handle'>
-                                <i class='icon-camera-retro text-orange'></i>
+                              <div class='dd-handle noborder'>
+                                <i class='icon-backward text-orange'></i>
                                 ${sequential.name}
                               </div>
                               <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
                               <ol class='dd-list'>
                                 <li class='dd-item' data-id='4'>
-                                  <div class='dd-handle'>${vertical.name}</div>
+                                  <div class='dd-handle noborder'>${vertical.name}</div>
                                   <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
 			                 		<c:forEach var="qd" items="${examq.qdlist}" varStatus="nn">
 			                 			<%-- 实训 --%>
@@ -270,35 +271,6 @@
 															</div>
 														</c:forEach>
 														</div>
-														<%-- <hr class='hr-normal nospace'>
-														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<label >正确答案：${qd.answer}</label>
-															<div class='row'>
-															<div class='col-xs-12 h30'></div>
-															</div>												
-															<div class='row'>
-																<div class='col-xs-6 juzhong' style="line-height:40px;">
-																	<label >正确答案：${qd.answer}</label>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>10</span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	您的得分：<span>5</span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	<div class='input-group controls-group'>
-																		<input class="form-control" type="text" />
-																		<span class='input-group-btn'>
-																			<button class='btn' type='submit'>改分</button>
-																		</span>
-																	</div>
-																</div>
-															</div>
-															<div class='row'>
-																<div class='col-xs-12 h30'></div>
-															</div>
-														</div> --%>
 													</form>
 												</div>
 											</div>
@@ -322,35 +294,6 @@
 															</div>
 														</c:forEach>
 														</div>
-														<%-- <hr class='hr-normal nospace'>
-														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<label >正确答案：${qd.answer}</label>
-															<div class='row'>
-															<div class='col-xs-12 h30'></div>
-															</div>												
-															<div class='row'>
-																<div class='col-xs-6 juzhong' style="line-height:40px;">
-																	<label >正确答案：${qd.answer}</label>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>10</span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	您的得分：<span>5</span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	<div class='input-group controls-group'>
-																		<input class="form-control" type="text" />
-																		<span class='input-group-btn'>
-																			<button class='btn' type='submit'>改分</button>
-																		</span>
-																	</div>
-																</div>
-															</div>
-															<div class='row'>
-																<div class='col-xs-12 h30'></div>
-															</div>
-														</div> --%>													
 													</form>
 												</div>
 											</div>
@@ -375,35 +318,6 @@
 																<input class='form-control' type="text" id="numberquestion${index}" onblur="submittextquesstion('${qd.id}','${nn.index+1}',this,'${index}');" />
 															</div>
 														</div>
-														<%-- <hr class='hr-normal nospace'>
-														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<label >正确答案：${qd.answer}</label>
-															<div class='row'>
-															<div class='col-xs-12 h30'></div>
-															</div>												
-															<div class='row'>
-																<div class='col-xs-6 juzhong' style="line-height:40px;">
-																	<label >正确答案：${qd.answer}</label>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>10</span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	您的得分：<span>5</span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	<div class='input-group controls-group'>
-																		<input class="form-control" type="text" />
-																		<span class='input-group-btn'>
-																			<button class='btn' type='submit'>改分</button>
-																		</span>
-																	</div>
-																</div>
-															</div>
-															<div class='row'>
-																<div class='col-xs-12 h30'></div>
-															</div>
-														</div> --%>
 													</form>
 												</div>
 											</div>
@@ -428,35 +342,6 @@
 																<textarea class='form-control' rows='5' id="numberquestion${index}" onblur="submittextareaquesstion('${qd.id}','${nn.index+1}',this,'${index}');"></textarea>
 															</div>
 														</div>
-														<%-- <hr class='hr-normal nospace'>
-														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<label >正确答案：${qd.answer}</label>
-															<div class='row'>
-															<div class='col-xs-12 h30'></div>
-															</div>												
-															<div class='row'>
-																<div class='col-xs-6 juzhong' style="line-height:40px;">
-																	<label >正确答案：${qd.answer}</label>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>10</span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	您的得分：<span>5</span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	<div class='input-group controls-group'>
-																		<input class="form-control" type="text" />
-																		<span class='input-group-btn'>
-																			<button class='btn' type='submit'>改分</button>
-																		</span>
-																	</div>
-																</div>
-															</div>
-															<div class='row'>
-																<div class='col-xs-12 h30'></div>
-															</div>
-														</div> --%>
 													</form>
 												</div>
 											</div>
@@ -568,6 +453,7 @@
     <script src="assets/javascripts/demo.js" type="text/javascript"></script>
     <!-- / START - page related files and scripts [optional] -->
     <script src="assets/javascripts/plugins/nestable/jquery.nestable.js" type="text/javascript"></script>
+    <script src="assets/javascripts/plugins/jgrowl/jquery.jgrowl.min.js" type="text/javascript"></script>
     <!-- / END - page related files and scripts [optional] -->
 	<script src="js/common.js" type="text/javascript"></script>
 	<script src="js/holder.js" type="text/javascript"></script>
@@ -629,6 +515,8 @@
 	            					var a = eval("(" + s + ")");
 	            					if ("sucess" == a.sucess) {
 	            						var answer = a.answer;
+	            						if (a.index)
+	            						$("#index"+a.index).css("background","#999999");
 	            						if (answer)
             							{
 	            							<c:if test="${qd.type == 2}">
@@ -704,6 +592,9 @@
 					if ("sucess" == a.sucess) {
 						//alert("提交了");
 						$("#index"+index).css("background","#999999");
+						$.jGrowl("提交了", {
+							position: 'bottom-right',
+					        });
 					}
 					else
 					{
@@ -740,6 +631,9 @@
 					if ("sucess" == a.sucess) {
 						//alert("提交了");
 						$("#index"+index).css("background","#999999");
+						$.jGrowl("提交了", {
+							position: 'bottom-right',
+					        });
 					}
 					else
 					{
@@ -769,6 +663,9 @@
 					if ("sucess" == a.sucess) {
 						//alert("提交了");
 						$("#index"+index).css("background","#999999");
+						$.jGrowl("提交了", {
+							position: 'bottom-right',
+					        });
 					}
 					else
 					{
@@ -799,6 +696,9 @@
 					if ("sucess" == a.sucess) {
 						//alert("提交了");
 						$("#index"+index).css("background","#999999");
+						$.jGrowl("提交了", {
+							position: 'bottom-right',
+					        });
 					}
 					else
 					{
