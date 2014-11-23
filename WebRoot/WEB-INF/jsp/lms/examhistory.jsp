@@ -96,13 +96,13 @@
 	.totalScore {
     	font-family: Arial,Helvetica,sans-serif;
     	font-size: 100px;
-   	 	line-height: 229px;  	 	
+   	 	line-height: 129px;  	 	
 	}
  	.advance {
     	left: 0;
     	text-align: center;
     	top: 0;
-    	width: 235px;
+    	/* width: 235px; */
     	color:#FF7F24;
 	}
 	.juzhong{
@@ -119,35 +119,32 @@
 					<div class='row'>
 						<div class='col-xs-12'>
 							<div class='row'>
-								<div class='col-xs-12'>
-									<div class='page-header'>
-										<h1 class='pull-left'>
-											<span>${exam.name}</span>
-										</h1>
-									</div>
-								</div>
-							</div>
-							<div class='row' id="firesult">
-							<div class='col-sm-3'>
-								<div class="advance ">
-									<span class="totalScore">${score}</span>分
-								</div>
-							</div>
-							<div class='col-sm-9'>
-								<div class='box bordered-box' style='margin-bottom:0;'>
-									<div class='box-content box-no-padding'>
-										<div class='responsive-table'>
-											<div class='scrollable-area'>
-												<table class='table table-bordered' style='margin-bottom:0;background-color:#CCCCCC'>
-													<thead>
+							
+								<div class="col-xs-12">
+									<div class="box ">
+										<div class="box-content">
+											<div class='row'>
+												<div class="col-xs-12">
+													<strong>${exam.name}</strong>
+												</div>
+											</div>
+											<hr class="hr-normal">
+											<div class='row'>
+												<div class="col-xs-3">
+													<div class="advance ">
+														<span class="totalScore" id="usercount"></span>分
+													</div>
+													<div class="center">该分数不同于真实成绩，仅代表预测分数。总分<strong>${score}</strong>分</div>
+												</div>
+												<div class="col-xs-9">
+												<table class='table table-bordered' style='background-color:#f9f9f9'>
+													<tbody>
 														<tr>
-															<th></th>
+															<td></td>
 															<c:forEach var="ued" items="${uedlist}">
-															<th>${ued.name}</th>
+															<td>${ued.name}</td>
 															</c:forEach>
 														</tr>
-													</thead>
-													<tbody>
 														<tr>
 															<td>答对</td>
 															<c:forEach var="ued" items="${uedlist}">
@@ -168,17 +165,18 @@
 														</tr>
 														<tr>
 															<td>得分</td>
+															
 															<c:forEach var="ued" items="${uedlist}">
 															<th>${ued.cscore}</th>
 															</c:forEach>
 														</tr>
 													</tbody>
 												</table>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
 						</div>
 				</div>
 			</div>
@@ -601,6 +599,12 @@
 		//这个方法多次提交，如果性能有问题再优化
 		function initquestion()
 		{
+			var usercount = 0;
+			<c:forEach var="ued" items="${uedlist}" varStatus="i">
+				usercount += parseInt("${ued.cscore}");
+				
+			</c:forEach>
+			$("#usercount").html(usercount);
 			var index = 0;
 			var docounts = "${docounts}";
 			<c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
