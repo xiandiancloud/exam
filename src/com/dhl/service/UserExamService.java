@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.dhl.bean.QuestionData;
 import com.dhl.bean.UserExamData;
+import com.dhl.bean.UserQuestionData;
 import com.dhl.cons.CommonConstant;
 import com.dhl.dao.UserExamDao;
 import com.dhl.dao.UserExamHistoryDao;
@@ -110,7 +111,7 @@ public class UserExamService {
 					uqch.setRevalue(uqc.getRevalue());
 					uqch.setUseranswer(uqc.getUseranswer());
 					uqch.setUserId(uqc.getUserId());
-					uqch.setUserquestionId(uqc.getUserquestionId());//应该是历史记录的id
+					uqch.setUserquestionId(uqh.getId());//应该是历史记录的id
 					userQuestionChildHistoryDao.save(uqch);
 				}
 			}
@@ -162,10 +163,129 @@ public class UserExamService {
 		return userExamDao.getMyHavingExam(userId);
 	}
 	
+	//////////////////////////////////////////////////////////////////////////
+	/**
+	 * 得到用户提交的历史答案
+	 */
+	public UserQuestionChildHistory getQuestionChildHistory(int userId,int examId,int questionId,int number,int docounts)
+	{
+		UserQuestionHistory uq = userQuestionHistoryDao.getUserQuestionByquestion(userId, examId, questionId,docounts);
+		if (uq != null)
+		{
+			UserQuestionChildHistory uqc = userQuestionChildHistoryDao.getUserQuestionByuserquestionId(userId,number,uq.getId());
+			return uqc;
+		}
+		return null;
+	}
 	
 	///////////////////////////////////////////////////////////////////////
+	
+	private UserQuestionData getUserQuestionData(int docounts,int userId,int examId,int questionId,int number)
+	{
+		if (docounts == -1)
+		{
+			UserQuestion uq = userQuestionDao.getUserQuestionByquestion(userId, examId, questionId);
+			if (uq != null)
+			{
+				UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(userId,number,uq.getId());
+				if (uqc != null)
+				{
+					UserQuestionData uqd = new UserQuestionData();
+					uqd.setUseranswer(uqc.getUseranswer());
+					uqd.setPfscore(uqc.getPfscore());
+					return uqd;
+				}
+			}
+			return null;
+		}
+		else
+		{
+			UserQuestionHistory uq = userQuestionHistoryDao.getUserQuestionByquestion(userId, examId, questionId,docounts);
+			if (uq != null)
+			{
+				UserQuestionChildHistory uqc = userQuestionChildHistoryDao.getUserQuestionByuserquestionId(userId,number,uq.getId());
+				if (uqc != null)
+				{
+					UserQuestionData uqd = new UserQuestionData();
+					uqd.setUseranswer(uqc.getUseranswer());
+					uqd.setPfscore(uqc.getPfscore());
+					return uqd;
+				}
+			}
+			return null;
+		}
+	}
+	
+	private UserQuestionData getUserTrainData(int docounts,int userId,int examId,int trainId)
+	{
+		if (docounts == -1)
+		{
+			UserQuestion uq = userQuestionDao.getUserQuestionBytrain(userId, examId, trainId);
+			if (uq != null)
+			{
+				UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByusertrainId(userId,uq.getId());
+				if (uqc != null)
+				{
+					UserQuestionData uqd = new UserQuestionData();
+					uqd.setUseranswer(uqc.getUseranswer());
+					uqd.setPfscore(uqc.getPfscore());
+					uqc.setResult(uqc.getResult());
+					return uqd;
+				}
+			}
+			return null;
+		}
+		else
+		{
+			UserQuestionHistory uq = userQuestionHistoryDao.getUserQuestionBytrain(userId, examId, trainId,docounts);
+			if (uq != null)
+			{
+				UserQuestionChildHistory uqc = userQuestionChildHistoryDao.getUserQuestionByusertrainId(userId,uq.getId());
+				if (uqc != null)
+				{
+					UserQuestionData uqd = new UserQuestionData();
+					uqd.setUseranswer(uqc.getUseranswer());
+					uqd.setPfscore(uqc.getPfscore());
+					uqc.setResult(uqc.getResult());
+					return uqd;
+				}
+			}
+			return null;
+		}
+	}
+	
+	//返回用户单个试卷题目的问题分析
+	public String getUserExamOneCount(int type,int userId,int examId,int questionId,int number,int docounts)
+	{
+		if (type != CommonConstant.QTYPE_6)
+		{
+			UserQuestionHistory uq = userQuestionHistoryDao.getUserQuestionByquestion(userId, examId, questionId,docounts);
+			if (uq != null)
+			{
+				UserQuestionChildHistory uqc = userQuestionChildHistoryDao.getUserQuestionByuserquestionId(userId,number,uq.getId());
+				if (uqc != null)
+				{
+					return uqc.getUseranswer();
+				}
+			}
+		}
+		else
+		{
+			UserQuestionHistory uq = userQuestionHistoryDao.getUserQuestionBytrain(userId, examId, questionId,docounts);
+			if (uq != null)
+			{
+				UserQuestionChildHistory uqc = userQuestionChildHistoryDao.getUserQuestionByusertrainId(userId,uq.getId());
+				if (uqc != null)
+				{
+					return uqc.getUseranswer();
+				}
+			}
+		}
+		return null;
+	}
+	
 	//用户试卷分析情况
-	public List getUserExamCount(int userId,Exam exam)
+	public List getUserExamCount(int userId,Exam exam,int docounts)
 	{
 		List<UserExamData> uedlist = new ArrayList<UserExamData>();
 		//总分
@@ -222,13 +342,14 @@ public class UserExamService {
 									int quscore = qd.getScore();
 									allscore += quscore;
 									
-									UserQuestion uq = userQuestionDao.getUserQuestionByquestion(userId, exam.getId(), q.getId());
-									UserQuestionChild uqc = null;
-									if (uq != null)
-									{
-										uqc = userQuestionChildDao.getUserQuestionByuserquestionId(userId,number,uq.getId());
-									}
+//									UserQuestion uq = userQuestionDao.getUserQuestionByquestion(userId, exam.getId(), q.getId());
+//									UserQuestionChild uqc = null;
+//									if (uq != null)
+//									{
+//										uqc = userQuestionChildDao.getUserQuestionByuserquestionId(userId,number,uq.getId());
+//									}
 //									UserQuestionChild uqc = userQuestionService.getQuestionChild(userId, exam.getId(), q.getId(), number);
+									UserQuestionData uqc = getUserQuestionData(docounts,userId,exam.getId(),q.getId(),number);
 									if (uqc != null)
 									{
 										String useranswer = uqc.getUseranswer();
@@ -247,7 +368,7 @@ public class UserExamService {
 												if (answerlist != null && answerlist.size() > 0)
 												{
 													//用户答案跟标准答案相同
-													if (useranswer != null && useranswer.trim().equals(answerlist.get(0).trim()))
+													if (useranswer != null && useranswer.trim().equalsIgnoreCase(answerlist.get(0).trim()))
 													{
 														cscore += quscore;
 													}
@@ -272,7 +393,7 @@ public class UserExamService {
 												if (answerlist != null && answerlist.size() > 0)
 												{
 													//用户答案跟标准答案相同
-													if (useranswer != null && useranswer.trim().equals(answerlist.get(0).trim()))
+													if (useranswer != null && useranswer.trim().equalsIgnoreCase(answerlist.get(0).trim()))
 													{
 														right ++;
 													}
@@ -294,7 +415,7 @@ public class UserExamService {
 													if (answerlist != null && answerlist.size() > 0)
 													{
 														//用户答案跟标准答案相同
-														if (useranswer != null && !useranswer.trim().equals(answerlist.get(0).trim()))
+														if (useranswer != null && !useranswer.trim().equalsIgnoreCase(answerlist.get(0).trim()))
 														{
 															wrong ++;
 														}
@@ -332,7 +453,7 @@ public class UserExamService {
 														{
 															for (int j=0;j<size;j++)
 															{
-																if (!answerlist.get(j).equals(strs[j]))
+																if (!answerlist.get(j).equalsIgnoreCase(strs[j]))
 																{
 																	flag = false;
 																	break;
@@ -377,7 +498,7 @@ public class UserExamService {
 														{
 															for (int j=0;j<size;j++)
 															{
-																if (!answerlist.get(j).equals(strs[j]))
+																if (!answerlist.get(j).equalsIgnoreCase(strs[j]))
 																{
 																	flag = false;
 																	break;
@@ -417,7 +538,7 @@ public class UserExamService {
 														{
 															for (int j=0;j<size;j++)
 															{
-																if (!answerlist.get(j).equals(strs[j]))
+																if (!answerlist.get(j).equalsIgnoreCase(strs[j]))
 																{
 																	flag = false;
 																	break;
@@ -462,20 +583,21 @@ public class UserExamService {
 								//---------------分析实训--------可以拆分出去
 								allscore += t.getScore();
 								
-								UserQuestion uq = userQuestionDao.getUserQuestionBytrain(userId, exam.getId(), t.getId());
-								UserQuestionChild uqc = null;
-								if (uq != null)
-								{
-									uqc = userQuestionChildDao.getUserQuestionByusertrainId(userId,uq.getId());
-								}
+//								UserQuestion uq = userQuestionDao.getUserQuestionBytrain(userId, exam.getId(), t.getId());
+//								UserQuestionChild uqc = null;
+//								if (uq != null)
+//								{
+//									uqc = userQuestionChildDao.getUserQuestionByusertrainId(userId,uq.getId());
+//								}
 //								UserQuestionChild uqc = userQuestionService.getUserExamTrainQuestionChild(userId,exam.getId(),t.getId());
+								UserQuestionData uqc = getUserTrainData(docounts,userId,exam.getId(),t.getId());
 								if (uqc != null)
 								{
 									String useranswer = uqc.getUseranswer();
 									String tanswer = t.getConAnswer();
 									String result = uqc.getResult();
 									int quscore = t.getScore();
-									int tmpscore = 0;
+//									int tmpscore = 0;
 									//得分，取裁判分
 									String pfscore = uqc.getPfscore();										
 									if (pfscore != null)
@@ -484,7 +606,7 @@ public class UserExamService {
 									}
 									else
 									{										
-										if (useranswer != null && tanswer != null && useranswer.trim().equals(tanswer.trim()))
+										if (useranswer != null && tanswer != null && useranswer.trim().equalsIgnoreCase(tanswer.trim()))
 										{
 											cscore += quscore;
 										}
@@ -512,7 +634,7 @@ public class UserExamService {
 									}
 									else
 									{
-										if (useranswer != null && tanswer != null && useranswer.trim().equals(tanswer.trim()))
+										if (useranswer != null && tanswer != null && useranswer.trim().equalsIgnoreCase(tanswer.trim()))
 										{
 											right ++;
 										}
@@ -535,7 +657,7 @@ public class UserExamService {
 									}
 									else
 									{
-										if (useranswer != null && tanswer != null && !useranswer.trim().equals(tanswer.trim()))
+										if (useranswer != null && tanswer != null && !useranswer.trim().equalsIgnoreCase(tanswer.trim()))
 										{
 											wrong ++;
 										}

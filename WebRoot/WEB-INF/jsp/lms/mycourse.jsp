@@ -183,7 +183,7 @@
 																<hr class="hr-normal">
 																<div class="pull-left">${history.againdotime}</div>
 																<div class="pull-right">
-																	<a href="lms/toexamingtohistoryexam.action?examId=${history.exam.id}" class="btn  btn-success">查看分析</a>
+																	<a href="lms/toexamingtohistoryexam.action?examId=${history.exam.id}&docounts=${history.docounts}" class="btn  btn-success">查看分析</a>
 																	<a href="lms/toagainexamintroduce.action?examId=${history.exam.id}"	class="btn btn-danger">再做一次</a>
 																</div>
 																<div class="clearfix"></div>

@@ -125,7 +125,7 @@ public class HavingExamController extends BaseController {
 		Exam exam = examService.get(examId);
 		//学生分析情况，试卷页面如果性能有问题，要拆分出来
 		User user = getSessionUser(request);
-		List clist = userExamService.getUserExamCount(user.getId(), exam);
+		List clist = userExamService.getUserExamCount(user.getId(), exam,-1);
 		
 		userExamService.setMyExamActiveState(user.getId());
 		UserExam ucs = userExamService
@@ -161,73 +161,77 @@ public class HavingExamController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/toexamingtohistoryexam")
-	public ModelAndView toexamingtohistoryexam(HttpServletRequest request,int examId) {
+	public ModelAndView toexamingtohistoryexam(HttpServletRequest request,int examId,int docounts) {
 		ModelAndView view = new ModelAndView();
 		Exam exam = examService.get(examId);
 		//
-		Set<ExamChapter> chapterset = exam.getExamchapters();
-		Iterator it = chapterset.iterator();
-		while (it.hasNext()) {
-			ExamChapter chapter = (ExamChapter) it.next();
-			Set<ExamSequential> sequentialset = chapter.getEsequentials();
-			Iterator it2 = sequentialset.iterator();
-
-			while (it2.hasNext()) {
-				ExamSequential sequential = (ExamSequential) it2.next();
-				Set<ExamVertical> verticalset = sequential.getExamVerticals();
-				Iterator it3 = verticalset.iterator();
-				while (it3.hasNext()) {
-					ExamVertical vertical = (ExamVertical) it3.next();
-					Set<ExamQuestion> vt = vertical.getExamQuestion();
-					for (ExamQuestion eq:vt)
-					{
-						Question q = eq.getQuestion();
-						//问题
-						if (q != null)
-						{
-							String content = q.getContent();
-							if (q.getType() == 1)
-							{
-								List<QuestionData> qtlist = new ArrayList();
-								QuestionData qd = new QuestionData(q.getId());
-								qd.setTitle(content);
-								qd.setType(CommonConstant.QTYPE_1);
-								qtlist.add(qd);
-								eq.setQdlist(qtlist);
-//							eq.setHtmlcontent(content);
-							}
-							else
-							{
-								
-								List<QuestionData> qdlist = ParseQuestion.changetohtml(content,q.getId());
-								eq.setQdlist(qdlist);
-							}
-						}
-						else//实训
-						{
-							Train t = eq.getTrain();
-							if (t != null)
-							{
-								List<QuestionData> trainList = new ArrayList();
-								QuestionData qd = new QuestionData(t.getId());
-								qd.setTitle(t.getName());
-								List<String> qs = new ArrayList();
-								qs.add(t.getConContent());
-								qd.setContent(qs);
-								qd.setType(CommonConstant.QTYPE_6);
-								trainList.add(qd);
-								eq.setQdlist(trainList);
-							}
-						}
-					}
-				}
-			}
-		}
+//		Set<ExamChapter> chapterset = exam.getExamchapters();
+//		Iterator it = chapterset.iterator();
+//		while (it.hasNext()) {
+//			ExamChapter chapter = (ExamChapter) it.next();
+//			Set<ExamSequential> sequentialset = chapter.getEsequentials();
+//			Iterator it2 = sequentialset.iterator();
+//
+//			while (it2.hasNext()) {
+//				ExamSequential sequential = (ExamSequential) it2.next();
+//				Set<ExamVertical> verticalset = sequential.getExamVerticals();
+//				Iterator it3 = verticalset.iterator();
+//				while (it3.hasNext()) {
+//					ExamVertical vertical = (ExamVertical) it3.next();
+//					Set<ExamQuestion> vt = vertical.getExamQuestion();
+//					for (ExamQuestion eq:vt)
+//					{
+//						Question q = eq.getQuestion();
+//						//问题
+//						if (q != null)
+//						{
+//							String content = q.getContent();
+//							if (q.getType() == 1)
+//							{
+//								List<QuestionData> qtlist = new ArrayList();
+//								QuestionData qd = new QuestionData(q.getId());
+//								qd.setTitle(content);
+//								qd.setType(CommonConstant.QTYPE_1);
+//								qtlist.add(qd);
+//								eq.setQdlist(qtlist);
+////							eq.setHtmlcontent(content);
+//							}
+//							else
+//							{
+//								
+//								List<QuestionData> qdlist = ParseQuestion.changetohtml(content,q.getId());
+//								eq.setQdlist(qdlist);
+//							}
+//						}
+//						else//实训
+//						{
+//							Train t = eq.getTrain();
+//							if (t != null)
+//							{
+//								List<QuestionData> trainList = new ArrayList();
+//								QuestionData qd = new QuestionData(t.getId());
+//								qd.setTitle(t.getName());
+//								List<String> qs = new ArrayList();
+//								qs.add(t.getConContent());
+//								qd.setContent(qs);
+//								qd.setType(CommonConstant.QTYPE_6);
+//								trainList.add(qd);
+//								eq.setQdlist(trainList);
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
 		User user = getSessionUser(request);
+		List clist = userExamService.getUserExamCount(user.getId(), exam,docounts);
+		view.addObject("score",clist.get(0));
+		view.addObject("uedlist",clist.get(1));
 //		userExamService.setMyExamActiveState(user.getId());
-		UserExamHistory ucs = userExamHistoryService
-				.getUserExam(user.getId(), examId);
-		view.addObject("userexam",ucs);
+//		UserExamHistory ucs = userExamHistoryService
+//				.getUserExam(user.getId(), examId);
+//		view.addObject("userexam",ucs);
+		view.addObject("docounts",docounts);
 		view.addObject("exam", exam);
 		
 		view.setViewName("/lms/examhistory");
@@ -327,6 +331,31 @@ public class HavingExamController extends BaseController {
 			if (uqc != null)
 			{
 				String useranswer = uqc.getUseranswer();
+				str = "{'sucess':'sucess','answer':'"+useranswer+"','index':'"+index+"'}";
+			}
+			
+			PrintWriter out = response.getWriter();
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 得到用户历史提交的答案
+	 */
+	@RequestMapping("/getQuestionHistoryAnswer")
+	public void getQuestionHistoryAnswer(HttpServletRequest request,
+			HttpServletResponse response, int type,int examId,int questionId,int number,int index,int docounts) {
+		try {
+			
+			User user = getSessionUser(request);
+//			UserQuestionChild uqc = userQuestionService.getQuestionChild(user.getId(),examId,questionId, number);
+			String useranswer = userExamService.getUserExamOneCount(type, user.getId(), examId, questionId, number, docounts);
+			String str = "{'sucess':'sucess','index':'"+index+"'}";
+			if (useranswer != null)
+			{
+//				String useranswer = uqc.getUseranswer();
 				str = "{'sucess':'sucess','answer':'"+useranswer+"','index':'"+index+"'}";
 			}
 			

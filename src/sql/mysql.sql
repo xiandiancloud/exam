@@ -407,7 +407,7 @@ create table t_user_questionchild_history
    result              varchar(255) default null,
    pfscore             int(10) default null,
    primary key (id),
-   CONSTRAINT receivet_user_questionchild_history_ibfk_1 FOREIGN KEY (userquestionId) REFERENCES t_user_question (id) ON DELETE CASCADE
+   CONSTRAINT receivet_user_questionchild_history_ibfk_1 FOREIGN KEY (userquestionId) REFERENCES t_user_question_history (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*

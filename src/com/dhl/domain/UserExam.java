@@ -29,7 +29,7 @@ public class UserExam extends BaseDomain {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "examId")
 	private Exam exam;
-	private int docounts;
+	private int docounts;//试卷做的次数
 	private int state;//1：完成试卷0：没有完成----针对学生的状态
 	private String usetime;
 	private int activestate;//0:默认，最近操作就set为1

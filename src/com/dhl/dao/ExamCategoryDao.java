@@ -30,34 +30,34 @@ public class ExamCategoryDao extends BaseDao<ExamCategory> {
 		{
 			r = CommonConstant.LEVEL_3;
 		}
-		String hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1";
+		String hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 order by exam.id desc";
 		if (categoryId > 0)
 		{
-			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and ecategory.id = "+categoryId;
+			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and ecategory.id = "+categoryId +" order by exam.id desc";
 		}
 		if (rank > 0)
 		{
-			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and exam.rank = '"+r+"'";
+			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and exam.rank = '"+r+"'"+" order by exam.id desc";
 		}
 		if (search != null&& !"".equals(search))
 		{
-			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and (exam.name like '%"+search+"%' or exam.describle like '%"+search+"%')";
+			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and (exam.name like '%"+search+"%' or exam.describle like '%"+search+"%')"+" order by exam.id desc";
 		}
 		if (categoryId > 0 && rank > 0)
 		{
-			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and ecategory.id = "+categoryId+" and exam.rank = '"+r+"'";
+			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and ecategory.id = "+categoryId+" and exam.rank = '"+r+"'"+" order by exam.id desc";
 		}
 		if (categoryId > 0 && search != null && !"".equals(search))
 		{
-			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and ecategory.id = "+categoryId+" and (exam.name like '%"+search+"%' or exam.describle like '%"+search+"%')";
+			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and ecategory.id = "+categoryId+" and (exam.name like '%"+search+"%' or exam.describle like '%"+search+"%')"+" order by exam.id desc";
 		}
 		if (rank > 0 && search != null)
 		{
-			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and exam.rank = '"+r+"' and (exam.name like '%"+search+"%' or exam.describle like '%"+search+"%')";
+			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and exam.rank = '"+r+"' and (exam.name like '%"+search+"%' or exam.describle like '%"+search+"%')"+" order by exam.id desc";
 		}
 		if (categoryId > 0 && rank > 0 && search != null && !"".equals(search))
 		{
-			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and ecategory.id = "+categoryId+" and exam.rank = '"+r+"' and (exam.name like '%"+search+"%' or exam.describle like '%"+search+"%')";
+			hql = "from ExamCategory where exam.isnormal = 0 and exam.publish = 1 and ecategory.id = "+categoryId+" and exam.rank = '"+r+"' and (exam.name like '%"+search+"%' or exam.describle like '%"+search+"%')"+" order by exam.id desc";
 		}
 		return pagedQuery(hql, pageNo, pageSize);
 	}

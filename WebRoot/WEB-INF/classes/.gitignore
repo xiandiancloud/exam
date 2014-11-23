@@ -1,9 +1,9 @@
 /applicationContext-exam.xml
 /applicationContext-user.xml
-/com
-/config
+/com/
+/config/
 /dhl-dao.xml
 /dhl-service.xml
 /jdbc.properties
-/org
-/sql
+/org/
+/sql/

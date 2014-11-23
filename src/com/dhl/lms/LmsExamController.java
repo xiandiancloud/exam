@@ -422,32 +422,6 @@ public class LmsExamController extends BaseController {
 		}
 	}
 	
-//	@RequestMapping("/toexam")
-//	public ModelAndView tocourse(HttpServletRequest request, int examId) {
-//		ModelAndView view = new ModelAndView();
-//		User user = getSessionUser(request);
-//		UserExam ucs = userExamService
-//				.getUserExam(user.getId(), examId);
-//		if (ucs == null) {
-//			UserExam uc = new UserExam();
-//			uc.setUserId(user.getId());
-//			uc.setExam(examService.get(examId));
-//			uc.setState(0);
-//			uc.setDocounts(1);
-//			uc.setActivestate(1);
-//			uc.setUsetime("0");
-//			userExamService.save(uc);
-//		} else {
-//			ucs.setActivestate(1);
-//			userExamService.updateUserCourse(ucs);
-//		}
-//		Exam course = examService.get(examId);
-//		view.addObject("exam", course);
-//
-//		view.setViewName("/lms/exam");
-//		return view;
-//	}
-	
 	/**
 	 * 我的试卷
 	 * @param request

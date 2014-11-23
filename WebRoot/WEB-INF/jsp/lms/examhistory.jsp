@@ -12,7 +12,7 @@
 <html>
   <head>
     <base href="<%=basePath%>">
-	<title>我的考试</title>
+	<title>我的考试历史</title>
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 	<meta content='text/html;charset=utf-8' http-equiv='content-type'>
 	<meta content='Flat administration template for Twitter Bootstrap. Twitter Bootstrap 3 template with Ruby on Rails support.' name='description'>
@@ -452,14 +452,14 @@
 																<div class='col-xs-2 juzhong'>
 																	得分：<span id="scorequestion${index}"></span>
 																</div>
-																<div class='col-xs-2 juzhong'>
+																<%-- <div class='col-xs-2 juzhong'>
 																	<div class='input-group controls-group'>
 																		<input class="form-control" type="text" id="textquestion${index}"/>
 																		<span class='input-group-btn'>
 																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
 																		</span>
 																	</div>
-																</div>
+																</div> --%>
 															</div>
 															<div class='h30'></div>
 														</div>
@@ -529,8 +529,8 @@
 									</div>
 									<hr class='hr-normal'>
 									<div class='row'>
-										<div class='col-xs-12'>
-											<div class='box-content' style="padding:0">
+										<div class='col-xs-4'>
+											<%-- <div class='box-content' style="padding:0">
 												<c:if test="${userexam.state == 0}">
 													<a class="btn btn-danger btn-block btn-lg" href="javascript:void(0);" onclick="submitallquesstion();">提交试卷</a>
 												</c:if>
@@ -539,6 +539,19 @@
 														<a class="btn btn-danger btn-block btn-lg" href="lms/toagainexamintroduce.action?competionId=${competionId}&examId=${exam.id}">再做一次</a>
 													</c:if>
 												</c:if>
+											</div> --%>
+											<div class="section">
+												<a class="item right"></a>&nbsp;正确
+											</div>
+										</div>
+										<div class='col-xs-4'>
+											<div class="section">
+												<a class="item wrong"></a>&nbsp;错误
+											</div>
+										</div>
+										<div class='col-xs-4'>
+											<div class="section">
+												<a class="item"></a>&nbsp;未做
 											</div>
 										</div>
 									</div>									
@@ -589,6 +602,7 @@
 		function initquestion()
 		{
 			var index = 0;
+			var docounts = "${docounts}";
 			<c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
             <c:forEach var="sequential" items="${chapter.esequentials}" varStatus="j">
                 <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
@@ -598,18 +612,30 @@
                     		var examId = "${exam.id}";
                     		var questionId = "${qd.id}";
                     		var number = "${nn.index+1}";
-	                    	var data = {examId:examId,questionId:questionId,number:number,index:index};
+                    		var type = "${qd.type}";
+	                    	var data = {type:type,examId:examId,questionId:questionId,number:number,index:index,docounts:docounts};
 	            			$.ajax({
-	            				url : "lms/getQuestionAnswer.action",
+	            				url : "lms/getQuestionHistoryAnswer.action",
 	            				type : "post",
 	            				data : data,
 	            				success : function(s) {
 	            					var a = eval("(" + s + ")");
 	            					if ("sucess" == a.sucess) {
 	            						var answer = a.answer;
+	            						/* <c:if test="${qd.type == 1}">
+	            						$("#index"+a.index).addClass("right");
+										</c:if> */
 	            						if (answer)
             							{
 	            							<c:if test="${qd.type == 2}">
+		            							if ("${qd.answer}" == "["+a.answer+"]")
+	            								{
+		            								$("#index"+a.index).addClass("right");
+	            								}
+		            							else
+	            								{
+		            								$("#index"+a.index).addClass("wrong");
+	            								}
             									$("#numberquestion"+a.index+" :radio").each(function(){
 											         if ($(this).val() == a.answer)
 										        	 {
@@ -618,20 +644,56 @@
 											     });
             								</c:if>
             								<c:if test="${qd.type == 3}">
-            								var strs = a.answer.split('#');
-        									$("#numberquestion"+a.index+" :checkbox").each(function(i){
-        										 if ($.inArray($(this).val(), strs) != -1)
-									        	 {
-										        	 $(this).attr("checked","checked");
-									        	 }
-										     });
+	            								var reg=new RegExp("#","g");
+	            								if ("${qd.answer}" == "["+a.answer.replace(reg,", ")+"]")
+	            								{
+		            								$("#index"+a.index).addClass("right");
+	            								}
+		            							else
+	            								{
+		            								$("#index"+a.index).addClass("wrong");
+	            								}
+	            								var strs = a.answer.split('#');
+	        									$("#numberquestion"+a.index+" :checkbox").each(function(i){
+	        										 if ($.inArray($(this).val(), strs) != -1)
+										        	 {
+											        	 $(this).attr("checked","checked");
+										        	 }
+											     });
         									</c:if>
             								<c:if test="${qd.type == 4}">
+	            								if ("${qd.answer}" == "["+a.answer+"]")
+	            								{
+		            								$("#index"+a.index).addClass("right");
+	            								}
+		            							else
+	            								{
+		            								$("#index"+a.index).addClass("wrong");
+	            								}
             									$("#numberquestion"+a.index).attr("value",a.answer);
 	        								</c:if>
 	        								<c:if test="${qd.type == 5}">
+	            								if ("${qd.answer}" == "["+a.answer+"]")
+	            								{
+		            								$("#index"+a.index).addClass("right");
+	            								}
+		            							else
+	            								{
+		            								$("#index"+a.index).addClass("wrong");
+	            								}
 	        									$("#numberquestion"+a.index).attr("value",replaceTextarea2(a.answer));
 	    									</c:if>
+	    									<c:if test="${qd.type == 6}">
+	            								if ("${qd.answer}" == "["+a.answer+"]")
+	            								{
+		            								$("#index"+a.index).addClass("right");
+	            								}
+		            							else
+	            								{
+		            								$("#index"+a.index).addClass("wrong");
+	            								}
+	        									$("#numberquestion"+a.index).attr("value",a.answer);
+    										</c:if>
             							}
 	            					}
 	            				}
@@ -771,7 +833,7 @@
 			}
 			$("#"+hrefId).attr("href","lms/toexamtrainone.action?examId="+examId+"&everticalId="+everticalId+"&trainId="+trainId); */
 		}
-		function examisover()
+		/*function examisover()
 		{
 			var examstate = "${userexam.state}";
 			if (examstate == 1)
@@ -779,7 +841,7 @@
 				return false;
 			}
 			return true;
-		}
+		}*/
 		//提交答案
 		function submitallquesstion()
 		{
