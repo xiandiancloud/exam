@@ -13,4 +13,15 @@ public class EnvironmentDao extends BaseDao<Environment> {
 		String hql = "from Environment where examId = " + examId;
 		return find(hql);
 	}
+	
+	public Environment getEnvironmentByname(String name)
+	{
+		String hql = "from Environment where name = '"+name+"'";
+		List<Environment> list =  find(hql);
+		if (list != null && list.size() > 0)
+		{
+			return list.get(0);
+		}
+		return null;
+	}
 }

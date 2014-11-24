@@ -29,43 +29,6 @@ public class ExamTrainController extends BaseController {
 	@Autowired
 	private RestTemplate restTemplate;
 
-//	@RequestMapping("/getTraincourselist")
-//	public void getTraincourselist(HttpServletRequest request,
-//			HttpServletResponse response) {
-//		try {
-//			PrintWriter out = response.getWriter();
-//			RestTrain rs = new RestTrain();
-//			HttpEntity<RestTrain> entity = new HttpEntity<RestTrain>(rs);
-//
-//			String resturl = UtilTools.getConfig().getProperty("REST_URL");
-//			ResponseEntity<RestTrain> res = restTemplate.postForEntity(resturl,
-//					entity, RestTrain.class);
-//
-//			RestTrain e = res.getBody();
-//			List<Course> list = null;//e.getCourselist();
-//			
-//			String str = JSONArray.fromObject(list).toString();
-//			
-////			System.out.println("---------------------- "+str);
-//			/*String str = "{'sucess':'sucess','result':'" + result
-//					+ "','revalue':'" + rdata + "'}";*/
-//
-//			out.write(str);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			PrintWriter out = null;
-//			try {
-//				out = response.getWriter();
-//			} catch (IOException e1) {
-//				e1.printStackTrace();
-//			} finally {
-//				String str = "{'user':'error','msg':'服务器有异常，请联系管理员'}";
-//				if (out != null)
-//					out.write(str);
-//			}
-//		}
-//	}
-
 	@RequestMapping("/getTraincourse")
 	public void getTraincourse(HttpServletRequest request,
 			HttpServletResponse response) {

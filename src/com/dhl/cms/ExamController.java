@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.dhl.bean.QuestionData;
 import com.dhl.cons.CommonConstant;
 import com.dhl.domain.ECategory;
+import com.dhl.domain.Environment;
 import com.dhl.domain.Exam;
 import com.dhl.domain.ExamChapter;
 import com.dhl.domain.ExamQuestion;
@@ -28,9 +29,11 @@ import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Question;
 import com.dhl.domain.RestTrain;
+import com.dhl.domain.ShellEnvironment;
 import com.dhl.domain.TeacherExam;
 import com.dhl.service.ECategoryService;
 import com.dhl.service.ExamChapterService;
+import com.dhl.service.ExamEnvironmentService;
 import com.dhl.service.ExamQuestionService;
 import com.dhl.service.ExamSequentialService;
 import com.dhl.service.ExamService;
@@ -71,14 +74,10 @@ public class ExamController extends BaseController {
 	private TrainService trainService;
 	@Autowired
 	private TeacherExamService teacherExamService;
-	
-//	private TeacherCourseService teacherCourseService;
-//	@Autowired
-//	private CategoryService categoryService;
-	
 	@Autowired
 	private ECategoryService ecategoryService;
-	
+	@Autowired
+	private ExamEnvironmentService examEnvironmentService;
 	@Autowired
 	private UserInterface userInterface;
 	@Autowired
@@ -87,9 +86,6 @@ public class ExamController extends BaseController {
 	//定义单元内容的时候取实训系统的课程
 	@Autowired
 	private RestTemplate restTemplate;
-	
-//	@Autowired
-//	private CourseService courseService;
 	
 	
 	//判断是否是竞赛试卷，并且试卷锁定
@@ -116,23 +112,6 @@ public class ExamController extends BaseController {
 	 */
 	@RequestMapping("/cms")
 	public ModelAndView cms(HttpServletRequest request) {
-
-//		User user = getSessionUser(request);
-//		if (user == null) {
-//			String url = "redirect:/cms/totlogin.action";
-//			return new ModelAndView(url);
-//		}
-//		Role role = user.getRole();
-//		if (!CommonConstant.ROLE_T.equals(role.getRoleName())) {
-//			String url = "redirect:/lms/getteamCategory.action";
-//			return new ModelAndView(url);
-//		}
-//		ModelAndView view = new ModelAndView();
-//		List<TeacherExam> tcourselist = teacherExamService
-//				.getMyTCourse(user.getId());
-//		view.addObject("texamlist", tcourselist);
-//		view.setViewName("/cms/texamlist");
-//		return view;
 		
 		String url = "redirect:/cms/totexamlist.action";
 		return new ModelAndView(url);
@@ -201,8 +180,8 @@ public class ExamController extends BaseController {
 	public ModelAndView totexamupdate(HttpServletRequest request, int examId) {
 		ModelAndView view = new ModelAndView();
 		view.addObject("examId", examId);
-		Exam course = examService.get(examId);
-		view.addObject("exam", course);
+		Exam exam = examService.get(examId);
+		view.addObject("exam", exam);
 		view.setViewName("/cms/update");
 		return view;
 	}
@@ -217,8 +196,8 @@ public class ExamController extends BaseController {
 	public ModelAndView totexamteam(HttpServletRequest request, int examId) {
 		ModelAndView view = new ModelAndView();
 		view.addObject("examId", examId);
-		Exam course = examService.get(examId);
-		view.addObject("Exam", course);
+		Exam exam = examService.get(examId);
+		view.addObject("Exam", exam);
 		view.setViewName("/cms/team");
 		return view;
 	}
@@ -233,14 +212,14 @@ public class ExamController extends BaseController {
 	public ModelAndView totexamschedule(HttpServletRequest request, int examId) {
 		ModelAndView view = new ModelAndView();
 		view.addObject("examId", examId);
-		Exam course = examService.get(examId);
-		view.addObject("exam", course);
+		Exam exam = examService.get(examId);
+		view.addObject("exam", exam);
 		view.setViewName("/cms/schedule");
 		return view;
 	}
 	
 	/**
-	 * 跳转到老师试卷schedule页面
+	 * 跳转到老师试卷设置页面
 	 * 
 	 * @param request
 	 * @return
@@ -249,8 +228,12 @@ public class ExamController extends BaseController {
 	public ModelAndView totsetting(HttpServletRequest request, int examId) {
 		ModelAndView view = new ModelAndView();
 		view.addObject("examId", examId);
-		Exam course = examService.get(examId);
-		view.addObject("exam", course);
+		Exam exam = examService.get(examId);
+		List<Environment> envlist = examEnvironmentService.getExamEnvironment(examId);
+		List<ShellEnvironment> shellenvlist = examEnvironmentService.getExamShellEnvironment(examId);
+		view.addObject("exam", exam);
+		view.addObject("envlist", envlist);
+		view.addObject("shellenvlist", shellenvlist);
 		view.setViewName("/cms/setting");
 		return view;
 	}
@@ -617,34 +600,6 @@ public class ExamController extends BaseController {
 		view.addObject("vtlist", vt);
 		ExamVertical vertical = examverticalService.get(verticalId);
 		view.addObject("vertical", vertical);
-		/*List<Train> courselists = new ArrayList<Train>();
-		try
-		{
-		//取得实训课程列表
-		RestTrain rs = new RestTrain();
-		HttpEntity<RestTrain> entity = new HttpEntity<RestTrain>(rs);
-
-		String resturl = UtilTools.getConfig().getProperty("REST_URL_COURSELIST");
-		ResponseEntity<RestTrain> res = restTemplate.postForEntity(resturl,
-				entity, RestTrain.class);
-		RestTrain e = res.getBody();
-		String courseList = e.getCourselist();
-		JSONArray jsonArray = JSONArray.fromObject(courseList);
-		
-		for (Object obj : jsonArray)  
-        {  
-            JSONObject jsonObject = (JSONObject) obj;  
-        	Train c = new Train();
-            int id = Integer.parseInt((String)jsonObject.get("id"));
-            String name = (String)jsonObject.get("name");
-            c.setId(id);
-            c.setName(name);
-            courselists.add(c);
-        }  
-		}
-		catch(Exception e)
-		{}
-		view.addObject("trainlist", courselists);*/
 		
 		view.setViewName("/cms/unit");
 		return view;
@@ -750,8 +705,6 @@ public class ExamController extends BaseController {
 			ResponseEntity<RestTrain> res = restTemplate.postForEntity(resturl,
 					entity, RestTrain.class);
 			RestTrain e = res.getBody();
-//			User user = getSessionUser(request);
-//			courseService.copyCourse(e.getCourse(),user.getId(),examId,everticalId);
 			examService.copyTrain(e.getCourse(),examId,everticalId);
 			String str = "{'sucess':'sucess'}";
 			out.write(str);
