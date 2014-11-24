@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.domain.UserEnvironment;
-import com.dhl.service.UCEService;
 import com.dhl.service.UserCloudService;
 import com.dhl.service.UserEnvironmentService;
 import com.dhl.web.BaseController;
@@ -29,8 +28,8 @@ import com.xiandian.model.User;
 public class ISController extends BaseController {
 	// @Autowired
 	// private UserTrainService userTrainService;
-	@Autowired
-	private UCEService uceService;
+//	@Autowired
+//	private UCEService uceService;
 	@Autowired
 	private UserEnvironmentService userEnvironmenteService;
 	@Autowired

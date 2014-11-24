@@ -12,16 +12,15 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "t_environment")
-public class Environment extends BaseDomain {
+@Table(name = "t_shellenvironment")
+public class ShellEnvironment extends BaseDomain {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-	private String name;//模板名称
-	private String value;//如果是创建虚拟机，采用系统的前置名称
-	private String shellprefix;//shell脚本的前置名称
+	private String name;//shell变量
+	private String value;//shell值
 	private int examId;
 	public int getExamId() {
 		return examId;
@@ -34,12 +33,6 @@ public class Environment extends BaseDomain {
 	}
 	public void setValue(String value) {
 		this.value = value;
-	}
-	public String getShellprefix() {
-		return shellprefix;
-	}
-	public void setShellprefix(String shellprefix) {
-		this.shellprefix = shellprefix;
 	}
 	public int getId() {
 		return id;

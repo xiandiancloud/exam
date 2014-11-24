@@ -240,6 +240,22 @@ public class ExamController extends BaseController {
 	}
 	
 	/**
+	 * 跳转到老师试卷schedule页面
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/totsetting")
+	public ModelAndView totsetting(HttpServletRequest request, int examId) {
+		ModelAndView view = new ModelAndView();
+		view.addObject("examId", examId);
+		Exam course = examService.get(examId);
+		view.addObject("exam", course);
+		view.setViewName("/cms/setting");
+		return view;
+	}
+	
+	/**
 	 * 老师创建试卷
 	 * 
 	 * @param request

@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Cloud;
 import com.dhl.domain.UserEnvironment;
-import com.dhl.service.UCEService;
 import com.dhl.service.UserCloudService;
 import com.dhl.service.UserEnvironmentService;
 import com.dhl.util.UtilTools;
@@ -40,8 +39,8 @@ public class LmsUserController extends BaseController {
 	 */
 	@Autowired
 	private UserInterface userInterface;
-	@Autowired
-	private UCEService uceService;
+//	@Autowired
+//	private UCEService uceService;
 	@Autowired
 	private UserEnvironmentService ueService;
 	@Autowired

@@ -30,6 +30,16 @@ public class Train extends BaseDomain {
 	private String conAnswer;
 	private int score;
 	private String scoretag;
+	//是否创建环境     0：代表不创建   1：创建
+	private int iscreate;
+	
+	public int getIscreate() {
+		return iscreate;
+	}
+
+	public void setIscreate(int iscreate) {
+		this.iscreate = iscreate;
+	}
 
 	public String getEnvname() {
 		return envname;

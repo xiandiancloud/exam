@@ -53,6 +53,10 @@
                   <li class="nav-item nav-course-settings-schedule">
                     <a href="cms/totexamschedule.action?examId=${examId}">日程 &amp; 细节</a>
                   </li>
+                  <li class="nav-item nav-course-settings-advanced">
+                    <a href="cms/totsetting.action?examId=${examId}">高级设置</a>
+                  </li>
+                  
                  <!--  <li class="nav-item nav-course-settings-grading">
                     <a href="/settings/grading/edX/Open_DemoX/edx_demo_course">评分</a>
                   </li> 

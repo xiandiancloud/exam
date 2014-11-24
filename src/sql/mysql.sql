@@ -262,7 +262,7 @@ create table t_evertical
 (
    id                  int not null AUTO_INCREMENT,
    name                varchar(255) not null,   
-   esequentialId        int(10) not null,
+   esequentialId       int(10) not null,
    primary key (id),
    CONSTRAINT receivet_evertical_ibfk_1 FOREIGN KEY (esequentialId) REFERENCES t_esequential (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -280,6 +280,7 @@ create table t_train
    conAnswer           longtext default null,
    score               int(10) not null,
    scoretag            varchar(255) default null,
+   iscreate            int(10) default 0,
    primary key (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -506,16 +507,32 @@ create table user_train_history
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 */
 
-/*
+/*环境模板*/
 drop table if exists t_environment;
 create table t_environment
 (
    id                  int not null AUTO_INCREMENT,
+   examId              int(10) not null,
    name                varchar(255) not null, 
+   value               varchar(255) not null,
+   shellprefix         varchar(255) not null,
    primary key (id),
-   UNIQUE KEY (name)
+   UNIQUE KEY (name),
+   CONSTRAINT receivet_environment_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-*/
+
+/*脚本参数模板*/
+drop table if exists t_shellenvironment;
+create table t_shellenvironment
+(
+   id                  int not null AUTO_INCREMENT,
+   examId              int(10) not null,
+   name                varchar(255) not null, 
+   value               varchar(255) not null,
+   primary key (id),
+   UNIQUE KEY (name),
+   CONSTRAINT receivet_shellenvironment_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*用户实训课程对应的环境模块
 drop table if exists user_course_environment;

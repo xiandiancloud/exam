@@ -19,7 +19,6 @@ import ch.ethz.ssh2.SCPClient;
 import com.dhl.domain.RestShell;
 import com.dhl.domain.UserEnvironment;
 import com.dhl.domain.UserQuestion;
-import com.dhl.service.UCEService;
 import com.dhl.service.UserEnvironmentService;
 import com.dhl.service.UserQuestionService;
 import com.dhl.util.UtilTools;
@@ -42,8 +41,8 @@ public class ShellController extends BaseController {
 //	private UserTrainService userTrainService;
 	// @Autowired
 	// private UserCourseService userCourseService;
-	@Autowired
-	private UCEService uceService;
+//	@Autowired
+//	private UCEService uceService;
 	@Autowired
 	private RestTemplate restTemplate;
 	@Autowired
