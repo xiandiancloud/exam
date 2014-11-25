@@ -9,8 +9,8 @@ import com.dhl.domain.Environment;
 @Repository
 public class EnvironmentDao extends BaseDao<Environment> {
 
-	public List<Environment> getExamEnvironment(int examId) {
-		String hql = "from Environment where examId = " + examId;
+	public List<Environment> getEnvironment() {
+		String hql = "from Environment";
 		return find(hql);
 	}
 	

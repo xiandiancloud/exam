@@ -32,50 +32,6 @@
 
 <script src="js/jquery-1.11.1.js"></script>
 <script src="js/index.js"></script>
-
-<style>
-.dhlselect
- {
-height: 100%;
-width: 100%;
-width: 45%;
-min-width: 100px;
-padding: 10px;
-border-radius: 3px;
-border: 1px solid #b2b2b2;
-text-overflow: ellipsis;
--webkit-appearance: menulist;
-box-sizing: border-box;
-align-items: center;
-border: 1px solid;
-border-image-source: initial;
-border-image-slice: initial;
-border-image-width: initial;
-border-image-outset: initial;
-border-image-repeat: initial;
-white-space: pre;
--webkit-rtl-ordering: logical;
-cursor: default;
-
--webkit-box-sizing: border-box;
--moz-box-sizing: border-box;
-box-sizing: border-box;
-background-color: #f2f2f2;
-background-image: -webkit-linear-gradient(#f2f2f2,#fff);
-background-image: linear-gradient(#f2f2f2,#fff);
-border: 1px solid #b2b2b2;
-border-radius: 2px;
-background-color: #f2f2f2;
-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
-color: #4c4c4c;
-outline: 0;
-}
-.dhlselect:focus
-{background-color:#fffcf1;
-background-image:-webkit-linear-gradient(#fffcf1,#fffefd);
-background-image:linear-gradient(#fffcf1,#fffefd);
-outline:0}
-</style>
 </head>
 
 <body class="is-signedin index view-dashboard hide-wip lang_zh-cn">
@@ -267,57 +223,6 @@ outline:0}
 					class="cta cta-show-sock"><i class="icon-question-sign"></i> <span
 						class="copy">向云平台求助?</span></a></li>
 			</ul>
-
-			<div class="wrapper-inner wrapper">
-				<section class="sock" id="sock"> <header>
-				<h2 class="title sr">edX Studio Documentation</h2>
-				</header>
-
-				<div class="support">
-					<h3 class="title">edX Studio Documentation</h3>
-
-					<div class="copy">
-						<p>You can click Help in the upper right corner of any page to
-							get more information about the page you're on. You can also use
-							the links below to download the Building and Running an edX
-							Course PDF file, to go to the edX Author Support site, or to
-							enroll in edX101.</p>
-					</div>
-
-					<ul class="list-actions">
-						<li class="action-item js-help-pdf"><a
-							href="https://media.readthedocs.org/pdf/edx-partner-course-staff/latest/edx-partner-course-staff.pdf"
-							target="_blank" rel="external" class="action action-primary">Building
-								and Running an edX Course PDF</a></li>
-
-						<li class="action-item"><a href="http://help.edge.edx.org/"
-							rel="external" class="action action-primary">edX Studio
-								Author Support</a> <span class="tip">edX Studio Author
-								Support</span></li>
-						<li class="action-item"><a
-							href="https://edge.edx.org/courses/edX/edX101/How_to_Create_an_edX_Course/about"
-							rel="external" class="action action-primary">注册edX101</a> <span
-							class="tip">How to use edX Studio to build your course</span></li>
-					</ul>
-				</div>
-
-				<div class="feedback">
-					<h3 class="title">Request help with edX Studio</h3>
-
-					<div class="copy">
-						<p>Have problems, questions, or suggestions about edX Studio?</p>
-					</div>
-
-					<ul class="list-actions">
-						<li class="action-item"><a
-							href="http://help.edge.edx.org/discussion/new"
-							class="action action-primary show-tender"
-							title="请使用工具Tender来分享您的反馈"><i class="icon-comments"></i>联系我们</a>
-						</li>
-					</ul>
-				</div>
-				</section>
-			</div>
 		</div>
 
 		<jsp:include page="tfooter.jsp"></jsp:include>

@@ -3,6 +3,7 @@ package com.dhl.cms;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,20 +28,21 @@ import com.dhl.domain.Exam;
 import com.dhl.domain.ExamChapter;
 import com.dhl.domain.ExamQuestion;
 import com.dhl.domain.ExamSequential;
+import com.dhl.domain.ExamShellEnvironment;
 import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Question;
 import com.dhl.domain.RestTrain;
-import com.dhl.domain.ShellEnvironment;
 import com.dhl.domain.TeacherExam;
 import com.dhl.service.ECategoryService;
+import com.dhl.service.EnvironmentService;
 import com.dhl.service.ExamChapterService;
-import com.dhl.service.ExamEnvironmentService;
 import com.dhl.service.ExamQuestionService;
 import com.dhl.service.ExamSequentialService;
 import com.dhl.service.ExamService;
 import com.dhl.service.ExamVerticalService;
 import com.dhl.service.TeacherExamService;
 import com.dhl.service.TrainService;
+import com.dhl.service.UserQuestionService;
 import com.dhl.util.ParseQuestion;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
@@ -77,12 +80,13 @@ public class ExamController extends BaseController {
 	@Autowired
 	private ECategoryService ecategoryService;
 	@Autowired
-	private ExamEnvironmentService examEnvironmentService;
+	private EnvironmentService environmentService;
 	@Autowired
 	private UserInterface userInterface;
 	@Autowired
 	private SchoolInterface schoolInterface;
-
+	@Autowired
+	private UserQuestionService userQuestionService;
 	//定义单元内容的时候取实训系统的课程
 	@Autowired
 	private RestTemplate restTemplate;
@@ -229,8 +233,8 @@ public class ExamController extends BaseController {
 		ModelAndView view = new ModelAndView();
 		view.addObject("examId", examId);
 		Exam exam = examService.get(examId);
-		List<Environment> envlist = examEnvironmentService.getExamEnvironment(examId);
-		List<ShellEnvironment> shellenvlist = examEnvironmentService.getExamShellEnvironment(examId);
+		List<Environment> envlist = environmentService.getEnvironment();
+		List<ExamShellEnvironment> shellenvlist = environmentService.getExamShellEnvironment(examId);
 		view.addObject("exam", exam);
 		view.addObject("envlist", envlist);
 		view.addObject("shellenvlist", shellenvlist);
@@ -238,6 +242,43 @@ public class ExamController extends BaseController {
 		return view;
 	}
 	
+	/**
+	 * 保存脚本参数
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/saveshellenv")
+	public void saveshellenv(HttpServletRequest request,HttpServletResponse response, int examId,String name,String value) {
+		try {
+			PrintWriter out = response.getWriter();
+			boolean flag = environmentService.saveShellEnv(examId, name, value);
+			String endstr = flag?"sucess":"fail";
+			String str = "{'sucess':'"+endstr+"'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 保存环境
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/saveenv")
+	public void saveenv(HttpServletRequest request,HttpServletResponse response, String name,String value,String type,String desc) {
+		try {
+			PrintWriter out = response.getWriter();
+			boolean flag = environmentService.saveEnv(name, value,type,desc);
+			String endstr = flag?"sucess":"fail";
+			String str = "{'sucess':'"+endstr+"'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * 老师创建试卷
 	 * 
@@ -603,6 +644,113 @@ public class ExamController extends BaseController {
 		
 		view.setViewName("/cms/unit");
 		return view;
+	}
+	
+
+	/**
+	 * 得到实验
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/getTrain")
+	public void getTrain(HttpServletRequest request,
+			HttpServletResponse response,int trainId) {
+
+		try {
+			PrintWriter out = response.getWriter();
+			String str = userQuestionService.getTrainQuestion(trainId);
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 创建考试的实验
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/createExamTrain")
+	public void createExamTrain(HttpServletRequest request,
+			HttpServletResponse response,@RequestBody List<Map<String,Object>> list) 
+	{
+		try {
+			PrintWriter out = response.getWriter();
+			userQuestionService.saveTrainQuestion(list);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * 创建考试的环境
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/getEnvironment")
+	public void getEnvironment(HttpServletRequest request, HttpServletResponse response) 
+	{
+		try {
+			PrintWriter out = response.getWriter();
+			
+			List<Environment> envlist = environmentService.getEnvironment();
+			String str = getEnvironmentStr(envlist);
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private String getEnvironmentStr(List<Environment> list) {
+		StringBuffer buffer = new StringBuffer();
+		int count = list.size();
+		buffer.append("{\"total\":" + count + ",\"rows\":[");
+		for (int i = 0; i < count; i++) {
+			Environment p = list.get(i);
+			buffer.append("{");
+			buffer.append("\"id\":");
+			buffer.append("\"" + p.getId() + "\"");
+			buffer.append(",\"value\":");
+			buffer.append("\"" + p.getValue() + "\"");
+			buffer.append(",\"name\":");
+			buffer.append("\"" + p.getName() + "\"");
+			buffer.append("},");
+		}
+		if (count > 0) {
+			String str = buffer.substring(0, buffer.length() - 1) + "]}";
+			str = str.replaceAll("null", "");
+			return str;
+		} else {
+			String str = buffer.toString() + "]}";
+			str = str.replaceAll("null", "");
+			return str;
+		}
+	}
+	
+	/**
+	 * 更新实验
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/updateTrain")
+	public void updateTrain(HttpServletRequest request,
+			HttpServletResponse response,@RequestBody List<Map<String,Object>> list) {
+
+		try {
+			PrintWriter out = response.getWriter();
+			userQuestionService.updateTrainQuestion(list);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**

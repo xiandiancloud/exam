@@ -12,7 +12,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>日程 &amp; 细节设置 | 先电云平台 | edX Studio</title>
+<title>日程 &amp; 细节设置 | 先电云平台</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -44,80 +44,10 @@
 <script src="js/fineuploader.js"></script>
 <script src="js/common.js"></script>
 
-<style type="text/css" charset="utf-8">
-#tender_window {
-	position: absolute;
-	top: 20px;
-	left: 10px;
-	right: 10px;
-	margin: auto;
-	max-width: 680px;
-	height: 715px;
-	padding: 3px;
-	background:
-		url(http://edxedge.tenderapp.com/images/widget/overlay_back.png);
-	z-index: 9999;
-}
-
-#tender_window iframe {
-	border: none;
-	width: 100%;
-	height: 100%;
-}
-
-#tender_window #tender_frame {
-	width: 100%;
-	height: 100%;
-	background: url(http://edxedge.tenderapp.com/images/widget/loader.gif)
-		50% 50% no-repeat #fff;
-}
-
-#tender_closer {
-	position: absolute;
-	top: 18px;
-	right: 18px;
-	color: #fff;
-	font-family: Helvetica, Arial, sans-serif;
-	font-size: 12px;
-	font-weight: bold;
-	text-decoration: none;
-	border: none;
-}
-
-#tender_closer {
-	color: #80B3CC
-}
-
-#tender_toggler {
-	position: absolute;
-	top: 100px;
-	right: 0px;
-	width: 33px;
-	height: 105px;
-	padding: 3px 0 3px 3px;
-	background:
-		url(http://edxedge.tenderapp.com/images/widget/overlay_back.png);
-}
-
-#tender_toggler_link {
-	display: block;
-	width: 100%;
-	height: 100%;
-	text-decoration: none;
-	border: none;
-	text-indent: -9999px;
-	background: #006699
-		url(http://edxedge.tenderapp.com/images/widget/tab_text_right.gif)
-		!important;
-}
-</style>
 </head>
 
 <body
 	class="is-signedin course schedule view-settings feature-upload hide-wip lang_zh-cn js">
-	<a class="nav-skip" href="#content">跳过本内容页</a>
-
-
 	<!-- view -->
 	<div class="wrapper wrapper-view">
 
@@ -258,20 +188,6 @@
 
 							<hr class="divide">
 
-							<!--             <section class="group-settings requirements">
-              <header>
-                <h2 class="title-2">要求</h2>
-                <span class="tip">对参加本门试卷的学生的期望</span>
-              </header>
-
-              <ol class="list-input">
-                <li class="field text" id="field-course-effort">
-                  <label for="course-effort">每周投入试卷学习的小时数</label>
-                  <input type="text" class="short time" id="course-effort" placeholder="HH:MM">
-                  <span class="tip tip-inline">在整个试卷上投入的时间</span>
-                </li>
-              </ol>
-            </section> -->
 							<ul class="course-actions">
 								<li class="action"><a href="javascript:void(0);"
 									rel="external" onclick="updateCourse(${examId});"
@@ -285,21 +201,6 @@
 							<p>您的试卷时间表决定何时学生可以注册和开始本门试卷。</p>
 
 							<p>本页面的其他信息将会出现在你试卷的关于页面上。这些信息包括试卷概要，试卷图片，介绍视频，以及预估的时间要求。学生们使用关于页面来选择要上的试卷。</p>
-						</div>
-
-						<div class="bit">
-
-							<h3 class="title-3">试卷其他设置</h3>
-							<nav class="nav-related">
-								<ul>
-									<li class="nav-item"><a
-										href="/settings/grading/cetc/CS201/2014_T1">评分</a></li>
-									<li class="nav-item"><a
-										href="/course_team/cetc/CS201/2014_T1/">试卷团队</a></li>
-									<li class="nav-item"><a
-										href="/settings/advanced/cetc/CS201/2014_T1">高级设置</a></li>
-								</ul>
-							</nav>
 						</div>
 					</aside>
 				</section>
@@ -316,60 +217,6 @@
 							<!-- Looking for help with Studio -->向云考试平台求助?
 					</span></a></li>
 			</ul>
-
-			<div class="wrapper-inner wrapper">
-				<section class="sock" id="sock">
-					<header>
-						<h2 class="title sr">edX Studio Documentation</h2>
-					</header>
-
-					<div class="support">
-						<h3 class="title">edX Studio Documentation</h3>
-
-						<div class="copy">
-							<p>You can click Help in the upper right corner of any page
-								to get more information about the page you're on. You can also
-								use the links below to download the Building and Running an edX
-								Course PDF file, to go to the edX Author Support site, or to
-								enroll in edX101.</p>
-						</div>
-
-						<ul class="list-actions">
-							<li class="action-item js-help-pdf"><a
-								href="https://media.readthedocs.org/pdf/edx-partner-course-staff/latest/edx-partner-course-staff.pdf"
-								target="_blank" rel="external" class="action action-primary"
-								title="该链接将在新的浏览器窗口/标签打开">Building and Running an edX Course
-									PDF</a></li>
-
-							<li class="action-item"><a href="http://help.edge.edx.org/"
-								rel="external" class="action action-primary"
-								title="该链接将在新的浏览器窗口/标签打开" target="_blank">edX Studio Author
-									Support</a> <span class="tip">edX Studio Author Support</span></li>
-							<li class="action-item"><a
-								href="https://edge.edx.org/courses/edX/edX101/How_to_Create_an_edX_Course/about"
-								rel="external" class="action action-primary"
-								title="该链接将在新的浏览器窗口/标签打开" target="_blank">注册edX101</a> <span
-								class="tip">How to use edX Studio to build your course</span></li>
-						</ul>
-					</div>
-
-					<div class="feedback">
-						<h3 class="title">Request help with edX Studio</h3>
-
-						<div class="copy">
-							<p>Have problems, questions, or suggestions about edX Studio?</p>
-						</div>
-
-						<ul class="list-actions">
-							<li class="action-item"><a
-								href="http://help.edge.edx.org/discussion/new"
-								class="action action-primary show-tender"
-								title="请使用工具Tender来分享您的反馈"><i class="icon-comments"></i>联系我们</a>
-							</li>
-						</ul>
-					</div>
-				</section>
-			</div>
 		</div>
 
 		<jsp:include page="tfooter.jsp"></jsp:include>
@@ -439,13 +286,6 @@
 			});
 		}
       
-window.Tender = {
-  hideToggle: true,
-  title: '',
-  body: '',
-  hide_kb: 'true',
-  widgetToggles: document.getElementsByClassName('show-tender')
-}
 </script>
 </body>
 </html>

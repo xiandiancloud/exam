@@ -108,7 +108,7 @@
     vertical-align:text-bottom;
 }
 .qq-upload-retry, .qq-upload-delete {
-    display: none;
+    /* display: none; */
     color: #000000;
 }
 .qq-upload-cancel, .qq-upload-delete {

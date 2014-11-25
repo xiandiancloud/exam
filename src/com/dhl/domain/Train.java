@@ -26,7 +26,7 @@ public class Train extends BaseDomain {
 	// 环境模板名称
 	private String envname;
 	private String conContent;
-	private String conShell;
+	/*private String conShell;*/
 	private String conAnswer;
 	private int score;
 	private String scoretag;
@@ -97,13 +97,13 @@ public class Train extends BaseDomain {
 		this.conContent = conContent;
 	}
 
-	public String getConShell() {
+	/*public String getConShell() {
 		return conShell;
 	}
 
 	public void setConShell(String conShell) {
 		this.conShell = conShell;
-	}
+	}*/
 
 	public String getConAnswer() {
 		return conAnswer;

@@ -6,22 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dhl.dao.EnvironmentDao;
-import com.dhl.dao.ShellEnvironmentDao;
+import com.dhl.dao.ExamShellEnvironmentDao;
 import com.dhl.domain.Environment;
-import com.dhl.domain.ShellEnvironment;
+import com.dhl.domain.ExamShellEnvironment;
 
 /**
  *每个考试对应的环境,脚本参数等
  */
 @Service
-public class ExamEnvironmentService {
+public class EnvironmentService {
 	
 	@Autowired
 	private EnvironmentDao envDao;
 	@Autowired
-	private ShellEnvironmentDao shellEnvDao;
+	private ExamShellEnvironmentDao shellEnvDao;
 	
-	public boolean saveEnv(int examId,String name,String value,String shellprefix)
+	public boolean saveEnv(String name,String value,String type,String desc)
 	{
 		Environment e = envDao.getEnvironmentByname(name);
 		if (e != null)
@@ -29,22 +29,22 @@ public class ExamEnvironmentService {
 			return false;
 		}
 		Environment uce = new Environment();
-		uce.setExamId(examId);
 		uce.setName(name);
 		uce.setValue(value);
-		uce.setShellprefix(shellprefix);
+		uce.setType(type);
+		uce.setDescrible(desc);
 		envDao.save(uce);
 		return true;
 	}
 	
 	public boolean saveShellEnv(int examId,String name,String value)
 	{
-		ShellEnvironment e = shellEnvDao.getShellEnvironmentByname(name);
+		ExamShellEnvironment e = shellEnvDao.getShellEnvironmentByname(name);
 		if (e != null)
 		{
 			return false;
 		}
-		ShellEnvironment uce = new ShellEnvironment();
+		ExamShellEnvironment uce = new ExamShellEnvironment();
 		uce.setExamId(examId);
 		uce.setName(name);
 		uce.setValue(value);
@@ -63,11 +63,11 @@ public class ExamEnvironmentService {
 	}
 	
 	
-	public List<Environment> getExamEnvironment(int examId) {
-		return envDao.getExamEnvironment(examId);
+	public List<Environment> getEnvironment() {
+		return envDao.getEnvironment();
 	}
 	
-	public List<ShellEnvironment> getExamShellEnvironment(int examId) {
+	public List<ExamShellEnvironment> getExamShellEnvironment(int examId) {
 		return shellEnvDao.getExamShellEnvironment(examId);
 	}
 	

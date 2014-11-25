@@ -20,26 +20,15 @@ public class Environment extends BaseDomain {
 	@Column(name = "id")
 	private int id;
 	private String name;//模板名称
-	private String value;//如果是创建虚拟机，采用系统的前置名称
-	private String shellprefix;//shell脚本的前置名称
-	private int examId;
-	public int getExamId() {
-		return examId;
+	private String value;//
+	private String type;//
+	private String describle;
+	
+	public String getDescrible() {
+		return describle;
 	}
-	public void setExamId(int examId) {
-		this.examId = examId;
-	}
-	public String getValue() {
-		return value;
-	}
-	public void setValue(String value) {
-		this.value = value;
-	}
-	public String getShellprefix() {
-		return shellprefix;
-	}
-	public void setShellprefix(String shellprefix) {
-		this.shellprefix = shellprefix;
+	public void setDescrible(String describle) {
+		this.describle = describle;
 	}
 	public int getId() {
 		return id;
@@ -52,5 +41,17 @@ public class Environment extends BaseDomain {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getValue() {
+		return value;
+	}
+	public void setValue(String value) {
+		this.value = value;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 }

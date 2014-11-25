@@ -43,81 +43,256 @@
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <script src="js/fineuploader.js"></script>
 <script src="js/common.js"></script>
-
-<style type="text/css" charset="utf-8">
-#tender_window {
-	position: absolute;
-	top: 20px;
-	left: 10px;
-	right: 10px;
-	margin: auto;
-	max-width: 680px;
-	height: 715px;
-	padding: 3px;
-	background:
-		url(http://edxedge.tenderapp.com/images/widget/overlay_back.png);
-	z-index: 9999;
-}
-
-#tender_window iframe {
-	border: none;
-	width: 100%;
-	height: 100%;
-}
-
-#tender_window #tender_frame {
-	width: 100%;
-	height: 100%;
-	background: url(http://edxedge.tenderapp.com/images/widget/loader.gif)
-		50% 50% no-repeat #fff;
-}
-
-#tender_closer {
-	position: absolute;
-	top: 18px;
-	right: 18px;
-	color: #fff;
-	font-family: Helvetica, Arial, sans-serif;
-	font-size: 12px;
-	font-weight: bold;
-	text-decoration: none;
-	border: none;
-}
-
-#tender_closer {
-	color: #80B3CC
-}
-
-#tender_toggler {
-	position: absolute;
-	top: 100px;
-	right: 0px;
-	width: 33px;
-	height: 105px;
-	padding: 3px 0 3px 3px;
-	background:
-		url(http://edxedge.tenderapp.com/images/widget/overlay_back.png);
-}
-
-#tender_toggler_link {
-	display: block;
-	width: 100%;
-	height: 100%;
-	text-decoration: none;
-	border: none;
-	text-indent: -9999px;
-	background: #006699
-		url(http://edxedge.tenderapp.com/images/widget/tab_text_right.gif)
-		!important;
-}
-</style>
 </head>
 
+<style>
+
+.tab{ 
+
+width: 100%; 
+
+margin:0; 
+
+padding:0; 
+
+font-family: "Trebuchet MS", Trebuchet, Arial, sans-serif;	
+
+color: #1c5d79; 
+
+border-top:  1px #c2c2c2; 
+
+border-bottom:  1px #c2c2c2; 
+    
+    border-left:  1px #c2c2c2; 
+
+border-right:  1px #c2c2c2; 
+
+border-collapse: collapse; 
+
+} 
+
+.tab caption { 
+
+margin:0; 
+
+padding:0; 
+
+background: #f3f3f3; 
+
+height: 40px; 
+
+line-height: 40px; 
+
+text-indent: 28px; 
+
+font-family: "Trebuchet MS", Trebuchet, Arial, sans-serif;	
+
+font-size: 14px; 
+
+font-weight: bold; 
+
+color: #555d6d; 
+
+text-align: left; 
+
+letter-spacing: 3px; 
+
+border-top: dashed 1px #c2c2c2; 
+
+border-bottom: dashed 1px #c2c2c2; 
+    
+
+} 
+
+
+
+/* HEAD */ 
+
+
+
+.tab thead { 
+
+background-color: #FFFFFF; 
+
+border: none; 
+
+} 
+
+.tab thead tr th { 
+
+background-image:url("/lottery/img/table/bg.gif"); 
+
+height: 22px; 
+
+line-height: 22px; 
+
+text-align: center; 
+
+color: #1c5d79; 
+
+background-repeat : repeat-x; 
+
+border-left:solid 1px #326E87; 
+
+border-right:solid 1px #326E87;	
+
+border-bottom:solid 1px #326E87; 
+
+border-collapse: collapse; 
+
+font-size: 12px; 
+
+} 
+
+
+
+/* BODY */ 
+
+.tab tbody tr { 
+
+background: #f3f3f3; 
+
+font-size: 13px; 
+
+height: 12px; 
+
+line-height: 12px; 
+
+text-align: center; 
+
+event:expression( 
+onmouseover = function(){this.style.backgroundColor = '#E9F5FF';}, 
+onmouseout = function(){this.style.backgroundColor = '#f3f3f3';} 
+) 
+
+} 
+
+.tab tbody tr.odd { 
+
+background: #F0FFFF; 
+
+} 
+
+.tab tbody tr:hover, .tab tbody tr.odd:hover { 
+
+background: #ffffff; 
+
+} 
+
+.tab tbody tr th,.tab tbody tr td { 
+
+padding: 6px; 
+
+border: solid 1px #326e87; 
+
+} 
+
+.tab tbody tr th { 
+
+font-family: "Trebuchet MS", Trebuchet, Arial, sans-serif;	
+
+font-size: 12px; 
+
+padding: 6px; 
+
+text-align: center; 
+
+font-weight: bold; 
+
+color: #FFFFFF; 
+
+border-bottom: solid 1px white; 
+
+} 
+
+.tab tbody tr th:hover { 
+
+background: #ffffff; 
+
+
+
+} 
+
+
+
+/* LINKS */ 
+
+
+
+.tab a{ 
+
+color: gray; 
+
+text-decoration: none; 
+
+font-size: 13px; 
+
+border-bottom: solid 1px white; 
+
+} 
+
+.tab a:hover { 
+
+color: blue; 
+
+border-bottom: none; 
+
+} 
+
+
+
+/* FOOTER */ 
+
+
+
+.tab tfoot { 
+
+background: #f3f3f3; 
+
+height: 24px; 
+
+line-height: 24px; 
+
+font-family: "Trebuchet MS", Trebuchet, Arial, sans-serif;	
+
+font-size: 12px; 
+
+/*font-weight: bold;*/ 
+
+color: #555d6d; 
+
+text-align: center; 
+
+letter-spacing: 3px; 
+
+border-top: solid 2px #326e87; 
+
+border-bottom: dashed 1px #c2c2c2; 
+
+} 
+
+.tab tfoot tr th,.tab tfoot tr td { 
+
+/*padding: .1em .6em;*/ 
+
+
+
+} 
+
+.tab tfoot tr th { 
+
+border-top: solid 1px #326e87; 
+
+} 
+
+.tab tfoot tr td { 
+
+/**text-align: right;**/ 
+
+}
+</style>
 <body
 	class="is-signedin course advanced view-settings feature-upload hide-wip lang_zh-cn js">
-	<a class="nav-skip" href="#content">跳过本内容页</a>
-
-
 	<!-- view -->
 	<div class="wrapper wrapper-view">
 
@@ -143,36 +318,47 @@
 							<section class="group-settings schedule">
 								<header>
 									<h2 class="title-2">平台信息&nbsp;<a
-						class="button new-button" onclick="showcloud()"><i
+						class="button new-button" onclick="showcloud();"><i
 							class="icon-plus icon-inline"></i>新建</a></h2>
 									<span class="tip">您平台的具体细节</span>
 								</header>
 
-								<table><tr><td>11111</td><td>2222</td><td>3333</td></tr><tr><td>11111</td><td>2222</td><td>3333</td></tr></table>
+								<table class="tab">
+									<c:forEach var="env" items="${envlist}">
+										<tr><td>${env.name}</td><td>${env.value}</td><td>${env.type}</td><td>${env.describle}</td></tr>
+									</c:forEach>
+								</table>
 
 								<div class="h10"></div>
 								<ol class="list-input hide" id="cloud">
 									<li class="field-group field-group-course-start"
 										id="course-start">
 										<div class="field date">
-											<label >环境名称</label> <input
+											<label >参数</label> <input
 												type="text"
 												class="start-date date start datepicker hasDatepicker"
 												id="cloudname">
 										
 										</div>            
 										 <div class="field time">
-							                <label>环境值</label>
+							                <label>值</label>
 							                <input type="text" class="time start timepicker ui-timepicker-input" id="cloudvalue">
 							               
 							              </div> 
-							              
+							              <div class="field time">
+							                <label>类型</label>
+							                <input type="text" class="time start timepicker ui-timepicker-input" id="cloudtype">
+							               
+							              </div> 
+							              <div class="field time">
+							                <label>说明</label>
+							                <input type="text" class="time start timepicker ui-timepicker-input" id="clouddesc">
+							               
+							              </div> 
 									</li>
-									<li class="action"><a href="javascript:void(0);"
-									rel="external" onclick=""
-									class="button view-button view-live-button">保存</a>
-									<a href="javascript:void(0);" rel="external" onclick="hidecloud();"
-									class="button gray-button">取消</a>
+									<li class="action">
+									<a href="javascript:void(0);" onclick="saveEnv();" class="button view-button view-live-button">保存</a>
+									<a href="javascript:void(0);" onclick="hidecloud();" class="button gray-button">取消</a>
 									</li>
 								</ol>
 							</section>
@@ -188,7 +374,11 @@
 									<span class="tip">调整您的验证脚本参数</span>
 								</header>
 
-								<table><tr><td>11111</td><td>2222</td><td>3333</td></tr><tr><td>11111</td><td>2222</td><td>3333</td></tr></table>
+								<table class="tab">
+									<c:forEach var="env" items="${shellenvlist}">
+										<tr><td>${env.name}</td><td>${env.value}</td></tr>
+									</c:forEach>
+								</table>
 
 								<div class="h10"></div>
 								<ol class="list-input hide" id="shell">
@@ -198,21 +388,20 @@
 											<label >脚本变量</label> <input
 												type="text"
 												class="start-date date start datepicker hasDatepicker"
-												id="starttimedetail" autocomplete="off" value="${exam.starttimedetail}">
+												id="shellname" autocomplete="off" value="${exam.starttimedetail}">
 										
 										</div>            
 										 <div class="field time" id="field-course-start-time">
 							                <label>脚本值</label>
-							                <input type="text" class="time start timepicker ui-timepicker-input" id="course-start-time" value="" autocomplete="off">
+							                <input type="text" class="time start timepicker ui-timepicker-input" id="shellvalue" autocomplete="off">
 							               
 							              </div> 
 							              
 									</li>
-									<li class="action"><a href="javascript:void(0);"
-									rel="external" onclick="updateCourse(${examId});"
-									class="button view-button view-live-button">保存</a>
-									<a href="javascript:void(0);" rel="external" onclick="hideshell();"
-									class="button gray-button">取消</a></li>
+									<li class="action">
+										<a href="javascript:void(0);" onclick="saveShell(${examId});" class="button view-button">保存</a>
+										<a href="javascript:void(0);" onclick="hideshell();" class="button gray-button">取消</a>
+									</li>
 								</ol>
 							</section>
 						</form>
@@ -223,21 +412,6 @@
 							<p>您的试卷时间表决定何时学生可以注册和开始本门试卷。</p>
 
 							<p>本页面的其他信息将会出现在你试卷的关于页面上。这些信息包括试卷概要，试卷图片，介绍视频，以及预估的时间要求。学生们使用关于页面来选择要上的试卷。</p>
-						</div>
-
-						<div class="bit">
-
-							<h3 class="title-3">试卷其他设置</h3>
-							<nav class="nav-related">
-								<ul>
-									<li class="nav-item"><a
-										href="/settings/grading/cetc/CS201/2014_T1">评分</a></li>
-									<li class="nav-item"><a
-										href="/course_team/cetc/CS201/2014_T1/">试卷团队</a></li>
-									<li class="nav-item"><a
-										href="/settings/advanced/cetc/CS201/2014_T1">高级设置</a></li>
-								</ul>
-							</nav>
 						</div>
 					</aside>
 				</section>
@@ -254,60 +428,6 @@
 							<!-- Looking for help with Studio -->向云考试平台求助?
 					</span></a></li>
 			</ul>
-
-			<div class="wrapper-inner wrapper">
-				<section class="sock" id="sock">
-					<header>
-						<h2 class="title sr">edX Studio Documentation</h2>
-					</header>
-
-					<div class="support">
-						<h3 class="title">edX Studio Documentation</h3>
-
-						<div class="copy">
-							<p>You can click Help in the upper right corner of any page
-								to get more information about the page you're on. You can also
-								use the links below to download the Building and Running an edX
-								Course PDF file, to go to the edX Author Support site, or to
-								enroll in edX101.</p>
-						</div>
-
-						<ul class="list-actions">
-							<li class="action-item js-help-pdf"><a
-								href="https://media.readthedocs.org/pdf/edx-partner-course-staff/latest/edx-partner-course-staff.pdf"
-								target="_blank" rel="external" class="action action-primary"
-								title="该链接将在新的浏览器窗口/标签打开">Building and Running an edX Course
-									PDF</a></li>
-
-							<li class="action-item"><a href="http://help.edge.edx.org/"
-								rel="external" class="action action-primary"
-								title="该链接将在新的浏览器窗口/标签打开" target="_blank">edX Studio Author
-									Support</a> <span class="tip">edX Studio Author Support</span></li>
-							<li class="action-item"><a
-								href="https://edge.edx.org/courses/edX/edX101/How_to_Create_an_edX_Course/about"
-								rel="external" class="action action-primary"
-								title="该链接将在新的浏览器窗口/标签打开" target="_blank">注册edX101</a> <span
-								class="tip">How to use edX Studio to build your course</span></li>
-						</ul>
-					</div>
-
-					<div class="feedback">
-						<h3 class="title">Request help with edX Studio</h3>
-
-						<div class="copy">
-							<p>Have problems, questions, or suggestions about edX Studio?</p>
-						</div>
-
-						<ul class="list-actions">
-							<li class="action-item"><a
-								href="http://help.edge.edx.org/discussion/new"
-								class="action action-primary show-tender"
-								title="请使用工具Tender来分享您的反馈"><i class="icon-comments"></i>联系我们</a>
-							</li>
-						</ul>
-					</div>
-				</section>
-			</div>
 		</div>
 
 		<jsp:include page="tfooter.jsp"></jsp:include>
@@ -330,6 +450,44 @@
         function hidecloud()
 		{
         	$("#cloud").hide();
+		}
+        function saveShell(examId)
+		{
+			var name = $("#shellname").val();
+			var value = $("#shellvalue").val();
+			var data = {examId:examId,name:name,value:value};
+			$.ajax({
+				url:"cms/saveshellenv.action",
+				type:"post",
+				data:data,
+				success:function(s){
+					var a=eval("("+s+")");	
+					if (a.sucess=="sucess")
+					{
+						location.reload();
+					}
+				}
+			});
+		}
+        function saveEnv()
+		{
+			var name = $("#cloudname").val();
+			var value = $("#cloudvalue").val();
+			var type = $("#cloudtype").val();
+			var desc = $("#clouddesc").val();
+			var data = {name:name,value:value,type:type,desc:desc};
+			$.ajax({
+				url:"cms/saveenv.action",
+				type:"post",
+				data:data,
+				success:function(s){
+					var a=eval("("+s+")");	
+					if (a.sucess=="sucess")
+					{
+						location.reload();
+					}
+				}
+			});
 		}
 		</script>
 </body>

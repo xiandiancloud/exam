@@ -276,12 +276,26 @@ create table t_train
    codenum             varchar(255) not null,
    envname             varchar(255) not null,    
    conContent          longtext not null,
-   conShell            varchar(255) default null,
+   /*conShell            varchar(255) default null,*/
    conAnswer           longtext default null,
    score               int(10) not null,
    scoretag            varchar(255) default null,
    iscreate            int(10) default 0,
    primary key (id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+/*课程实验的扩展部分*/
+drop table if exists t_train_ext;
+create table t_train_ext
+(
+   id                  int not null AUTO_INCREMENT,
+   trainId             int(10) not null,
+   shellpath           varchar(255) default null,
+   shellname           varchar(255) default null,
+   shellparameter      varchar(255) default null,
+   devip               varchar(255) default null,
+   primary key (id),
+   CONSTRAINT receivet_train_ext_1 FOREIGN KEY (trainId) REFERENCES t_train (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*试卷问题定义*/
@@ -512,18 +526,17 @@ drop table if exists t_environment;
 create table t_environment
 (
    id                  int not null AUTO_INCREMENT,
-   examId              int(10) not null,
    name                varchar(255) not null, 
    value               varchar(255) not null,
-   shellprefix         varchar(255) not null,
+   type                varchar(255) not null,
+   describle           varchar(255) not null,
    primary key (id),
-   UNIQUE KEY (name),
-   CONSTRAINT receivet_environment_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE
+   UNIQUE KEY (name)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*脚本参数模板*/
-drop table if exists t_shellenvironment;
-create table t_shellenvironment
+drop table if exists t_exam_shellenvironment;
+create table t_exam_shellenvironment
 (
    id                  int not null AUTO_INCREMENT,
    examId              int(10) not null,
@@ -531,7 +544,7 @@ create table t_shellenvironment
    value               varchar(255) not null,
    primary key (id),
    UNIQUE KEY (name),
-   CONSTRAINT receivet_shellenvironment_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE
+   CONSTRAINT receivet_exam_shellenvironment_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*用户实训课程对应的环境模块

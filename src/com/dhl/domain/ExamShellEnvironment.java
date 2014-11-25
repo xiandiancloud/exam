@@ -12,8 +12,8 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "t_shellenvironment")
-public class ShellEnvironment extends BaseDomain {
+@Table(name = "t_exam_shellenvironment")
+public class ExamShellEnvironment extends BaseDomain {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

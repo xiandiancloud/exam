@@ -607,13 +607,13 @@ public class CmsUploadExamController extends BaseController {
 		rootGen.addAttribute("envname", train.getEnvname());
 		rootGen.addAttribute("content", train.getConContent());
 		rootGen.addAttribute("answer", train.getConAnswer());
-		String shellpath = train.getConShell();
-		String[] strs = shellpath.split("/");
+//		String shellpath = train.getConShell();
+//		String[] strs = shellpath.split("/");
 		String shellname = "";
-		if (strs.length > 1)
-		{
-			shellname = strs[1];
-		}
+//		if (strs.length > 1)
+//		{
+//			shellname = strs[1];
+//		}
 		rootGen.addAttribute("shell", shellname);
 		rootGen.addAttribute("score", train.getScore() + "");
 		rootGen.addAttribute("scoretag", train.getScoretag());
@@ -621,8 +621,8 @@ public class CmsUploadExamController extends BaseController {
 		File imgdir = new File(coursepath + File.separator + "shell");
 		if (!imgdir.exists())
 			imgdir.mkdir();
-		UtilTools.copyFile(path + shellpath,
-				coursepath + File.separator + shellpath);
+//		UtilTools.copyFile(path + shellpath,
+//				coursepath + File.separator + shellpath);
 
 		OutputFormat format = null;
 		XMLWriter xmlwriter = null;

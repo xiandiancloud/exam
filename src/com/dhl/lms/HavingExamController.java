@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.bean.QuestionData;
-import com.dhl.bean.UserExamData;
 import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Competion;
 import com.dhl.domain.Exam;
@@ -27,7 +26,6 @@ import com.dhl.domain.Question;
 import com.dhl.domain.Train;
 import com.dhl.domain.UserEnvironment;
 import com.dhl.domain.UserExam;
-import com.dhl.domain.UserExamHistory;
 import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
 import com.dhl.service.CompetionService;
@@ -626,31 +624,6 @@ public class HavingExamController extends BaseController {
 
 		}
 	}
-	
-	/**
-	 * 创建考试的实验
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	@RequestMapping("/createExamTrain")
-	public void createExamTrain(HttpServletRequest request,
-			HttpServletResponse response, String name, String codenum,
-			String envname, String conContent, String conShell,
-			String conAnswer, int score, String scoretag, int examId,
-			int everticalId) {
-
-		try {
-			PrintWriter out = response.getWriter();
-			userQuestionService.saveTrainQuestion(name, codenum, envname, conContent,
-					conShell, conAnswer, score, scoretag, examId, everticalId);
-			String str = "{'sucess':'sucess'}";
-			out.write(str);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 	
 	/**
 	 * 用户的统计情况

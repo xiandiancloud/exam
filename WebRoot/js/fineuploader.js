@@ -2741,9 +2741,9 @@ qq.FineUploader = function(o){
         },
         text: {
             uploadButton: 'Upload a file',
-            cancelButton: 'Cancel',
-            retryButton: 'Retry',
-            deleteButton: 'Delete',
+            cancelButton: '取消',
+            retryButton: '再试',
+            deleteButton: '删除',
             failUpload: 'Upload failed',
             dragZone: 'Drop files here to upload',
             dropProcessing: 'Processing dropped files...',

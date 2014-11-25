@@ -129,7 +129,7 @@ public class ExamService {
 			t.setCodenum(codenum);
 			t.setEnvname(envname);
 			t.setConContent(conContent);
-			t.setConShell(conShell);
+//			t.setConShell(conShell);
 			t.setConAnswer(conAnswer);
 			t.setScore(Integer.parseInt(score));
 			t.setScoretag(scoretag);
@@ -722,7 +722,7 @@ public class ExamService {
 					train.setCodenum(codenum);
 					train.setConAnswer(conAnswer);
 					train.setConContent(conContent);
-					train.setConShell("shell"+ File.separator + endshell);
+//					train.setConShell("shell"+ File.separator + endshell);
 					train.setEnvname(envname);
 					train.setName(display_name);
 					train.setScore(Integer.parseInt(score));

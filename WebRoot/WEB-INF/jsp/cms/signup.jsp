@@ -63,18 +63,17 @@
 								placeholder="e.g. Jane Doe" /></li>
 							<li class="field text required" id="field-username"><label
 								for="username">公开用户名</label> <input id="username" type="text"
-								name="username" placeholder="e.g. janedoe" /> <span
-								class="tip tip-stacked">这将会被用于您的公开讨论中以及我们考试平台的支持论坛</span>
+								name="username" placeholder="e.g. janedoe" />
 							</li>
 							<li class="field text required" id="field-password"><label
 								for="password">密码</label> <input id="password" type="password"
 								name="password" /></li>
 							<li class="field text required" id="field-school_name"><label
-								for="school_name">学校名称</label><select class="short"
+								for="school_name">学校名称</label><select class="dhlselect"
 								id="school_name">
 							</select></li>
 							<li class="field text required" id="field-level_of_education"><label
-								for="level_of_education">最高教育程度</label><select class="short"
+								for="level_of_education">最高教育程度</label><select class="dhlselect"
 								id="level_of_education">
 									<option value="">--</option>
 									<option value="p">博士</option>
@@ -88,14 +87,14 @@
 									<option value="other">其他</option>
 							</select></li>
 							<li class="field text required" id="field-gender"><label
-								for="gender">性别</label> <select class="short" id="gender">
+								for="gender">性别</label> <select class="dhlselect" id="gender">
 									<option value="">--</option>
 									<option value="m">男</option>
 									<option value="f">女</option>
 									<option value="o">其他</option>
 							</select></li>
 							<li class="field text required" id="field-year_of_birth"><label
-								for="year_of_birth">出生年份</label> <select class=""
+								for="year_of_birth">出生年份</label> <select class="dhlselect"
 								id="year_of_birth">
 									<option value="">--</option>
 									<option value="2014">2014</option>

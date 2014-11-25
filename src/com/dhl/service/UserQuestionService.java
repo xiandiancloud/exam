@@ -1,6 +1,8 @@
 package com.dhl.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,12 +13,15 @@ import com.dhl.dao.ExamQuestionDao;
 import com.dhl.dao.ExamVerticalDao;
 import com.dhl.dao.QuestionDao;
 import com.dhl.dao.TrainDao;
+import com.dhl.dao.TrainExtDao;
 import com.dhl.dao.UserQuestionChildDao;
 import com.dhl.dao.UserQuestionDao;
 import com.dhl.domain.ExamQuestion;
 import com.dhl.domain.Train;
+import com.dhl.domain.TrainExt;
 import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
+import com.dhl.util.UtilTools;
 
 /**
  *
@@ -33,37 +38,157 @@ public class UserQuestionService {
 	@Autowired
 	private TrainDao trainDao;
 	@Autowired
+	private TrainExtDao trainExtDao;
+	@Autowired
 	private ExamQuestionDao examQuestionDao;
 	@Autowired
 	private ExamDao examDao;
 	@Autowired
 	private ExamVerticalDao examVerticalDao;
 	
-	public void saveTrainQuestion(String name, String codenum, String envname,
-			String conContent, String conShell, String conAnswer, int score,
-			String scoretag, int examId, int verticalId) {
-
-//		Train tt = trainDao.getTrainByCodenum(codenum);
-//		if (tt != null)
+	
+	public String getTrainQuestion(int trainId)
+	{
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("{");
+		buffer.append("\"basiclist\":");
+		Train t = trainDao.get(trainId);
+		String con = UtilTools.replaceBackett(t.getConContent());
+		String conanswer = UtilTools.replaceBackett(t.getConAnswer());
+		String str = "{'name':'"+t.getName()+"','codenum':'"+t.getCodenum()
+				+"','envname':'"+t.getEnvname()+"','conContent':'"+con+"','conAnswer':'"+conanswer+"','scoretag':'"+t.getScoretag()+"','score':'"+t.getScore()+"'},";
+		buffer.append(str);
+		
+		List<TrainExt> zyList = trainExtDao.getTrainByTrainId(trainId);
+		if (zyList != null)
+		{
+			int len = zyList.size();
+			if (len >0)
+			{
+				buffer.append("\"extlist\":[");
+				String temp="";
+				for (int i=0;i<len;i++)
+				{
+					TrainExt pm = zyList.get(i);
+					temp += "{\"shellpath\":\""+pm.getShellpath()+"\",\"devip\":\""+pm.getDevip()+"\",\"shellparameter\":\""+pm.getShellparameter()+"\",\"shellname\":\""+pm.getShellname()+"\"},";
+				}
+				if (temp.length() > 1)
+				{
+					temp = temp.substring(0, temp.length() -1 );
+					buffer.append(temp);
+				}
+				buffer.append("],");
+			}
+		}
+		String tt = buffer.toString();
+		if (tt.length() > 1)
+		{
+			tt = tt.substring(0,tt.length() -1 );
+		}
+		return tt+"}";
+	}
+	
+	public void updateTrainQuestion(List<Map<String,Object>> list)
+	{
+		for (Map<String,Object> map:list)
+		{
+			System.out.println(map.get("basiclist").getClass());
+			Map<String,Object> usermap = (Map)map.get("basiclist");
+			Train t = trainDao.get((int)usermap.get("trainId"));
+			if (t != null)
+			{
+				t.setName((String)usermap.get("name"));
+				t.setCodenum((String)usermap.get("codenum"));
+				t.setEnvname((String)usermap.get("envname"));
+				t.setConContent((String)usermap.get("conContent"));
+				t.setConAnswer((String)usermap.get("conAnswer"));
+				t.setScore((int)usermap.get("score"));
+				t.setScoretag((String)usermap.get("scoretag"));
+				trainDao.update(t);
+				
+				ArrayList slist = (ArrayList)map.get("shelllist");
+				if (slist != null)
+				{
+					int size = slist.size();					
+	//				if (size > 0)
+					{
+						trainExtDao.removeByTrainId(t.getId());
+					}
+					for (int i=0;i<size;i++)
+					{
+						Map<String,Object> shellmap  = (Map)slist.get(i);
+						//实训的扩展信息：shell，参数等信息
+						TrainExt te = new TrainExt();
+						te.setTrainId(t.getId());
+						te.setShellpath((String)shellmap.get("shellpath"));
+						te.setDevip((String)shellmap.get("devip"));
+						te.setShellparameter((String)shellmap.get("shellparameter"));
+						te.setShellname((String)shellmap.get("shellname"));
+						trainExtDao.save(te);
+					}
+				}
+			}
+		}
+//		Train t = get(id);
+//		if (t != null)
 //		{
-//			return CommonConstant.ERROR_4;
+//			t.setName(name);
+//			t.setCodenum(codenum);
+//			t.setEnvname(envname);
+//			t.setConContent(conContent);
+////			t.setConShell(conShell);
+//			t.setConAnswer(conAnswer);
+//			t.setScore(score);
+//			t.setScoretag(scoretag);
+//			update(t);
 //		}
-		Train t = new Train();
-		t.setName(name);
-		t.setCodenum(codenum);
-		t.setEnvname(envname);
-		t.setConContent(conContent);
-		t.setConShell(conShell);
-		t.setConAnswer(conAnswer);
-		t.setScore(score);
-		t.setScoretag(scoretag);
-		trainDao.save(t);
-		//考试跟实训联系起来
-		ExamQuestion eq = new ExamQuestion();
-		eq.setExam(examDao.get(examId));
-		eq.setTrain(t);
-		eq.setExamVertical(examVerticalDao.get(verticalId));
-		examQuestionDao.save(eq);
+	}
+	
+	public void saveTrainQuestion(List<Map<String,Object>> list) {
+	
+		for (Map<String,Object> map:list)
+		{
+			System.out.println(map.get("basiclist").getClass());
+			Map<String,Object> usermap = (Map)map.get("basiclist");
+			Train t = new Train();
+			t.setName((String)usermap.get("name"));
+			t.setCodenum((String)usermap.get("codenum"));
+			t.setEnvname((String)usermap.get("envname"));
+			t.setConContent((String)usermap.get("conContent"));
+//			t.setConShell(conShell);
+			t.setConAnswer((String)usermap.get("conAnswer"));
+			t.setScore((int)usermap.get("score"));
+			t.setScoretag((String)usermap.get("scoretag"));
+			trainDao.save(t);
+			
+			ArrayList slist = (ArrayList)map.get("shelllist");
+			if (slist != null)
+			{
+				int size = slist.size();					
+//				if (size > 0)
+				{
+					trainExtDao.removeByTrainId(t.getId());
+				}
+				for (int i=0;i<size;i++)
+				{
+					Map<String,Object> shellmap  = (Map)slist.get(i);
+					//实训的扩展信息：shell，参数等信息
+					TrainExt te = new TrainExt();
+					te.setTrainId(t.getId());
+					te.setShellpath((String)shellmap.get("shellpath"));
+					te.setDevip((String)shellmap.get("devip"));
+					te.setShellparameter((String)shellmap.get("shellparameter"));
+					te.setShellname((String)shellmap.get("shellname"));
+					trainExtDao.save(te);
+				}
+			}
+			//考试跟实训联系起来
+			ExamQuestion eq = new ExamQuestion();
+			eq.setExam(examDao.get((int)usermap.get("examId")));
+			eq.setTrain(t);
+			eq.setExamVertical(examVerticalDao.get((int)usermap.get("everticalId")));
+			examQuestionDao.save(eq);
+		}
 	}
 	
 	/**
