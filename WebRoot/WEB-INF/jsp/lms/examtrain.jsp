@@ -224,28 +224,6 @@
 						    <textarea class="form-control" rows="6" id="trainresult"></textarea> -->
 						    <label for="useranswer"><div class="h2font">你也可以手工输入你的答案</div></label>
 						    <!-- <textarea class="form-control" rows="3" id="useranswer"></textarea> -->
-						    
-						     <!--  <div class='row'>
-				                <div class='col-sm-12'>
-				                  <div class='box'>
-				                    <div class='box-header purple-background'>
-				                      <div class='title'>Simple WYSIWYG (wysihtml5)</div>
-				                      <div class='actions'>
-				                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
-				                        </a>
-				                        
-				                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
-				                        </a>
-				                      </div>
-				                    </div>
-				                    <div class='box-content'>
-				                      <textarea class='form-control wysihtml5' id='wysiwyg2' rows='10'><h1>In computing,</h1>
-				                      a WYSIWYG editor is a system in which content (text and graphics) displayed onscreen during editing appears in a form closely corresponding to its appearance when printed or displayed as a finished product,[1] which might be a printed document, web page, or slide presentation. WYSIWYG (pron.: /ˈwɪziwɪɡ/ wiz-ee-wig)[2] is an acronym for "what you see is what you get".</textarea>
-				                    </div>
-				                  </div>
-				                </div>
-				             </div> -->
-							
 							<div>
 								<div id="alerts"></div>
 							    <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
@@ -266,7 +244,7 @@
 							 </div>
 						    <div class="h10"></div>
 						    <a href="javascript:void(0);" id="usertrainsubmit">
-							<button type="button" class="btn btn-primary" id="usertrainbutton">手工提交</button>
+								<button type="button" class="btn btn-primary" id="usertrainbutton">手工提交</button>
 							</a>
 						  </div>
 						</form>

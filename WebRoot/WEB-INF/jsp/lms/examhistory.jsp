@@ -109,6 +109,11 @@
 		height:40px;
 		line-height:40px;
 	}
+    .fixtop 
+	{ 
+		position:fixed;
+		top:415px; 
+	} 
 </style>
 
   </head>
@@ -125,11 +130,13 @@
 										<div class="box-content">
 											<div class='row'>
 												<div class="col-xs-12">
-													<strong>${exam.name}</strong>
+													<h2>${exam.name}</h2>
 												</div>
 											</div>
-											<hr class="hr-normal">
 											<div class='row'>
+												<div class="col-xs-12">
+													<hr class="hr-normal">
+												</div>
 												<div class="col-xs-3">
 													<div class="advance ">
 														<span class="totalScore" id="usercount"></span>分
