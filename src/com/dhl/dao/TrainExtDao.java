@@ -8,7 +8,7 @@ import com.dhl.domain.TrainExt;
 
 @Repository
 public class TrainExtDao extends BaseDao<TrainExt> {
-	public List<TrainExt> getTrainByTrainId(int trainId) {
+	public List<TrainExt> getTrainExtList(int trainId) {
 		String hql = "from TrainExt where trainId = "+trainId;
 		return find(hql);
 	}

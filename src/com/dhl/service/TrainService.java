@@ -1,10 +1,14 @@
 package com.dhl.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dhl.dao.TrainDao;
+import com.dhl.dao.TrainExtDao;
 import com.dhl.domain.Train;
+import com.dhl.domain.TrainExt;
 
 /**
  *
@@ -14,6 +18,13 @@ public class TrainService {
 
 	@Autowired
 	private TrainDao trainDao;
+	@Autowired
+	private TrainExtDao trainExtDao;
+	
+	public List<TrainExt> getTrainExtList(int trainId)
+	{
+		return trainExtDao.getTrainExtList(trainId);
+	}
 	
 	/**
 	 * 根据编码取得实验
@@ -33,25 +44,6 @@ public class TrainService {
 	{
 		trainDao.update(entity);
 	}
-	
-//	public void update(int id,String name, String codenum, String envname,
-//			String conContent, String conShell, String conAnswer, int score,
-//			String scoretag) {
-//
-//		Train t = get(id);
-//		if (t != null)
-//		{
-//			t.setName(name);
-//			t.setCodenum(codenum);
-//			t.setEnvname(envname);
-//			t.setConContent(conContent);
-////			t.setConShell(conShell);
-//			t.setConAnswer(conAnswer);
-//			t.setScore(score);
-//			t.setScoretag(scoretag);
-//			update(t);
-//		}
-//	}
 	
 	/**
 	 * 保存实验

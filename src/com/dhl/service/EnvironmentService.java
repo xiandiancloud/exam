@@ -21,6 +21,19 @@ public class EnvironmentService {
 	@Autowired
 	private ExamShellEnvironmentDao shellEnvDao;
 	
+	public String getDevIP(String key)
+	{
+		return envDao.getDevIP(key);
+	}
+	public String getDevUserName(String key)
+	{
+		return envDao.getDevUserName(key);
+	}
+	public String getDevPassword(String key)
+	{
+		return envDao.getDevPassword(key);
+	}
+	
 	public boolean saveEnv(String name,String value,String type,String desc)
 	{
 		Environment e = envDao.getEnvironmentByname(name);
@@ -62,7 +75,6 @@ public class EnvironmentService {
 		shellEnvDao.remove(shellEnvDao.get(id));
 	}
 	
-	
 	public List<Environment> getEnvironment() {
 		return envDao.getEnvironment();
 	}
@@ -70,49 +82,5 @@ public class EnvironmentService {
 	public List<ExamShellEnvironment> getExamShellEnvironment(int examId) {
 		return shellEnvDao.getExamShellEnvironment(examId);
 	}
-	
-//	
-//	public UserExamEnvironment get(int id) {
-//		return uceDao.get(id);
-//	}
-//	
-//	public UserExamEnvironment getMyUCE(int userId,int examId,String name) {
-//		return uceDao.getMyUCE(userId,examId,name);
-//	}
-//	
-//	public List<UserExamEnvironment> getMyUCE(int userId) {
-//		return uceDao.getMyUCE(userId);
-//	}
-//	
-//	public void update(UserExamEnvironment uce,String hostname,String username,String password,String serverId)
-//	{
-//		uce.setHostname(hostname);
-//		uce.setUsername(username);
-//		uce.setPassword(password);
-//		uce.setServerId(serverId);
-//		uceDao.update(uce);
-//	}
-//	
-//	public void save(int userId,int examId,String name,String hostname,String username,String password,String serverId)
-//	{
-//		UserExamEnvironment uce = new UserExamEnvironment();
-//		uce.setUserId(userId);
-//		uce.setExamId(examId);
-//		uce.setName(name);
-//		uce.setHostname(hostname);
-//		uce.setUsername(username);
-//		uce.setPassword(password);
-//		uce.setServerId(serverId);
-//		uce.setCreatetime(UtilTools.timeTostrHMS(new Date()));
-//		uceDao.save(uce);
-//	}
-//	
-//	public void delete(int id) {
-//		uceDao.remove(uceDao.get(id));
-//	}
-//	
-//	public void delete(UserExamEnvironment uee) {
-//		uceDao.remove(uee);
-//	}
 	
 }

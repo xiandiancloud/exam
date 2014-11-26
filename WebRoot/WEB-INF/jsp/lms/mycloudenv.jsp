@@ -57,7 +57,7 @@
       <script src="assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
     <![endif]-->
 </head>
-<body class='contrast-green fixed-header'>
+<body class='contrast-red fixed-header'>
 	<jsp:include page="../common/header.jsp"></jsp:include>
 	<div id='wrapper'>
 		<section id=''>
@@ -125,7 +125,7 @@
 								<div class="h5"></div>
 								<input type="password" class="form-control" id="password" value="${uc.password}">
 								<div class="clear"></div>
-								<button type="button" class="btn btn-success btn-lg btn-block"
+								<button type="button" class="btn btn-danger btn-lg btn-block"
 									onclick="update();">保存</button>
 							</div>
 						</form>

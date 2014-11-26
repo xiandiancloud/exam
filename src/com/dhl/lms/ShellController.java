@@ -2,6 +2,7 @@ package com.dhl.lms;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,9 +17,14 @@ import org.springframework.web.client.RestTemplate;
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.SCPClient;
 
+import com.dhl.domain.Cloud;
 import com.dhl.domain.RestShell;
+import com.dhl.domain.TrainExt;
 import com.dhl.domain.UserEnvironment;
 import com.dhl.domain.UserQuestion;
+import com.dhl.service.EnvironmentService;
+import com.dhl.service.TrainService;
+import com.dhl.service.UserCloudService;
 import com.dhl.service.UserEnvironmentService;
 import com.dhl.service.UserQuestionService;
 import com.dhl.util.UtilTools;
@@ -37,24 +43,21 @@ public class ShellController extends BaseController {
 	
 	@Autowired
 	private UserQuestionService userQuestionService;
-//	@Autowired
-//	private UserTrainService userTrainService;
-	// @Autowired
-	// private UserCourseService userCourseService;
-//	@Autowired
-//	private UCEService uceService;
 	@Autowired
 	private RestTemplate restTemplate;
 	@Autowired
 	private UserEnvironmentService userEnvironmenteService;
-//	@Autowired
-//	private UserExamEnvironmentService userExamEnvironmenteService;
+	@Autowired
+	private EnvironmentService environmenteService;
+	@Autowired
+	private UserCloudService userCloudService;
+	@Autowired
+	private TrainService trainService;
 	
-	//-------------考试系统-------------------
 	@RequestMapping("/myExamShell")
 	public void myExamShell(HttpServletRequest request,
 			HttpServletResponse response, int examId, int trainId,
-			String name, String path) {
+			String name) {
 		try {
 			String rp = request.getSession().getServletContext()
 					.getRealPath("/");
@@ -63,58 +66,128 @@ public class ShellController extends BaseController {
 			User user = getSessionUser(request);
 			
 			//远程上传文件传递--------要考虑实现方式（1 系统一次性对拷实现脚本2判断是否有检测脚本）
-			String restid = UtilTools.getConfig().getProperty("RESTHOST_ID");
-			String restusername = UtilTools.getConfig().getProperty("RESTHOST_USERNAME");
-			String restpassword = UtilTools.getConfig().getProperty("RESTHOST_PASSWORD");
+			Cloud cloud = userCloudService.getMyCloud(user.getId());
+			String str = "";
+			if (cloud == null)
+			{
+				str = "{'sucess':'fail','msg':'你还没有配置你的云平台'}";
+				out.write(str);
+				return;
+			}
+			String restid = cloud.getIp();//UtilTools.getConfig().getProperty("RESTHOST_ID");
+			String restusername = cloud.getName();//UtilTools.getConfig().getProperty("RESTHOST_USERNAME");
+			String restpassword = cloud.getPassword();//UtilTools.getConfig().getProperty("RESTHOST_PASSWORD");
 			Connection conn = UtilTools.getConnection(restid, restusername, restpassword);
 			if (conn != null) {
 //				Session ssh = conn.openSession();
 				SCPClient scpClient = conn.createSCPClient();
-				scpClient.put(rp + path, "/tmp", "0755");
-			}
-			conn.close();
-			System.out.println("path ---------- " + path);
-			UserEnvironment uce = userEnvironmenteService.getMyUCE(user.getId(), examId, trainId);
-			if (uce != null)
-			{
-				String ip = uce.getHostname();
-				String userName = uce.getUsername();
-				String passWord = uce.getPassword();
 				
-				RestShell rs = new RestShell();
-				rs.setIp(ip);
-				rs.setUserName(userName);
-				rs.setPassWord(passWord);
-				rs.setPath(path);
-				HttpEntity<RestShell> entity = new HttpEntity<RestShell>(rs);
-				
-				String resturl = UtilTools.getConfig().getProperty("REST_URL");
-				ResponseEntity<RestShell> res = restTemplate.postForEntity(resturl, 
-						entity, RestShell.class);
-				
-				RestShell e = res.getBody();
-				
-				String rdata = e.getCondition();
-				String result = e.getResult();
-				result = UtilTools.replaceBr(result);
-				
-				UserQuestion uq = userQuestionService.getUserExamTrainQuestion(user.getId(), examId, trainId);
-				if (uq == null) {
-					userQuestionService.saveQuestionTrain(user.getId(), examId, trainId,rdata,result);
-				} else {
-					userQuestionService.updateQuestionTrain(uq, user.getId(), rdata,result);
+				List<TrainExt> trainExtList = trainService.getTrainExtList(trainId);
+				for (TrainExt te:trainExtList)
+				{
+					String shellpath = te.getShellpath();
+					if (shellpath ==null)
+					{
+						str = "{'sucess':'fail','msg':'检测脚本为空'}";
+						out.write(str);
+						return;
+					}
+					scpClient.put(rp + shellpath, "/tmp", "0755");
+					String devinfo = te.getDevinfo();
+					//到指定的云环境查找
+					if (devinfo != null && !"".equals(devinfo))
+					{
+						
+						String ip = environmenteService.getDevIP(devinfo);
+						String userName = environmenteService.getDevUserName(devinfo.substring(0,devinfo.indexOf('.'))+"username");
+						String passWord = environmenteService.getDevPassword(devinfo.substring(0,devinfo.indexOf('.'))+"password");
+						
+						RestShell rs = new RestShell();
+						rs.setIp(ip);
+						rs.setUserName(userName);
+						rs.setPassWord(passWord);
+						rs.setPath(shellpath);
+						HttpEntity<RestShell> entity = new HttpEntity<RestShell>(rs);
+						
+						String resturl = UtilTools.getConfig().getProperty("REST_URL");
+						ResponseEntity<RestShell> res = restTemplate.postForEntity(resturl, 
+								entity, RestShell.class);
+						
+						RestShell e = res.getBody();
+						
+						String rdata = e.getCondition();
+						//检测返回值取得判断正确与否
+//						String result = e.getResult();
+//						result = UtilTools.replaceBr(result);
+						
+						UserQuestion uq = userQuestionService.getUserExamTrainQuestion(user.getId(), examId, trainId);
+						if (uq == null) {
+							userQuestionService.saveQuestionTrain(user.getId(), examId, trainId,rdata,ip);
+						} else {
+							userQuestionService.updateQuestionTrain(uq, user.getId(), rdata,ip);
+						}
+						str = "{'sucess':'sucess','revalue':'"+ rdata + "'}";
+					}
+					else
+					{
+						UserEnvironment uce = userEnvironmenteService.getMyUCE(user.getId(), examId, trainId);
+						if (uce != null)
+						{
+							String ip = uce.getHostname();
+							String userName = uce.getUsername();
+							String passWord = uce.getPassword();
+							
+							RestShell rs = new RestShell();
+							rs.setIp(ip);
+							rs.setUserName(userName);
+							rs.setPassWord(passWord);
+							rs.setPath(shellpath);
+							HttpEntity<RestShell> entity = new HttpEntity<RestShell>(rs);
+							
+							String resturl = UtilTools.getConfig().getProperty("REST_URL");
+							ResponseEntity<RestShell> res = restTemplate.postForEntity(resturl, 
+									entity, RestShell.class);
+							
+							RestShell e = res.getBody();
+							
+							String rdata = e.getCondition();
+							String result = e.getResult();
+							result = UtilTools.replaceBr(result);
+							
+							UserQuestion uq = userQuestionService.getUserExamTrainQuestion(user.getId(), examId, trainId);
+							if (uq == null) {
+								userQuestionService.saveQuestionTrain(user.getId(), examId, trainId,rdata,result);
+							} else {
+								userQuestionService.updateQuestionTrain(uq, user.getId(), rdata,result);
+							}
+							str = "{'sucess':'sucess','result':'" + result + "','revalue':'"
+									+ rdata + "'}";
+						}
+						else
+						{
+							str = "{'sucess':'fail','msg':'环境还没有创建'}";
+							out.write(str);
+							return;
+						}
+					}
 				}
-				String str = "{'sucess':'sucess','result':'" + result + "','revalue':'"
-						+ rdata + "'}";
-
-				out.write(str);
+				conn.close();
+				/*UserEnvironment uce = userEnvironmenteService.getMyUCE(user.getId(), examId, trainId);
+				if (uce != null)
+				{
+					
+				}
+				else
+				{
+					String str = "{'sucess':'fail','msg':'环境还没有创建'}";
+					out.write(str);
+				}*/
 			}
 			else
 			{
-				String str = "{'sucess':'fail','msg':'环境还没有创建'}";
-
-				out.write(str);
+				str = "{'sucess':'fail','msg':'控制节点连接不上'}";
 			}
+			out.write(str);
 		} catch (Exception e) {
 			e.printStackTrace();
 			PrintWriter out = null;
@@ -123,7 +196,7 @@ public class ShellController extends BaseController {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			} finally {
-				String str = "{'user':'error','msg':'服务器有异常，请联系管理员'}";
+				String str = "{'sucess':'fail','msg':'服务器有异常，请联系管理员'}";
 				if (out != null)
 					out.write(str);
 			}
@@ -154,87 +227,5 @@ public class ShellController extends BaseController {
 			e.printStackTrace();
 		}
 	}
-	//------------------------------------------------------------
-	
-//	@RequestMapping("/myshell")
-//	public void myshell(HttpServletRequest request,
-//			HttpServletResponse response, int courseId, int trainId,
-//			String name, String path) {
-//		try {
-//			String rp = request.getSession().getServletContext()
-//					.getRealPath("/");
-//			System.out.println(rp);
-//			PrintWriter out = response.getWriter();
-//			User user = getSessionUser(request);
-//				System.out.println("path ---------- " + path);
-//				// ----------shell start--------------
-//				UCEnvironment uce = uceService.getMyUCE(user.getId(), courseId,
-//						name);
-//				if (uce != null)
-//				{
-//					String ip = uce.getHostname();
-//					String userName = uce.getUsername();
-//					String passWord = uce.getPassword();
-//					
-//					RestShell rs = new RestShell();
-//					rs.setIp(ip);
-//					rs.setUserName(userName);
-//					rs.setPassWord(passWord);
-//					rs.setPath(path);
-//					HttpEntity<RestShell> entity = new HttpEntity<RestShell>(rs);
-//					
-//					String resturl = UtilTools.getConfig().getProperty("REST_URL");
-//					ResponseEntity<RestShell> res = restTemplate.postForEntity(resturl, 
-//							entity, RestShell.class);
-//					
-//					RestShell e = res.getBody();
-//					
-//					String rdata = e.getCondition();
-//					String result = e.getResult();
-//					result = UtilTools.replaceBr(result);
-//					UserTrain userTrain = userTrainService.getUserTrain(
-//							user.getId(), courseId, trainId);
-//					if (userTrain == null) {
-//						UserTrain ut = new UserTrain();
-//						ut.setCounts(1);
-//						ut.setResult(result);
-//						ut.setRevalue(rdata);
-//						ut.setCourseId(courseId);
-//						ut.setUserId(user.getId());
-//						ut.setTrainId(trainId);
-//						// ut.setVerticalId(verticalId);
-//						userTrainService.save(ut);
-//					} else {
-//						userTrain.setCounts(userTrain.getCounts() + 1);
-//						userTrain.setResult(result);
-//						userTrain.setRevalue(rdata);
-//						userTrainService.update(userTrain);
-//					}
-//
-//					String str = "{'sucess':'sucess','result':'" + result + "','revalue':'"
-//							+ rdata + "'}";
-//
-//					out.write(str);
-//				}
-//				else
-//				{
-//					String str = "{'sucess':'fail','msg':'环境还没有创建'}";
-//
-//					out.write(str);
-//				}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			PrintWriter out = null;
-//			try {
-//				out = response.getWriter();
-//			} catch (IOException e1) {
-//				e1.printStackTrace();
-//			} finally {
-//				String str = "{'user':'error','msg':'服务器有异常，请联系管理员'}";
-//				if (out != null)
-//					out.write(str);
-//			}
-//		}
-//	}
 
 }

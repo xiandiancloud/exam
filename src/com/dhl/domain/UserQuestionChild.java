@@ -21,16 +21,23 @@ public class UserQuestionChild extends BaseDomain {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-	private int number;
+	private int number;//一个问题下面的多个小问题的次序
 	private int userquestionId;
 	private String useranswer;
 	private String revalue;
-	private String result;//机器评分，返回true，false等信息
+	private String result;//机器评分，返回true，false等信息--------修改为实训以来的环境
 	private int userId;
 	//裁判判分值-----默认情况下得分根据用户的回答来决定判多少分
 	//如果pfscore有分值，代表裁判修改了系统默认的判分值，采用裁判判分值
 	private String pfscore;
 	
+	private String devinfo;//实训依赖的环境
+	public String getDevinfo() {
+		return devinfo;
+	}
+	public void setDevinfo(String devinfo) {
+		this.devinfo = devinfo;
+	}
 	public String getPfscore() {
 		return pfscore;
 	}

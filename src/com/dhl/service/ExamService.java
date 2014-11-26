@@ -132,7 +132,7 @@ public class ExamService {
 //			t.setConShell(conShell);
 			t.setConAnswer(conAnswer);
 			t.setScore(Integer.parseInt(score));
-			t.setScoretag(scoretag);
+//			t.setScoretag(scoretag);
 			trainDao.save(t);
 			
 			//保存考试系统下单元下对应的课程
@@ -726,7 +726,7 @@ public class ExamService {
 					train.setEnvname(envname);
 					train.setName(display_name);
 					train.setScore(Integer.parseInt(score));
-					train.setScoretag(scoretag);
+//					train.setScoretag(scoretag);
 					trainDao.save(train);
 				}
 				ExamQuestion vt = new ExamQuestion();

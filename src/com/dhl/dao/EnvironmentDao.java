@@ -24,4 +24,35 @@ public class EnvironmentDao extends BaseDao<Environment> {
 		}
 		return null;
 	}
+	
+	public String getDevIP(String key)
+	{
+		String hql = "from Environment where name = '"+key+"'";
+		List<Environment> list =  find(hql);
+		if (list != null && list.size() > 0)
+		{
+			return list.get(0).getValue();
+		}
+		return null;
+	}
+	public String getDevUserName(String key)
+	{
+		String hql = "from Environment where name = '"+key+"'";
+		List<Environment> list =  find(hql);
+		if (list != null && list.size() > 0)
+		{
+			return list.get(0).getValue();
+		}
+		return null;
+	}
+	public String getDevPassword(String key)
+	{
+		String hql = "from Environment where name = '"+key+"'";
+		List<Environment> list =  find(hql);
+		if (list != null && list.size() > 0)
+		{
+			return list.get(0).getValue();
+		}
+		return null;
+	}
 }

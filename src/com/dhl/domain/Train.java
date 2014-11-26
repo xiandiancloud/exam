@@ -29,7 +29,7 @@ public class Train extends BaseDomain {
 	/*private String conShell;*/
 	private String conAnswer;
 	private int score;
-	private String scoretag;
+	/*private String scoretag;*/
 	//是否创建环境     0：代表不创建   1：创建
 	private int iscreate;
 	
@@ -57,13 +57,13 @@ public class Train extends BaseDomain {
 		this.score = score;
 	}
 
-	public String getScoretag() {
+	/*public String getScoretag() {
 		return scoretag;
 	}
 
 	public void setScoretag(String scoretag) {
 		this.scoretag = scoretag;
-	}
+	}*/
 
 	public String getCodenum() {
 		return codenum;

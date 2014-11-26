@@ -56,10 +56,10 @@ public class UserQuestionService {
 		String con = UtilTools.replaceBackett(t.getConContent());
 		String conanswer = UtilTools.replaceBackett(t.getConAnswer());
 		String str = "{'name':'"+t.getName()+"','codenum':'"+t.getCodenum()
-				+"','envname':'"+t.getEnvname()+"','conContent':'"+con+"','conAnswer':'"+conanswer+"','scoretag':'"+t.getScoretag()+"','score':'"+t.getScore()+"'},";
+				+"','envname':'"+t.getEnvname()+"','conContent':'"+con+"','conAnswer':'"+conanswer+"','score':'"+t.getScore()+"'},";
 		buffer.append(str);
 		
-		List<TrainExt> zyList = trainExtDao.getTrainByTrainId(trainId);
+		List<TrainExt> zyList = trainExtDao.getTrainExtList(trainId);
 		if (zyList != null)
 		{
 			int len = zyList.size();
@@ -70,7 +70,7 @@ public class UserQuestionService {
 				for (int i=0;i<len;i++)
 				{
 					TrainExt pm = zyList.get(i);
-					temp += "{\"shellpath\":\""+pm.getShellpath()+"\",\"devip\":\""+pm.getDevip()+"\",\"shellparameter\":\""+pm.getShellparameter()+"\",\"shellname\":\""+pm.getShellname()+"\"},";
+					temp += "{\"shellpath\":\""+pm.getShellpath()+"\",\"devinfo\":\""+pm.getDevinfo()+"\",\"scoretag\":\""+pm.getScoretag()+"\",\"shellparameter\":\""+pm.getShellparameter()+"\",\"shellname\":\""+pm.getShellname()+"\"},";
 				}
 				if (temp.length() > 1)
 				{
@@ -103,7 +103,6 @@ public class UserQuestionService {
 				t.setConContent((String)usermap.get("conContent"));
 				t.setConAnswer((String)usermap.get("conAnswer"));
 				t.setScore((int)usermap.get("score"));
-				t.setScoretag((String)usermap.get("scoretag"));
 				trainDao.update(t);
 				
 				ArrayList slist = (ArrayList)map.get("shelllist");
@@ -121,27 +120,15 @@ public class UserQuestionService {
 						TrainExt te = new TrainExt();
 						te.setTrainId(t.getId());
 						te.setShellpath((String)shellmap.get("shellpath"));
-						te.setDevip((String)shellmap.get("devip"));
+						te.setDevinfo((String)shellmap.get("devinfo"));
 						te.setShellparameter((String)shellmap.get("shellparameter"));
 						te.setShellname((String)shellmap.get("shellname"));
+						te.setScoretag((String)shellmap.get("scoretag"));
 						trainExtDao.save(te);
 					}
 				}
 			}
 		}
-//		Train t = get(id);
-//		if (t != null)
-//		{
-//			t.setName(name);
-//			t.setCodenum(codenum);
-//			t.setEnvname(envname);
-//			t.setConContent(conContent);
-////			t.setConShell(conShell);
-//			t.setConAnswer(conAnswer);
-//			t.setScore(score);
-//			t.setScoretag(scoretag);
-//			update(t);
-//		}
 	}
 	
 	public void saveTrainQuestion(List<Map<String,Object>> list) {
@@ -158,7 +145,6 @@ public class UserQuestionService {
 //			t.setConShell(conShell);
 			t.setConAnswer((String)usermap.get("conAnswer"));
 			t.setScore((int)usermap.get("score"));
-			t.setScoretag((String)usermap.get("scoretag"));
 			trainDao.save(t);
 			
 			ArrayList slist = (ArrayList)map.get("shelllist");
@@ -176,9 +162,10 @@ public class UserQuestionService {
 					TrainExt te = new TrainExt();
 					te.setTrainId(t.getId());
 					te.setShellpath((String)shellmap.get("shellpath"));
-					te.setDevip((String)shellmap.get("devip"));
+					te.setDevinfo((String)shellmap.get("devinfo"));
 					te.setShellparameter((String)shellmap.get("shellparameter"));
 					te.setShellname((String)shellmap.get("shellname"));
+					te.setScoretag((String)shellmap.get("scoretag"));
 					trainExtDao.save(te);
 				}
 			}
@@ -265,7 +252,7 @@ public class UserQuestionService {
 	 * @param examId
 	 * @param trainId
 	 */
-	public void saveQuestionTrain(int userId,int examId,int trainId,String rdata,String result)
+	public void saveQuestionTrain(int userId,int examId,int trainId,String rdata,String devinfo)
 	{
 		UserQuestion uq = new UserQuestion();
 		uq.setExamId(examId);
@@ -277,8 +264,8 @@ public class UserQuestionService {
 		
 		UserQuestionChild uqc = new UserQuestionChild();
 		uqc.setUserId(userId);
-		uqc.setNumber(1);
-		uqc.setResult(result);
+//		uqc.setNumber(1);
+		uqc.setDevinfo(devinfo);
 		uqc.setRevalue(rdata);
 		uqc.setUserquestionId(uq.getId());
 		userQuestionChildDao.save(uqc);
@@ -303,7 +290,7 @@ public class UserQuestionService {
 		
 		UserQuestionChild uqc = new UserQuestionChild();
 		uqc.setUserId(userId);
-		uqc.setNumber(1);
+//		uqc.setNumber(1);
 		uqc.setUseranswer(useranswer);
 		uqc.setUserquestionId(uq.getId());
 		userQuestionChildDao.save(uqc);
@@ -325,14 +312,22 @@ public class UserQuestionService {
 	/**
 	 * 更新考试系统的实训答案
 	 */
-	public void updateQuestionTrain(UserQuestion uq,int userId,String rdata,String result)
+	public void updateQuestionTrain(UserQuestion uq,int userId,String rdata,String devinfo)
 	{
-		UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(userId,1,uq.getId());
+		UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByusertrainId(userId,uq.getId(),devinfo);
 		if (uqc != null)
 		{
-			uqc.setResult(result);
 			uqc.setRevalue(rdata);
 			userQuestionChildDao.update(uqc);
+		}
+		else
+		{
+			uqc = new UserQuestionChild();
+			uqc.setUserId(userId);
+			uqc.setDevinfo(devinfo);
+			uqc.setRevalue(rdata);
+			uqc.setUserquestionId(uq.getId());
+			userQuestionChildDao.save(uqc);
 		}
 	}
 	

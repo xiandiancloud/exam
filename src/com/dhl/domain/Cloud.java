@@ -22,7 +22,7 @@ public class Cloud extends BaseDomain {
 	private String ip;
 	private String name;
 	private String password;
-	private int userId;
+	private int userId;//由谁创建的云平台
 	
 	public int getUserId() {
 		return userId;
