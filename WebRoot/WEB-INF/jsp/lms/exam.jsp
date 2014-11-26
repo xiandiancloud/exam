@@ -110,11 +110,11 @@
 		height:40px;
 		line-height:40px;
 	}
-	.fixtop 
+	/* .fixtop 
 	{ 
 		position:fixed;
 		top:180px; 
-	} 
+	}  */
 </style>
 
   </head>
@@ -430,7 +430,7 @@
 				</div>																																			
 					
 				<div class="col-xs-3" id="scroll1">
-				<div class="fixtop" id="scroll2">
+				<div id="scroll2">
 							<div class='box bordered-box blue-border'>
 								<div class='box-content'>
 									<div class='row'>
@@ -522,7 +522,7 @@
     <!-- / END - page related files and scripts [optional] -->
 	<script src="js/common.js" type="text/javascript"></script>
 	<script src="js/holder.js" type="text/javascript"></script>
-
+	<script src="js/stickUp.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(function() {
 			$("#scroll2").width($("#scroll1").width());
@@ -534,7 +534,7 @@
 				if ("${exam.isnormal}" == 0)
 				{
 					$("#firesult").show();
-					$("#scroll2").css("top",415);
+					/* $("#scroll2").css("top",415); */
 				}
 			}
 			else
@@ -542,6 +542,24 @@
 				$("#firesult").hide();
 			}			
 		});
+		jQuery(function($) {
+	        $(document).ready( function() {
+	          $('#scroll2').stickUp({
+                  parts: {
+                      0:'home',
+                      1:'features',
+                      2: 'news',
+                      3: 'installation',
+                      4: 'one-pager',
+                      5: 'extras',
+                      6: 'wordpress',
+                      7: 'contact'
+                    },
+                    itemClass: 'menuItem',
+                    itemHover: 'active'
+                  });
+	        });
+	      });
 		function loadfiresult()
 		{
  			var examId = "${exam.id}";

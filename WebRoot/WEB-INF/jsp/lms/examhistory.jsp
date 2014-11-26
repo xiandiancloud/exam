@@ -109,11 +109,11 @@
 		height:40px;
 		line-height:40px;
 	}
-    .fixtop 
+    /* .fixtop 
 	{ 
 		position:fixed;
 		top:415px; 
-	} 
+	}  */
 </style>
 
   </head>
@@ -491,7 +491,7 @@
 				</div>																																			
 					
 				<div class="col-xs-3" id="scroll1">
-				<div class="fixtop" id="scroll2">
+				<div id="scroll2">
 							<div class='box bordered-box blue-border'>
 								<div class='box-content'>
 									<!-- <div class='row'>
@@ -595,14 +595,32 @@
     <!-- / END - page related files and scripts [optional] -->
 	<script src="js/common.js" type="text/javascript"></script>
 	<script src="js/holder.js" type="text/javascript"></script>
-
+	<script src="js/stickUp.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(function() {
 			$("#scroll2").width($("#scroll1").width());
 			//填充试卷内容，判断对错，或者是否已经做过
 			initquestion();
 		});
-	
+		jQuery(function($) {
+	        $(document).ready( function() {
+	          $('#scroll2').stickUp({
+                  parts: {
+                      0:'home',
+                      1:'features',
+                      2: 'news',
+                      3: 'installation',
+                      4: 'one-pager',
+                      5: 'extras',
+                      6: 'wordpress',
+                      7: 'contact'
+                    },
+                    itemClass: 'menuItem',
+                    itemHover: 'active',
+                    topMargin: 'auto'
+                  });
+	        });
+	      });
 		//这个方法多次提交，如果性能有问题再优化
 		function initquestion()
 		{

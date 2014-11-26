@@ -122,11 +122,11 @@ public class ShellController extends BaseController {
 						
 						UserQuestion uq = userQuestionService.getUserExamTrainQuestion(user.getId(), examId, trainId);
 						if (uq == null) {
-							userQuestionService.saveQuestionTrain(user.getId(), examId, trainId,rdata,ip);
+							userQuestionService.saveQuestionTrain(user.getId(), examId, trainId,rdata,devinfo);
 						} else {
-							userQuestionService.updateQuestionTrain(uq, user.getId(), rdata,ip);
+							userQuestionService.updateQuestionTrain(uq, user.getId(), rdata,devinfo);
 						}
-						str = "{'sucess':'sucess','revalue':'"+ rdata + "'}";
+//						str = "{'sucess':'sucess','revalue':'"+ rdata + "'}";
 					}
 					else
 					{
@@ -160,8 +160,8 @@ public class ShellController extends BaseController {
 							} else {
 								userQuestionService.updateQuestionTrain(uq, user.getId(), rdata,result);
 							}
-							str = "{'sucess':'sucess','result':'" + result + "','revalue':'"
-									+ rdata + "'}";
+//							str = "{'sucess':'sucess','result':'" + result + "','revalue':'"
+//									+ rdata + "'}";
 						}
 						else
 						{
@@ -172,6 +172,7 @@ public class ShellController extends BaseController {
 					}
 				}
 				conn.close();
+				str = "{'sucess':'sucess'}";
 				/*UserEnvironment uce = userEnvironmenteService.getMyUCE(user.getId(), examId, trainId);
 				if (uce != null)
 				{
