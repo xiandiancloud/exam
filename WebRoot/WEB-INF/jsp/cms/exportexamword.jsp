@@ -11,10 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <base href="<%=basePath%>">
     
     <title>
-        导出课程 |
-        
-        先电云平台 |
-        edX Studio
+        导出试卷
     </title>
     
 	<meta http-equiv="pragma" content="no-cache">

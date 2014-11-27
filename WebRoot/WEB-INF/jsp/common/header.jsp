@@ -27,6 +27,7 @@
 						<li><a href="lms/myexam.action">我的云试卷</a></li>
 						<c:if test="${USER_CONTEXT.role.roleName=='老师'}">
 						<li><a href="cms">制作试卷</a></li>
+						<li><a href="cms/totcompetion.action?competionId=-1">增加竞赛</a></li>
 						</c:if>
 					</ul>
 					<!--向右对齐-->

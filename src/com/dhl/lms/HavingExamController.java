@@ -329,6 +329,7 @@ public class HavingExamController extends BaseController {
 			if (uqc != null)
 			{
 				String useranswer = uqc.getUseranswer();
+				useranswer = UtilTools.replaceBackett(useranswer);
 				str = "{'sucess':'sucess','answer':'"+useranswer+"','index':'"+index+"'}";
 			}
 			

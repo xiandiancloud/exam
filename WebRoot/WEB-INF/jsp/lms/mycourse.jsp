@@ -113,16 +113,16 @@
 									</a>
 									<a href="lms/mycompetion.action" class="list-group-item"> <i class='icon-plus'></i> 我的竞赛
 									</a>
-									<hr class="hr-normal">
+									<!-- <hr class="hr-normal"> -->
 									<!-- <p>增加竞赛</p> -->
-									<c:if test="${USER_CONTEXT.role.roleName=='老师'}">
+									<%-- <c:if test="${USER_CONTEXT.role.roleName=='老师'}">
 									<a href="cms" class='btn btn-success'> <i
 										class='icon-plus'></i> 增加试卷
 									</a>
 									<a href="cms/totcompetion.action?competionId=-1" class='btn btn-primary'> <i
 										class='icon-plus'></i> 增加竞赛
 									</a>
-									</c:if>
+									</c:if> --%>
 								</div>
 							</div>
 						</div>
@@ -158,7 +158,7 @@
 																<div class="pull-left">${se.exam.describle}</div>
 																<div class="pull-right">
 																	<c:if test="${se.state == 1}">
-																	<a href="lms/toexamingtostartexam.action?competionId=-1&examId=${se.exam.id}" class="btn  btn-success">查看分析</a>
+																	<a href="lms/toexamingtohistoryexam.action?examId=${se.exam.id}&docounts=-1" class="btn  btn-success">查看分析</a>
 																	<a href="lms/toagainexamintroduce.action?competionId=-1&examId=${se.exam.id}"	class="btn btn-danger">再做一次</a>
 																	</c:if>
 																	<c:if test="${se.state == 0}"><a href="lms/toexamingtostartexam.action?competionId=-1&examId=${se.exam.id}" class="btn btn-danger">继续考试</a></c:if>

@@ -23,12 +23,12 @@
                 <span>学校管理</span>
               </a>
             </li>
-            <li>
+            <!-- <li>
               <a href='admin/category.action'>
                 <i class='icon-star'></i>
                 <span>实验分类管理</span>
               </a>
-            </li>
+            </li> -->
             <li>
               <a href='admin/examcategory.action'>
                 <i class='icon-star'></i>

@@ -122,72 +122,6 @@
     <jsp:include page="../common/header.jsp"></jsp:include>
 	<div id='wrapper'>
 		<div class='container'>
-					<%-- <div class='row'>
-						<div class='col-xs-12'>
-							<div class='row'>
-								<div class='col-xs-12'>
-									<div class='page-header'>
-										<h1 class='pull-left'>
-											<span>${exam.name}</span>
-										</h1>
-									</div>
-								</div>
-							</div>
-							<div class='row none' id="firesult">
-							<div class='col-sm-3'>
-								<div class="advance ">
-									<span class="totalScore">${score}</span>分
-								</div>
-							</div>
-							<div class='col-sm-9'>
-								<div class='box bordered-box' style='margin-bottom:0;'>
-									<div class='box-content box-no-padding'>
-										<div class='responsive-table'>
-											<div class='scrollable-area'>
-												<table class='table table-bordered' style='margin-bottom:0;background-color:#CCCCCC'>
-													<thead>
-														<tr>
-															<th></th>
-															<c:forEach var="ued" items="${uedlist}">
-															<th>${ued.name}</th>
-															</c:forEach>
-														</tr>
-													</thead>
-													<tbody>
-														<tr>
-															<td>答对</td>
-															<c:forEach var="ued" items="${uedlist}">
-															<th>${ued.right}</th>
-															</c:forEach>
-														</tr>
-														<tr>
-															<td>答错</td>
-															<c:forEach var="ued" items="${uedlist}">
-															<th>${ued.wrong}</th>
-															</c:forEach>
-														</tr>
-														<tr>
-															<td>未答</td>
-															<c:forEach var="ued" items="${uedlist}">
-															<th>${ued.noanswer}</th>
-															</c:forEach>
-														</tr>
-														<tr>
-															<td>得分</td>
-															<c:forEach var="ued" items="${uedlist}">
-															<th>${ued.cscore}</th>
-															</c:forEach>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-				</div>
-			</div> --%>
 			<div class='row'>
 						<div class='col-xs-12'>
 							<div class='row'>
@@ -288,19 +222,21 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
 														    <c:set value="${index + 1}" var="index" />
-															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
+															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
 																<div class="trainimg">${qdcontent}</div> 
 															</div>
 														</c:forEach>
+														<hr class='hr-normal'>
+														<div class='form-group'>
+															<div class='col-sm-12'>
+																<a id="hrefnumber${index}" href="javascript:void(0);" onclick="entertrain('${competionId}','${exam.id}','${vertical.id}','${qd.id}','hrefnumber${index}','${index}');" target="_blank" class='btn btn-danger'>
+																<i class='icon-circle-arrow-right'></i>进入实训</a>
+															</div>
+														</div>
 													</form>
-													<hr class='hr-normal'>
-													<div class='form-group col-sm-12'>
-														<a id="hrefnumber${index}" href="javascript:void(0);" onclick="entertrain('${competionId}','${exam.id}','${vertical.id}','${qd.id}','hrefnumber${index}','${index}');" target="_blank" class='btn btn-danger'>
-														<i class='icon-circle-arrow-right'></i>进入实训</a>
-													</div>
 												</div>
 											</div>
 							   			</c:if>
@@ -311,7 +247,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span class='trainimg' id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
+															<span class='trainimg' id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
 													</form>
 												</div>
@@ -324,7 +260,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
+															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
 														<hr class='hr-normal'>
 														<div id="numberquestion${index}">
@@ -347,7 +283,7 @@
 													<form class="form form-horizontal" method="post" action="#" id="${examq.id}${qd.id}">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
+															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
 														<hr class='hr-normal'>
 														<div id="numberquestion${index}">
@@ -370,7 +306,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
+															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -380,7 +316,8 @@
 														<hr class='hr-normal'>
 														<div class='form-group'>
 															<div class='col-sm-12'>
-																<input class='form-control' type="text" id="numberquestion${index}" onblur="submittextquesstion('${qd.id}','${nn.index+1}',this,'${index}');" />
+																<%-- <input class='form-control' type="text" id="numberquestion${index}" onblur="submittextquesstion('${qd.id}','${nn.index+1}',this,'${index}');" /> --%>
+																<textarea class='form-control' rows='5' id="numberquestion${index}" onblur="submittextquesstion('${qd.id}','${nn.index+1}',this,'${index}');"></textarea>
 															</div>
 														</div>
 													</form>
@@ -394,7 +331,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
+															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -404,7 +341,12 @@
 														<hr class='hr-normal'>
 														<div class='form-group'>
 															<div class='col-sm-12'>
-																<textarea class='form-control' rows='5' id="numberquestion${index}" onblur="submittextareaquesstion('${qd.id}','${nn.index+1}',this,'${index}');"></textarea>
+																<%-- <textarea class='form-control' rows='5' id="numberquestion${index}" onblur="submittextareaquesstion('${qd.id}','${nn.index+1}',this,'${index}');"></textarea> --%>
+																<iframe width="100%" height="250" scrolling="no"  frameborder="0" id="numberquestion${index}" src="input.html" ></iframe>
+															</div>
+															<div class='col-sm-12'>
+																<a id="hrefnumber${index}" href="javascript:void(0);" onclick="submittextareaquesstion('${qd.id}','${nn.index+1}','numberquestion${index}','${index}');" class='btn btn-danger'>
+																<i class='icon-circle-arrow-right'></i>提交答案</a>
 															</div>
 														</div>
 													</form>
@@ -454,15 +396,11 @@
 							                          <c:forEach var="sequential" items="${chapter.esequentials}" varStatus="j">
 							                              <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
 							                                  <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
-							                                  
 										                 		<c:forEach var="qd" items="${examq.qdlist}">
-										                 		<!-- <li> -->
 										                 		<c:set value="${sum + 1}" var="sum" /> 
 										                 		<a href="javascript:void(0)" onclick="document.getElementById('number${sum}').scrollIntoView();" class="j-item item  f-fl" id="index${sum}">
 										                 		${sum}
 										                 		</a>
-										                 		<!-- </li> -->
-
 										                 		</c:forEach>
 										                 	</c:forEach>
 							                              </c:forEach>
@@ -527,20 +465,6 @@
 		$(function() {
 			$("#scroll2").width($("#scroll1").width());
 			//填充试卷内容，判断对错，或者是否已经做过
-			initquestion();
-			//是否显示考试成绩
-			if ("${userexam.state}" == 1)
-			{
-				if ("${exam.isnormal}" == 0)
-				{
-					$("#firesult").show();
-					/* $("#scroll2").css("top",415); */
-				}
-			}
-			else
-			{
-				$("#firesult").hide();
-			}			
 		});
 		jQuery(function($) {
 	        $(document).ready( function() {
@@ -558,6 +482,22 @@
                     itemClass: 'menuItem',
                     itemHover: 'active'
                   });
+	          
+	          	initquestion();
+				//是否显示考试成绩
+				if ("${userexam.state}" == 1)
+				{
+					if ("${exam.isnormal}" == 0)
+					{
+						$("#firesult").show();
+						/* $("#scroll2").css("top",415); */
+					}
+				}
+				else
+				{
+					$("#firesult").hide();
+				}			
+				
 	        });
 	      });
 		function loadfiresult()
@@ -582,7 +522,6 @@
 			var usercount = 0;
 			<c:forEach var="ued" items="${uedlist}" varStatus="i">
 				usercount += parseInt("${ued.cscore}");
-				
 			</c:forEach>
 			$("#usercount").html(usercount);
 			
@@ -592,6 +531,7 @@
                 <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
                     <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
                     	<c:forEach var="qd" items="${examq.qdlist}" varStatus="nn">
+                    	
                     		index ++;
                     		var examId = "${exam.id}";
                     		var questionId = "${qd.id}";
@@ -627,10 +567,22 @@
 										     });
         									</c:if>
             								<c:if test="${qd.type == 4}">
-            									$("#numberquestion"+a.index).attr("value",a.answer);
+            									$("#numberquestion"+a.index).attr("value",decodeURIComponent(a.answer));
 	        								</c:if>
 	        								<c:if test="${qd.type == 5}">
-	        									$("#numberquestion"+a.index).attr("value",replaceTextarea2(a.answer));
+	        									//$("#numberquestion"+a.index).attr("value",replaceTextarea2(a.answer));
+	        									var iframe = document.getElementById("numberquestion"+a.index);
+												if (iframe.attachEvent) {  
+												    iframe.attachEvent("onload", function() {  
+										                //以下操作必须在iframe加载完后才可进行  
+												    	$("#numberquestion"+a.index).contents().find("#editor").html(decodeURIComponent(a.answer));
+												    });  
+												} else {  
+												    iframe.onload = function() {  
+										                //以下操作必须在iframe加载完后才可进行  
+												    	$("#numberquestion"+a.index).contents().find("#editor").html(decodeURIComponent(a.answer));
+												    };  
+												}  
 	    									</c:if>
             							}
 	            					}
@@ -642,7 +594,7 @@
             </c:forEach>
           </c:forEach>
 		}
-		
+		 
 		//一个小时，按秒计算，可以自己调整时间
 		/* var maxtime = 60 * 60;
 		function CountDown() {
@@ -672,6 +624,7 @@
 			}
 			var examId = "${exam.id}";
 			var competionId = "${competionId}";
+			useranswer = encodeURIComponent(useranswer);
 			var data = {competionId:competionId,examId:examId,questionId:questionId,number:number,useranswer:useranswer};
 			$.ajax({
 				url : "lms/submitquesstion.action",
@@ -711,7 +664,8 @@
 			} 
  			var examId = "${exam.id}";
  			var competionId = "${competionId}";
-			var data = {competionId:competionId,examId:examId,questionId:questionId,number:number,useranswer:s};
+ 			var useranswer = encodeURIComponent(s);
+			var data = {competionId:competionId,examId:examId,questionId:questionId,number:number,useranswer:useranswer};
 			$.ajax({
 				url : "lms/submitquesstion.action",
 				type : "post",
@@ -743,7 +697,9 @@
 			}
  			var examId = "${exam.id}";
  			var competionId = "${competionId}";
-			var data = {competionId:competionId,examId:examId,questionId:questionId,number:number,useranswer:$(element).val()};
+ 			var useranswer = $(element).val();
+ 			useranswer = encodeURIComponent(useranswer);
+			var data = {competionId:competionId,examId:examId,questionId:questionId,number:number,useranswer:useranswer};
 			$.ajax({
 				url : "lms/submitquesstion.action",
 				type : "post",
@@ -773,7 +729,9 @@
 				alert("答题已经结束");
 				return;
 			}
-			var useranswer = replaceTextarea1($(element).val());
+			var useranswer = $("#"+element).contents().find("#editor").html();
+			useranswer = encodeURIComponent(useranswer);
+			//var useranswer = replaceTextarea1($(element).val());
  			var examId = "${exam.id}";
  			var competionId = "${competionId}";
 			var data = {competionId:competionId,examId:examId,questionId:questionId,number:number,useranswer:useranswer};
@@ -830,8 +788,9 @@
 				success : function(s) {
 					var a = eval("(" + s + ")");
 					if ("sucess" == a.sucess) {
-						alert("提交成功");
-						location.reload();
+						//alert("提交成功");
+						//location.reload();
+						location.href = "lms/toexamingtohistoryexam.action?examId="+examId+"&docounts=-1";
 					}
 					else
 					{
@@ -840,23 +799,6 @@
 				}
 			});
 		}
-		//再做一次
-		/* function againallquesstion()
-		{
-			var examId = "${exam.id}";
-			var data = {examId:examId};
-			$.ajax({
-				url : "lms/toagainexamintroduce.action",
-				type : "post",
-				data : data,
-				success : function(s) {
-					var a = eval("(" + s + ")");
-					if ("sucess" == a.sucess) {
-						location.reload();
-					}
-				}
-			});
-		} */
 	</script>
 </body>
 </html>

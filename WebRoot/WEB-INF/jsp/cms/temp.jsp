@@ -16,7 +16,7 @@
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>课程大纲 |edX Demonstration Course|edX Studio</title>
+<title>课程大纲</title>
 
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="path_prefix" content="">

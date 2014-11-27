@@ -11,12 +11,8 @@
 <script src="js/inputtext/bootstrap.min.js"></script>
 <script src="js/inputtext/bootstrap-wysiwyg.js" type="text/javascript"></script>
 <script src="js/inputtext/jquery.hotkeys.js" type="text/javascript"></script>
-<style>
-#editor {overflow:scroll; max-height:300px}
-</style>
 </head>
 <body>
-<div class="">
   <div class="hero-unit">
 	
 	<div id="alerts"></div>
@@ -72,8 +68,7 @@
       <input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="">
     </div>
 
-    <div id="editor" class="test">
-      输入内容&hellip;
+    <div id="editor">
     </div>
   </div>
 <script>
@@ -113,6 +108,19 @@
 	};
     initToolbarBootstrapBindings(); 
 	$('#editor').wysiwyg({ fileUploadError: showErrorAlert} );
+	
+	/* var lhref = location.href;
+	var strs = lhref.split('?');
+	if (strs.length > 1)
+	{
+		var cb = strs[1].split('&');
+		if (cb.length > 2)
+		{
+			$('#eee').blur(function () {
+			});
+			
+		}
+	} */
   });
 </script>
 </body>

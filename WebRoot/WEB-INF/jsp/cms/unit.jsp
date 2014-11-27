@@ -79,6 +79,7 @@ background: -webkit-gradient(linear, left top, left bottom, from(#0078a5), to(#0
 background: -moz-linear-gradient(top, #0078a5, #00adee); 
 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0078a5', endColorstr='#00adee'); 
 } 
+
 </style> 
 
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>

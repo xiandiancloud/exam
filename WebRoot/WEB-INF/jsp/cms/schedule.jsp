@@ -12,7 +12,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>日程 &amp; 细节设置 | 先电云平台</title>
+<title>日程 &amp; 细节设置 </title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">

@@ -32,9 +32,9 @@ create table t_school_user
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 */
 
-drop database if exists exam;
-create database exam character set utf8;
-use exam;
+drop database if exists examdemo;
+create database examdemo character set utf8;
+use examdemo;
 
 /*实验课程定义分类
 drop table if exists t_coursecategory;

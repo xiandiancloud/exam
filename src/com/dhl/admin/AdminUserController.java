@@ -51,15 +51,18 @@ public class AdminUserController extends BaseController {
 			User user = getSessionUser(request);
 			if (user == null)
 			{
-//				ModelAndView view = new ModelAndView();
-//				view.setViewName("/admin/signin");
+				ModelAndView view = new ModelAndView();
+				view.setViewName("/admin/signin");
 				url = "/admin/signin";
 			}
-			Role role = user.getRole();//userInterface.getUserRoleByuserId(user.getId());
-			if (!CommonConstant.ROLE_A.equals(role.getRoleName())) {
-//				ModelAndView view = new ModelAndView();
-//				view.setViewName("/admin/signin");
-				url = "redirect:/lms/getteamCategory.action";
+			else
+			{
+				Role role = user.getRole();//userInterface.getUserRoleByuserId(user.getId());
+				if (!CommonConstant.ROLE_A.equals(role.getRoleName())) {
+	//				ModelAndView view = new ModelAndView();
+	//				view.setViewName("/admin/signin");
+					url = "redirect:/lms/getteamCategory.action";
+				}
 			}
 		}
 		return new ModelAndView(url);
