@@ -11,6 +11,7 @@ import com.dhl.cons.CommonConstant;
 import com.dhl.dao.ExamDao;
 import com.dhl.dao.ExamQuestionDao;
 import com.dhl.dao.ExamVerticalDao;
+import com.dhl.dao.LogDao;
 import com.dhl.dao.QuestionDao;
 import com.dhl.dao.TrainDao;
 import com.dhl.dao.TrainExtDao;
@@ -45,7 +46,8 @@ public class UserQuestionService {
 	private ExamDao examDao;
 	@Autowired
 	private ExamVerticalDao examVerticalDao;
-	
+	@Autowired
+	private LogDao logDao;
 	
 	public String getTrainQuestion(int trainId)
 	{
@@ -252,7 +254,7 @@ public class UserQuestionService {
 	 * @param examId
 	 * @param trainId
 	 */
-	public void saveQuestionTrain(int userId,int examId,int trainId,String rdata,String devinfo)
+	public void saveQuestionTrain(String username,int userId,int examId,int trainId,String rdata,String devinfo)
 	{
 		UserQuestion uq = new UserQuestion();
 		uq.setExamId(examId);
@@ -269,7 +271,7 @@ public class UserQuestionService {
 		uqc.setRevalue(rdata);
 		uqc.setUserquestionId(uq.getId());
 		userQuestionChildDao.save(uqc);
-		
+		logDao.saveLog(username,CommonConstant.LOG_1+"examId:"+examId+" , trainId:"+trainId);
 	}
 	
 	/**
@@ -312,13 +314,14 @@ public class UserQuestionService {
 	/**
 	 * 更新考试系统的实训答案
 	 */
-	public void updateQuestionTrain(UserQuestion uq,int userId,String rdata,String devinfo)
+	public void updateQuestionTrain(String username,UserQuestion uq,int userId,int examId,int trainId,String rdata,String devinfo)
 	{
 		UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByusertrainId(userId,uq.getId(),devinfo);
 		if (uqc != null)
 		{
 			uqc.setRevalue(rdata);
 			userQuestionChildDao.update(uqc);
+			logDao.saveLog(username,CommonConstant.LOG_5+"examId:"+examId+" , trainId:"+trainId);
 		}
 		else
 		{
@@ -328,13 +331,14 @@ public class UserQuestionService {
 			uqc.setRevalue(rdata);
 			uqc.setUserquestionId(uq.getId());
 			userQuestionChildDao.save(uqc);
+			logDao.saveLog(username,CommonConstant.LOG_1+"examId:"+examId+" , trainId:"+trainId);
 		}
 	}
 	
 	/**
 	 * 提交答案
 	 */
-	public void saveQuestion(int userId,int examId,int questionId,int number,String useranswer)
+	public void saveQuestion(String username,int userId,int examId,int questionId,int number,String useranswer)
 	{
 		UserQuestion uq = userQuestionDao.getUserQuestionByquestion(userId, examId, questionId);
 		if (uq == null)
@@ -364,6 +368,7 @@ public class UserQuestionService {
 			uqc2.setUseranswer(useranswer);
 			uqc2.setUserquestionId(uq.getId());
 			userQuestionChildDao.save(uqc2);
+			logDao.saveLog(username,CommonConstant.LOG_1+"examId:"+examId+" , questionId:"+questionId+" , number:"+number);
 		}
 		else
 		{
@@ -371,13 +376,14 @@ public class UserQuestionService {
 			uqc.setUseranswer(useranswer);
 			uqc.setUserquestionId(uq.getId());
 			userQuestionChildDao.update(uqc);
+			logDao.saveLog(username,CommonConstant.LOG_5+"examId:"+examId+" , questionId:"+questionId+" , number:"+number);
 		}
 	}
 	
 	/**
 	 * 提交答案
 	 */
-	public boolean updateQuestion(int type,int userId,int examId,int questionId,int number,String pfscore)
+	public boolean updateQuestion(String username,int type,int userId,int examId,int questionId,int number,String pfscore)
 	{
 		UserQuestion uq;
 		if (type == CommonConstant.QTYPE_6)
@@ -395,6 +401,7 @@ public class UserQuestionService {
 			{
 				uqc.setPfscore(pfscore);
 				userQuestionChildDao.update(uqc);
+				logDao.saveLog(username,CommonConstant.LOG_3+"examId:"+examId+" , questionId:"+questionId+" , number:"+number+" , pfscore:"+pfscore);
 				return true;
 			}
 		}

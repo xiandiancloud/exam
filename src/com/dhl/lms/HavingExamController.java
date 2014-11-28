@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.dhl.bean.QuestionData;
 import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Competion;
 import com.dhl.domain.Exam;
@@ -35,7 +34,6 @@ import com.dhl.service.UserEnvironmentService;
 import com.dhl.service.UserExamHistoryService;
 import com.dhl.service.UserExamService;
 import com.dhl.service.UserQuestionService;
-import com.dhl.util.ParseQuestion;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
 import com.xiandian.model.User;
@@ -323,7 +321,7 @@ public class HavingExamController extends BaseController {
 			else
 			{
 				User user = getSessionUser(request);
-				userQuestionService.saveQuestion(user.getId(),examId,questionId, number, useranswer);
+				userQuestionService.saveQuestion(user.getUsername(),user.getId(),examId,questionId, number, useranswer);
 				str = "{'sucess':'sucess'}";
 			}
 			PrintWriter out = response.getWriter();
@@ -340,20 +338,15 @@ public class HavingExamController extends BaseController {
 	@RequestMapping("/submitallquesstion")
 	public ModelAndView submitallquesstion(HttpServletRequest request,
 			HttpServletResponse response,int competionId, int examId) {
-//		try {
-//			String str="";
 			if (!isstart(competionId))
 			{
-//				str = "{'sucess':'fail'}";
 				String url = "redirect:/lms/toexamerror.action";
 				return new ModelAndView(url);
 			}
 			else
 			{
 				User user = getSessionUser(request);
-				UserExam ue = userExamService.getUserExam(user.getId(),examId);
-				ue.setState(1);
-				userExamService.updateUserExam(ue);
+				userExamService.finishStudentUserExam(user.getUsername(),user.getId(),examId);
 				if (competionId > 0)
 				{
 					String url = "redirect:/lms/mycompetion.action";
@@ -364,16 +357,8 @@ public class HavingExamController extends BaseController {
 					String url = "redirect:/lms/toexamingtohistoryexam.action?examId="+examId+"&docounts=-1";
 					return new ModelAndView(url);
 				}
-//				str = "{'sucess':'sucess'}";
 			}
-//			PrintWriter out = response.getWriter();
-//			out.write(str);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-
 	}
-	
 	
 	/**
 	 * 裁判修改分值
@@ -382,15 +367,14 @@ public class HavingExamController extends BaseController {
 	public void setquesstionpfscore(HttpServletRequest request,
 			HttpServletResponse response,int type,int userId, int examId,int questionId,int number,String pfscore) {
 		try {
-			
-			boolean flag = userQuestionService.updateQuestion(type,userId,examId,questionId, number,pfscore);
+			User user = getSessionUser(request);
+			boolean flag = userQuestionService.updateQuestion(user.getUsername(),type,userId,examId,questionId, number,pfscore);
 			String str = flag?"{'sucess':'sucess'}":"{'sucess':'fail','msg':'"+CommonConstant.ERROR_7+"'}";
 			PrintWriter out = response.getWriter();
 			out.write(str);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 	
 	/**
@@ -400,7 +384,8 @@ public class HavingExamController extends BaseController {
 	public void finishpf(HttpServletRequest request,
 			HttpServletResponse response,int userId, int examId) {
 		try {
-			userExamService.finishUserExam(userId, examId);
+			User user = getSessionUser(request);
+			userExamService.finishUserExam(user.getUsername(),userId, examId);
 			String str = "{'sucess':'sucess'}";
 			PrintWriter out = response.getWriter();
 			out.write(str);

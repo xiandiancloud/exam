@@ -68,4 +68,11 @@ public class CommonConstant
    //是否是单点登录  默认0的话不是单点登录
    public static final int SSO_NO = 0;
    public static final int SSO_CAS = 1;
+   
+   //日志信息记录
+   public static final String LOG_1 = "提交答案：";
+   public static final String LOG_2 = "提交试卷：";
+   public static final String LOG_3 = "修改判分：";
+   public static final String LOG_4 = "结束判分：";
+   public static final String LOG_5 = "更新答案：";
 }

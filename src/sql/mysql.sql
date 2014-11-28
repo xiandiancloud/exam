@@ -622,7 +622,17 @@ create table t_user_cloud
 (
    id                int not null AUTO_INCREMENT,
    userId            int(10) not null,
-   cloudId          int(10) not null,
+   cloudId           int(10) not null,
    primary key (id),
    CONSTRAINT receivet_user_clound_1 FOREIGN KEY (cloudId) REFERENCES t_cloud (id) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+drop table if exists t_log;
+create table t_log
+(
+   id                int not null AUTO_INCREMENT,
+   username          varchar(255) default null,
+   useraction        varchar(255) default null,
+   dotime            varchar(255) default null,
+   primary key (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

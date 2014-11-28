@@ -13,6 +13,7 @@ import com.dhl.bean.QuestionData;
 import com.dhl.bean.UserExamData;
 import com.dhl.bean.UserQuestionData;
 import com.dhl.cons.CommonConstant;
+import com.dhl.dao.LogDao;
 import com.dhl.dao.UserExamDao;
 import com.dhl.dao.UserExamHistoryDao;
 import com.dhl.dao.UserQuestionChildDao;
@@ -53,6 +54,8 @@ public class UserExamService {
 	private UserQuestionChildHistoryDao userQuestionChildHistoryDao;
 	@Autowired
 	private UserExamHistoryDao userExamHistoryDao;
+	@Autowired
+	private LogDao logDao;
 	
 	public void save(UserExam entity)
 	{
@@ -62,6 +65,23 @@ public class UserExamService {
 		userExamDao.update(userExam);
 	}
 
+	/**
+	 * 学生提交试卷
+	 * @param username
+	 * @param userId
+	 * @param examId
+	 */
+	public void finishStudentUserExam(String username,int userId,int examId)
+	{
+		UserExam ue = getUserExam(userId,examId);
+		if (ue != null)
+		{
+			ue.setState(1);
+			updateUserExam(ue);
+			logDao.saveLog(username,CommonConstant.LOG_2+"examId:"+examId);
+		}
+	}
+	
 	/**
 	 * 再来一次
 	 * @param userExam
@@ -132,12 +152,13 @@ public class UserExamService {
 	 * @param userId
 	 * @param examId
 	 */
-	public void finishUserExam(int userId, int examId) {
+	public void finishUserExam(String username,int userId, int examId) {
 		UserExam ue = getUserExam(userId, examId);
 		if (ue != null)
 		{
 			ue.setFipf(1);
 			userExamDao.update(ue);
+			logDao.saveLog(username,CommonConstant.LOG_4+"examId:"+examId);
 		}
 	}
 	
