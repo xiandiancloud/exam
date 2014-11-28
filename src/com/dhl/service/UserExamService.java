@@ -284,6 +284,38 @@ public class UserExamService {
 		return null;
 	}
 	
+	private boolean isCorrect(int type,String useranswer,List<String> answerlist)
+	{
+		if (type == CommonConstant.QTYPE_2 || type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5)
+		{
+			return useranswer.trim().equalsIgnoreCase(answerlist.get(0).trim());
+		}
+		else if (type == CommonConstant.QTYPE_3)
+		{
+			String[] strs = useranswer.split("#");
+			int size = answerlist.size();
+			boolean flag = true;
+			if (size != strs.length)
+			{
+				flag = false;
+			}
+			else
+			{
+				for (int j=0;j<size;j++)
+				{
+					if (!answerlist.get(j).equalsIgnoreCase(strs[j]))
+					{
+						flag = false;
+						break;
+					}
+				}
+			}
+			return flag;
+		}
+		else
+			return false;
+	}
+	
 	//用户试卷分析情况
 	public List getUserExamCount(int userId,Exam exam,int docounts)
 	{
@@ -331,7 +363,6 @@ public class UserExamService {
 								
 								List<QuestionData> qdlist = ParseQuestion.changetohtml(content,q.getId());
 								eq.setQdlist(qdlist);
-								
 								//------------分析问题--------可以拆分出去
 								int len = qdlist.size();
 								for (int i=0;i<len;i++)
@@ -354,71 +385,35 @@ public class UserExamService {
 									{
 										String useranswer = uqc.getUseranswer();
 										int type = qd.getType();
-										if (type == CommonConstant.QTYPE_2 || type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5)
+										//得分，取裁判分
+										String pfscore = uqc.getPfscore();
+										if (pfscore != null)
 										{
-											//得分，取裁判分
-											String pfscore = uqc.getPfscore();										
-											if (pfscore != null)
+											cscore += Integer.parseInt(pfscore);
+											if (Integer.parseInt(pfscore) == quscore)
 											{
-												cscore += Integer.parseInt(pfscore);
+												right ++;
 											}
 											else
+											{
+												wrong ++;
+											}
+										}
+										else
+										{
+											if (useranswer != null)
 											{
 												List<String> answerlist = qd.getAnswer();
-												if (answerlist != null && answerlist.size() > 0)
+												if (answerlist != null)
 												{
-													//用户答案跟标准答案相同
-													if (useranswer != null && useranswer.trim().equalsIgnoreCase(answerlist.get(0).trim()))
+													if (isCorrect(type,useranswer,answerlist))
 													{
-														cscore += quscore;
+														cscore = quscore;
+														right++;
 													}
-												}
-											}
-											//未答
-											if (useranswer == null)
-											{
-												noanswer ++;
-											}
-											//答对
-											if (pfscore != null)
-											{
-												if (Integer.parseInt(pfscore) == quscore)
-												{
-													right ++;
-												}
-											}
-											else
-											{
-												List<String> answerlist = qd.getAnswer();
-												if (answerlist != null && answerlist.size() > 0)
-												{
-													//用户答案跟标准答案相同
-													if (useranswer != null && useranswer.trim().equalsIgnoreCase(answerlist.get(0).trim()))
+													else
 													{
-														right ++;
-													}
-												}
-											}
-											//答错
-											if (pfscore != null)
-											{
-												if (Integer.parseInt(pfscore) != quscore)
-												{
-													wrong ++;
-												}
-											}
-											else
-											{
-												if (useranswer != null)
-												{
-													List<String> answerlist = qd.getAnswer();
-													if (answerlist != null && answerlist.size() > 0)
-													{
-														//用户答案跟标准答案相同
-														if (useranswer != null && !useranswer.trim().equalsIgnoreCase(answerlist.get(0).trim()))
-														{
-															wrong ++;
-														}
+														wrong ++;
 													}
 												}
 												else
@@ -427,135 +422,10 @@ public class UserExamService {
 												}
 											}
 										}
-										else if (type == CommonConstant.QTYPE_3)//多选要匹配答案列表
+										//未答
+										if (useranswer == null)
 										{
-											//得分，取裁判分
-											String pfscore = uqc.getPfscore();										
-											if (pfscore != null)
-											{
-												cscore += Integer.parseInt(pfscore);
-											}
-											else
-											{
-												if (useranswer != null)
-												{
-													List<String> answerlist = qd.getAnswer();
-													if (answerlist != null)
-													{
-														String[] strs = useranswer.split("#");
-														int size = answerlist.size();
-														boolean flag = true;
-														if (size != strs.length)
-														{
-															flag = false;
-														}
-														else
-														{
-															for (int j=0;j<size;j++)
-															{
-																if (!answerlist.get(j).equalsIgnoreCase(strs[j]))
-																{
-																	flag = false;
-																	break;
-																}
-															}
-														}
-														if (flag)
-														{
-															cscore = quscore;
-														}
-													}
-												}
-											}
-											//未答
-											if (useranswer == null)
-											{
-												noanswer ++;
-											}
-											//答对
-											if (pfscore != null)
-											{
-												if (Integer.parseInt(pfscore) == quscore)
-												{
-													right ++;
-												}
-											}
-											else
-											{
-												if (useranswer != null)
-												{
-													List<String> answerlist = qd.getAnswer();
-													if (answerlist != null)
-													{
-														String[] strs = useranswer.split("#");
-														int size = answerlist.size();
-														boolean flag = true;
-														if (size != strs.length)
-														{
-															flag = false;
-														}
-														else
-														{
-															for (int j=0;j<size;j++)
-															{
-																if (!answerlist.get(j).equalsIgnoreCase(strs[j]))
-																{
-																	flag = false;
-																	break;
-																}
-															}
-														}
-														if (flag)
-														{
-															right++;
-														}
-													}
-												}
-											}
-											//答错
-											if (pfscore != null)
-											{
-												if (Integer.parseInt(pfscore) != quscore)
-												{
-													wrong ++;
-												}
-											}
-											else
-											{
-												if (useranswer != null)
-												{
-													List<String> answerlist = qd.getAnswer();
-													if (answerlist != null)
-													{
-														String[] strs = useranswer.split("#");
-														int size = answerlist.size();
-														boolean flag = true;
-														if (size != strs.length)
-														{
-															flag = false;
-														}
-														else
-														{
-															for (int j=0;j<size;j++)
-															{
-																if (!answerlist.get(j).equalsIgnoreCase(strs[j]))
-																{
-																	flag = false;
-																	break;
-																}
-															}
-														}
-														if (!flag)
-														{
-															wrong++;
-														}
-													}
-												}
-												else
-												{
-													wrong ++;
-												}
-											}
+											noanswer ++;
 										}
 									}
 									else
@@ -579,10 +449,8 @@ public class UserExamService {
 								qd.setType(CommonConstant.QTYPE_6);
 								trainList.add(qd);
 								eq.setQdlist(trainList);
-								
 								//---------------分析实训--------可以拆分出去
 								allscore += t.getScore();
-								
 //								UserQuestion uq = userQuestionDao.getUserQuestionBytrain(userId, exam.getId(), t.getId());
 //								UserQuestionChild uqc = null;
 //								if (uq != null)
@@ -603,12 +471,21 @@ public class UserExamService {
 									if (pfscore != null)
 									{
 										cscore += Integer.parseInt(pfscore);
+										if (Integer.parseInt(pfscore) == quscore)
+										{
+											right ++;
+										}
+										else
+										{
+											wrong ++;
+										}
 									}
 									else
 									{										
 										if (useranswer != null && tanswer != null && useranswer.trim().equalsIgnoreCase(tanswer.trim()))
 										{
 											cscore += quscore;
+											right ++;
 										}
 										else
 										{
@@ -616,6 +493,11 @@ public class UserExamService {
 											if (result != null && "True".equals(result))
 											{
 												cscore += quscore;
+												right ++;
+											}
+											else
+											{
+												wrong ++;
 											}
 										}
 									}
@@ -623,52 +505,6 @@ public class UserExamService {
 									if (useranswer == null && result == null)
 									{
 										noanswer ++;
-									}
-									//答对
-									if (pfscore != null)
-									{
-										if (Integer.parseInt(pfscore) == quscore)
-										{
-											right ++;
-										}
-									}
-									else
-									{
-										if (useranswer != null && tanswer != null && useranswer.trim().equalsIgnoreCase(tanswer.trim()))
-										{
-											right ++;
-										}
-										else
-										{
-											//判断机器评分
-											if (result != null && "True".equals(result))
-											{
-												right ++;
-											}
-										}
-									}
-									//答错
-									if (pfscore != null)
-									{
-										if (Integer.parseInt(pfscore) != quscore)
-										{
-											wrong ++;
-										}
-									}
-									else
-									{
-										if (useranswer != null && tanswer != null && !useranswer.trim().equalsIgnoreCase(tanswer.trim()))
-										{
-											wrong ++;
-										}
-										else
-										{
-											//判断机器评分
-											if (result != null && "False".equals(result))
-											{
-												wrong ++;
-											}
-										}
 									}
 								}
 								else

@@ -96,7 +96,7 @@
 	.totalScore {
     	font-family: Arial,Helvetica,sans-serif;
     	font-size: 100px;
-   	 	line-height: 229px;  	 	
+   	 	line-height: 129px;  	 	
 	}
  	.advance {
     	left: 0;
@@ -109,11 +109,11 @@
 		height:40px;
 		line-height:40px;
 	}
-	.fixtop 
+	/* .fixtop 
 	{ 
 		position:fixed;
 		top:445px; 
-	} 
+	}  */
 	.answerimg{overflow:auto;height:150px;border: 1px solid #dddddd;}
 	.answerimg img{
 		padding: 4px;
@@ -134,78 +134,7 @@
     <jsp:include page="../common/header.jsp"></jsp:include>
 	<div id='wrapper'>
 		<div class='container'>
-					<div class='row'>
-						<div class='col-xs-12'>
-							<div class='row'>
-								<div class='col-xs-12'>
-									<div class='page-header'>
-										<h1 class='pull-left'>
-											<span>${exam.name}</span>
-										</h1>
-									</div>
-								</div>
-							</div>
-							<div class='row'>
-							<div class='col-sm-3'>
-								<div class="advance ">
-									<span class="totalScore">100</span>分
-								</div>
-							</div>
-							<div class='col-sm-9'>
-								<div class='box bordered-box' style='margin-bottom:0;'>
-									<div class='box-content box-no-padding'>
-										<div class='responsive-table'>
-											<div class='scrollable-area'>
-												<table class='table table-bordered' style='margin-bottom:0;background-color:#CCCCCC'>
-													<thead>
-														<tr>
-															<th></th>
-															<th>第一部分</th>
-															<th>第二部分</th>
-															<th>第三部分</th>
-															<th>第四部分</th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr>
-															<td>答对</td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td>答错</td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td>未答</td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td>得分</td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-				</div>
-			</div>
-			
+			<jsp:include page="../common/count.jsp"></jsp:include>			
 			<div class='row' id='content-wrapper'>
 				<div class='col-xs-9 box box-nomargin'>
 					<div class='box-content'>
@@ -214,21 +143,21 @@
                     <c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
                       <ol class='dd-list'>
                         <li class='dd-item' data-id='2'>
-                          <div class='dd-handle'>
+                          <div class='dd-handle noborder'>
                             <i class='icon-backward text-purple'></i>
                             ${chapter.name}
                           </div>
                           <c:forEach var="sequential" items="${chapter.esequentials}" varStatus="j">
                           <ol class='dd-list'>
                             <li class='dd-item' data-id='3'>
-                              <div class='dd-handle'>
-                                <i class='icon-camera-retro text-orange'></i>
+                              <div class='dd-handle noborder'>
+                                <i class='icon-backward text-orange'></i>
                                 ${sequential.name}
                               </div>
                               <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
                               <ol class='dd-list'>
                                 <li class='dd-item' data-id='4'>
-                                  <div class='dd-handle'>${vertical.name}</div>
+                                  <div class='dd-handle noborder'>${vertical.name}</div>
                                   <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
 			                 		<c:forEach var="qd" items="${examq.qdlist}" varStatus="nn">
 			                 			<%-- 实训 --%>
@@ -238,7 +167,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<c:set value="${index + 1}" var="index" />
 														<div class='form-group col-sm-12'>
-															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
+															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -288,7 +217,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span class='trainimg' id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
+															<span class='trainimg' id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
 													</form>
 												</div>
@@ -301,7 +230,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<c:set value="${index + 1}" var="index" />
 														<div class='form-group col-sm-12'>
-															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
+															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
 														<hr class='hr-normal'>
 														<div id="numberquestion${index}">
@@ -348,7 +277,7 @@
 													<form class="form form-horizontal" method="post" action="#" id="${examq.id}${qd.id}">
 														<c:set value="${index + 1}" var="index" />
 														<div class='form-group col-sm-12'>
-															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
+															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
 														<hr class='hr-normal'>
 														<div id="numberquestion${index}">
@@ -395,7 +324,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<c:set value="${index + 1}" var="index" />
 														<div class='form-group col-sm-12'>
-															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
+															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -405,7 +334,8 @@
 														<hr class='hr-normal'>
 														<div class='form-group'>
 															<div class='col-sm-12'>
-																<input class='form-control' type="text" id="numberquestion${index}" />
+																<%-- <input class='form-control' type="text" id="numberquestion${index}" /> --%>
+																<textarea class='form-control' rows='5' id="numberquestion${index}"></textarea>
 															</div>
 														</div>
 														<hr class='hr-normal nospace'>
@@ -443,7 +373,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<c:set value="${index + 1}" var="index" />
 														<div class='form-group col-sm-12'>
-															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
+															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -453,7 +383,8 @@
 														<hr class='hr-normal'>
 														<div class='form-group'>
 															<div class='col-sm-12'>
-																<textarea class='form-control' rows='5' id="numberquestion${index}"></textarea>
+																<%-- <textarea class='form-control' rows='5' id="numberquestion${index}"></textarea> --%>
+																<iframe width="100%" height="250" scrolling="no"  frameborder="0" id="numberquestion${index}" src="input.html" ></iframe>
 															</div>
 														</div>
 														<hr class='hr-normal nospace'>
@@ -546,7 +477,7 @@
 									<!-- <div class='row'>
 										<div class='col-xs-12'> -->
 											<div class='box-content' style="padding:0">
-												<a class="btn btn-success btn-block btn-lg" href="javascript:void(0);" onclick="finishpf();">评分结束</a>
+												<a class="btn btn-danger btn-block btn-lg" href="javascript:void(0);" onclick="finishpf();">评分结束</a>
 											</div>
 										<!-- </div>
 									</div>	 -->								
@@ -558,7 +489,7 @@
 		</div>
 
 	</div>
-
+	<div class="clear"></div>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
     <!-- / jquery [required] -->
     <script src="assets/javascripts/jquery/jquery.min.js" type="text/javascript"></script>
@@ -585,17 +516,41 @@
     <!-- / END - page related files and scripts [optional] -->
 	<script src="js/common.js" type="text/javascript"></script>
 	<script src="js/holder.js" type="text/javascript"></script>
-
+	<script src="js/stickUp.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(function() {
 			$("#scroll2").width($("#scroll1").width());
-			//填充试卷内容，判断对错，或者是否已经做过
+        	//填充试卷内容，判断对错，或者是否已经做过
 			initquestion();
 		});
-	
+		jQuery(function($) {
+	        $(document).ready( function() {
+	        	$('#scroll2').stickUp({
+	                parts: {
+	                    0:'home',
+	                    1:'features',
+	                    2: 'news',
+	                    3: 'installation',
+	                    4: 'one-pager',
+	                    5: 'extras',
+	                    6: 'wordpress',
+	                    7: 'contact'
+	                  },
+	                  itemClass: 'menuItem',
+	                  itemHover: 'active',
+	                  topMargin: 'auto'
+	             });
+	        });
+	      });
 		//这个方法多次提交，如果性能有问题再优化
 		function initquestion()
 		{
+			var usercount = 0;
+			<c:forEach var="ued" items="${uedlist}" varStatus="i">
+				usercount += parseInt("${ued.cscore}");
+			</c:forEach>
+			$("#usercount").html(usercount);
+			
 			var index = 0;
 			var examId = "${exam.id}";
 			var userId = "${userId}";
@@ -645,11 +600,23 @@
         									$("#scorequestion"+a.index).html(pfscore);
         									</c:if>
             								<c:if test="${qd.type == 4}">
-            									$("#numberquestion"+a.index).attr("value",a.answer);
+            									$("#numberquestion"+a.index).attr("value",decodeURIComponent(a.answer));
             									$("#scorequestion"+a.index).html(pfscore);
 	        								</c:if>
 	        								<c:if test="${qd.type == 5}">
-	        									$("#numberquestion"+a.index).attr("value",replaceTextarea2(a.answer));
+	        									//$("#numberquestion"+a.index).attr("value",replaceTextarea2(a.answer));
+	        									var iframe = document.getElementById("numberquestion"+a.index);
+												if (iframe.attachEvent) {  
+												    iframe.attachEvent("onload", function() {  
+										                //以下操作必须在iframe加载完后才可进行  
+												    	$("#numberquestion"+a.index).contents().find("#editor").html(decodeURIComponent(a.answer));
+												    });  
+												} else {  
+												    iframe.onload = function() {  
+										                //以下操作必须在iframe加载完后才可进行  
+												    	$("#numberquestion"+a.index).contents().find("#editor").html(decodeURIComponent(a.answer));
+												    };  
+												}  
 	        									$("#scorequestion"+a.index).html(pfscore);
 	    									</c:if>
     								

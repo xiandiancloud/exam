@@ -203,7 +203,7 @@
 										</p>
 										<div>
 											<div class='datetimepicker input-group' id='datetimepicker'>
-												<input class='form-control' data-format='yyyy-MM-dd HH:mm:ss' placeholder='Select timepicker' type='text' id="examstarttime" value="${competion.examstarttime}"> 
+												<input class='form-control' data-format='yyyy-MM-dd HH:mm:ss PP' placeholder='Select timepicker' type='text' id="examstarttime" value="${competion.examstarttime}"> 
 												<span class='input-group-addon'> 
 													<span data-date-icon='icon-calendar' data-time-icon='icon-time'></span>
 												</span>
@@ -216,7 +216,7 @@
 										</p>
 										<div>
 											<div class='datetimepicker input-group' id='datetimepicker'>
-												<input class='form-control' data-format='yyyy-MM-dd HH:mm:ss' placeholder='Select timepicker' type='text' id="examendtime" value="${competion.examendtime}"> 
+												<input class='form-control' data-format='yyyy-MM-dd HH:mm:ss PP' placeholder='Select timepicker' type='text' id="examendtime" value="${competion.examendtime}"> 
 												<span class='input-group-addon'> 
 													<span data-date-icon='icon-calendar' data-time-icon='icon-time'></span>
 												</span>
@@ -433,7 +433,7 @@
                           						<table><tr>
                           						<td>选用试卷</td>
                           						<td width="400px;">
-                          						<select class='select2 form-control' id="selectexam" onclick="selectexam();">
+                          						<select class='select2 form-control' id="selectexam"  onchange="selectexam();">
                           							<c:forEach var="ce" items="${celist}">
 													<option value='${ce.exam.id}' <c:if test="${sexam.id == ce.id}">selected="selected"</c:if>>${ce.exam.name}</option>
 													</c:forEach>
@@ -1135,8 +1135,14 @@
 	//增加裁判
 	function addcompetionjudgment()
 	{
+		var tcom = $("#competionId").attr("value")
+		if (isNull(tcom))
+		{
+			alert("竞赛还没有保存");
+			return;
+		}
 		var userId = parseInt($("#selectuser").attr("value"));;
-		var competionId = parseInt($("#competionId").attr("value"));
+		var competionId = parseInt(tcom);
 		var job = $("#selectjob").attr("value");;
 		var data={userId:userId,competionId:competionId,job:job};
 		$.ajax({
@@ -1197,9 +1203,20 @@
 	//增加竞赛试卷------同时将试卷指定给出卷裁判
 	function addexam()
 	{
-		var userId = parseInt($("#model2user").attr("value"));;
+		var name = $("#model2name").attr("value");
+		if (isNull(name))
+		{
+			alert("试卷名不能为空");
+			return;
+		}
+		var tuserID = $("#model2user").attr("value");
+		if (isNull(tuserID))
+		{
+			alert("命题裁判不能为空");
+			return;
+		}
+		var userId = parseInt(tuserID);;
 		var competionId = parseInt($("#competionId").attr("value"));
-		var name = $("#model2name").attr("value");;
 		var data={userId:userId,competionId:competionId,name:name};
 		$.ajax({
 			url : "cms/addexam.action",

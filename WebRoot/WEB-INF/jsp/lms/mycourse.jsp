@@ -90,7 +90,7 @@
 						<div class='col-sm-12 box'>
 							<div class='box-content'>
 								<div style="text-align:center">
-									<img src="images/user.jpg">
+									<img src="images/user.jpg" class="img-thumbnail">
 								</div>
 								<div style="text-align:center">
 									<a class="btn btn-link">${USER_CONTEXT.username} </a>

@@ -90,7 +90,7 @@
 						<div class='col-sm-12 box'>
 							<div class='box-content'>
 								<div style="text-align:center">
-									<img src="images/user.jpg">
+									<img src="images/user.jpg" class="img-thumbnail">
 								</div>
 								<div style="text-align:center">
 									<a class="btn btn-link">${USER_CONTEXT.username} </a>
@@ -114,16 +114,6 @@
 									</a>
 									<a href="lms/mycompetion.action" class="list-group-item active"> <i class='icon-plus'></i> 我的竞赛
 									</a>
-									<hr class="hr-normal">
-									<!-- <p>增加竞赛</p> -->
-									<c:if test="${USER_CONTEXT.role.roleName=='老师'}">
-									<a href="cms" class='btn btn-success'> <i
-										class='icon-plus'></i> 增加试卷
-									</a>
-									<a href="cms/totcompetion.action?competionId=-1" class='btn btn-primary'> <i
-										class='icon-plus'></i> 增加竞赛
-									</a>
-									</c:if>
 								</div>
 							</div>
 						</div>

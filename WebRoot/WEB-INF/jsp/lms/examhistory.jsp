@@ -121,73 +121,7 @@
     <jsp:include page="../common/header.jsp"></jsp:include>
 	<div id='wrapper'>
 		<div class='container'>
-					<div class='row'>
-						<div class='col-xs-12'>
-							<div class='row'>
-							
-								<div class="col-xs-12">
-									<div class="box ">
-										<div class="box-content">
-											<div class='row'>
-												<div class="col-xs-12">
-													<h2>${exam.name}</h2>
-												</div>
-											</div>
-											<div class='row'>
-												<div class="col-xs-12">
-													<hr class="hr-normal">
-												</div>
-												<div class="col-xs-3">
-													<div class="advance ">
-														<span class="totalScore" id="usercount"></span>分
-													</div>
-													<div class="center">该分数不同于真实成绩，仅代表预测分数。总分<strong>${score}</strong>分</div>
-												</div>
-												<div class="col-xs-9">
-												<table class='table table-bordered' style='background-color:#f9f9f9'>
-													<tbody>
-														<tr>
-															<td></td>
-															<c:forEach var="ued" items="${uedlist}">
-															<td>${ued.name}</td>
-															</c:forEach>
-														</tr>
-														<tr>
-															<td>答对</td>
-															<c:forEach var="ued" items="${uedlist}">
-															<th>${ued.right}</th>
-															</c:forEach>
-														</tr>
-														<tr>
-															<td>答错</td>
-															<c:forEach var="ued" items="${uedlist}">
-															<th>${ued.wrong}</th>
-															</c:forEach>
-														</tr>
-														<tr>
-															<td>未答</td>
-															<c:forEach var="ued" items="${uedlist}">
-															<th>${ued.noanswer}</th>
-															</c:forEach>
-														</tr>
-														<tr>
-															<td>得分</td>
-															
-															<c:forEach var="ued" items="${uedlist}">
-															<th>${ued.cscore}</th>
-															</c:forEach>
-														</tr>
-													</tbody>
-												</table>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-						</div>
-				</div>
-			</div>
-			
+			<jsp:include page="../common/count.jsp"></jsp:include>			
 			<div class='row' id='content-wrapper'>
 				<div class='col-xs-9'>
 					<div class='row'>
@@ -450,83 +384,82 @@
 					
 				<div class="col-xs-3" id="scroll1">
 				<div id="scroll2">
-							<div class='box bordered-box blue-border'>
-								<div class='box-content'>
-									<!-- <div class='row'>
-										<div class='col-xs-3'>
-											<div id="timer" style="color:green;font-family:Arial;font-size:170%;"></div>
-										</div>
-										<div class='col-xs-12'>
-											<div class="pull-right">
-												<a class="btn">暂停</a> 
-												<a href="lms/myexam.action" class="btn">下次再做</a>
-											</div>
-										</div>
-									</div> 
-									<hr class='hr-normal'>-->
-									<div class='row'>
-										<div class='col-xs-12'>
-											<div data-offset-top="125" class="nav nav-tabs nav-stacked section">
-												<!-- <li><a href="javascript:void(0)" onclick="document.getElementById('section-2').scrollIntoView();" class="j-item item  f-fl">31</a></li> -->
-												<c:set value="0" var="sum" />
-												<c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
-							                          <c:forEach var="sequential" items="${chapter.esequentials}" varStatus="j">
-							                              <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
-							                                  <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
-							                                  
-										                 		<c:forEach var="qd" items="${examq.qdlist}">
-										                 		<!-- <li> -->
-										                 		<c:set value="${sum + 1}" var="sum" /> 
-										                 		<a href="javascript:void(0)" onclick="document.getElementById('number${sum}').scrollIntoView();" class="j-item item  f-fl" id="index${sum}">
-										                 		${sum}
-										                 		</a>
-										                 		<!-- </li> -->
-
-										                 		</c:forEach>
-										                 	</c:forEach>
-							                              </c:forEach>
-							                          </c:forEach>
-							                      </c:forEach>
-											</div>
-										</div>
+					<div class='box bordered-box blue-border'>
+						<div class='box-content'>
+							<!-- <div class='row'>
+								<div class='col-xs-3'>
+									<div id="timer" style="color:green;font-family:Arial;font-size:170%;"></div>
+								</div>
+								<div class='col-xs-12'>
+									<div class="pull-right">
+										<a class="btn">暂停</a> 
+										<a href="lms/myexam.action" class="btn">下次再做</a>
 									</div>
-									<hr class='hr-normal'>
-									<div class='row'>
-										<div class='col-xs-4'>
-											<%-- <div class='box-content' style="padding:0">
-												<c:if test="${userexam.state == 0}">
-													<a class="btn btn-danger btn-block btn-lg" href="javascript:void(0);" onclick="submitallquesstion();">提交试卷</a>
-												</c:if>
-												<c:if test="${userexam.state == 1}">
-													<c:if test="${exam.isnormal == 0}">
-														<a class="btn btn-danger btn-block btn-lg" href="lms/toagainexamintroduce.action?competionId=${competionId}&examId=${exam.id}">再做一次</a>
-													</c:if>
-												</c:if>
-											</div> --%>
-											<div class="section">
-												<a class="item right"></a>&nbsp;正确
-											</div>
-										</div>
-										<div class='col-xs-4'>
-											<div class="section">
-												<a class="item wrong"></a>&nbsp;错误
-											</div>
-										</div>
-										<div class='col-xs-4'>
-											<div class="section">
-												<a class="item"></a>&nbsp;未做
-											</div>
-										</div>
-									</div>									
+								</div>
+							</div> 
+							<hr class='hr-normal'>-->
+							<div class='row'>
+								<div class='col-xs-12'>
+									<div data-offset-top="125" class="nav nav-tabs nav-stacked section">
+										<!-- <li><a href="javascript:void(0)" onclick="document.getElementById('section-2').scrollIntoView();" class="j-item item  f-fl">31</a></li> -->
+										<c:set value="0" var="sum" />
+										<c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
+					                          <c:forEach var="sequential" items="${chapter.esequentials}" varStatus="j">
+					                              <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
+					                                  <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
+					                                  
+								                 		<c:forEach var="qd" items="${examq.qdlist}">
+								                 		<!-- <li> -->
+								                 		<c:set value="${sum + 1}" var="sum" /> 
+								                 		<a href="javascript:void(0)" onclick="document.getElementById('number${sum}').scrollIntoView();" class="j-item item  f-fl" id="index${sum}">
+								                 		${sum}
+								                 		</a>
+								                 		<!-- </li> -->
+
+								                 		</c:forEach>
+								                 	</c:forEach>
+					                              </c:forEach>
+					                          </c:forEach>
+					                      </c:forEach>
+									</div>
 								</div>
 							</div>
+							<hr class='hr-normal'>
+							<div class='row'>
+								<div class='col-xs-4'>
+									<%-- <div class='box-content' style="padding:0">
+										<c:if test="${userexam.state == 0}">
+											<a class="btn btn-danger btn-block btn-lg" href="javascript:void(0);" onclick="submitallquesstion();">提交试卷</a>
+										</c:if>
+										<c:if test="${userexam.state == 1}">
+											<c:if test="${exam.isnormal == 0}">
+												<a class="btn btn-danger btn-block btn-lg" href="lms/toagainexamintroduce.action?competionId=${competionId}&examId=${exam.id}">再做一次</a>
+											</c:if>
+										</c:if>
+									</div> --%>
+									<div class="section">
+										<a class="item right"></a>&nbsp;正确
+									</div>
+								</div>
+								<div class='col-xs-4'>
+									<div class="section">
+										<a class="item wrong"></a>&nbsp;错误
+									</div>
+								</div>
+								<div class='col-xs-4'>
+									<div class="section">
+										<a class="item"></a>&nbsp;未做
+									</div>
+								</div>
+							</div>									
+						</div>
+					</div>
 		        </div>
 		        </div>
 			</div>
 		</div>
-
 	</div>
-
+	<div class="clear"></div>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
     <!-- / jquery [required] -->
     <script src="assets/javascripts/jquery/jquery.min.js" type="text/javascript"></script>
@@ -562,21 +495,21 @@
 		});
 		jQuery(function($) {
 	        $(document).ready( function() {
-	          $('#scroll2').stickUp({
-                  parts: {
-                      0:'home',
-                      1:'features',
-                      2: 'news',
-                      3: 'installation',
-                      4: 'one-pager',
-                      5: 'extras',
-                      6: 'wordpress',
-                      7: 'contact'
-                    },
-                    itemClass: 'menuItem',
-                    itemHover: 'active',
-                    topMargin: 'auto'
-                  });
+	        	$('#scroll2').stickUp({
+	                parts: {
+	                    0:'home',
+	                    1:'features',
+	                    2: 'news',
+	                    3: 'installation',
+	                    4: 'one-pager',
+	                    5: 'extras',
+	                    6: 'wordpress',
+	                    7: 'contact'
+	                  },
+	                  itemClass: 'menuItem',
+	                  itemHover: 'active',
+	                  topMargin: 'auto'
+	             });
 	        });
 	      });
 		//这个方法多次提交，如果性能有问题再优化
@@ -585,7 +518,6 @@
 			var usercount = 0;
 			<c:forEach var="ued" items="${uedlist}" varStatus="i">
 				usercount += parseInt("${ued.cscore}");
-				
 			</c:forEach>
 			$("#usercount").html(usercount);
 			var index = 0;
@@ -621,7 +553,7 @@
 		            								$("#index"+a.index).addClass("wrong");
 	            								}
             									$("#numberquestion"+a.index+" :radio").each(function(){
-											         if ($(this).val() == a.answer)
+											         if ($(this).val() == decodeURIComponent(a.answer))
 										        	 {
 											        	 $(this).attr("checked","checked");
 										        	 }

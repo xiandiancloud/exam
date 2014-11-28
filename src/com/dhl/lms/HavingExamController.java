@@ -162,65 +162,6 @@ public class HavingExamController extends BaseController {
 	public ModelAndView toexamingtohistoryexam(HttpServletRequest request,int examId,int docounts) {
 		ModelAndView view = new ModelAndView();
 		Exam exam = examService.get(examId);
-		//
-//		Set<ExamChapter> chapterset = exam.getExamchapters();
-//		Iterator it = chapterset.iterator();
-//		while (it.hasNext()) {
-//			ExamChapter chapter = (ExamChapter) it.next();
-//			Set<ExamSequential> sequentialset = chapter.getEsequentials();
-//			Iterator it2 = sequentialset.iterator();
-//
-//			while (it2.hasNext()) {
-//				ExamSequential sequential = (ExamSequential) it2.next();
-//				Set<ExamVertical> verticalset = sequential.getExamVerticals();
-//				Iterator it3 = verticalset.iterator();
-//				while (it3.hasNext()) {
-//					ExamVertical vertical = (ExamVertical) it3.next();
-//					Set<ExamQuestion> vt = vertical.getExamQuestion();
-//					for (ExamQuestion eq:vt)
-//					{
-//						Question q = eq.getQuestion();
-//						//问题
-//						if (q != null)
-//						{
-//							String content = q.getContent();
-//							if (q.getType() == 1)
-//							{
-//								List<QuestionData> qtlist = new ArrayList();
-//								QuestionData qd = new QuestionData(q.getId());
-//								qd.setTitle(content);
-//								qd.setType(CommonConstant.QTYPE_1);
-//								qtlist.add(qd);
-//								eq.setQdlist(qtlist);
-////							eq.setHtmlcontent(content);
-//							}
-//							else
-//							{
-//								
-//								List<QuestionData> qdlist = ParseQuestion.changetohtml(content,q.getId());
-//								eq.setQdlist(qdlist);
-//							}
-//						}
-//						else//实训
-//						{
-//							Train t = eq.getTrain();
-//							if (t != null)
-//							{
-//								List<QuestionData> trainList = new ArrayList();
-//								QuestionData qd = new QuestionData(t.getId());
-//								qd.setTitle(t.getName());
-//								List<String> qs = new ArrayList();
-//								qs.add(t.getConContent());
-//								qd.setContent(qs);
-//								qd.setType(CommonConstant.QTYPE_6);
-//								trainList.add(qd);
-//								eq.setQdlist(trainList);
-//							}
-//						}
-//					}
-//				}
-//			}
-//		}
 		User user = getSessionUser(request);
 		List clist = userExamService.getUserExamCount(user.getId(), exam,docounts);
 		view.addObject("score",clist.get(0));
@@ -246,69 +187,11 @@ public class HavingExamController extends BaseController {
 	public ModelAndView toexamingtopfexam(HttpServletRequest request,int competionId,int examId,int userId) {
 		ModelAndView view = new ModelAndView();
 		Exam exam = examService.get(examId);
-		//
-		Set<ExamChapter> chapterset = exam.getExamchapters();
-		Iterator it = chapterset.iterator();
-		while (it.hasNext()) {
-			ExamChapter chapter = (ExamChapter) it.next();
-			Set<ExamSequential> sequentialset = chapter.getEsequentials();
-			Iterator it2 = sequentialset.iterator();
-
-			while (it2.hasNext()) {
-				ExamSequential sequential = (ExamSequential) it2.next();
-				Set<ExamVertical> verticalset = sequential.getExamVerticals();
-				Iterator it3 = verticalset.iterator();
-				while (it3.hasNext()) {
-					ExamVertical vertical = (ExamVertical) it3.next();
-					Set<ExamQuestion> vt = vertical.getExamQuestion();
-					for (ExamQuestion eq:vt)
-					{
-						Question q = eq.getQuestion();
-						//问题
-						if (q != null)
-						{
-							String content = q.getContent();
-							if (q.getType() == 1)
-							{
-								List<QuestionData> qtlist = new ArrayList();
-								QuestionData qd = new QuestionData(q.getId());
-								qd.setTitle(content);
-								qd.setType(CommonConstant.QTYPE_1);
-								qtlist.add(qd);
-								eq.setQdlist(qtlist);
-//							eq.setHtmlcontent(content);
-							}
-							else
-							{
-								
-								List<QuestionData> qdlist = ParseQuestion.changetohtml(content,q.getId());
-								eq.setQdlist(qdlist);
-							}
-						}
-						else//实训
-						{
-							Train t = eq.getTrain();
-							if (t != null)
-							{
-								List<QuestionData> trainList = new ArrayList();
-								QuestionData qd = new QuestionData(t.getId());
-								qd.setTitle(t.getName());
-								List<String> qs = new ArrayList();
-								qs.add(t.getConContent());
-								qd.setContent(qs);
-								qd.setType(CommonConstant.QTYPE_6);
-								qd.setScore(t.getScore());
-								List<String> answer = new ArrayList();
-								answer.add(t.getConAnswer());
-								qd.setAnswer(answer);
-								trainList.add(qd);
-								eq.setQdlist(trainList);
-							}
-						}
-					}
-				}
-			}
-		}
+		//统计信息
+		List clist = userExamService.getUserExamCount(userId, exam,-1);
+		view.addObject("score",clist.get(0));
+		view.addObject("uedlist",clist.get(1));
+		
 		view.addObject("competionId",competionId);
 		view.addObject("exam", exam);
 		view.addObject("userId", userId);
@@ -355,6 +238,7 @@ public class HavingExamController extends BaseController {
 			if (useranswer != null)
 			{
 //				String useranswer = uqc.getUseranswer();
+				useranswer = UtilTools.replaceBackett(useranswer);
 				str = "{'sucess':'sucess','answer':'"+useranswer+"','index':'"+index+"'}";
 			}
 			
@@ -454,13 +338,15 @@ public class HavingExamController extends BaseController {
 	 * 提交考卷
 	 */
 	@RequestMapping("/submitallquesstion")
-	public void submitallquesstion(HttpServletRequest request,
+	public ModelAndView submitallquesstion(HttpServletRequest request,
 			HttpServletResponse response,int competionId, int examId) {
-		try {
-			String str="";
+//		try {
+//			String str="";
 			if (!isstart(competionId))
 			{
-				str = "{'sucess':'fail'}";
+//				str = "{'sucess':'fail'}";
+				String url = "redirect:/lms/toexamerror.action";
+				return new ModelAndView(url);
 			}
 			else
 			{
@@ -468,13 +354,23 @@ public class HavingExamController extends BaseController {
 				UserExam ue = userExamService.getUserExam(user.getId(),examId);
 				ue.setState(1);
 				userExamService.updateUserExam(ue);
-				str = "{'sucess':'sucess'}";
+				if (competionId > 0)
+				{
+					String url = "redirect:/lms/mycompetion.action";
+					return new ModelAndView(url);
+				}
+				else
+				{
+					String url = "redirect:/lms/toexamingtohistoryexam.action?examId="+examId+"&docounts=-1";
+					return new ModelAndView(url);
+				}
+//				str = "{'sucess':'sucess'}";
 			}
-			PrintWriter out = response.getWriter();
-			out.write(str);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//			PrintWriter out = response.getWriter();
+//			out.write(str);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 
 	}
 	

@@ -134,7 +134,7 @@
 													<h2>${exam.name}</h2>
 												</div>
 											</div>											
-											<div class='row none' id="firesult">
+											<%-- <div class='row none' id="firesult">
 												<div class="col-xs-12">
 													<hr class="hr-normal">
 												</div>
@@ -181,7 +181,7 @@
 													</tbody>
 												</table>
 												</div>
-											</div>
+											</div> --%>
 										</div>
 									</div>
 								</div>
@@ -373,59 +373,59 @@
 					
 				<div class="col-xs-3" id="scroll1">
 				<div id="scroll2">
-							<div class='box bordered-box blue-border'>
-								<div class='box-content'>
-									<div class='row'>
-										<!-- <div class='col-xs-3'>
-											<div id="timer" style="color:green;font-family:Arial;font-size:170%;"></div>
-										</div> -->
-										<div class='col-xs-12'>
-											<div class="pull-right">
-												<!-- <a class="btn">暂停</a>  -->
-												<a href="lms/myexam.action" class="btn">下次再做</a>
-											</div>
-										</div>
+					<div class='box bordered-box blue-border'>
+						<div class='box-content'>
+							<div class='row'>
+								<!-- <div class='col-xs-3'>
+									<div id="timer" style="color:green;font-family:Arial;font-size:170%;"></div>
+								</div> -->
+								<div class='col-xs-12'>
+									<div class="pull-right">
+										<!-- <a class="btn">暂停</a>  -->
+										<a href="lms/myexam.action" class="btn">下次再做</a>
 									</div>
-									<hr class='hr-normal'>
-									<div class='row'>
-										<div class='col-xs-12'>
-											<div data-offset-top="125" class="nav nav-tabs nav-stacked section">
-												<!-- <li><a href="javascript:void(0)" onclick="document.getElementById('section-2').scrollIntoView();" class="j-item item  f-fl">31</a></li> -->
-												<c:set value="0" var="sum" />
-												<c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
-							                          <c:forEach var="sequential" items="${chapter.esequentials}" varStatus="j">
-							                              <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
-							                                  <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
-										                 		<c:forEach var="qd" items="${examq.qdlist}">
-										                 		<c:set value="${sum + 1}" var="sum" /> 
-										                 		<a href="javascript:void(0)" onclick="document.getElementById('number${sum}').scrollIntoView();" class="j-item item  f-fl" id="index${sum}">
-										                 		${sum}
-										                 		</a>
-										                 		</c:forEach>
-										                 	</c:forEach>
-							                              </c:forEach>
-							                          </c:forEach>
-							                      </c:forEach>
-											</div>
-										</div>
-									</div>
-									<hr class='hr-normal'>
-									<div class='row'>
-										<div class='col-xs-12'>
-											<div class='box-content' style="padding:0">
-												<c:if test="${userexam.state == 0}">
-													<a class="btn btn-danger btn-block btn-lg" href="javascript:void(0);" onclick="submitallquesstion();">提交试卷</a>
-												</c:if>
-												<c:if test="${userexam.state == 1}">
-													<c:if test="${exam.isnormal == 0}">
-														<a class="btn btn-danger btn-block btn-lg" href="lms/toagainexamintroduce.action?competionId=${competionId}&examId=${exam.id}">再做一次</a>
-													</c:if>
-												</c:if>
-											</div>
-										</div>
-									</div>									
 								</div>
 							</div>
+							<hr class='hr-normal'>
+							<div class='row'>
+								<div class='col-xs-12'>
+									<div data-offset-top="125" class="nav nav-tabs nav-stacked section">
+										<!-- <li><a href="javascript:void(0)" onclick="document.getElementById('section-2').scrollIntoView();" class="j-item item  f-fl">31</a></li> -->
+										<c:set value="0" var="sum" />
+										<c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
+					                          <c:forEach var="sequential" items="${chapter.esequentials}" varStatus="j">
+					                              <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
+					                                  <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
+								                 		<c:forEach var="qd" items="${examq.qdlist}">
+								                 		<c:set value="${sum + 1}" var="sum" /> 
+								                 		<a href="javascript:void(0)" onclick="document.getElementById('number${sum}').scrollIntoView();" class="j-item item  f-fl" id="index${sum}">
+								                 		${sum}
+								                 		</a>
+								                 		</c:forEach>
+								                 	</c:forEach>
+					                              </c:forEach>
+					                          </c:forEach>
+					                      </c:forEach>
+									</div>
+								</div>
+							</div>
+							<hr class='hr-normal'>
+							<div class='row'>
+								<div class='col-xs-12'>
+									<div class='box-content' style="padding:0">
+										<c:if test="${userexam.state == 0}">
+											<a class="btn btn-danger btn-block btn-lg" href="lms/submitallquesstion.action?competionId=${competionId}&examId=${exam.id}">提交试卷</a>
+										</c:if>
+										<c:if test="${userexam.state == 1}">
+											<c:if test="${exam.isnormal == 0}">
+												<a class="btn btn-danger btn-block btn-lg" href="lms/toagainexamintroduce.action?competionId=${competionId}&examId=${exam.id}">再做一次</a>
+											</c:if>
+										</c:if>
+									</div>
+								</div>
+							</div>									
+						</div>
+					</div>
 		        </div>
 		        </div>
 			</div>
@@ -464,46 +464,43 @@
 	<script type="text/javascript">
 		$(function() {
 			$("#scroll2").width($("#scroll1").width());
-			//填充试卷内容，判断对错，或者是否已经做过
-		});
-		jQuery(function($) {
-	        $(document).ready( function() {
-	          $('#scroll2').stickUp({
-                  parts: {
-                      0:'home',
-                      1:'features',
-                      2: 'news',
-                      3: 'installation',
-                      4: 'one-pager',
-                      5: 'extras',
-                      6: 'wordpress',
-                      7: 'contact'
-                    },
-                    itemClass: 'menuItem',
-                    itemHover: 'active'
-                  });
-	          
-	          	initquestion();
-				//是否显示考试成绩
-				if ("${userexam.state}" == 1)
+			//填充试卷内容，判断对错，或者是否已经做过  
+			initquestion();
+	            //是否显示考试成绩
+				/* if ("${userexam.state}" == 1)
 				{
 					if ("${exam.isnormal}" == 0)
 					{
 						$("#firesult").show();
-						/* $("#scroll2").css("top",415); */
 					}
 				}
 				else
 				{
 					$("#firesult").hide();
-				}			
-				
+				} */		
+		});
+		jQuery(function($) {
+	        $(document).ready( function() {
+	        	$('#scroll2').stickUp({
+	                parts: {
+	                    0:'home',
+	                    1:'features',
+	                    2: 'news',
+	                    3: 'installation',
+	                    4: 'one-pager',
+	                    5: 'extras',
+	                    6: 'wordpress',
+	                    7: 'contact'
+	                  },
+	                  itemClass: 'menuItem',
+	                  itemHover: 'active',
+	                  topMargin: 'auto'
+	             });
 	        });
 	      });
-		function loadfiresult()
+		/* function loadfiresult()
 		{
  			var examId = "${exam.id}";
- 			//var competionId = "${competionId}";
 			var data = {examId:examId};
 			$.ajax({
 				url : "lms/usercounts.action",
@@ -515,15 +512,15 @@
 					}
 				}
 			});
-		}
+		} */
 		//这个方法多次提交，如果性能有问题再优化
 		function initquestion()
 		{
-			var usercount = 0;
+			/* var usercount = 0;
 			<c:forEach var="ued" items="${uedlist}" varStatus="i">
 				usercount += parseInt("${ued.cscore}");
 			</c:forEach>
-			$("#usercount").html(usercount);
+			$("#usercount").html(usercount); */
 			
 			var index = 0;
 			<c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
@@ -551,14 +548,14 @@
             							{
 	            							<c:if test="${qd.type == 2}">
             									$("#numberquestion"+a.index+" :radio").each(function(){
-											         if ($(this).val() == a.answer)
+											         if ($(this).val() == decodeURIComponent(a.answer))
 										        	 {
 											        	 $(this).attr("checked","checked");
 										        	 }
 											     });
             								</c:if>
             								<c:if test="${qd.type == 3}">
-            								var strs = a.answer.split('#');
+            								var strs = decodeURIComponent(a.answer).split('#');
         									$("#numberquestion"+a.index+" :checkbox").each(function(i){
         										 if ($.inArray($(this).val(), strs) != -1)
 									        	 {
@@ -776,7 +773,7 @@
 			return true;
 		}
 		//提交答案
-		function submitallquesstion()
+		/* function submitallquesstion()
 		{
  			var examId = "${exam.id}";
  			var competionId = "${competionId}";
@@ -788,8 +785,6 @@
 				success : function(s) {
 					var a = eval("(" + s + ")");
 					if ("sucess" == a.sucess) {
-						//alert("提交成功");
-						//location.reload();
 						location.href = "lms/toexamingtohistoryexam.action?examId="+examId+"&docounts=-1";
 					}
 					else
@@ -798,7 +793,7 @@
 					}
 				}
 			});
-		}
+		} */
 	</script>
 </body>
 </html>
