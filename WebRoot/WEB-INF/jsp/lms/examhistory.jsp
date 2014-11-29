@@ -98,6 +98,9 @@
     	font-size: 100px;
    	 	line-height: 129px;  	 	
 	}
+	.bscore {
+   	 	color:#FF7F24; 	 	
+	}
  	.advance {
     	left: 0;
     	text-align: center;
@@ -164,29 +167,45 @@
 															</div>
 														</c:forEach>
 													</form>
-													<hr class='hr-normal'>												
-													<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<div class='h30'></div>											
+													<div class='form-group col-xs-12'>
 															<div class='row'>
-																<div class='col-xs-6 juzhong' style="line-height:40px;">
-																	<label >正确答案：${qd.answer}</label>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>${qd.score}</span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	得分：<span id="scorequestion${index}"></span>
-																</div>
-															</div>
-															<div class='row'>
-																<div class='col-xs-12 juzhong' style="line-height:40px;height:auto;">
-																	<label>机器答案：<div id="revalue${index}" class="answerimg"></div></label>
-																</div>
-																<div class='col-xs-12 juzhong' style="line-height:40px;height:auto;">
-																	<label>用户答案：<div id="numberquestion${index}" class="answerimg"></div></label>
-																</div>
-															</div>
-															<div class='h30'></div>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link green-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-ok'></div>
+														                    </div>
+														                    <div class='content'>正确答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div class='col-xs-10 box-content msg-block'>
+														                ${qd.answer}
+														              </div>
+														          </div>
+														          <div class='h10'></div>	
+														          <div class='row'>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link red-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-user'></div>
+														                    </div>
+														                    <div class='content'>用户答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div class='col-xs-10 box-content msg-block'>&nbsp;</div>
+														          </div>
+														          <div class='row'>
+																 <div class='col-xs-2'>
+														              </div>
+														              
+														              <div class='col-xs-10 l7back'>
+														                	本题满分：<span class="bscore"><strong>${qd.score}</strong></span>
+														                	&nbsp;&nbsp;你的得分：<span class="bscore" id="scorequestion${index}"><strong>${qd.userscore}</strong></span>
+														              </div>
+														          </div>
 														</div>
 												</div>
 											</div>
@@ -213,7 +232,6 @@
 															<c:set value="${index + 1}" var="index" />
 															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
-														<hr class='hr-normal'>
 														<div id="numberquestion${index}">
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -223,21 +241,45 @@
 															</div>
 														</c:forEach>
 														</div>
-														<hr class='hr-normal nospace'>
-														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<div class='h30'></div>											
+														<div class='form-group col-xs-12'>
 															<div class='row'>
-																<div class='col-xs-6 juzhong' style="line-height:40px;">
-																	<label >正确答案：${qd.answer}</label>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>${qd.score}</span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	得分：<span id="scorequestion${index}"></span>
-																</div>															
-															</div>
-															<div class='h30'></div>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link green-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-ok'></div>
+														                    </div>
+														                    <div class='content'>正确答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div class='col-xs-10 box-content msg-block'>
+														                ${qd.answer}
+														              </div>
+														          </div>
+														          <div class='h10'></div>	
+														          <div class='row'>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link red-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-user'></div>
+														                    </div>
+														                    <div class='content'>用户答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div class='col-xs-10 box-content msg-block'>&nbsp;</div>
+														          </div>
+														          <div class='row'>
+																 <div class='col-xs-2'>
+														              </div>
+														              
+														              <div class='col-xs-10 l7back'>
+														                	本题满分：<span class="bscore"><strong>${qd.score}</strong></span>
+														                	&nbsp;&nbsp;你的得分：<span class="bscore" id="scorequestion${index}"><strong>${qd.userscore}</strong></span>
+														              </div>
+														          </div>
 														</div>
 													</form>
 												</div>
@@ -252,7 +294,6 @@
 															<c:set value="${index + 1}" var="index" />
 															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
-														<hr class='hr-normal'>
 														<div id="numberquestion${index}">
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -262,22 +303,46 @@
 															</div>
 														</c:forEach>
 														</div>
-														<hr class='hr-normal nospace'>
-														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<div class='h30'></div>											
+														<div class='form-group col-xs-12'>
 															<div class='row'>
-																<div class='col-xs-6 juzhong' style="line-height:40px;">
-																	<label >正确答案：${qd.answer}</label>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>${qd.score}</span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	得分：<span id="scorequestion${index}"></span>
-																</div>																
-															</div>
-															<div class='h30'></div>
-														</div>												
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link green-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-ok'></div>
+														                    </div>
+														                    <div class='content'>正确答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div class='col-xs-10 box-content msg-block'>
+														                ${qd.answer}
+														              </div>
+														          </div>
+														          <div class='h10'></div>	
+														          <div class='row'>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link red-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-user'></div>
+														                    </div>
+														                    <div class='content'>用户答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div class='col-xs-10 box-content msg-block'>&nbsp;</div>
+														          </div>
+														          <div class='row'>
+																 <div class='col-xs-2'>
+														              </div>
+														              
+														              <div class='col-xs-10 l7back'>
+														                	本题满分：<span class="bscore"><strong>${qd.score}</strong></span>
+														                	&nbsp;&nbsp;你的得分：<span class="bscore" id="scorequestion${index}"><strong>${qd.userscore}</strong></span>
+														              </div>
+														          </div>
+														</div>
 													</form>
 												</div>
 											</div>
@@ -296,28 +361,45 @@
 																<label>${qdcontent}</label> 
 															</div>
 														</c:forEach>
-														<hr class='hr-normal'>
-														<div class='form-group'>
-															<div class='col-sm-12'>
-																<%-- <input class='form-control' type="text" id="numberquestion${index}"/> --%>
-																<textarea class='form-control' rows='5' id="numberquestion${index}"></textarea>
-															</div>
-														</div>
-														<hr class='hr-normal nospace'>
-														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<div class='h30'></div>											
+														<div class='form-group col-xs-12'>
 															<div class='row'>
-																<div class='col-xs-6 juzhong' style="line-height:40px;">
-																	<label >正确答案：${qd.answer}</label>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>${qd.score}</span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	得分：<span id="scorequestion${index}"></span>
-																</div>
-															</div>
-															<div class='h30'></div>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link green-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-ok'></div>
+														                    </div>
+														                    <div class='content'>正确答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div class='col-xs-10 box-content msg-block'>
+														                ${qd.answer}
+														              </div>
+														          </div>
+														          <div class='h10'></div>	
+														          <div class='row'>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link red-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-user'></div>
+														                    </div>
+														                    <div class='content'>用户答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div class='col-xs-10 box-content msg-block'>&nbsp;</div>
+														          </div>
+														          <div class='row'>
+																 <div class='col-xs-2'>
+														              </div>
+														              
+														              <div class='col-xs-10 l7back'>
+														                	本题满分：<span class="bscore"><strong>${qd.score}</strong></span>
+														                	&nbsp;&nbsp;你的得分：<span class="bscore" id="scorequestion${index}"><strong>${qd.userscore}</strong></span>
+														              </div>
+														          </div>
 														</div>
 													</form>
 												</div>
@@ -337,28 +419,45 @@
 																<label>${qdcontent}</label> 
 															</div>
 														</c:forEach>
-														<hr class='hr-normal'>
-														<div class='form-group'>
-															<div class='col-sm-12'>
-																<%-- <textarea class='form-control' rows='5' id="numberquestion${index}"></textarea> --%>
-																<iframe width="100%" height="250" scrolling="no"  frameborder="0" id="numberquestion${index}" src="input.html" ></iframe>
-															</div>
-														</div>
-														<hr class='hr-normal nospace'>
-														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<div class='h30'></div>												
+														<div class='form-group col-xs-12'>
 															<div class='row'>
-																<div class='col-xs-6 juzhong' style="line-height:40px;">
-																	<label >正确答案：${qd.answer}</label>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>${qd.score}</span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	得分：<span id="scorequestion${index}"></span>
-																</div>															
-															</div>
-															<div class='h30'></div>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link green-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-ok'></div>
+														                    </div>
+														                    <div class='content'>正确答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div class='col-xs-10 box-content msg-block'>
+														                ${qd.answer}
+														              </div>
+														          </div>
+														          <div class='h10'></div>	
+														          <div class='row'>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link red-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-user'></div>
+														                    </div>
+														                    <div class='content'>用户答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div class='col-xs-10 box-content msg-block'>&nbsp;</div>
+														          </div>
+														          <div class='row'>
+																 <div class='col-xs-2'>
+														              </div>
+														              
+														              <div class='col-xs-10 l7back'>
+														                	本题满分：<span class="bscore"><strong>${qd.score}</strong></span>
+														                	&nbsp;&nbsp;你的得分：<span class="bscore" id="scorequestion${index}"><strong>${qd.userscore}</strong></span>
+														              </div>
+														          </div>
 														</div>
 													</form>
 												</div>
@@ -475,8 +574,6 @@
     <script src="assets/javascripts/bootstrap/bootstrap.js" type="text/javascript"></script>
     <!-- / modernizr -->
     <script src="assets/javascripts/plugins/modernizr/modernizr.min.js" type="text/javascript"></script>
-    <!-- / retina -->
-    <script src="assets/javascripts/plugins/retina/retina.js" type="text/javascript"></script>
     <!-- / theme file [required] -->
     <script src="assets/javascripts/theme.js" type="text/javascript"></script>
     <!-- / demo file [not required!] -->
@@ -489,7 +586,7 @@
 	<script src="js/stickUp.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(function() {
-			$("#scroll2").width($("#scroll1").width());
+			/* $("#scroll2").width($("#scroll1").width()); */
 			//填充试卷内容，判断对错，或者是否已经做过
 			initquestion();
 		});

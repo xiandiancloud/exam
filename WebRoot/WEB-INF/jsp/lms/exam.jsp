@@ -47,6 +47,9 @@
     <script src="assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
     <![endif]-->
     
+    <script type="text/javascript" charset="utf-8" src="ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="ueditor.all.js"> </script>
+    
    <style type="text/css">
     /* Custom Styles */
 	.section .item {
@@ -342,7 +345,9 @@
 														<div class='form-group'>
 															<div class='col-sm-12'>
 																<%-- <textarea class='form-control' rows='5' id="numberquestion${index}" onblur="submittextareaquesstion('${qd.id}','${nn.index+1}',this,'${index}');"></textarea> --%>
-																<iframe width="100%" height="250" scrolling="no"  frameborder="0" id="numberquestion${index}" src="input.html" ></iframe>
+																<%-- <iframe width="100%" height="250" scrolling="no"  frameborder="0" id="numberquestion${index}" src="input.html" ></iframe> --%>
+																
+																<script id="numberquestion${index}" type="text/plain" style="width:100%;margin-bottom:5px;min-height: 100px;"></script>
 															</div>
 															<div class='col-sm-12'>
 																<a id="hrefnumber${index}" href="javascript:void(0);" onclick="submittextareaquesstion('${qd.id}','${nn.index+1}','numberquestion${index}','${index}');" class='btn btn-danger'>
@@ -448,8 +453,6 @@
     <script src="assets/javascripts/bootstrap/bootstrap.js" type="text/javascript"></script>
     <!-- / modernizr -->
     <script src="assets/javascripts/plugins/modernizr/modernizr.min.js" type="text/javascript"></script>
-    <!-- / retina -->
-    <script src="assets/javascripts/plugins/retina/retina.js" type="text/javascript"></script>
     <!-- / theme file [required] -->
     <script src="assets/javascripts/theme.js" type="text/javascript"></script>
     <!-- / demo file [not required!] -->
@@ -463,9 +466,7 @@
 	<script src="js/stickUp.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(function() {
-			$("#scroll2").width($("#scroll1").width());
-			//填充试卷内容，判断对错，或者是否已经做过  
-			initquestion();
+			/* $("#scroll2").width($("#scroll1").width()); */
 	            //是否显示考试成绩
 				/* if ("${userexam.state}" == 1)
 				{
@@ -497,6 +498,8 @@
 	                  topMargin: 'auto'
 	             });
 	        });
+	      	//填充试卷内容，判断对错，或者是否已经做过  
+			initquestion();
 	      });
 		/* function loadfiresult()
 		{
@@ -568,20 +571,30 @@
 	        								</c:if>
 	        								<c:if test="${qd.type == 5}">
 	        									//$("#numberquestion"+a.index).attr("value",replaceTextarea2(a.answer));
-	        									var iframe = document.getElementById("numberquestion"+a.index);
+	        									//ue.setContent('1111111111111',false);
+	        									//UE.getEditor('numberquestion1').execCommand('insertHtml', '1111111111111')
+	        									$("#numberquestion"+a.index).html(decodeURIComponent(a.answer));
+	        									UE.getEditor("numberquestion"+a.index);
+	        									
+	        									/* var iframe = document.getElementById("numberquestion"+a.index);
 												if (iframe.attachEvent) {  
 												    iframe.attachEvent("onload", function() {  
-										                //以下操作必须在iframe加载完后才可进行  
 												    	$("#numberquestion"+a.index).contents().find("#editor").html(decodeURIComponent(a.answer));
 												    });  
 												} else {  
 												    iframe.onload = function() {  
-										                //以下操作必须在iframe加载完后才可进行  
 												    	$("#numberquestion"+a.index).contents().find("#editor").html(decodeURIComponent(a.answer));
 												    };  
-												}  
+												} */
 	    									</c:if>
             							}
+	            						else
+            							{
+	            							<c:if test="${qd.type == 5}">
+        									UE.getEditor("numberquestion"+a.index);
+    										</c:if>
+            							}
+	            						
 	            					}
 	            				}
 	            			});
@@ -726,7 +739,7 @@
 				alert("答题已经结束");
 				return;
 			}
-			var useranswer = $("#"+element).contents().find("#editor").html();
+			var useranswer = UE.getEditor(element).getContent();//$("#"+element).contents().find("#editor").html();
 			useranswer = encodeURIComponent(useranswer);
 			//var useranswer = replaceTextarea1($(element).val());
  			var examId = "${exam.id}";

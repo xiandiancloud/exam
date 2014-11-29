@@ -25,7 +25,7 @@ public class LmsLoginInterceptor extends BaseController implements HandlerInterc
 			"getAllCategory.action", "getCourse.action", "tologin.action",
 			"getteamCategory.action", "login.action","sleepfront.action",
 			"getCourseByCategoryId.action", "getexamByCategoryId.action",
-			"examlist.action", "recentcourse.action", "toregeister.action",
+			"examlist.action", "toregeister.action",
 			"regeister.action", "getAllSchool.action",
 			"getAllExamCategory.action", };
 

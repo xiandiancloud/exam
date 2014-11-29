@@ -125,7 +125,7 @@
 					<table class="table table-bordered table-hover h5">
 						<caption></caption>
 						<thead>
-							<tr class="dhldanger">
+							<tr class="l3back">
 								<th>试卷名称</th>
 								<th>实验名称</th>
 								<th>名称</th>
@@ -174,9 +174,6 @@
 		type="text/javascript"></script>
 	<!-- / modernizr -->
 	<script src="assets/javascripts/plugins/modernizr/modernizr.min.js"
-		type="text/javascript"></script>
-	<!-- / retina -->
-	<script src="assets/javascripts/plugins/retina/retina.js"
 		type="text/javascript"></script>
 	<!-- / theme file [required] -->
 	<script src="assets/javascripts/theme.js" type="text/javascript"></script>

@@ -46,7 +46,7 @@ public class AuthenticationFilter extends AbstractCasFilter {
 			"getAllCategory.action", "getCourse.action","sleepfront.action",
 			"getteamCategory.action", "getCourseByCategoryId.action",
 			"getexamByCategoryId.action", "examlist.action",
-			"recentcourse.action", "toregeister.action", "regeister.action",
+			"toregeister.action", "regeister.action",
 			"getAllSchool.action", "getAllExamCategory.action",
 			"tlogin.action", "totregeister.action", "tregeister.action","loginout.action","tloginout.action" };
 

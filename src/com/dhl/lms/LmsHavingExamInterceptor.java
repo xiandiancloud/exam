@@ -24,7 +24,7 @@ public class LmsHavingExamInterceptor extends BaseController implements HandlerI
 	private static final String[] INHERENT_ESCAPE_URIS = {
 		"/getAllCategory.action", "getCourse.action", "/tologin.action",
 		"/login.action", "getCourseByCategoryId.action",
-		"recentcourse.action", "toregeister.action","regeister.action", "getAllSchool.action",
+		"toregeister.action","regeister.action", "getAllSchool.action",
 		"/bbb.action" };
 
 	@Override

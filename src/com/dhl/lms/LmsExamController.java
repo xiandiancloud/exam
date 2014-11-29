@@ -220,7 +220,7 @@ public class LmsExamController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping("/recentexam")
-	public void recentcourse(HttpServletRequest request,
+	public void recentexam(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		try {

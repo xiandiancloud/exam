@@ -206,7 +206,7 @@ public class HavingExamController extends BaseController {
 			
 			User user = getSessionUser(request);
 			UserQuestionChild uqc = userQuestionService.getQuestionChild(user.getId(),examId,questionId, number);
-			String str = "{'sucess':'sucess'}";
+			String str = "{'sucess':'sucess','index':'"+index+"'}";
 			if (uqc != null)
 			{
 				String useranswer = uqc.getUseranswer();

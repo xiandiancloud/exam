@@ -22,9 +22,28 @@ public class QuestionData {
 	private List<String> answer;
 	//题目分
 	private int score;
-
 	private String explain;
-		
+	
+	//user info
+	private int userscore;
+	private String useranswer;
+	
+	public String getUseranswer() {
+		return useranswer;
+	}
+
+	public void setUseranswer(String useranswer) {
+		this.useranswer = useranswer;
+	}
+
+	public int getUserscore() {
+		return userscore;
+	}
+
+	public void setUserscore(int userscore) {
+		this.userscore = userscore;
+	}
+
 	public QuestionData(int id)
 	{
 		this.id = id;

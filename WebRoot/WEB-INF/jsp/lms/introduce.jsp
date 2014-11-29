@@ -160,8 +160,6 @@
 	<script src="assets/javascripts/bootstrap/bootstrap.js" type="text/javascript"></script>
 	<!-- / modernizr -->
 	<script src="assets/javascripts/plugins/modernizr/modernizr.min.js" type="text/javascript"></script>
-	<!-- / retina -->
-	<script src="assets/javascripts/plugins/retina/retina.js" type="text/javascript"></script>
 	<!-- / theme file [required] -->
 	<script src="assets/javascripts/theme.js" type="text/javascript"></script>
 	<!-- / demo file [not required!] -->

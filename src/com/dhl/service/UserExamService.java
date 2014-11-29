@@ -1,5 +1,6 @@
 package com.dhl.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -307,6 +308,12 @@ public class UserExamService {
 	
 	private boolean isCorrect(int type,String useranswer,List<String> answerlist)
 	{
+		try {
+			useranswer = java.net.URLDecoder.decode(useranswer,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (type == CommonConstant.QTYPE_2 || type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5)
 		{
 			return useranswer.trim().equalsIgnoreCase(answerlist.get(0).trim());
@@ -405,11 +412,13 @@ public class UserExamService {
 									if (uqc != null)
 									{
 										String useranswer = uqc.getUseranswer();
+										qd.setUseranswer(useranswer);
 										int type = qd.getType();
 										//得分，取裁判分
 										String pfscore = uqc.getPfscore();
 										if (pfscore != null)
 										{
+											qd.setUserscore(Integer.parseInt(pfscore));
 											cscore += Integer.parseInt(pfscore);
 											if (Integer.parseInt(pfscore) == quscore)
 											{
@@ -429,7 +438,8 @@ public class UserExamService {
 												{
 													if (isCorrect(type,useranswer,answerlist))
 													{
-														cscore = quscore;
+														qd.setUserscore(quscore);
+														cscore += quscore;
 														right++;
 													}
 													else

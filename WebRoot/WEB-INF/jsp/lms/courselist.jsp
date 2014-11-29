@@ -176,9 +176,6 @@
 	<!-- / modernizr -->
 	<script src="assets/javascripts/plugins/modernizr/modernizr.min.js"
 		type="text/javascript"></script>
-	<!-- / retina -->
-	<script src="assets/javascripts/plugins/retina/retina.js"
-		type="text/javascript"></script>
 	<!-- / theme file [required] -->
 	<script src="assets/javascripts/theme.js" type="text/javascript"></script>
 	<!-- / demo file [not required!] -->
@@ -210,7 +207,6 @@
 			<c:forEach items="${category}" var="category">
 			loadCourse("${category.id}", 1);
 			</c:forEach>
-			loadmyCourse();
 		});
 
 		function addimgmove() {
@@ -247,26 +243,6 @@
 					},80);
 				});
 			}); */
-		}
-		function loadmyCourse() {
-			$.ajax({
-				url : "lms/recentcourse.action",
-				type : "post",
-				success : function(s) {
-					var a = eval("(" + s + ")");
-					if ("sucess" == a.sucess) {
-						$("#imgcourse").attr("src", a.img);
-						$("#namecourse").html(a.name);
-						$('.progress-bar').css({
-							'width' : a.complete
-						}).find('span').html(a.complete);
-						$("#completecourse").html(a.complete);
-						$("#hrefcourse").attr("href",
-								"lms/tocourse.action?courseId=" + a.courseId);
-						$("#myrecentlycourse").show();
-					}
-				}
-			});
 		}
 		function loadCourse(categoryId, pageNo) {
 			categoryId = parseInt(categoryId);
