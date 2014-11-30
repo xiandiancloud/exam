@@ -24,10 +24,10 @@ public class QuestionData {
 	private int score;
 	private String explain;
 	
-	//user info
+	//用户得分
 	private int userscore;
+	//用户答案
 	private String useranswer;
-	
 	public String getUseranswer() {
 		return useranswer;
 	}

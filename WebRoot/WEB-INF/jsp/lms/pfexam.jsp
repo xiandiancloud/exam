@@ -175,37 +175,49 @@
 															</div>
 														</c:forEach>
 													</form>
-													<hr class='hr-normal'>
-													<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<div class='h30'></div>											
+													<div class='form-group col-xs-12'>
 															<div class='row'>
-																<div class='col-xs-6 juzhong' style="line-height:40px;">
-																	<label >正确答案：${qd.answer}</label>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>${qd.score}</span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	得分：<span id="scorequestion${index}"></span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	<div class='input-group controls-group'>
-																		<input class="form-control" type="text" id="textquestion${index}"/>
-																		<span class='input-group-btn'>
-																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
-																		</span>
-																	</div>
-																</div>
-															</div>
-															<div class='row'>
-																<div class='col-xs-12 juzhong' style="line-height:40px;height:auto;">
-																	<label>机器答案：<div id="revalue${index}" class="answerimg"></div></label>
-																</div>
-																<div class='col-xs-12 juzhong' style="line-height:40px;height:auto;">
-																	<label>用户答案：<div id="numberquestion${index}" class="answerimg"></div></label>
-																</div>
-															</div>
-															<div class='h30'></div>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link green-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-ok'></div>
+														                    </div>
+														                    <div class='content'>正确答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div class='col-xs-10 box-content msg-block'>
+														                ${qd.answer}
+														              </div>
+														          </div>
+														          <div class='h10'></div>	
+														          <div class='row'>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link red-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-user'></div>
+														                    </div>
+														                    <div class='content'>用户答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div id="numberquestion${index}" class='col-xs-10 box-content msg-block'>&nbsp;</div>
+														          </div>
+														          <div class='row'>
+																      <div class='col-xs-2'></div>
+														              <div class='col-xs-10 l7back'>
+														                	本题满分：<span class="bscore"><strong>${qd.score}</strong></span>
+														                	&nbsp;&nbsp;你的得分：<span class="bscore" id="scorequestion${index}"><strong>${qd.userscore}</strong></span>
+														                	<div class='input-group controls-group'>
+																				<input class="form-control" type="text" id="textquestion${index}"/>
+																				<span class='input-group-btn'>
+																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
+																				</span>
+																			</div>
+														              </div>
+														          </div>
 														</div>
 												</div>
 											</div>
@@ -232,8 +244,6 @@
 														<div class='form-group col-sm-12'>
 															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
-														<hr class='hr-normal'>
-														<div id="numberquestion${index}">
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
 																<label class='radio'>
@@ -241,30 +251,49 @@
 																</label> 
 															</div>
 														</c:forEach>
-														</div>
-														<hr class='hr-normal nospace'>
-														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<div class='h30'></div>											
+														<div class='form-group col-xs-12'>
 															<div class='row'>
-																<div class='col-xs-6 juzhong' style="line-height:40px;">
-																	<label >正确答案：${qd.answer}</label>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>${qd.score}</span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	得分：<span id="scorequestion${index}"></span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	<div class='input-group controls-group'>
-																		<input class="form-control" type="text" id="textquestion${index}"/>
-																		<span class='input-group-btn'>
-																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
-																		</span>
-																	</div>
-																</div>
-															</div>
-															<div class='h30'></div>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link green-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-ok'></div>
+														                    </div>
+														                    <div class='content'>正确答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div class='col-xs-10 box-content msg-block'>
+														                ${qd.answer}
+														              </div>
+														          </div>
+														          <div class='h10'></div>	
+														          <div class='row'>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link red-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-user'></div>
+														                    </div>
+														                    <div class='content'>用户答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div id="numberquestion${index}" class='col-xs-10 box-content msg-block'>&nbsp;</div>
+														          </div>
+														          <div class='row'>
+																      <div class='col-xs-2'></div>
+														              <div class='col-xs-10 l7back'>
+														                	本题满分：<span class="bscore"><strong>${qd.score}</strong></span>
+														                	&nbsp;&nbsp;你的得分：<span class="bscore" id="scorequestion${index}"><strong>${qd.userscore}</strong></span>
+														                	<div class='input-group controls-group'>
+																				<input class="form-control" type="text" id="textquestion${index}"/>
+																				<span class='input-group-btn'>
+																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
+																				</span>
+																			</div>
+														              </div>
+														          </div>
 														</div>
 													</form>
 												</div>
@@ -279,8 +308,6 @@
 														<div class='form-group col-sm-12'>
 															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
-														<hr class='hr-normal'>
-														<div id="numberquestion${index}">
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
 																<label class='checkbox'>
@@ -288,30 +315,49 @@
 																</label> 
 															</div>
 														</c:forEach>
-														</div>
-														<hr class='hr-normal nospace'>
-														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<div class='h30'></div>											
+														<div class='form-group col-xs-12'>
 															<div class='row'>
-																<div class='col-xs-6 juzhong' style="line-height:40px;">
-																	<label >正确答案：${qd.answer}</label>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>${qd.score}</span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	得分：<span id="scorequestion${index}"></span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	<div class='input-group controls-group'>
-																		<input class="form-control" type="text" id="textquestion${index}"/>
-																		<span class='input-group-btn'>
-																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
-																		</span>
-																	</div>
-																</div>
-															</div>
-															<div class='h30'></div>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link green-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-ok'></div>
+														                    </div>
+														                    <div class='content'>正确答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div class='col-xs-10 box-content msg-block'>
+														                ${qd.answer}
+														              </div>
+														          </div>
+														          <div class='h10'></div>	
+														          <div class='row'>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link red-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-user'></div>
+														                    </div>
+														                    <div class='content'>用户答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div id="numberquestion${index}" class='col-xs-10 box-content msg-block'>&nbsp;</div>
+														          </div>
+														          <div class='row'>
+																      <div class='col-xs-2'></div>
+														              <div class='col-xs-10 l7back'>
+														                	本题满分：<span class="bscore"><strong>${qd.score}</strong></span>
+														                	&nbsp;&nbsp;你的得分：<span class="bscore" id="scorequestion${index}"><strong>${qd.userscore}</strong></span>
+														                	<div class='input-group controls-group'>
+																				<input class="form-control" type="text" id="textquestion${index}"/>
+																				<span class='input-group-btn'>
+																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
+																				</span>
+																			</div>
+														              </div>
+														          </div>
 														</div>													
 													</form>
 												</div>
@@ -331,36 +377,49 @@
 																<label>${qdcontent}</label> 
 															</div>
 														</c:forEach>
-														<hr class='hr-normal'>
-														<div class='form-group'>
-															<div class='col-sm-12'>
-																<%-- <input class='form-control' type="text" id="numberquestion${index}" /> --%>
-																<textarea class='form-control' rows='5' id="numberquestion${index}"></textarea>
-															</div>
-														</div>
-														<hr class='hr-normal nospace'>
-														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
-															<div class='h30'></div>											
+														<div class='form-group col-xs-12'>
 															<div class='row'>
-																<div class='col-xs-6 juzhong' style="line-height:40px;">
-																	<label >正确答案：${qd.answer}</label>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	本题满分：<span>${qd.score}</span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	得分：<span id="scorequestion${index}"></span>
-																</div>
-																<div class='col-xs-2 juzhong'>
-																	<div class='input-group controls-group'>
-																		<input class="form-control" type="text" id="textquestion${index}"/>
-																		<span class='input-group-btn'>
-																			<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
-																		</span>
-																	</div>
-																</div>
-															</div>
-															<div class='h30'></div>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link green-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-ok'></div>
+														                    </div>
+														                    <div class='content'>正确答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div class='col-xs-10 box-content msg-block'>
+														                ${qd.answer}
+														              </div>
+														          </div>
+														          <div class='h10'></div>	
+														          <div class='row'>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link red-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-user'></div>
+														                    </div>
+														                    <div class='content'>用户答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div id="numberquestion${index}" class='col-xs-10 box-content msg-block'>&nbsp;</div>
+														          </div>
+														          <div class='row'>
+																 	  <div class='col-xs-2'></div>
+														              <div class='col-xs-10 l7back'>
+														                	本题满分：<span class="bscore"><strong>${qd.score}</strong></span>
+														                	&nbsp;&nbsp;你的得分：<span class="bscore" id="scorequestion${index}"><strong>${qd.userscore}</strong></span>
+														                	<div class='input-group controls-group'>
+																				<input class="form-control" type="text" id="textquestion${index}"/>
+																				<span class='input-group-btn'>
+																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
+																				</span>
+																			</div>
+														              </div>
+														          </div>
 														</div>
 													</form>
 												</div>
@@ -380,14 +439,51 @@
 																<label>${qdcontent}</label> 
 															</div>
 														</c:forEach>
-														<hr class='hr-normal'>
-														<div class='form-group'>
-															<div class='col-sm-12'>
-																<%-- <textarea class='form-control' rows='5' id="numberquestion${index}"></textarea> --%>
-																<iframe width="100%" height="250" scrolling="no"  frameborder="0" id="numberquestion${index}" src="input.html" ></iframe>
-															</div>
+														<div class='form-group col-xs-12'>
+															<div class='row'>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link green-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-ok'></div>
+														                    </div>
+														                    <div class='content'>正确答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div class='col-xs-10 box-content msg-block'>
+														                ${qd.answer}
+														              </div>
+														          </div>
+														          <div class='h10'></div>	
+														          <div class='row'>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link red-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-user'></div>
+														                    </div>
+														                    <div class='content'>用户答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div id="numberquestion${index}" class='col-xs-10 box-content msg-block'>&nbsp;</div>
+														          </div>
+														          <div class='row'>
+																 	  <div class='col-xs-2'></div>
+														              <div class='col-xs-10 l7back'>
+														                	本题满分：<span class="bscore"><strong>${qd.score}</strong></span>
+														                	&nbsp;&nbsp;你的得分：<span class="bscore" id="scorequestion${index}"><strong>${qd.userscore}</strong></span>
+														                	<div class='input-group controls-group'>
+																				<input class="form-control" type="text" id="textquestion${index}"/>
+																				<span class='input-group-btn'>
+																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
+																				</span>
+																			</div>
+														              </div>
+														          </div>
 														</div>
-														<hr class='hr-normal nospace'>
+														<%-- <hr class='hr-normal nospace'>
 														<div class='form-group col-xs-12' style="margin:0;padding:0;background-color:#fff4f4;">
 															<div class='h30'></div>												
 															<div class='row'>
@@ -410,7 +506,7 @@
 																</div>
 															</div>
 															<div class='h30'></div>
-														</div>
+														</div> --%>
 													</form>
 												</div>
 											</div>
@@ -460,7 +556,7 @@
 										                 		<c:forEach var="qd" items="${examq.qdlist}">
 										                 		<!-- <li> -->
 										                 		<c:set value="${sum + 1}" var="sum" /> 
-										                 		<a href="javascript:void(0)" onclick="document.getElementById('number${sum}').scrollIntoView();" class="j-item item  f-fl">
+										                 		<a href="javascript:void(0)" onclick="document.getElementById('number${sum}').scrollIntoView();" class="j-item item  f-fl"  id="index${sum}">
 										                 		${sum}
 										                 		</a>
 										                 		<!-- </li> -->
@@ -473,6 +569,23 @@
 											</div>
 										<!-- </div>
 									</div> -->
+									<div class='row'>
+										<div class='col-xs-4'>
+											<div class="section">
+												<a class="item right"></a>&nbsp;正确
+											</div>
+										</div>
+										<div class='col-xs-4'>
+											<div class="section">
+												<a class="item wrong"></a>&nbsp;错误
+											</div>
+										</div>
+										<div class='col-xs-4'>
+											<div class="section">
+												<a class="item"></a>&nbsp;未做
+											</div>
+										</div>
+									</div>	
 									<hr class='hr-normal'>
 									<!-- <div class='row'>
 										<div class='col-xs-12'> -->
@@ -558,7 +671,24 @@
                     <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
                     	<c:forEach var="qd" items="${examq.qdlist}" varStatus="nn">
                     		index ++;
-                    		var qdtype = "${qd.type}";
+                    		var useranswer = "${qd.useranswer}";
+                    		if (useranswer)
+                   			{
+                    			if ("${qd.score}" == "${qd.userscore}")
+								{
+    								$("#index"+index).addClass("right");
+								}
+    							else
+								{
+    								$("#index"+index).addClass("wrong");
+								}
+                    			$("#numberquestion"+index).html(decodeURIComponent(useranswer));
+                   			}
+                    		else
+                   			{
+                    			$("#numberquestion"+index).html("&nbsp;");
+                   			}
+                    		/* var qdtype = "${qd.type}";
                     		var questionId = "${qd.id}";
                     		var number = "${nn.index+1}";
 	                    	var data = {qdtype:qdtype,examId:examId,questionId:questionId,number:number,index:index,userId:userId};
@@ -569,9 +699,7 @@
 	            				success : function(s) {
 	            					var a = eval("(" + s + ")");
 	            					if ("sucess" == a.sucess) {
-	            						//var answer = a.answer;
 	            						var pfscore = a.pfscore;
-	            						//if (answer)
             							{
 	            							<c:if test="${qd.type == 6}">
 	            							    $("#numberquestion"+a.index).html(a.answer);
@@ -602,16 +730,13 @@
             									$("#scorequestion"+a.index).html(pfscore);
 	        								</c:if>
 	        								<c:if test="${qd.type == 5}">
-	        									//$("#numberquestion"+a.index).attr("value",replaceTextarea2(a.answer));
 	        									var iframe = document.getElementById("numberquestion"+a.index);
 												if (iframe.attachEvent) {  
 												    iframe.attachEvent("onload", function() {  
-										                //以下操作必须在iframe加载完后才可进行  
 												    	$("#numberquestion"+a.index).contents().find("#editor").html(decodeURIComponent(a.answer));
 												    });  
 												} else {  
 												    iframe.onload = function() {  
-										                //以下操作必须在iframe加载完后才可进行  
 												    	$("#numberquestion"+a.index).contents().find("#editor").html(decodeURIComponent(a.answer));
 												    };  
 												}  
@@ -621,7 +746,7 @@
             							}
 	            					}
 	            				}
-	            			});
+	            			}); */
 	               		</c:forEach>
                	</c:forEach>
                 </c:forEach>

@@ -232,7 +232,6 @@
 															<c:set value="${index + 1}" var="index" />
 															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
-														<div id="numberquestion${index}">
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
 																<label class='radio'>
@@ -240,7 +239,6 @@
 																</label> 
 															</div>
 														</c:forEach>
-														</div>
 														<div class='form-group col-xs-12'>
 															<div class='row'>
 																 <div class='col-xs-2'>
@@ -269,7 +267,7 @@
 														                  </a>
 														                </div>
 														              </div>
-														              <div class='col-xs-10 box-content msg-block'>&nbsp;</div>
+														              <div id="numberquestion${index}" class='col-xs-10 box-content msg-block'>&nbsp;</div>
 														          </div>
 														          <div class='row'>
 																 <div class='col-xs-2'>
@@ -294,7 +292,6 @@
 															<c:set value="${index + 1}" var="index" />
 															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
-														<div id="numberquestion${index}">
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
 																<label class='checkbox'>
@@ -302,7 +299,6 @@
 																</label> 
 															</div>
 														</c:forEach>
-														</div>
 														<div class='form-group col-xs-12'>
 															<div class='row'>
 																 <div class='col-xs-2'>
@@ -331,7 +327,7 @@
 														                  </a>
 														                </div>
 														              </div>
-														              <div class='col-xs-10 box-content msg-block'>&nbsp;</div>
+														              <div id="numberquestion${index}" class='col-xs-10 box-content msg-block'>&nbsp;</div>
 														          </div>
 														          <div class='row'>
 																 <div class='col-xs-2'>
@@ -389,7 +385,7 @@
 														                  </a>
 														                </div>
 														              </div>
-														              <div class='col-xs-10 box-content msg-block'>&nbsp;</div>
+														              <div id="numberquestion${index}" class='col-xs-10 box-content msg-block'>&nbsp;</div>
 														          </div>
 														          <div class='row'>
 																 <div class='col-xs-2'>
@@ -447,7 +443,7 @@
 														                  </a>
 														                </div>
 														              </div>
-														              <div class='col-xs-10 box-content msg-block'>&nbsp;</div>
+														              <div id="numberquestion${index}" class='col-xs-10 box-content msg-block'>&nbsp;</div>
 														          </div>
 														          <div class='row'>
 																 <div class='col-xs-2'>
@@ -526,16 +522,6 @@
 							<hr class='hr-normal'>
 							<div class='row'>
 								<div class='col-xs-4'>
-									<%-- <div class='box-content' style="padding:0">
-										<c:if test="${userexam.state == 0}">
-											<a class="btn btn-danger btn-block btn-lg" href="javascript:void(0);" onclick="submitallquesstion();">提交试卷</a>
-										</c:if>
-										<c:if test="${userexam.state == 1}">
-											<c:if test="${exam.isnormal == 0}">
-												<a class="btn btn-danger btn-block btn-lg" href="lms/toagainexamintroduce.action?competionId=${competionId}&examId=${exam.id}">再做一次</a>
-											</c:if>
-										</c:if>
-									</div> --%>
 									<div class="section">
 										<a class="item right"></a>&nbsp;正确
 									</div>
@@ -625,7 +611,26 @@
                     <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
                     	<c:forEach var="qd" items="${examq.qdlist}" varStatus="nn">
                     		index ++;
-                    		var examId = "${exam.id}";
+                    		var useranswer = "${qd.useranswer}";
+                    		if (useranswer)
+                   			{
+                    			if ("${qd.score}" == "${qd.userscore}")
+								{
+    								$("#index"+index).addClass("right");
+								}
+    							else
+								{
+    								$("#index"+index).addClass("wrong");
+								}
+                    			$("#numberquestion"+index).html(decodeURIComponent(useranswer));
+                   			}
+                    		else
+                   			{
+                    			$("#numberquestion"+index).html("&nbsp;");
+                   			}
+                    		
+                    		
+                    		/* var examId = "${exam.id}";
                     		var questionId = "${qd.id}";
                     		var number = "${nn.index+1}";
                     		var type = "${qd.type}";
@@ -710,7 +715,7 @@
             							}
 	            					}
 	            				}
-	            			});
+	            			}); */
 	               		</c:forEach>
                	</c:forEach>
                 </c:forEach>
