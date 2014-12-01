@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -29,6 +28,7 @@ import com.dhl.dao.ExamDao;
 import com.dhl.dao.ExamQuestionDao;
 import com.dhl.dao.ExamSequentialDao;
 import com.dhl.dao.ExamVerticalDao;
+import com.dhl.dao.LogDao;
 import com.dhl.dao.Page;
 import com.dhl.dao.QuestionDao;
 import com.dhl.dao.TeacherExamDao;
@@ -43,12 +43,12 @@ import com.dhl.domain.ExamChapter;
 import com.dhl.domain.ExamQuestion;
 import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
+import com.dhl.domain.Log;
 import com.dhl.domain.Question;
 import com.dhl.domain.TeacherExam;
 import com.dhl.domain.Train;
 import com.dhl.util.UtilTools;
 import com.xiandian.dao.UserDao;
-import com.xiandian.model.User;
 
 /**
  *
@@ -88,7 +88,8 @@ public class ExamService {
 	private QuestionDao questionDao;
 	@Autowired
 	private ExamQuestionDao examquestionDao;
-	
+	@Autowired
+	private LogDao logDao;
 	/**
 	 * 备份实训
 	 * @param trainstr
@@ -317,6 +318,13 @@ public class ExamService {
 	}
 	public List<Exam> getAllExam(){
 		return examDao.getAllExam();
+	}
+	/**
+	 * 得到所有的日志记录
+	 * @return
+	 */
+	public List<Log> getAllLog(){
+		return logDao.getAllLog();
 	}
 	/**
 	 * 根据试卷id取得试卷

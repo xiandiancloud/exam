@@ -37,8 +37,14 @@
             </li>
             <li>
               <a href='admin/groom.action'>
-                <i class='icon-star'></i>
+                <i class='icon-thumbs-up-alt'></i>
                 <span>试卷推荐管理</span>
+              </a>
+            </li>
+            <li>
+              <a href='admin/log.action'>
+                <i class='icon-pencil'></i>
+                <span>日志管理</span>
               </a>
             </li>
           </ul>

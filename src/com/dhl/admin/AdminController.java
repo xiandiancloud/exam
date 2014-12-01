@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.dhl.cons.CommonConstant;
 import com.dhl.domain.ECategory;
 import com.dhl.domain.Exam;
+import com.dhl.domain.Log;
 import com.dhl.service.ECategoryService;
 import com.dhl.service.ExamService;
 import com.dhl.web.BaseController;
@@ -86,6 +87,23 @@ public class AdminController extends BaseController {
 		List<Exam> list = examService.getAllExam();
 		view.addObject("examlist", list);
 		view.setViewName("/admin/groom");
+		return view;
+	}
+	
+	/**
+	 * 管理员到log日志頁面
+	 * 
+	 * @param request
+	 * @param index
+	 * @return
+	 */
+	@RequestMapping("/log")
+	public ModelAndView log(HttpServletRequest request) {
+		ModelAndView view = new ModelAndView();
+
+		List<Log> list = examService.getAllLog();
+		view.addObject("loglist", list);
+		view.setViewName("/admin/log");
 		return view;
 	}
 	

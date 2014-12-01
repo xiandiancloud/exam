@@ -15,7 +15,7 @@
 <html lang="zh-cn"><!--<![endif]-->
   <head>
   	<base href="<%=basePath%>">
-    <title>课程分类管理</title>
+    <title>推荐试卷</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta content='text/html;charset=utf-8' http-equiv='content-type'>
     <meta content='Flat administration template for Twitter Bootstrap. Twitter Bootstrap 3 template with Ruby on Rails support.' name='description'>
@@ -54,18 +54,18 @@
                 <div class='col-sm-12'>
                   <div class='page-header'>
                     <h1 class='pull-left'>
-                      <i class='icon-star'></i>
-                      <span>实验分类管理</span>
+                      <i class='icon-cog'></i>
+                      <span>日志管理</span>
                     </h1>
                   </div>
                 </div>
               </div>
-              <div class='row'>
+<!--               <div class='row'>
               <div class='col-sm-12'>
                   <div class='box'>
-<!--                     <div class='box-header'>
-                      <div class='title'>分类管理</div>
-                    </div> -->
+                    <div class='box-header'>
+                      <div class='title'>学校管理</div>
+                    </div>
                     <div class='box-content'>
                       <div class='row'>
                         <div class='col-sm-2'>
@@ -74,7 +74,7 @@
                               <div class='header'>
                                 <div class='icon-plus'></div>
                               </div>
-                              <div class='content'>增加分类</div>
+                              <div class='content'>增加学校</div>
                             </a>
                           </div>
                         </div>
@@ -82,13 +82,13 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
               
               <div class='row'>
                 <div class='col-sm-12'>
                   <div class='box bordered-box blue-border' style='margin-bottom:0;'>
                     <div class='box-header blue-background'>
-                      <div class='title'>Responsive table</div>
+                      <div class='title'>所有日志</div>
                       <div class='actions'>
                         <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
                         </a>
@@ -104,22 +104,20 @@
                             <thead>
                               <tr>
                                 <th>
-                                  	名称
+                                  	用户
                                 </th>
-                                <th></th>
+                                <th>
+                                  	动作
+                                </th>
+                                <th>时间</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <c:forEach var="category" items="${categorylist}">
+	                            <c:forEach var="log" items="${loglist}">
 		                            <tr>
-	                                <td>${category.name}</td>
-	                                <td>
-	                                  <div class='text-center'>
-	                                    <a class='btn btn-danger btn-xs' href='admin/delcategory.action?categoryId=${category.id}'>
-	                                      <i class='icon-remove'></i>
-	                                    </a>
-	                                  </div>
-	                                </td>
+	                                <td>${log.username}</td>
+	                                <td>${log.useraction}</td>                          
+	                                <td>${log.dotime}</td>
 	                              </tr>
 								</c:forEach>
                             </tbody>
@@ -132,38 +130,10 @@
               </div>
             </div>
           </div>
-		<jsp:include page="footer.jsp"></jsp:include>
+		 <jsp:include page="footer.jsp"></jsp:include>
         </div>
       </section>
     </div>
-    
-    <div class="modal fade" id="myModal" data-backdrop="static">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-					</button>
-					<h4 class="modal-title">增加分类</h4>
-				</div>
-				<div class="modal-body">
-					<form class="form-horizontal" role="form">
-						<div class="form-group">
-							<label for="cname" class="col-sm-2 control-label"><h4>名称</h4></label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="cname">
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary"
-						onclick="addcategory();">增加</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				</div>
-			</div>
-		</div>
-	</div>
     <!-- / jquery [required] -->
     <script src="assets/javascripts/jquery/jquery.min.js" type="text/javascript"></script>
     <!-- / jquery mobile (for touch events) -->
@@ -189,36 +159,6 @@
     <script>
 	$(function() {
 	});
-	
-	function showdialog() {
-		$('#myModal').modal({
-			keyboard : false
-		});
-	}
-	function addcategory() {
-		var name = $("#cname").val();
-		if (isNull(name))	
-		{					
-			alert("名称不能为空");
-			return ;
-		}	
-		var data = {				
-			name : name
-		};
-		$.ajax({
-			url : "admin/addcategory.action",
-			type : "post",
-			data : data,
-			success : function(s) {
-				var a = eval("(" + s + ")");
-				if (a.sucess == "sucess") {
-					location.reload();
-				}
-				else
-				alert(a.msg);
-			}
-		});
-	}
     </script>
   </body>
 </html>

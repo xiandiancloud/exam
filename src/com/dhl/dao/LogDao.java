@@ -1,5 +1,6 @@
 package com.dhl.dao;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
@@ -17,4 +18,9 @@ public class LogDao extends BaseDao<Log> {
 		log.setUseraction(useraction);
 		save(log);
 	}
+	
+	public List<Log> getAllLog(){
+		String hql = "from Log";
+		return find(hql);
+    }
 }
