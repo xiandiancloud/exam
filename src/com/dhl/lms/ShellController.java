@@ -83,8 +83,11 @@ public class ShellController extends BaseController {
 				SCPClient scpClient = conn.createSCPClient();
 				
 				List<TrainExt> trainExtList = trainService.getTrainExtList(trainId);
-				for (TrainExt te:trainExtList)
+				int len = trainExtList.size();
+				for (int i=0;i<len;i++)
 				{
+					TrainExt te = trainExtList.get(i);
+					int number = i+1;
 					String shellpath = te.getShellpath();
 					if (shellpath ==null)
 					{
@@ -99,8 +102,8 @@ public class ShellController extends BaseController {
 					{
 						
 						String ip = environmenteService.getDevIP(devinfo);
-						String userName = environmenteService.getDevUserName(devinfo.substring(0,devinfo.indexOf('.'))+"username");
-						String passWord = environmenteService.getDevPassword(devinfo.substring(0,devinfo.indexOf('.'))+"password");
+						String userName = environmenteService.getDevUserName(devinfo.substring(0,devinfo.lastIndexOf('.'))+".username");
+						String passWord = environmenteService.getDevPassword(devinfo.substring(0,devinfo.lastIndexOf('.'))+".password");
 						
 						RestShell rs = new RestShell();
 						rs.setIp(ip);
@@ -122,9 +125,9 @@ public class ShellController extends BaseController {
 						
 						UserQuestion uq = userQuestionService.getUserExamTrainQuestion(user.getId(), examId, trainId);
 						if (uq == null) {
-							userQuestionService.saveQuestionTrain(user.getUsername(),user.getId(), examId, trainId,rdata,devinfo);
+							userQuestionService.saveQuestionTrain(user.getUsername(),user.getId(), examId, trainId,rdata,devinfo,number);
 						} else {
-							userQuestionService.updateQuestionTrain(user.getUsername(),uq, user.getId(),examId,trainId, rdata,devinfo);
+							userQuestionService.updateQuestionTrain(user.getUsername(),uq, user.getId(),examId,trainId, rdata,devinfo,number);
 						}
 //						str = "{'sucess':'sucess','revalue':'"+ rdata + "'}";
 					}
@@ -156,9 +159,9 @@ public class ShellController extends BaseController {
 							
 							UserQuestion uq = userQuestionService.getUserExamTrainQuestion(user.getId(), examId, trainId);
 							if (uq == null) {
-								userQuestionService.saveQuestionTrain(user.getUsername(),user.getId(), examId, trainId,rdata,result);
+								userQuestionService.saveQuestionTrain(user.getUsername(),user.getId(), examId, trainId,rdata,result,number);
 							} else {
-								userQuestionService.updateQuestionTrain(user.getUsername(),uq, user.getId(),examId, trainId, rdata,result);
+								userQuestionService.updateQuestionTrain(user.getUsername(),uq, user.getId(),examId, trainId, rdata,result,number);
 							}
 //							str = "{'sucess':'sucess','result':'" + result + "','revalue':'"
 //									+ rdata + "'}";

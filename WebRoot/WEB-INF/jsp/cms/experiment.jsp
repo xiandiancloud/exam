@@ -366,7 +366,7 @@ width:600px;
 						var select = '<select class="dhlselect2 two">'+opttmp+'</select>';
 						
 						html+='<li class=" dhlalert dhlalert-success">'+
-    					'<input type="hidden" class="one" value="'+extlist[i]['shellname']+'"/>'+
+    					'<input type="hidden" class="one" value="'+extlist[i]['shellpath']+'"/>'+
 	    				'<span class="qq-upload-file four">'+extlist[i]['shellname']+'</span>'+
     	    			'<a>环境：</a>&nbsp;'+select+
 	    				'&nbsp;<a>参数：</a>&nbsp;<input type="text" class="input setting-input dhltext2 three" value="'+extlist[i]['shellparameter']+'"/>'+

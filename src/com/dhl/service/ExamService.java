@@ -145,6 +145,11 @@ public class ExamService {
 		}
 	}
 	
+	public Train getTrain(int trainId)
+	{
+		return trainDao.get(trainId);
+	}
+	
 	private boolean copyshell(String conShell)
 	{
 		//到实训系统远程下载检测脚本		

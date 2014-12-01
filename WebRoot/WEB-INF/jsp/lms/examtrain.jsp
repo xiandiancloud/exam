@@ -637,6 +637,7 @@
 							$("#trainjoin").show();
 						}
 					}
+					$("#traincon").html(a.conContent);
 					if (a.result && a.result.length > 0)
 					{
 						//var reg = new RegExp("</br>", "g"); //创建正则RegExp对象 
@@ -658,7 +659,7 @@
 			$("#traincode").attr("value","${train.codenum}");//html("实验名称：${train.name}");
 			$("#trainprename").attr("value","${train.envname}");
 			//$("#trainjoin").attr("href", "");
-			$("#traincon").html('${train.conContent}');
+			//$("#traincon").html('${train.conContent}');
 			//$("#trainanswer").html("${train.conAnswer}");
 		}
 		</c:forEach>

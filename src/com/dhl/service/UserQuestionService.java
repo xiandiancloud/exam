@@ -254,7 +254,7 @@ public class UserQuestionService {
 	 * @param examId
 	 * @param trainId
 	 */
-	public void saveQuestionTrain(String username,int userId,int examId,int trainId,String rdata,String devinfo)
+	public void saveQuestionTrain(String username,int userId,int examId,int trainId,String rdata,String devinfo,int number)
 	{
 		UserQuestion uq = new UserQuestion();
 		uq.setExamId(examId);
@@ -266,7 +266,7 @@ public class UserQuestionService {
 		
 		UserQuestionChild uqc = new UserQuestionChild();
 		uqc.setUserId(userId);
-//		uqc.setNumber(1);
+		uqc.setNumber(number);
 		uqc.setDevinfo(devinfo);
 		uqc.setRevalue(rdata);
 		uqc.setUserquestionId(uq.getId());
@@ -292,7 +292,7 @@ public class UserQuestionService {
 		
 		UserQuestionChild uqc = new UserQuestionChild();
 		uqc.setUserId(userId);
-//		uqc.setNumber(1);
+		uqc.setNumber(1);
 		uqc.setUseranswer(useranswer);
 		uqc.setUserquestionId(uq.getId());
 		userQuestionChildDao.save(uqc);
@@ -314,7 +314,7 @@ public class UserQuestionService {
 	/**
 	 * 更新考试系统的实训答案
 	 */
-	public void updateQuestionTrain(String username,UserQuestion uq,int userId,int examId,int trainId,String rdata,String devinfo)
+	public void updateQuestionTrain(String username,UserQuestion uq,int userId,int examId,int trainId,String rdata,String devinfo,int number)
 	{
 		UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByusertrainId(userId,uq.getId(),devinfo);
 		if (uqc != null)
@@ -327,6 +327,7 @@ public class UserQuestionService {
 		{
 			uqc = new UserQuestionChild();
 			uqc.setUserId(userId);
+			uqc.setNumber(number);
 			uqc.setDevinfo(devinfo);
 			uqc.setRevalue(rdata);
 			uqc.setUserquestionId(uq.getId());

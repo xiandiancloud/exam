@@ -490,16 +490,19 @@ public class HavingExamController extends BaseController {
 			String result = userTrain == null ? "" : userTrain.getResult();
 			String revalue = userTrain == null ? "" : userTrain.getRevalue();
 			String useranswer = userTrain == null ? "" : userTrain.getUseranswer();
+			Train train = examService.getTrain(trainId);
+			String con = train.getConContent();
+			con = UtilTools.replaceBackett(con);
 			if (uce != null) {
 				String str = "{'sucess':'sucess','ip':'" + uce.getHostname()
 						+ "','username':'" + uce.getUsername() + "','result':'"
-						+ result + "','revalue':'" + revalue+ "','useranswer':'" + useranswer + "','password':'"
+						+ result + "','revalue':'" + revalue+ "','conContent':'" + con+ "','useranswer':'" + useranswer + "','password':'"
 						+ uce.getPassword() + "','ssh':'" + uce.getServerId()
 						+ "'}";
 				out.write(str);
 			} else {
 				String str = "{'sucess':'fail','result':'" + result
-						+ "','revalue':'" + revalue + "','useranswer':'"+useranswer+"'}";
+						+ "','revalue':'" + revalue+ "','conContent':'" + con + "','useranswer':'"+useranswer+"'}";
 				out.write(str);
 			}
 		} catch (Exception e) {

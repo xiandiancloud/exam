@@ -25,10 +25,10 @@
 						<li><a href="lms/examlist.action?currentpage=1&c=0&r=0">题库</a></li>
 						<li><a href="lms/competionlist.action?currentpage=1&c=0&r=0">竞赛</a></li>
 						<li><a href="lms/myexam.action">我的云试卷</a></li>
-						<c:if test="${USER_CONTEXT.role.roleName=='老师'}">
+						<%-- <c:if test="${USER_CONTEXT.role.roleName=='老师'}">
 						<li><a href="cms">制作试卷</a></li>
 						<li><a href="cms/totcompetion.action?competionId=-1">增加竞赛</a></li>
-						</c:if>
+						</c:if> --%>
 					</ul>
 					<!--向右对齐-->
 					<ul class="nav navbar-nav navbar-right">
@@ -52,6 +52,12 @@
 										<li><a href='lms/myexam.action'> <i
 												class='icon-signout'></i> 我的云试卷
 										</a></li>
+										<c:if test="${USER_CONTEXT.role.roleName=='老师'}">
+										<li><a href="cms"><i
+												class='icon-signout'></i>制作试卷</a></li>
+										<li><a href="cms/totcompetion.action?competionId=-1"><i
+												class='icon-signout'></i>增加竞赛</a></li>
+										</c:if>
 										<li><a href='lms/mysetting.action'> <i
 												class='icon-signout'></i> 设置
 										</a></li>
