@@ -487,7 +487,7 @@ public class HavingExamController extends BaseController {
 			UserEnvironment uce = userEnvironmentService.getMyUCE(user.getId(), examId,trainId);
 			UserQuestionChild userTrain = userQuestionService.getUserExamTrainQuestionChild(user.getId(),
 					examId, trainId);
-			String result = userTrain == null ? "" : userTrain.getResult();
+//			String result = userTrain == null ? "" : userTrain.getResult();
 			String revalue = userTrain == null ? "" : userTrain.getRevalue();
 			String useranswer = userTrain == null ? "" : userTrain.getUseranswer();
 			Train train = examService.getTrain(trainId);
@@ -495,14 +495,12 @@ public class HavingExamController extends BaseController {
 			con = UtilTools.replaceBackett(con);
 			if (uce != null) {
 				String str = "{'sucess':'sucess','ip':'" + uce.getHostname()
-						+ "','username':'" + uce.getUsername() + "','result':'"
-						+ result + "','revalue':'" + revalue+ "','conContent':'" + con+ "','useranswer':'" + useranswer + "','password':'"
+						+ "','username':'" + uce.getUsername()  + "','revalue':'" + revalue+ "','conContent':'" + con+ "','useranswer':'" + useranswer + "','password':'"
 						+ uce.getPassword() + "','ssh':'" + uce.getServerId()
 						+ "'}";
 				out.write(str);
 			} else {
-				String str = "{'sucess':'fail','result':'" + result
-						+ "','revalue':'" + revalue+ "','conContent':'" + con + "','useranswer':'"+useranswer+"'}";
+				String str = "{'sucess':'fail','revalue':'" + revalue+ "','conContent':'" + con + "','useranswer':'"+useranswer+"'}";
 				out.write(str);
 			}
 		} catch (Exception e) {
@@ -510,70 +508,70 @@ public class HavingExamController extends BaseController {
 		}
 	}
 	
-	/**
-	 * 用户的统计情况
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	@RequestMapping("/usercounts")
-	public void usercounts(HttpServletRequest request,
-			HttpServletResponse response,int examId) {
-
-		try {
-			PrintWriter out = response.getWriter();
-			User user = getSessionUser(request);
-			String str = "{'sucess':'sucess',";
-			String score = "";
-			Exam exam = examService.get(examId);
-			Set<ExamChapter> chapterset = exam.getExamchapters();
-			Iterator it = chapterset.iterator();
-			str+="'chapter':[";
-			String tmpstr = "";
-			while (it.hasNext()) {
-				ExamChapter chapter = (ExamChapter) it.next();
-				Set<ExamSequential> sequentialset = chapter.getEsequentials();
-				Iterator it2 = sequentialset.iterator();
-				tmpstr+="{'name':'"+chapter.getName()+"'";
-				while (it2.hasNext()) {
-					ExamSequential sequential = (ExamSequential) it2.next();
-					Set<ExamVertical> verticalset = sequential.getExamVerticals();
-					Iterator it3 = verticalset.iterator();
-					while (it3.hasNext()) {
-						ExamVertical vertical = (ExamVertical) it3.next();
-						Set<ExamQuestion> vt = vertical.getExamQuestion();
-						for (ExamQuestion eq:vt)
-						{
-							Question q = eq.getQuestion();
-							//问题
-							if (q != null)
-							{
-								List<UserQuestionChild> uqc = userQuestionService.getQuestionList(user.getId(),examId,q.getId());
-							}
-							else//实训
-							{
-								Train t = eq.getTrain();
-								if (t != null)
-								{
-									UserQuestionChild userTrain = userQuestionService.getUserExamTrainQuestionChild(user.getId(),examId, t.getId());
-								}
-							}
-						}
-					}
-				}
-				tmpstr+="},";
-			}
-			if (tmpstr.length() > 2)
-			{
-				tmpstr = tmpstr.substring(0,tmpstr.length() - 1);
-			}
-			str += tmpstr;
-			str += "],'score':'"+score+"'}";
-			out.write(str);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	/**
+//	 * 用户的统计情况
+//	 * 
+//	 * @param request
+//	 * @param response
+//	 */
+//	@RequestMapping("/usercounts")
+//	public void usercounts(HttpServletRequest request,
+//			HttpServletResponse response,int examId) {
+//
+//		try {
+//			PrintWriter out = response.getWriter();
+//			User user = getSessionUser(request);
+//			String str = "{'sucess':'sucess',";
+//			String score = "";
+//			Exam exam = examService.get(examId);
+//			Set<ExamChapter> chapterset = exam.getExamchapters();
+//			Iterator it = chapterset.iterator();
+//			str+="'chapter':[";
+//			String tmpstr = "";
+//			while (it.hasNext()) {
+//				ExamChapter chapter = (ExamChapter) it.next();
+//				Set<ExamSequential> sequentialset = chapter.getEsequentials();
+//				Iterator it2 = sequentialset.iterator();
+//				tmpstr+="{'name':'"+chapter.getName()+"'";
+//				while (it2.hasNext()) {
+//					ExamSequential sequential = (ExamSequential) it2.next();
+//					Set<ExamVertical> verticalset = sequential.getExamVerticals();
+//					Iterator it3 = verticalset.iterator();
+//					while (it3.hasNext()) {
+//						ExamVertical vertical = (ExamVertical) it3.next();
+//						Set<ExamQuestion> vt = vertical.getExamQuestion();
+//						for (ExamQuestion eq:vt)
+//						{
+//							Question q = eq.getQuestion();
+//							//问题
+//							if (q != null)
+//							{
+//								List<UserQuestionChild> uqc = userQuestionService.getQuestionList(user.getId(),examId,q.getId());
+//							}
+//							else//实训
+//							{
+//								Train t = eq.getTrain();
+//								if (t != null)
+//								{
+//									UserQuestionChild userTrain = userQuestionService.getUserExamTrainQuestionChild(user.getId(),examId, t.getId());
+//								}
+//							}
+//						}
+//					}
+//				}
+//				tmpstr+="},";
+//			}
+//			if (tmpstr.length() > 2)
+//			{
+//				tmpstr = tmpstr.substring(0,tmpstr.length() - 1);
+//			}
+//			str += tmpstr;
+//			str += "],'score':'"+score+"'}";
+//			out.write(str);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	//-----------------------考试实训-------------------------------
 }

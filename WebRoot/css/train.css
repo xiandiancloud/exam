@@ -212,8 +212,9 @@ box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);}
   height: auto;
 }
 .msg-block{
-	/* max-height: 100px;
-	overflow: auto; */
+	min-height:41px;
+	max-height: 87px;
+	overflow: auto; 
 }
 .msg-block:before {
 border-right: 7px solid rgba(0,0,0,0.1);

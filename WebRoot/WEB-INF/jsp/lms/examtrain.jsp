@@ -625,7 +625,6 @@
 						$("#username").html(a.username);
 						$("#password").html(a.password);
 						$("#ssh").html(a.ssh);
-						$("#editor").html(a.useranswer);
 					} else {
 						$("#hasenv").hide();
 						if ("无" == "${train.envname}")
@@ -637,6 +636,7 @@
 							$("#trainjoin").show();
 						}
 					}
+					$("#editor").html(a.useranswer);
 					$("#traincon").html(a.conContent);
 					if (a.result && a.result.length > 0)
 					{

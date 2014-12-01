@@ -501,21 +501,6 @@
 	      	//填充试卷内容，判断对错，或者是否已经做过  
 			initquestion();
 	      });
-		/* function loadfiresult()
-		{
- 			var examId = "${exam.id}";
-			var data = {examId:examId};
-			$.ajax({
-				url : "lms/usercounts.action",
-				type : "post",
-				data : data,
-				success : function(s) {
-					var a = eval("(" + s + ")");
-					if ("sucess" == a.sucess) {
-					}
-				}
-			});
-		} */
 		//这个方法多次提交，如果性能有问题再优化
 		function initquestion()
 		{
@@ -531,9 +516,41 @@
                 <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
                     <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
                     	<c:forEach var="qd" items="${examq.qdlist}" varStatus="nn">
-                    	
                     		index ++;
-                    		var examId = "${exam.id}";
+                    		var useranswer = "${qd.useranswer}";
+                    		if (useranswer)
+                   			{
+                    			$("#index"+index).css("background","#999999");
+                    			
+                    			<c:if test="${qd.type == 2}">
+    							$("#numberquestion"+index+" :radio").each(function(){
+    						         if ($(this).val() == decodeURIComponent(useranswer))
+    					        	 {
+    						        	 $(this).attr("checked","checked");
+    					        	 }
+    						     });
+    							</c:if>
+    							<c:if test="${qd.type == 3}">
+    							var strs = decodeURIComponent(useranswer).split('#');
+    							$("#numberquestion"+index+" :checkbox").each(function(i){
+    								 if ($.inArray($(this).val(), strs) != -1)
+    					        	 {
+    						        	 $(this).attr("checked","checked");
+    					        	 }
+    						     });
+    							</c:if>
+    							<c:if test="${qd.type == 4}">
+    								$("#numberquestion"+index).attr("value",decodeURIComponent(useranswer));
+    							</c:if>
+                   			}
+							<c:if test="${qd.type == 5}">
+								if (useranswer)
+								{
+									$("#numberquestion"+index).html(decodeURIComponent(useranswer));
+								}
+								UE.getEditor("numberquestion"+index);
+							</c:if>
+                    		/* var examId = "${exam.id}";
                     		var questionId = "${qd.id}";
                     		var number = "${nn.index+1}";
 	                    	var data = {examId:examId,questionId:questionId,number:number,index:index};
@@ -570,22 +587,8 @@
             									$("#numberquestion"+a.index).attr("value",decodeURIComponent(a.answer));
 	        								</c:if>
 	        								<c:if test="${qd.type == 5}">
-	        									//$("#numberquestion"+a.index).attr("value",replaceTextarea2(a.answer));
-	        									//ue.setContent('1111111111111',false);
-	        									//UE.getEditor('numberquestion1').execCommand('insertHtml', '1111111111111')
 	        									$("#numberquestion"+a.index).html(decodeURIComponent(a.answer));
 	        									UE.getEditor("numberquestion"+a.index);
-	        									
-	        									/* var iframe = document.getElementById("numberquestion"+a.index);
-												if (iframe.attachEvent) {  
-												    iframe.attachEvent("onload", function() {  
-												    	$("#numberquestion"+a.index).contents().find("#editor").html(decodeURIComponent(a.answer));
-												    });  
-												} else {  
-												    iframe.onload = function() {  
-												    	$("#numberquestion"+a.index).contents().find("#editor").html(decodeURIComponent(a.answer));
-												    };  
-												} */
 	    									</c:if>
             							}
 	            						else
@@ -594,10 +597,9 @@
         									UE.getEditor("numberquestion"+a.index);
     										</c:if>
             							}
-	            						
 	            					}
 	            				}
-	            			});
+	            			}); */
 	               		</c:forEach>
                	</c:forEach>
                 </c:forEach>

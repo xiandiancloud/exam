@@ -9,12 +9,12 @@ public class UserQuestionData {
 
 	private String useranswer;
 	private String pfscore;
-	private String result;
-	public String getResult() {
-		return result;
+	private String revalue;//返回结果
+	public String getRevalue() {
+		return revalue;
 	}
-	public void setResult(String result) {
-		this.result = result;
+	public void setRevalue(String revalue) {
+		this.revalue = revalue;
 	}
 	public String getUseranswer() {
 		return useranswer;

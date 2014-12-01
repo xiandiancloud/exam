@@ -184,6 +184,22 @@
 														              </div>
 														          </div>
 														          <div class='h10'></div>	
+														         <div class='row'>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link green-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-ok'></div>
+														                    </div>
+														                    <div class='content'>机器答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div class='col-xs-10 box-content msg-block'>
+														                ${qd.osanswer}
+														              </div>
+														          </div>
+														          <div class='h10'></div>	
 														          <div class='row'>
 																 <div class='col-xs-2'>
 														                <div class='box-quick-link red-background'>
@@ -624,11 +640,6 @@
 								}
                     			$("#numberquestion"+index).html(decodeURIComponent(useranswer));
                    			}
-                    		else
-                   			{
-                    			$("#numberquestion"+index).html("&nbsp;");
-                   			}
-                    		
                     		
                     		/* var examId = "${exam.id}";
                     		var questionId = "${qd.id}";

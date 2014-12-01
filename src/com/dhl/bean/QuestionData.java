@@ -28,6 +28,17 @@ public class QuestionData {
 	private int userscore;
 	//用户答案
 	private String useranswer;
+	//机器答案
+	private String osanswer;
+	
+	public String getOsanswer() {
+		return osanswer;
+	}
+
+	public void setOsanswer(String osanswer) {
+		this.osanswer = osanswer;
+	}
+
 	public String getUseranswer() {
 		return useranswer;
 	}

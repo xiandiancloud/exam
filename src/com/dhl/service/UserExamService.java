@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import com.dhl.bean.UserExamData;
 import com.dhl.bean.UserQuestionData;
 import com.dhl.cons.CommonConstant;
 import com.dhl.dao.LogDao;
+import com.dhl.dao.TrainExtDao;
 import com.dhl.dao.UserExamDao;
 import com.dhl.dao.UserExamHistoryDao;
 import com.dhl.dao.UserQuestionChildDao;
@@ -28,6 +31,7 @@ import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Question;
 import com.dhl.domain.Train;
+import com.dhl.domain.TrainExt;
 import com.dhl.domain.UserExam;
 import com.dhl.domain.UserExamHistory;
 import com.dhl.domain.UserQuestion;
@@ -57,6 +61,8 @@ public class UserExamService {
 	private UserExamHistoryDao userExamHistoryDao;
 	@Autowired
 	private LogDao logDao;
+	@Autowired
+	private TrainExtDao trainExtDao;
 	
 	public void save(UserExam entity)
 	{
@@ -251,7 +257,7 @@ public class UserExamService {
 					UserQuestionData uqd = new UserQuestionData();
 					uqd.setUseranswer(uqc.getUseranswer());
 					uqd.setPfscore(uqc.getPfscore());
-					uqc.setResult(uqc.getResult());
+					uqd.setRevalue(uqc.getRevalue());
 					return uqd;
 				}
 			}
@@ -268,7 +274,7 @@ public class UserExamService {
 					UserQuestionData uqd = new UserQuestionData();
 					uqd.setUseranswer(uqc.getUseranswer());
 					uqd.setPfscore(uqc.getPfscore());
-					uqc.setResult(uqc.getResult());
+					uqd.setRevalue(uqc.getRevalue());
 					return uqd;
 				}
 			}
@@ -306,7 +312,7 @@ public class UserExamService {
 		return null;
 	}
 	
-	private boolean isCorrect(int type,String useranswer,List<String> answerlist)
+	private boolean isCorrect(int type,String useranswer,List<String> answerlist,String REGEX)
 	{
 		try {
 			useranswer = java.net.URLDecoder.decode(useranswer,"UTF-8");
@@ -314,7 +320,7 @@ public class UserExamService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (type == CommonConstant.QTYPE_2 || type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5)
+		if (type == CommonConstant.QTYPE_2)
 		{
 			return useranswer.trim().equalsIgnoreCase(answerlist.get(0).trim());
 		}
@@ -339,6 +345,13 @@ public class UserExamService {
 				}
 			}
 			return flag;
+		}
+		else if (type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5 || type == CommonConstant.QTYPE_6)
+		{
+			//主观题用正则表达式判断
+			Pattern p = Pattern.compile(REGEX);
+		    Matcher m = p.matcher(useranswer);
+		    return m.find();
 		}
 		else
 			return false;
@@ -436,7 +449,7 @@ public class UserExamService {
 												List<String> answerlist = qd.getAnswer();
 												if (answerlist != null)
 												{
-													if (isCorrect(type,useranswer,answerlist))
+													if (isCorrect(type,useranswer,answerlist,qd.getExplain()))
 													{
 														qd.setUserscore(quscore);
 														cscore += quscore;
@@ -477,7 +490,11 @@ public class UserExamService {
 								List<String> qs = new ArrayList<String>();
 								qs.add(t.getConContent());
 								qd.setContent(qs);
+								List<String> qa = new ArrayList<String>();
+								qa.add(t.getConAnswer());
+								qd.setAnswer(qa);
 								qd.setType(CommonConstant.QTYPE_6);
+								qd.setScore(t.getScore());
 								trainList.add(qd);
 								eq.setQdlist(trainList);
 								//---------------分析实训--------可以拆分出去
@@ -493,14 +510,17 @@ public class UserExamService {
 								if (uqc != null)
 								{
 									String useranswer = uqc.getUseranswer();
-									String tanswer = t.getConAnswer();
-									String result = uqc.getResult();
+									qd.setUseranswer(useranswer);
+//									String tanswer = t.getConAnswer();
+									String revalue = uqc.getRevalue();
+									qd.setOsanswer(revalue);
 									int quscore = t.getScore();
 //									int tmpscore = 0;
 									//得分，取裁判分
 									String pfscore = uqc.getPfscore();										
 									if (pfscore != null)
 									{
+										qd.setUserscore(Integer.parseInt(pfscore));
 										cscore += Integer.parseInt(pfscore);
 										if (Integer.parseInt(pfscore) == quscore)
 										{
@@ -512,28 +532,60 @@ public class UserExamService {
 										}
 									}
 									else
-									{										
-										if (useranswer != null && tanswer != null && useranswer.trim().equalsIgnoreCase(tanswer.trim()))
+									{		
+										if (useranswer != null)
 										{
-											cscore += quscore;
-											right ++;
-										}
-										else
-										{
-											//判断机器评分
-											if (result != null && "True".equals(result))
+											List<String> answerlist = qd.getAnswer();
+											if (answerlist != null)
 											{
-												cscore += quscore;
-												right ++;
-											}
-											else
-											{
-												wrong ++;
+												List<TrainExt> te = trainExtDao.getTrainExtList(t.getId());
+												String REGEX = "";
+												for (TrainExt text:te)
+												{
+													REGEX += text.getScoretag();
+												}
+												if (isCorrect(CommonConstant.QTYPE_6,useranswer,answerlist,REGEX))
+												{
+													qd.setUserscore(quscore);
+													cscore += quscore;
+													right++;
+												}
+												else
+												{
+													if (revalue != null && isCorrect(CommonConstant.QTYPE_6,revalue,answerlist,REGEX))
+													{
+														qd.setUserscore(quscore);
+														cscore += quscore;
+														right++;
+													}
+													else
+													{
+														wrong++;
+													}
+												}
 											}
 										}
+//										if (useranswer != null && tanswer != null && useranswer.trim().equalsIgnoreCase(tanswer.trim()))
+//										{
+//											cscore += quscore;
+//											right ++;
+//										}
+//										else
+//										{
+//											//判断机器评分
+//											if (result != null && "True".equals(result))
+//											{
+//												cscore += quscore;
+//												right ++;
+//											}
+//											else
+//											{
+//												wrong ++;
+//											}
+//										}
 									}
 									//未答
-									if (useranswer == null && result == null)
+									if (useranswer == null && revalue == null)
 									{
 										noanswer ++;
 									}

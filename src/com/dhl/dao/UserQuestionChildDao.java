@@ -36,14 +36,14 @@ public class UserQuestionChildDao extends BaseDao<UserQuestionChild> {
 		}
 	}
 	
-	public UserQuestionChild getUserQuestionByusertrainId(int userId,int userquestionId,String devinfo) {
-		String hql = "from UserQuestionChild where userId = "+userId+" and userquestionId = "+userquestionId+" and devinfo = '"+devinfo+"'";
-		List<UserQuestionChild> list = find(hql);
-		if (list.size() == 0) {
-			return null;
-		} else {
-
-			return list.get(0);
-		}
-	}
+//	public UserQuestionChild getUserQuestionByusertrainId(int userId,int userquestionId) {
+//		String hql = "from UserQuestionChild where userId = "+userId+" and userquestionId = "+userquestionId;
+//		List<UserQuestionChild> list = find(hql);
+//		if (list.size() == 0) {
+//			return null;
+//		} else {
+//
+//			return list.get(0);
+//		}
+//	}
 }

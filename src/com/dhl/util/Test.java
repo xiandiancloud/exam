@@ -2,7 +2,8 @@ package com.dhl.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class Test {
@@ -52,8 +53,9 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-				
-		System.out.println("------ "+UtilTools.timeTostrHMS(new Date()));
+		
+		
+//		System.out.println("------ "+UtilTools.timeTostrHMS(new Date()));
 		
 //		for (int i=0;i<5;i++)
 //		{
