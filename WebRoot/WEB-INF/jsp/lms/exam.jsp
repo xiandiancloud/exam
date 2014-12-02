@@ -128,7 +128,6 @@
 			<div class='row'>
 						<div class='col-xs-12'>
 							<div class='row'>
-							
 								<div class="col-xs-12">
 									<div class="box ">
 										<div class="box-content">
@@ -137,54 +136,6 @@
 													<h2>${exam.name}</h2>
 												</div>
 											</div>											
-											<%-- <div class='row none' id="firesult">
-												<div class="col-xs-12">
-													<hr class="hr-normal">
-												</div>
-												<div class="col-xs-3">
-													<div class="advance ">
-														<span class="totalScore" id="usercount"></span>分
-													</div>
-													<div class="center">该分数不同于真实成绩，仅代表预测分数。总分<strong>${score}</strong>分</div>
-												</div>
-												<div class="col-xs-9">
-												<table class='table table-bordered' style='background-color:#f9f9f9'>
-													<tbody>
-														<tr>
-															<td></td>
-															<c:forEach var="ued" items="${uedlist}">
-															<td>${ued.name}</td>
-															</c:forEach>
-														</tr>
-														<tr>
-															<td>答对</td>
-															<c:forEach var="ued" items="${uedlist}">
-															<th>${ued.right}</th>
-															</c:forEach>
-														</tr>
-														<tr>
-															<td>答错</td>
-															<c:forEach var="ued" items="${uedlist}">
-															<th>${ued.wrong}</th>
-															</c:forEach>
-														</tr>
-														<tr>
-															<td>未答</td>
-															<c:forEach var="ued" items="${uedlist}">
-															<th>${ued.noanswer}</th>
-															</c:forEach>
-														</tr>
-														<tr>
-															<td>得分</td>
-															
-															<c:forEach var="ued" items="${uedlist}">
-															<th>${ued.cscore}</th>
-															</c:forEach>
-														</tr>
-													</tbody>
-												</table>
-												</div>
-											</div> --%>
 										</div>
 									</div>
 								</div>
@@ -232,7 +183,6 @@
 																<div class="trainimg">${qdcontent}</div> 
 															</div>
 														</c:forEach>
-														<hr class='hr-normal'>
 														<div class='form-group'>
 															<div class='col-sm-12'>
 																<a id="hrefnumber${index}" href="javascript:void(0);" onclick="entertrain('${competionId}','${exam.id}','${vertical.id}','${qd.id}','hrefnumber${index}','${index}');" target="_blank" class='btn btn-danger'>
@@ -265,7 +215,6 @@
 															<c:set value="${index + 1}" var="index" />
 															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
-														<hr class='hr-normal'>
 														<div id="numberquestion${index}">
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -288,7 +237,6 @@
 															<c:set value="${index + 1}" var="index" />
 															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
-														<hr class='hr-normal'>
 														<div id="numberquestion${index}">
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -316,7 +264,6 @@
 																<label>${qdcontent}</label> 
 															</div>
 														</c:forEach>
-														<hr class='hr-normal'>
 														<div class='form-group'>
 															<div class='col-sm-12'>
 																<%-- <input class='form-control' type="text" id="numberquestion${index}" onblur="submittextquesstion('${qd.id}','${nn.index+1}',this,'${index}');" /> --%>
@@ -341,7 +288,6 @@
 																<label>${qdcontent}</label> 
 															</div>
 														</c:forEach>
-														<hr class='hr-normal'>
 														<div class='form-group'>
 															<div class='col-sm-12'>
 																<%-- <textarea class='form-control' rows='5' id="numberquestion${index}" onblur="submittextareaquesstion('${qd.id}','${nn.index+1}',this,'${index}');"></textarea> --%>
@@ -414,7 +360,6 @@
 									</div>
 								</div>
 							</div>
-							<hr class='hr-normal'>
 							<div class='row'>
 								<div class='col-xs-12'>
 									<div class='box-content' style="padding:0">
