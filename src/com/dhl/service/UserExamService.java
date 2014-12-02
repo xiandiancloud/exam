@@ -349,9 +349,24 @@ public class UserExamService {
 		else if (type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5 || type == CommonConstant.QTYPE_6)
 		{
 			//主观题用正则表达式判断
-			Pattern p = Pattern.compile(REGEX);
-		    Matcher m = p.matcher(useranswer);
-		    return m.find();
+			String[] regex = REGEX.split("#");
+			int len = regex.length;
+			//如果没有判分法则，直接返回
+			if (len < 1)
+			{
+				return false;
+			}
+			for (String str:regex)
+			{
+				Pattern p = Pattern.compile(str);
+			    Matcher m = p.matcher(useranswer);
+			    boolean isfind =  m.find();
+			    if (!isfind)
+			    {
+			    	return false;
+			    }
+			}
+			return true;
 		}
 		else
 			return false;
@@ -543,6 +558,7 @@ public class UserExamService {
 												for (TrainExt text:te)
 												{
 													REGEX += text.getScoretag();
+													REGEX += "#";
 												}
 												if (isCorrect(CommonConstant.QTYPE_6,useranswer,answerlist,REGEX))
 												{

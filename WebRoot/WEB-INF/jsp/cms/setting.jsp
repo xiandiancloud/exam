@@ -321,10 +321,11 @@ border-top: solid 1px #326e87;
 								</header>
 								<p class="instructions"><strong>警告</strong>：不要轻易修改这些策略，除非您已经熟悉了这些策略的目的。</p>
 								<ol class="list-input">
-									<li class="field-group field-group-course-start"
+									<li class="field text required"
 										id="course-start">
 										<div class="field date">
-											<label >试卷名称</label> <input
+											<label >试卷名称</label> 
+											<input
 												type="text"
 												class="start-date date start datepicker hasDatepicker"
 												id="examname" value="${exam.name}">
