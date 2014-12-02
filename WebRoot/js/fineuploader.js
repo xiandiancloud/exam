@@ -1251,7 +1251,7 @@ qq.status = {
             onStatusChange: function(id, oldStatus, newStatus) {}
         },
         messages: {
-            typeError: "{file} has an invalid extension. Valid extension(s): {extensions}.",
+            typeError: "{file} 格式不对. 仅支持后缀名为: {extensions}.",
             sizeError: "{file} is too large, maximum file size is {sizeLimit}.",
             minSizeError: "{file} is too small, minimum file size is {minSizeLimit}.",
             emptyError: "{file} is empty, please select files again without it.",

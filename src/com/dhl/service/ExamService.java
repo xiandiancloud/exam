@@ -33,6 +33,7 @@ import com.dhl.dao.Page;
 import com.dhl.dao.QuestionDao;
 import com.dhl.dao.TeacherExamDao;
 import com.dhl.dao.TrainDao;
+import com.dhl.dao.TrainExtDao;
 import com.dhl.dao.UserExamDao;
 import com.dhl.dao.UserQuestionDao;
 import com.dhl.domain.CompetionExam;
@@ -47,6 +48,7 @@ import com.dhl.domain.Log;
 import com.dhl.domain.Question;
 import com.dhl.domain.TeacherExam;
 import com.dhl.domain.Train;
+import com.dhl.domain.TrainExt;
 import com.dhl.util.UtilTools;
 import com.xiandian.dao.UserDao;
 
@@ -74,6 +76,8 @@ public class ExamService {
 	private ExamQuestionDao examQuestionDao;
 	@Autowired
 	private TrainDao trainDao;
+	@Autowired
+	private TrainExtDao trainExtDao;
 	@Autowired
 	private UserDao userDao;
 	@Autowired
@@ -498,7 +502,7 @@ public class ExamService {
 							+ File.separator + "upload" + File.separator
 							+ endcourse_image);
 
-					String display_name = rt.attributeValue("display_name");
+//					String display_name = rt.attributeValue("display_name");
 					String starttime = rt.attributeValue("start");
 					String starttimedetail = rt
 							.attributeValue("enrollment_start");
@@ -506,7 +510,7 @@ public class ExamService {
 
 					course.setCoursecode(coursecode);
 					course.setImgpath("upload/" + endcourse_image);
-					course.setName(display_name);
+//					course.setName(display_name);
 					course.setOrg(org);
 					course.setStarttime(starttime);
 					course.setStarttimedetail(starttimedetail);
@@ -730,23 +734,23 @@ public class ExamService {
 				String codenum = rt.attributeValue("codenum");
 				String conAnswer = rt.attributeValue("answer");
 				String conContent = rt.attributeValue("content");
-				String conShell = rt.attributeValue("shell");
+//				String conShell = rt.attributeValue("shell");
 				String envname = rt.attributeValue("envname");
 				String display_name = rt.attributeValue("display_name");
 				String score = rt.attributeValue("score");
-				String scoretag = rt.attributeValue("scoretag");
+//				String scoretag = rt.attributeValue("scoretag");
 
-				File imgdir = new File(path + File.separator + "shell");
-				if (!imgdir.exists())
-					imgdir.mkdir();
-				String endshell = UUID.randomUUID().toString() + conShell;
-				UtilTools.copyFile(rootelement + File.separator + "static"
-						+ File.separator + conShell, path + "shell"
-						+ File.separator + endshell);
+//				File imgdir = new File(path + File.separator + "shell");
+//				if (!imgdir.exists())
+//					imgdir.mkdir();
+//				String endshell = UUID.randomUUID().toString() + conShell;
+//				UtilTools.copyFile(rootelement + File.separator + "static"
+//						+ File.separator + conShell, path + "shell"
+//						+ File.separator + endshell);
 
-				Train train = trainDao.getTrainByCodenum(codenum);
-				if (train == null) {
-					train = new Train();
+//				Train train = trainDao.getTrainByCodenum(codenum);
+//				if (train == null) {
+				Train train = new Train();
 					train.setCodenum(codenum);
 					train.setConAnswer(conAnswer);
 					train.setConContent(conContent);
@@ -756,12 +760,62 @@ public class ExamService {
 					train.setScore(Integer.parseInt(score));
 //					train.setScoretag(scoretag);
 					trainDao.save(train);
-				}
+//				}
 				ExamQuestion vt = new ExamQuestion();
 				vt.setExam(course);
 				vt.setExamVertical(v);
 				vt.setTrain(train);
 				examQuestionDao.save(vt);
+				
+				Iterator iter = rt.elementIterator("trainext");
+				if (iter != null)
+				{
+					while (iter.hasNext()) {
+						Element recordEle = (Element) iter.next();
+						String chapter_url_name = recordEle
+								.attributeValue("url_name");
+						createTrainExt(course, train, path, rootelement, chapter_url_name);
+					}
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void createTrainExt(Exam course, Train train, String path,
+			String rootelement, String url_name) {
+
+		File rootxml = new File(rootelement + File.separator + "trainext"
+				+ File.separator + url_name + ".xml");
+		if (rootxml.exists()) {
+			SAXReader reader = new SAXReader();
+			try {
+				Document document = reader.read(rootxml);
+				Element rt = document.getRootElement();
+				
+				String shellpath = rt.attributeValue("shellpath");
+				String shellname = rt.attributeValue("shellname");
+				String shellparameter = rt.attributeValue("shellparameter");
+				String devinfo = rt.attributeValue("devinfo");
+				String scoretag = rt.attributeValue("scoretag");
+
+				File imgdir = new File(path + File.separator + "shell");
+				if (!imgdir.exists())
+					imgdir.mkdir();
+				String endshell = UUID.randomUUID().toString() + shellname;
+				UtilTools.copyFile(rootelement + File.separator + shellpath, path+ File.separator + "shell"
+						+ File.separator + endshell);
+
+				TrainExt te = new TrainExt();
+				te.setTrainId(train.getId());
+				te.setShellpath("shell"+ File.separator + endshell);
+				te.setShellname(shellname);
+				te.setShellparameter(shellparameter);
+				te.setDevinfo(devinfo);
+				te.setScoretag(scoretag);
+				trainExtDao.save(te);
 
 			} catch (Exception e) {
 				e.printStackTrace();

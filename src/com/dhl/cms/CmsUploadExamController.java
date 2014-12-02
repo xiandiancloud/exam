@@ -155,7 +155,7 @@ public class CmsUploadExamController extends BaseController {
 					String rootelement = rootpath + File.separator
 							+ rootfile.getName();
 					// User user = getSessionUser(request);
-					examService.updateCourse(examId,  rootpath, rootelement);
+					examService.updateCourse(examId,  upath, rootelement);
 				}
 
 				// 删除文件夹
@@ -364,6 +364,10 @@ public class CmsUploadExamController extends BaseController {
 
 	private void createExamAbout(String coursepath, String desc) {
 		try {
+			if (desc == null)
+			{
+				return;
+			}
 			String tt = coursepath + File.separator + "about";
 			File filedir = new File(tt);
 			if (!filedir.exists())

@@ -33,7 +33,7 @@ public class LmsUploadController extends BaseController {
 	 * @param file
 	 */
 	@RequestMapping("/importcompetionimg")
-	public void importCourseimg(HttpServletRequest request,
+	public void importcompetionimg(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value = "qqfile", required = true) MultipartFile file) {
 		response.setContentType("text/html");

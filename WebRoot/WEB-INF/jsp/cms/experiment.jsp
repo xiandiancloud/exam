@@ -279,9 +279,9 @@ width:600px;
     	    	text: { 
     	    	uploadButton: '<button class="btn btn-warning"><i class="icon-upload"></i>上传</button>' 
     	    	},   
-    	    	/* validation:{
+    	    	validation:{
         			allowedExtensions: ['sh']
-        		}, */
+        		},
     	    	template: 
     	    		 '<div class="qq-uploader">' +
     	    		  '<pre class="qq-upload-drop-area"><span>{dragZoneText}</span></pre>' +
