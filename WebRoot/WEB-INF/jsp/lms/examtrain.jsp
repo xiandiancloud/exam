@@ -287,7 +287,7 @@
 </div>
 
 <div data-options="region:'center'" style="padding:0px;overflow:hidden;">
-	<iframe id="iframe" src="http://192.168.1.109:8090/" frameBorder="0"
+	<iframe id="iframe" src="http://${gateone}:8090/" frameBorder="0"
 						width="100%" scrolling="no" height="100%"></iframe>
 </div>
 

@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.cons.CommonConstant;
+import com.dhl.domain.Cloud;
 import com.dhl.domain.Competion;
 import com.dhl.domain.Exam;
 import com.dhl.domain.ExamChapter;
 import com.dhl.domain.ExamQuestion;
 import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
-import com.dhl.domain.Question;
 import com.dhl.domain.Train;
 import com.dhl.domain.UserEnvironment;
 import com.dhl.domain.UserExam;
@@ -30,6 +30,7 @@ import com.dhl.domain.UserQuestionChild;
 import com.dhl.service.CompetionService;
 import com.dhl.service.ExamQuestionService;
 import com.dhl.service.ExamService;
+import com.dhl.service.UserCloudService;
 import com.dhl.service.UserEnvironmentService;
 import com.dhl.service.UserExamHistoryService;
 import com.dhl.service.UserExamService;
@@ -63,6 +64,8 @@ public class HavingExamController extends BaseController {
 	private UserEnvironmentService userEnvironmentService;
 	@Autowired
 	private CompetionService competionService;
+	@Autowired
+	private UserCloudService userCloudService;
 	
 	//判断是否有权限去考试
 	private boolean isHaving(Exam exam)
@@ -461,6 +464,11 @@ public class HavingExamController extends BaseController {
 				}
 			}
 		}
+		Cloud cloud = userCloudService.getMyCloud(user.getId());
+		if (cloud != null)
+		{
+			view.addObject("gateone",cloud.getIp());
+		}
 		view.addObject("competionId",competionId);
 		view.addObject("tlist", tlist);
 		view.setViewName("/lms/examtrain");
@@ -507,71 +515,4 @@ public class HavingExamController extends BaseController {
 
 		}
 	}
-	
-//	/**
-//	 * 用户的统计情况
-//	 * 
-//	 * @param request
-//	 * @param response
-//	 */
-//	@RequestMapping("/usercounts")
-//	public void usercounts(HttpServletRequest request,
-//			HttpServletResponse response,int examId) {
-//
-//		try {
-//			PrintWriter out = response.getWriter();
-//			User user = getSessionUser(request);
-//			String str = "{'sucess':'sucess',";
-//			String score = "";
-//			Exam exam = examService.get(examId);
-//			Set<ExamChapter> chapterset = exam.getExamchapters();
-//			Iterator it = chapterset.iterator();
-//			str+="'chapter':[";
-//			String tmpstr = "";
-//			while (it.hasNext()) {
-//				ExamChapter chapter = (ExamChapter) it.next();
-//				Set<ExamSequential> sequentialset = chapter.getEsequentials();
-//				Iterator it2 = sequentialset.iterator();
-//				tmpstr+="{'name':'"+chapter.getName()+"'";
-//				while (it2.hasNext()) {
-//					ExamSequential sequential = (ExamSequential) it2.next();
-//					Set<ExamVertical> verticalset = sequential.getExamVerticals();
-//					Iterator it3 = verticalset.iterator();
-//					while (it3.hasNext()) {
-//						ExamVertical vertical = (ExamVertical) it3.next();
-//						Set<ExamQuestion> vt = vertical.getExamQuestion();
-//						for (ExamQuestion eq:vt)
-//						{
-//							Question q = eq.getQuestion();
-//							//问题
-//							if (q != null)
-//							{
-//								List<UserQuestionChild> uqc = userQuestionService.getQuestionList(user.getId(),examId,q.getId());
-//							}
-//							else//实训
-//							{
-//								Train t = eq.getTrain();
-//								if (t != null)
-//								{
-//									UserQuestionChild userTrain = userQuestionService.getUserExamTrainQuestionChild(user.getId(),examId, t.getId());
-//								}
-//							}
-//						}
-//					}
-//				}
-//				tmpstr+="},";
-//			}
-//			if (tmpstr.length() > 2)
-//			{
-//				tmpstr = tmpstr.substring(0,tmpstr.length() - 1);
-//			}
-//			str += tmpstr;
-//			str += "],'score':'"+score+"'}";
-//			out.write(str);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-	
-	//-----------------------考试实训-------------------------------
 }
