@@ -565,24 +565,6 @@ public class UserExamService {
 												}
 											}
 										}
-//										if (useranswer != null && tanswer != null && useranswer.trim().equalsIgnoreCase(tanswer.trim()))
-//										{
-//											cscore += quscore;
-//											right ++;
-//										}
-//										else
-//										{
-//											//判断机器评分
-//											if (result != null && "True".equals(result))
-//											{
-//												cscore += quscore;
-//												right ++;
-//											}
-//											else
-//											{
-//												wrong ++;
-//											}
-//										}
 									}
 									//未答
 									if (useranswer == null && revalue == null)

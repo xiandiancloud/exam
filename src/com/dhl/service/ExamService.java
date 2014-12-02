@@ -184,9 +184,9 @@ public class ExamService {
 	 * @param name
 	 * @return
 	 */
-	public List<Exam> getCourseByName(String name) {
-		return examDao.getCourseByName(name);
-	}
+//	public List<Exam> getCourseByName(String name) {
+//		return examDao.getCourseByName(name);
+//	}
 
 	/**
 	 * 得到推荐试卷
@@ -433,19 +433,34 @@ public class ExamService {
 	 * @param courseId
 	 * @param rootelement
 	 */
-	public void updateCourse(int courseId, String describle,
+	public void updateExam(int examId, String describle,
 			String starttimedetail, String endtimedetail, String imgpath) {
-		Exam course = get(courseId);
+		Exam exam = get(examId);
 		// 更新试卷
-		if (course != null) {
-			course.setDescrible(describle);
-			course.setStarttimedetail(starttimedetail);
-			course.setEndtimedetail(endtimedetail);
-			course.setImgpath(imgpath);
-			update(course);
+		if (exam != null) {
+			exam.setDescrible(describle);
+			exam.setStarttimedetail(starttimedetail);
+			exam.setEndtimedetail(endtimedetail);
+			exam.setImgpath(imgpath);
+			update(exam);
 		}
 	}
 
+	/**
+	 * 更新试卷名称
+	 * 
+	 * @param courseId
+	 * @param rootelement
+	 */
+	public void updateExamName(int examId, String name) {
+		Exam exam = get(examId);
+		// 更新试卷
+		if (exam != null) {
+			exam.setName(name);
+			update(exam);
+		}
+	}
+	
 	/**
 	 * 导入试卷的时候更新试卷
 	 * 

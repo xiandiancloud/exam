@@ -141,8 +141,7 @@ create table t_exam
    lockexam            int(10) default 0,
    isnormal            int(10) default 0,
    isgroom           int(10) default 0,
-   primary key (id),
-   UNIQUE KEY (name)
+   primary key (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*竞赛下的试卷定义*/

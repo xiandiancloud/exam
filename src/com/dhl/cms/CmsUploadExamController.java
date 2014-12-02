@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dhl.dao.TrainExtDao;
 import com.dhl.domain.Exam;
 import com.dhl.domain.ExamCategory;
 import com.dhl.domain.ExamChapter;
@@ -37,6 +39,7 @@ import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Question;
 import com.dhl.domain.Train;
+import com.dhl.domain.TrainExt;
 import com.dhl.service.ExamService;
 import com.dhl.util.UtilTools;
 import com.dhl.util.WordTools;
@@ -54,7 +57,9 @@ public class CmsUploadExamController extends BaseController {
 
 	@Autowired
 	private ExamService examService;
-
+	@Autowired
+	private TrainExtDao trainExtDao;
+	
 	/**
 	 * 跳转到老师试卷导出页面
 	 * 
@@ -381,8 +386,11 @@ public class CmsUploadExamController extends BaseController {
 		// 定义根节点Element
 		Element rootGen = document.addElement("course");
 		String imgpath = c.getImgpath();
-		imgpath = imgpath.substring(imgpath.indexOf('/')+1);
-		rootGen.addAttribute("course_image", imgpath);
+		if (imgpath != null)
+		{
+			imgpath = imgpath.substring(imgpath.indexOf('/')+1);
+			rootGen.addAttribute("course_image", imgpath);
+		}
 		rootGen.addAttribute("display_name", c.getName());
 		rootGen.addAttribute("start", c.getStarttime());
 		rootGen.addAttribute("enrollment_start", c.getStarttimedetail());
@@ -391,10 +399,12 @@ public class CmsUploadExamController extends BaseController {
 		File imgdir = new File(coursepath + File.separator + "static");
 		if (!imgdir.exists())
 			imgdir.mkdir();
-		UtilTools.copyFile(path + "upload" + File.separator + imgpath,
-				coursepath + File.separator + "static" + File.separator
-						+ imgpath);
-
+		if (imgpath != null)
+		{
+			UtilTools.copyFile(path + "upload" + File.separator + imgpath,
+					coursepath + File.separator + "static" + File.separator
+							+ imgpath);
+		}
 		Set<ExamChapter> set = c.getExamchapters();
 		Iterator<ExamChapter> it = set.iterator();
 		while (it.hasNext()) {
@@ -609,18 +619,26 @@ public class CmsUploadExamController extends BaseController {
 		rootGen.addAttribute("answer", train.getConAnswer());
 //		String shellpath = train.getConShell();
 //		String[] strs = shellpath.split("/");
-		String shellname = "";
+//		String shellname = "";
 //		if (strs.length > 1)
 //		{
 //			shellname = strs[1];
 //		}
-		rootGen.addAttribute("shell", shellname);
+//		rootGen.addAttribute("shell", shellname);
 		rootGen.addAttribute("score", train.getScore() + "");
 //		rootGen.addAttribute("scoretag", train.getScoretag());
 
-		File imgdir = new File(coursepath + File.separator + "shell");
-		if (!imgdir.exists())
-			imgdir.mkdir();
+		List<TrainExt> telist = trainExtDao.getTrainExtList(train.getId());
+		for (TrainExt te:telist)
+		{
+			Element childElement = rootGen.addElement("trainext");
+			String uuid = UUID.randomUUID().toString();
+			childElement.addAttribute("url_name", uuid);
+			createTrainExtXMl(path, coursepath, uuid + ".xml", te);
+		}
+//		File imgdir = new File(coursepath + File.separator + "shell");
+//		if (!imgdir.exists())
+//			imgdir.mkdir();
 //		UtilTools.copyFile(path + shellpath,
 //				coursepath + File.separator + shellpath);
 
@@ -632,6 +650,51 @@ public class CmsUploadExamController extends BaseController {
 			// 设定编码
 			format.setEncoding("UTF-8");
 			String tt = coursepath + File.separator + "train";
+			File filedir = new File(tt);
+			if (!filedir.exists())
+				filedir.mkdir();
+			File file = new File(tt + File.separator + xml);
+			if (!file.exists())
+				file.createNewFile();
+			xmlwriter = new XMLWriter(new FileOutputStream(file), format);
+			xmlwriter.write(document);
+			xmlwriter.flush();
+			xmlwriter.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void createTrainExtXMl(String path, String coursepath, String xml,
+			TrainExt trainExt)
+	{
+		// 创建document对象
+		Document document = DocumentHelper.createDocument();
+		// 定义根节点Element
+		Element rootGen = document.addElement("trainext");
+//		rootGen.addAttribute("trainId", trainExt.getTrainId()+"");
+		String shellpath = trainExt.getShellpath();
+		
+		rootGen.addAttribute("shellpath", shellpath);
+		rootGen.addAttribute("shellname", trainExt.getShellname());
+		rootGen.addAttribute("shellparameter", trainExt.getShellparameter());
+		rootGen.addAttribute("devinfo", trainExt.getDevinfo());
+		rootGen.addAttribute("scoretag", trainExt.getScoretag());
+				
+		File imgdir = new File(coursepath + File.separator + "shell");
+		if (!imgdir.exists())
+			imgdir.mkdir();
+		UtilTools.copyFile(path + shellpath,
+				coursepath + File.separator + shellpath);
+
+		OutputFormat format = null;
+		XMLWriter xmlwriter = null;
+		try {
+			// 进行格式化
+			format = OutputFormat.createPrettyPrint();
+			// 设定编码
+			format.setEncoding("UTF-8");
+			String tt = coursepath + File.separator + "trainext";
 			File filedir = new File(tt);
 			if (!filedir.exists())
 				filedir.mkdir();

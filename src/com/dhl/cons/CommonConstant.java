@@ -75,4 +75,7 @@ public class CommonConstant
    public static final String LOG_3 = "修改判分：";
    public static final String LOG_4 = "结束判分：";
    public static final String LOG_5 = "更新答案：";
+   
+   //
+   public static final String CONTROL_NODE = "iaas.host.controller.ip";
 }

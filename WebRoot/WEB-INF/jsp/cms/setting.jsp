@@ -317,6 +317,29 @@ border-top: solid 1px #326e87;
 							action="">
 							<section class="group-settings schedule">
 								<header>
+									<h2 class="title-2">手工策略定义</h2>
+								</header>
+								<p class="instructions"><strong>警告</strong>：不要轻易修改这些策略，除非您已经熟悉了这些策略的目的。</p>
+								<ol class="list-input">
+									<li class="field-group field-group-course-start"
+										id="course-start">
+										<div class="field date">
+											<label >试卷名称</label> <input
+												type="text"
+												class="start-date date start datepicker hasDatepicker"
+												id="examname" value="${exam.name}">
+										
+										</div>            
+									</li>
+									<li class="action">
+									<a href="javascript:void(0);" onclick="saveExamName();" class="button view-button view-live-button">保存</a>
+									</li>
+								</ol>
+							</section>
+
+							<hr class="divide">
+							<section class="group-settings schedule">
+								<header>
 									<h2 class="title-2">平台信息&nbsp;<a
 						class="button new-button" onclick="showcloud();"><i
 							class="icon-plus icon-inline"></i>新建</a></h2>
@@ -489,6 +512,25 @@ border-top: solid 1px #326e87;
 				}
 			});
 		}
+        function saveExamName()
+        {
+        	var name = $("#examname").val();
+        	var examId = "${exam.id}";
+			var data = {examId:examId,name:name};
+			$.ajax({
+				url:"cms/updateExamname.action",
+				type:"post",
+				data:data,
+				success:function(s){
+					var a=eval("("+s+")");	
+					if (a.sucess=="sucess")
+					{
+						location.reload();
+						alert("保存成功");
+					}
+				}
+			});
+        }
 		</script>
 </body>
 </html>

@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.SCPClient;
 
+import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Cloud;
 import com.dhl.domain.RestShell;
 import com.dhl.domain.TrainExt;
@@ -102,10 +103,21 @@ public class ShellController extends BaseController {
 					if (devinfo != null && !"".equals(devinfo))
 					{
 						
-						String ip = environmenteService.getDevIP(devinfo);
-						String userName = environmenteService.getDevUserName(devinfo.substring(0,devinfo.lastIndexOf('.'))+".username");
-						String passWord = environmenteService.getDevPassword(devinfo.substring(0,devinfo.lastIndexOf('.'))+".password");
-						
+						String ip;// = environmenteService.getDevIP(devinfo);
+						String userName;// = environmenteService.getDevUserName(devinfo.substring(0,devinfo.lastIndexOf('.'))+".username");
+						String passWord;// = environmenteService.getDevPassword(devinfo.substring(0,devinfo.lastIndexOf('.'))+".password");
+						if (CommonConstant.CONTROL_NODE.equals(devinfo))
+						{
+							ip = restid;
+							userName = restusername;
+							passWord = restpassword;
+						}
+						else
+						{
+							ip = environmenteService.getDevIP(devinfo);
+							userName = environmenteService.getDevUserName(devinfo.substring(0,devinfo.lastIndexOf('.'))+".username");
+							passWord = environmenteService.getDevPassword(devinfo.substring(0,devinfo.lastIndexOf('.'))+".password");
+						}
 						RestShell rs = new RestShell();
 						rs.setIp(ip);
 						rs.setUserName(userName);

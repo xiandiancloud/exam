@@ -395,8 +395,30 @@ public class ExamController extends BaseController {
 		try {
 			PrintWriter out = response.getWriter();
 
-			examService.updateCourse(examId, describle, starttimedetail,
+			examService.updateExam(examId, describle, starttimedetail,
 					endtimedetail, imgpath);
+
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 老师更新试卷
+	 * 
+	 * @param request
+	 * @param name
+	 * @return
+	 */
+	@RequestMapping("/updateExamname")
+	public void updateExamname(HttpServletRequest request,
+			HttpServletResponse response, int examId, String name) {
+		try {
+			PrintWriter out = response.getWriter();
+
+			examService.updateExamName(examId, name);
 
 			String str = "{'sucess':'sucess'}";
 			out.write(str);

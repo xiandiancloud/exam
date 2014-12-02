@@ -8,11 +8,11 @@ import com.dhl.domain.Exam;
 @Repository
 public class ExamDao extends BaseDao<Exam> {
 	
-	public List<Exam> getCourseByName(String name)
-	{
-		String hql = "from Exam where name = '"+name+"'";
-    	return find(hql);
-	}
+//	public List<Exam> getCourseByName(String name)
+//	{
+//		String hql = "from Exam where name = '"+name+"'";
+//    	return find(hql);
+//	}
 	
 	public List<Exam> getGroomExam()
 	{
