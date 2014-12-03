@@ -638,7 +638,7 @@
 					}
 					$("#editor").html(a.useranswer);
 					$("#traincon").html(a.conContent);
-					if (a.result && a.result.length > 0)
+					if (a.revalue && a.revalue.length > 0)
 					{
 						//var reg = new RegExp("</br>", "g"); //创建正则RegExp对象 
 						//var newstr = a.result.replace(reg, "\r\n");

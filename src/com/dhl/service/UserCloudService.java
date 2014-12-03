@@ -65,6 +65,14 @@ public class UserCloudService {
 			//别人的云平台
 			if (cloud.getUserId() != userId)
 			{
+				if (userCloud == null)
+				{
+					UserCloud uce = new UserCloud();
+					uce.setUserId(userId);
+					uce.setCloudId(cloud.getId());
+					uceDao.save(uce);
+					return true;
+				}
 				return false;
 			}
 			else

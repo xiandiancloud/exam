@@ -10,11 +10,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -34,16 +37,6 @@ import com.dhl.domain.Question;
 import com.dhl.domain.Train;
 import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
-import com.woorea.openstack.base.client.OpenStackSimpleTokenProvider;
-import com.woorea.openstack.keystone.Keystone;
-import com.woorea.openstack.keystone.model.Access;
-import com.woorea.openstack.keystone.model.authentication.UsernamePassword;
-import com.woorea.openstack.nova.Nova;
-import com.woorea.openstack.nova.api.ServersResource;
-import com.woorea.openstack.nova.model.Server;
-import com.woorea.openstack.nova.model.Server.Addresses.Address;
-import com.woorea.openstack.nova.model.ServerForCreate;
-import com.woorea.openstack.nova.model.Servers;
 
 public class UtilTools {
 
@@ -849,92 +842,234 @@ public class UtilTools {
 
 	}
 	
+	 private static final String regEx_script = "<script[^>]*?>[\\s\\S]*?<\\/script>"; // 定义script的正则表达式  
+	    private static final String regEx_style = "<style[^>]*?>[\\s\\S]*?<\\/style>"; // 定义style的正则表达式  
+	    private static final String regEx_html = "<[^>]+>"; // 定义HTML标签的正则表达式  
+	    private static final String regEx_space = "\\s*|\t|\r|\n";//定义空格回车换行符  
+	    
+	    public static String delHTMLTag(String htmlStr) {  
+	        Pattern p_script = Pattern.compile(regEx_script, Pattern.CASE_INSENSITIVE);  
+	        Matcher m_script = p_script.matcher(htmlStr);  
+	        htmlStr = m_script.replaceAll(""); // 过滤script标签  
+	  
+	        Pattern p_style = Pattern.compile(regEx_style, Pattern.CASE_INSENSITIVE);  
+	        Matcher m_style = p_style.matcher(htmlStr);  
+	        htmlStr = m_style.replaceAll(""); // 过滤style标签  
+	  
+	        Pattern p_html = Pattern.compile(regEx_html, Pattern.CASE_INSENSITIVE);  
+	        Matcher m_html = p_html.matcher(htmlStr);  
+	        htmlStr = m_html.replaceAll(""); // 过滤html标签  
+	  
+	        Pattern p_space = Pattern.compile(regEx_space, Pattern.CASE_INSENSITIVE);  
+	        Matcher m_space = p_space.matcher(htmlStr);  
+	        htmlStr = m_space.replaceAll(""); // 过滤空格回车标签  
+	        return htmlStr.trim(); // 返回文本字符串  
+	    }  
+	      
+	    public static String getTextFromHtml(String htmlStr){  
+	        htmlStr = delHTMLTag(htmlStr);  
+	        htmlStr = htmlStr.replaceAll("&nbsp;", "");  
+//	        htmlStr = htmlStr.substring(0, htmlStr.indexOf("。")+1);  
+	        return htmlStr;  
+	    }  
+	    
 	//动态计算得分情况
-	public static String getScore(UserQuestion uq,UserQuestionChild uqc,int number)
+//	public static String getScore(UserQuestion uq,UserQuestionChild uqc,int number)
+//	{
+//		String score = "0";
+//		//判分裁判一旦修改了系统判分，采用判分裁判的
+//		String pfscore = uqc.getPfscore();
+//		if (pfscore != null)
+//		{
+//			score = pfscore;
+//		}
+//		else
+//		{
+//			String useranswer = uqc.getUseranswer();
+//			String result = uqc.getResult();
+//			//采用自动评分
+//			Train t = uq.getTrain();
+//			if (t != null)//实训
+//			{
+//				String tanswer = t.getConAnswer();
+//				//-------如果有机器跟用户的答案，先判断用户提交答案
+//				int tmpscore = 0;
+//				if (useranswer != null && tanswer != null && useranswer.trim().equals(tanswer.trim()))
+//				{
+//					tmpscore = t.getScore();
+//				}
+//				if (tmpscore > 0)
+//				{
+//					score = tmpscore+"";
+//				}
+//				else
+//				{
+//					//机器评分
+//					if (result != null && "True".equals(result))
+//					{
+//						score = t.getScore()+"";
+//					}
+//				}
+//			}
+//			else//问题
+//			{
+//				Question q = uq.getQuestion();
+//				List<QuestionData> qdlist = ParseQuestion.changetohtml(q.getContent(), q.getId());
+//				//理论上不应该越界，没有容错，是为了前期发现问题，如果出错，好排查问题
+//				if (qdlist != null)
+//				{
+//					QuestionData qd = qdlist.get(number-1);
+//					int type = qd.getType();
+//					if (type == CommonConstant.QTYPE_2 || type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5)
+//					{
+//						List<String> answerlist = qd.getAnswer();
+//						if (answerlist != null && answerlist.size() > 0)
+//						{
+//							if (useranswer != null && useranswer.trim().equals(answerlist.get(0).trim()))
+//							{
+//								score = qd.getScore()+"";
+//							}
+//						}
+//					}
+//					else if (type == CommonConstant.QTYPE_3)//多选要匹配答案列表
+//					{
+//						if (useranswer != null)
+//						{
+//							List<String> answerlist = qd.getAnswer();
+//							if (answerlist != null)
+//							{
+//								String[] strs = useranswer.split("#");
+//								int size = answerlist.size();
+//								boolean flag = true;
+//								for (int i=0;i<size;i++)
+//								{
+//									if (!answerlist.get(i).equals(strs[i]))
+//									{
+//										flag = false;
+//										break;
+//									}
+//								}
+//								if (flag)
+//								{
+//									score = qd.getScore()+"";
+//								}
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
+//		return score;
+//	}
+	
+	public static List isCorrect(int type,String useranswer,List<String> answerlist,String REGEX,int score)
 	{
-		String score = "0";
-		//判分裁判一旦修改了系统判分，采用判分裁判的
-		String pfscore = uqc.getPfscore();
-		if (pfscore != null)
-		{
-			score = pfscore;
+		List list = new ArrayList();
+		try {
+			useranswer = java.net.URLDecoder.decode(useranswer,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		else
+		if (type == CommonConstant.QTYPE_2)
 		{
-			String useranswer = uqc.getUseranswer();
-			String result = uqc.getResult();
-			//采用自动评分
-			Train t = uq.getTrain();
-			if (t != null)//实训
+//			return useranswer.trim().equalsIgnoreCase(answerlist.get(0).trim());
+			if (useranswer.trim().equalsIgnoreCase(answerlist.get(0).trim()))
 			{
-				String tanswer = t.getConAnswer();
-				//-------如果有机器跟用户的答案，先判断用户提交答案
-				int tmpscore = 0;
-				if (useranswer != null && tanswer != null && useranswer.trim().equals(tanswer.trim()))
+				list.add(1);
+				list.add(score);
+			}
+			else
+			{
+				list.add(0);
+				list.add(0);
+			}
+		}
+		else if (type == CommonConstant.QTYPE_3)
+		{
+			String[] strs = useranswer.split("#");
+			int size = answerlist.size();
+//			boolean flag = true;
+			if (size != strs.length)
+			{
+//				flag = false;
+				list.add(0);
+				list.add(0);
+			}
+			else
+			{
+				boolean flag = true;
+				for (int j=0;j<size;j++)
 				{
-					tmpscore = t.getScore();
+					if (!answerlist.get(j).equalsIgnoreCase(strs[j]))
+					{
+						flag = false;
+						break;
+					}
 				}
-				if (tmpscore > 0)
+				if (flag)
 				{
-					score = tmpscore+"";
+					list.add(1);
+					list.add(score);
 				}
 				else
 				{
-					//机器评分
-					if (result != null && "True".equals(result))
-					{
-						score = t.getScore()+"";
-					}
+					list.add(0);
+					list.add(0);
 				}
 			}
-			else//问题
+//			return flag;
+		}
+		else if (type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5 || type == CommonConstant.QTYPE_6)
+		{
+			//主观题用正则表达式判断
+			String[] regex = REGEX.split("#");
+			int len = regex.length;
+			//如果没有判分法则，直接返回
+			if (len < 1)
 			{
-				Question q = uq.getQuestion();
-				List<QuestionData> qdlist = ParseQuestion.changetohtml(q.getContent(), q.getId());
-				//理论上不应该越界，没有容错，是为了前期发现问题，如果出错，好排查问题
-				if (qdlist != null)
+//				return false;
+				list.add(0);
+				list.add(0);
+			}
+			else
+			{
+				int istrue = 0;
+				String tempuseranswer = UtilTools.getTextFromHtml(useranswer);
+				for (String str:regex)
 				{
-					QuestionData qd = qdlist.get(number-1);
-					int type = qd.getType();
-					if (type == CommonConstant.QTYPE_2 || type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5)
-					{
-						List<String> answerlist = qd.getAnswer();
-						if (answerlist != null && answerlist.size() > 0)
-						{
-							if (useranswer != null && useranswer.trim().equals(answerlist.get(0).trim()))
-							{
-								score = qd.getScore()+"";
-							}
-						}
-					}
-					else if (type == CommonConstant.QTYPE_3)//多选要匹配答案列表
-					{
-						if (useranswer != null)
-						{
-							List<String> answerlist = qd.getAnswer();
-							if (answerlist != null)
-							{
-								String[] strs = useranswer.split("#");
-								int size = answerlist.size();
-								boolean flag = true;
-								for (int i=0;i<size;i++)
-								{
-									if (!answerlist.get(i).equals(strs[i]))
-									{
-										flag = false;
-										break;
-									}
-								}
-								if (flag)
-								{
-									score = qd.getScore()+"";
-								}
-							}
-						}
-					}
+					Pattern p = Pattern.compile(str);
+				    Matcher m = p.matcher(tempuseranswer);
+				    if (m.find())
+				    {
+				    	istrue ++;
+				    }
 				}
+				if (istrue == len)
+				{
+					list.add(1);
+					list.add(score);
+				}
+				else if (istrue == 0)
+				{
+					list.add(0);
+					list.add(0);
+				}
+				else
+				{
+					list.add(2);
+					int tscore = score;
+					float b = tscore * (istrue*1.0f/len);
+					DecimalFormat formater = new DecimalFormat("#0.##");
+					String uscore = formater.format(b);
+					list.add(uscore);
+				}
+//				return true;
 			}
 		}
-		return score;
+//		else
+//			return false;
+		return list;
 	}
+	
 }

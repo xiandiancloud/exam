@@ -250,43 +250,43 @@ public class HavingExamController extends BaseController {
 		}
 	}
 	
-	/**
-	 * 评分裁判得到用户提交的答案
-	 */
-	@RequestMapping("/getUserQuestionAnswer")
-	public void getUserQuestionAnswer(HttpServletRequest request,
-			HttpServletResponse response,int qdtype, int examId,int questionId,int number,int index,int userId) {
-		try {
-			UserQuestion uq;
-			if (qdtype == CommonConstant.QTYPE_6)
-			{
-				uq = userQuestionService.getUserExamTrainQuestion(userId, examId, questionId);
-			}
-			else
-			{
-				uq = userQuestionService.getQuestion(userId, examId, questionId);
-			}
-			String revalue="";
-			String str = "{'sucess':'sucess','answer':' ','index':'"+index+"','pfscore':'0','revalue':' '}";
-			String score = "0";
-			if (uq != null)
-			{
-				UserQuestionChild uqc = userQuestionService.getQuestionChild(uq,userId,number);
-				if (uqc != null)
-				{
-					String useranswer = uqc.getUseranswer();
-					//实训机器返回值
-					revalue = uqc.getRevalue();
-					score = UtilTools.getScore(uq, uqc, number);
-					str = "{'sucess':'sucess','answer':'"+useranswer+"','index':'"+index+"','pfscore':'"+score+"','revalue':'"+revalue+"'}";
-				}
-			}
-			PrintWriter out = response.getWriter();
-			out.write(str);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	/**
+//	 * 评分裁判得到用户提交的答案
+//	 */
+//	@RequestMapping("/getUserQuestionAnswer")
+//	public void getUserQuestionAnswer(HttpServletRequest request,
+//			HttpServletResponse response,int qdtype, int examId,int questionId,int number,int index,int userId) {
+//		try {
+//			UserQuestion uq;
+//			if (qdtype == CommonConstant.QTYPE_6)
+//			{
+//				uq = userQuestionService.getUserExamTrainQuestion(userId, examId, questionId);
+//			}
+//			else
+//			{
+//				uq = userQuestionService.getQuestion(userId, examId, questionId);
+//			}
+//			String revalue="";
+//			String str = "{'sucess':'sucess','answer':' ','index':'"+index+"','pfscore':'0','revalue':' '}";
+//			String score = "0";
+//			if (uq != null)
+//			{
+//				UserQuestionChild uqc = userQuestionService.getQuestionChild(uq,userId,number);
+//				if (uqc != null)
+//				{
+//					String useranswer = uqc.getUseranswer();
+//					//实训机器返回值
+//					revalue = uqc.getRevalue();
+//					score = UtilTools.getScore(uq, uqc, number);
+//					str = "{'sucess':'sucess','answer':'"+useranswer+"','index':'"+index+"','pfscore':'"+score+"','revalue':'"+revalue+"'}";
+//				}
+//			}
+//			PrintWriter out = response.getWriter();
+//			out.write(str);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	//判断竞赛是否结束---以后修改调用
 	private boolean isstart(int competionId)
@@ -498,6 +498,10 @@ public class HavingExamController extends BaseController {
 //			String result = userTrain == null ? "" : userTrain.getResult();
 			String revalue = userTrain == null ? "" : userTrain.getRevalue();
 			String useranswer = userTrain == null ? "" : userTrain.getUseranswer();
+			if (useranswer == null)
+			{
+				useranswer = "";
+			}
 			Train train = examService.getTrain(trainId);
 			String con = train.getConContent();
 			con = UtilTools.replaceBackett(con);

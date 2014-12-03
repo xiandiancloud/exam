@@ -1,13 +1,10 @@
 package com.dhl.service;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -312,66 +309,6 @@ public class UserExamService {
 		return null;
 	}
 	
-	private boolean isCorrect(int type,String useranswer,List<String> answerlist,String REGEX)
-	{
-		try {
-			useranswer = java.net.URLDecoder.decode(useranswer,"UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if (type == CommonConstant.QTYPE_2)
-		{
-			return useranswer.trim().equalsIgnoreCase(answerlist.get(0).trim());
-		}
-		else if (type == CommonConstant.QTYPE_3)
-		{
-			String[] strs = useranswer.split("#");
-			int size = answerlist.size();
-			boolean flag = true;
-			if (size != strs.length)
-			{
-				flag = false;
-			}
-			else
-			{
-				for (int j=0;j<size;j++)
-				{
-					if (!answerlist.get(j).equalsIgnoreCase(strs[j]))
-					{
-						flag = false;
-						break;
-					}
-				}
-			}
-			return flag;
-		}
-		else if (type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5 || type == CommonConstant.QTYPE_6)
-		{
-			//主观题用正则表达式判断
-			String[] regex = REGEX.split("#");
-			int len = regex.length;
-			//如果没有判分法则，直接返回
-			if (len < 1)
-			{
-				return false;
-			}
-			for (String str:regex)
-			{
-				Pattern p = Pattern.compile(str);
-			    Matcher m = p.matcher(useranswer);
-			    boolean isfind =  m.find();
-			    if (!isfind)
-			    {
-			    	return false;
-			    }
-			}
-			return true;
-		}
-		else
-			return false;
-	}
-	
 	//用户试卷分析情况
 	public List getUserExamCount(int userId,Exam exam,int docounts)
 	{
@@ -464,11 +401,20 @@ public class UserExamService {
 												List<String> answerlist = qd.getAnswer();
 												if (answerlist != null)
 												{
-													if (isCorrect(type,useranswer,answerlist,qd.getExplain()))
+													List list = UtilTools.isCorrect(type,useranswer,answerlist,qd.getExplain(),quscore);
+													int isflag = (int)list.get(0);
+													if (isflag == 1)
 													{
 														qd.setUserscore(quscore);
 														cscore += quscore;
 														right++;
+													}
+													else if (isflag == 2)
+													{
+														int temp = (int)list.get(1);
+														qd.setUserscore(temp);
+														cscore += temp;
+														wrong ++;
 													}
 													else
 													{
@@ -560,19 +506,80 @@ public class UserExamService {
 													REGEX += text.getScoretag();
 													REGEX += "#";
 												}
-												if (isCorrect(CommonConstant.QTYPE_6,useranswer,answerlist,REGEX))
+												List list = UtilTools.isCorrect(CommonConstant.QTYPE_6,useranswer,answerlist,REGEX,quscore);
+												int isflag = (int)list.get(0);
+												if (isflag == 1)
 												{
 													qd.setUserscore(quscore);
 													cscore += quscore;
 													right++;
 												}
+												else if (isflag == 2)
+												{
+													int temp = (int)list.get(1);
+													qd.setUserscore(temp);
+													cscore += temp;
+													wrong++;
+												}
 												else
 												{
-													if (revalue != null && isCorrect(CommonConstant.QTYPE_6,revalue,answerlist,REGEX))
+													if (revalue != null)
+													{
+														List list2 = UtilTools.isCorrect(CommonConstant.QTYPE_6,revalue,answerlist,REGEX,quscore);
+														int isflag2 = (int)list2.get(0);
+														if (isflag2 == 1)
+														{
+															qd.setUserscore(quscore);
+															cscore += quscore;
+															right++;
+														}
+														else if (isflag2 == 2)
+														{
+															int temp = (int)list2.get(1);
+															qd.setUserscore(temp);
+															cscore += temp;
+															wrong++;
+														}
+														else
+														{
+															wrong++;
+														}
+													}
+													else
+													{
+														wrong++;
+													}
+												}
+											}
+										}
+										else
+										{
+											List<String> answerlist = qd.getAnswer();
+											if (answerlist != null)
+											{
+												if (revalue != null)
+												{
+													List<TrainExt> te = trainExtDao.getTrainExtList(t.getId());
+													String REGEX = "";
+													for (TrainExt text:te)
+													{
+														REGEX += text.getScoretag();
+														REGEX += "#";
+													}
+													List list2 = UtilTools.isCorrect(CommonConstant.QTYPE_6,revalue,answerlist,REGEX,quscore);
+													int isflag2 = (int)list2.get(0);
+													if (isflag2 == 1)
 													{
 														qd.setUserscore(quscore);
 														cscore += quscore;
 														right++;
+													}
+													else if (isflag2 == 2)
+													{
+														int temp = (int)list2.get(1);
+														qd.setUserscore(temp);
+														cscore += temp;
+														wrong++;
 													}
 													else
 													{
@@ -603,7 +610,6 @@ public class UserExamService {
 			ued.setCscore(cscore);
 			uedlist.add(ued);
 		}
-		
 		List list = new ArrayList();
 		list.add(allscore);
 		list.add(uedlist);

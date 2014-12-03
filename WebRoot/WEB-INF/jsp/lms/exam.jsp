@@ -495,6 +495,13 @@
 								}
 								UE.getEditor("numberquestion"+index);
 							</c:if>
+							<c:if test="${qd.type == 6}">
+								var osanswer = "${qd.osanswer}";
+								if (osanswer)
+								{
+									$("#index"+index).css("background","#999999");
+								}
+							</c:if>
                     		/* var examId = "${exam.id}";
                     		var questionId = "${qd.id}";
                     		var number = "${nn.index+1}";

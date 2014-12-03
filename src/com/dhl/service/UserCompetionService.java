@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.dhl.bean.QuestionData;
 import com.dhl.bean.UserCompetionData;
+import com.dhl.bean.UserQuestionData;
 import com.dhl.cons.CommonConstant;
 import com.dhl.dao.CompetionDao;
 import com.dhl.dao.CompetionExamDao;
+import com.dhl.dao.TrainExtDao;
 import com.dhl.dao.UserCompetionDao;
 import com.dhl.dao.UserExamDao;
 import com.dhl.dao.UserQuestionChildDao;
@@ -25,10 +27,13 @@ import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Question;
 import com.dhl.domain.Train;
+import com.dhl.domain.TrainExt;
 import com.dhl.domain.UserCompetion;
 import com.dhl.domain.UserExam;
 import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
+import com.dhl.domain.UserQuestionChildHistory;
+import com.dhl.domain.UserQuestionHistory;
 import com.dhl.util.ParseQuestion;
 import com.dhl.util.UtilTools;
 import com.xiandian.cai.UserInterface;
@@ -52,7 +57,8 @@ public class UserCompetionService {
 	private UserQuestionDao userQuestionDao;
 	@Autowired
 	private UserQuestionChildDao userQuestionChildDao;
-	
+	@Autowired
+	private TrainExtDao trainExtDao;
 	@Autowired
 	private UserInterface userInterface;
 	
@@ -129,6 +135,50 @@ public class UserCompetionService {
 		return userCompetionDao.getCompetionStudent(competionId);
 	}
 	
+	
+	private UserQuestionData getUserQuestionData(int docounts,int userId,int examId,int questionId,int number)
+	{
+		if (docounts == -1)
+		{
+			UserQuestion uq = userQuestionDao.getUserQuestionByquestion(userId, examId, questionId);
+			if (uq != null)
+			{
+				UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(userId,number,uq.getId());
+				if (uqc != null)
+				{
+					UserQuestionData uqd = new UserQuestionData();
+					uqd.setUseranswer(uqc.getUseranswer());
+					uqd.setPfscore(uqc.getPfscore());
+					return uqd;
+				}
+			}
+			return null;
+		}
+		return null;
+	}
+	
+	private UserQuestionData getUserTrainData(int docounts,int userId,int examId,int trainId)
+	{
+		if (docounts == -1)
+		{
+			UserQuestion uq = userQuestionDao.getUserQuestionBytrain(userId, examId, trainId);
+			if (uq != null)
+			{
+				UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByusertrainId(userId,uq.getId());
+				if (uqc != null)
+				{
+					UserQuestionData uqd = new UserQuestionData();
+					uqd.setUseranswer(uqc.getUseranswer());
+					uqd.setPfscore(uqc.getPfscore());
+					uqd.setRevalue(uqc.getRevalue());
+					return uqd;
+				}
+			}
+			return null;
+		}
+		return null;
+	}
+	
 	/**
 	 * 得到竞赛下的学生数据
 	 * @param competionId
@@ -137,7 +187,7 @@ public class UserCompetionService {
 	public List<UserCompetionData> getCompetionStudentData(int competionId) {
 		
 		List<UserCompetion> ucslist = getCompetionStudent(competionId);
-		List<UserCompetionData> list = new ArrayList<UserCompetionData>();
+		List<UserCompetionData> ucdlist = new ArrayList<UserCompetionData>();
 		//竞赛下的试卷
 		CompetionExam ce = competionExamDao.getCompetionSelectExam(competionId);
 		if (ce != null)
@@ -149,13 +199,14 @@ public class UserCompetionService {
 				ucd.setUserCompetionId(uc.getId());
 				User user = userInterface.getUserById(uc.getUserId());//uc.getUser();
 				ucd.setUsername(user.getUsername());
-				ucd.setUserId(user.getId());
+				int userId = user.getId();
+				ucd.setUserId(userId);
 				//用户对应的竞赛试卷			
 				UserExam ue = userExamDao.getUserExam(user.getId(), exam.getId());
 				if (ue != null)
 				ucd.setState(ue.getFipf() == 1?CommonConstant.STRING_1:CommonConstant.STRING_0);
 				//对应的总分数，先采取计算方式，如果性能出问题再优化
-				int score = 0;
+				int cscore = 0;
 				
 				Set<ExamChapter> chapterset = exam.getExamchapters();
 				Iterator it = chapterset.iterator();
@@ -172,9 +223,9 @@ public class UserCompetionService {
 							Set<ExamQuestion> vt = vertical.getExamQuestion();
 							for (ExamQuestion eq:vt)
 							{
-								////////////////////
 								Question q = eq.getQuestion();
-								if (q != null)//问题
+								//问题
+								if (q != null)
 								{
 									String content = q.getContent();
 									if (q.getType() == 1)
@@ -185,13 +236,60 @@ public class UserCompetionService {
 										qd.setType(CommonConstant.QTYPE_1);
 										qtlist.add(qd);
 										eq.setQdlist(qtlist);
-	//								eq.setHtmlcontent(content);
+										//html问题描述 不用分析
 									}
 									else
 									{
 										
 										List<QuestionData> qdlist = ParseQuestion.changetohtml(content,q.getId());
 										eq.setQdlist(qdlist);
+										//------------分析问题--------可以拆分出去
+										int len = qdlist.size();
+										for (int i=0;i<len;i++)
+										{
+											int number = i+1;
+											QuestionData qd = qdlist.get(i);
+											
+											int quscore = qd.getScore();
+											
+											UserQuestionData uqc = getUserQuestionData(-1,userId,exam.getId(),q.getId(),number);
+											if (uqc != null)
+											{
+												String useranswer = uqc.getUseranswer();
+												qd.setUseranswer(useranswer);
+												int type = qd.getType();
+												//得分，取裁判分
+												String pfscore = uqc.getPfscore();
+												if (pfscore != null)
+												{
+													qd.setUserscore(Integer.parseInt(pfscore));
+													cscore += Integer.parseInt(pfscore);
+												}
+												else
+												{
+													if (useranswer != null)
+													{
+														List<String> answerlist = qd.getAnswer();
+														if (answerlist != null)
+														{
+															List list = UtilTools.isCorrect(type,useranswer,answerlist,qd.getExplain(),quscore);
+															int isflag = (int)list.get(0);
+															if (isflag == 1)
+															{
+																qd.setUserscore(quscore);
+																cscore += quscore;
+															}
+															else if (isflag == 2)
+															{
+																int temp = (int)list.get(1);
+																qd.setUserscore(temp);
+																cscore += temp;
+															}
+														}
+													}
+												}
+											}
+										}
 									}
 								}
 								else//实训
@@ -199,44 +297,115 @@ public class UserCompetionService {
 									Train t = eq.getTrain();
 									if (t != null)
 									{
-										List<QuestionData> trainList = new ArrayList();
+										List<QuestionData> trainList = new ArrayList<QuestionData>();
 										QuestionData qd = new QuestionData(t.getId());
 										qd.setTitle(t.getName());
-										List<String> qs = new ArrayList();
+										List<String> qs = new ArrayList<String>();
 										qs.add(t.getConContent());
 										qd.setContent(qs);
+										List<String> qa = new ArrayList<String>();
+										qa.add(t.getConAnswer());
+										qd.setAnswer(qa);
 										qd.setType(CommonConstant.QTYPE_6);
 										qd.setScore(t.getScore());
 										trainList.add(qd);
 										eq.setQdlist(trainList);
-									}
-								}
-							}
-							////////////////
-							for (ExamQuestion eq:vt)
-							{
-								List<QuestionData> qdlist = eq.getQdlist();
-								int len = qdlist.size();
-								for (int i=0;i<len;i++)
-								{
-									int number = i+1;
-									QuestionData qd = qdlist.get(i);
-									int type = qd.getType();
-									UserQuestion uq;
-									if (type == CommonConstant.QTYPE_6)
-									{
-										uq = userQuestionDao.getUserQuestionBytrain(user.getId(), exam.getId(),qd.getId());
-									}
-									else
-									{
-										uq = userQuestionDao.getUserQuestionByquestion(user.getId(), exam.getId(), qd.getId());
-									}
-									if (uq != null)
-									{
-										UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(user.getId(),number,uq.getId());
+										//---------------分析实训--------可以拆分出去
+										UserQuestionData uqc = getUserTrainData(-1,userId,exam.getId(),t.getId());
 										if (uqc != null)
 										{
-											score += Integer.parseInt(UtilTools.getScore(uq, uqc, number));
+											String useranswer = uqc.getUseranswer();
+											qd.setUseranswer(useranswer);
+//											String tanswer = t.getConAnswer();
+											String revalue = uqc.getRevalue();
+											qd.setOsanswer(revalue);
+											int quscore = t.getScore();
+											//得分，取裁判分
+											String pfscore = uqc.getPfscore();										
+											if (pfscore != null)
+											{
+												qd.setUserscore(Integer.parseInt(pfscore));
+												cscore += Integer.parseInt(pfscore);
+											}
+											else
+											{		
+												if (useranswer != null)
+												{
+													List<String> answerlist = qd.getAnswer();
+													if (answerlist != null)
+													{
+														List<TrainExt> te = trainExtDao.getTrainExtList(t.getId());
+														String REGEX = "";
+														for (TrainExt text:te)
+														{
+															REGEX += text.getScoretag();
+															REGEX += "#";
+														}
+														List list = UtilTools.isCorrect(CommonConstant.QTYPE_6,useranswer,answerlist,REGEX,quscore);
+														int isflag = (int)list.get(0);
+														if (isflag == 1)
+														{
+															qd.setUserscore(quscore);
+															cscore += quscore;
+														}
+														else if (isflag == 2)
+														{
+															int temp = (int)list.get(1);
+															qd.setUserscore(temp);
+															cscore += temp;
+														}
+														else
+														{
+															if (revalue != null)
+															{
+																List list2 = UtilTools.isCorrect(CommonConstant.QTYPE_6,revalue,answerlist,REGEX,quscore);
+																int isflag2 = (int)list2.get(0);
+																if (isflag2 == 1)
+																{
+																	qd.setUserscore(quscore);
+																	cscore += quscore;
+																}
+																else if (isflag2 == 2)
+																{
+																	int temp = (int)list2.get(1);
+																	qd.setUserscore(temp);
+																	cscore += temp;
+																}
+															}
+														}
+													}
+												}
+												else
+												{
+													List<String> answerlist = qd.getAnswer();
+													if (answerlist != null)
+													{
+														if (revalue != null)
+														{
+															List<TrainExt> te = trainExtDao.getTrainExtList(t.getId());
+															String REGEX = "";
+															for (TrainExt text:te)
+															{
+																REGEX += text.getScoretag();
+																REGEX += "#";
+															}
+															List list2 = UtilTools.isCorrect(CommonConstant.QTYPE_6,revalue,answerlist,REGEX,quscore);
+															int isflag2 = (int)list2.get(0);
+															if (isflag2 == 1)
+															{
+																qd.setUserscore(quscore);
+																cscore += quscore;
+															}
+															else if (isflag2 == 2)
+															{
+																int temp = (int)list2.get(1);
+																qd.setUserscore(temp);
+																cscore += temp;
+															}
+														}
+													}
+												}
+											}
 										}
 									}
 								}
@@ -244,11 +413,11 @@ public class UserCompetionService {
 						}
 					}
 				}
-				ucd.setScore(score+"");
-				list.add(ucd);
+				ucd.setScore(cscore+"");
+				ucdlist.add(ucd);
 			}
 		}
-		return list;
+		return ucdlist;
 	}
 	
 	/**

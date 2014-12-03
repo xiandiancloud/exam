@@ -663,8 +663,8 @@
 			$("#usercount").html(usercount);
 			
 			var index = 0;
-			var examId = "${exam.id}";
-			var userId = "${userId}";
+			//var examId = "${exam.id}";
+			//var userId = "${userId}";
 			<c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
             <c:forEach var="sequential" items="${chapter.esequentials}" varStatus="j">
                 <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
@@ -674,20 +674,16 @@
                     		var useranswer = "${qd.useranswer}";
                     		if (useranswer)
                    			{
-                    			if ("${qd.score}" == "${qd.userscore}")
-								{
-    								$("#index"+index).addClass("right");
-								}
-    							else
-								{
-    								$("#index"+index).addClass("wrong");
-								}
                     			$("#numberquestion"+index).html(decodeURIComponent(useranswer));
                    			}
-                    		else
-                   			{
-                    			$("#numberquestion"+index).html("&nbsp;");
-                   			}
+                    		if ("${qd.score}" == "${qd.userscore}")
+							{
+								$("#index"+index).addClass("right");
+							}
+							else
+							{
+								$("#index"+index).addClass("wrong");
+							}
                     		/* var qdtype = "${qd.type}";
                     		var questionId = "${qd.id}";
                     		var number = "${nn.index+1}";
