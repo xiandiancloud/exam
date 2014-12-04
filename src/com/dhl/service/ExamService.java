@@ -50,7 +50,6 @@ import com.dhl.domain.TeacherExam;
 import com.dhl.domain.Train;
 import com.dhl.domain.TrainExt;
 import com.dhl.util.UtilTools;
-import com.xiandian.dao.UserDao;
 
 /**
  *
@@ -78,8 +77,6 @@ public class ExamService {
 	private TrainDao trainDao;
 	@Autowired
 	private TrainExtDao trainExtDao;
-	@Autowired
-	private UserDao userDao;
 	@Autowired
 	private UserQuestionDao userQuestionDao;
 	@Autowired

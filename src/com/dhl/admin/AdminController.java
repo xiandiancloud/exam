@@ -19,6 +19,7 @@ import com.dhl.service.ECategoryService;
 import com.dhl.service.ExamService;
 import com.dhl.web.BaseController;
 import com.xiandian.cai.SchoolInterface;
+import com.xiandian.cai.UserInterface;
 import com.xiandian.model.School;
 
 /**
@@ -38,23 +39,23 @@ public class AdminController extends BaseController {
 	private SchoolInterface schoolInterface;
 	@Autowired
 	private ExamService examService;
+	@Autowired
+	private UserInterface userInterface;
 	
-//	/**
-//	 * 管理员到课程分类頁面
-//	 * 
-//	 * @param request
-//	 * @param index
-//	 * @return
-//	 */
-//	@RequestMapping("/category")
-//	public ModelAndView category(HttpServletRequest request) {
-//		ModelAndView view = new ModelAndView();
-//
-//		List<Category> categorylist = categoryService.getAllCategory();
-//		view.addObject("categorylist", categorylist);
-//		view.setViewName("/admin/category");
-//		return view;
-//	}
+	/**
+	 * 根据id删除用户
+	 * 
+	 * @param request
+	 * @param response
+	 * @param schoolId
+	 */
+	@RequestMapping("/deluser")
+	public ModelAndView deluser(HttpServletRequest request,
+			HttpServletResponse response, int userId) {
+		userInterface.remove(userId);
+		String url = "redirect:/admin/importuser.action";
+		return new ModelAndView(url);
+	}
 
 	/**
 	 * 管理员到试卷分类頁面

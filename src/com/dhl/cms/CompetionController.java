@@ -94,7 +94,7 @@ public class CompetionController extends BaseController {
 		}
 		view.addObject("celist", celist);
 		//竞赛学生
-		List<UserCompetionData> ucslist = usercompetionService.getCompetionStudentData(competionId);
+		List<UserCompetionData> ucslist = usercompetionService.getCompetionStudentData(competionId,userInterface);
 		view.addObject("studentlist", ucslist);
 		
 		view.setViewName("/cms/competion");
@@ -111,7 +111,7 @@ public class CompetionController extends BaseController {
 	public void exportdata(HttpServletRequest request,HttpServletResponse response,int competionId) {
 		try {
 			
-			List<UserCompetionData> list = usercompetionService.getCompetionStudentData(competionId);
+			List<UserCompetionData> list = usercompetionService.getCompetionStudentData(competionId,userInterface);
 			
 			 String path = request.getSession().getServletContext().getRealPath("/export/");
 			 File file = new File(path+"/比赛信息.csv");
@@ -231,7 +231,7 @@ public class CompetionController extends BaseController {
 		Competion competion = competionService.get(competionId);
 		view.addObject("competion", competion);
 		//竞赛学生
-		List<UserCompetionData> ucslist = usercompetionService.getCompetionStudentData(competionId);
+		List<UserCompetionData> ucslist = usercompetionService.getCompetionStudentData(competionId,userInterface);
 		view.addObject("studentlist", ucslist);
 		
 		CompetionExam ce = competionService.getCompetionSelectExam(competionId);

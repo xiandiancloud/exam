@@ -32,8 +32,6 @@ import com.dhl.domain.UserCompetion;
 import com.dhl.domain.UserExam;
 import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
-import com.dhl.domain.UserQuestionChildHistory;
-import com.dhl.domain.UserQuestionHistory;
 import com.dhl.util.ParseQuestion;
 import com.dhl.util.UtilTools;
 import com.xiandian.cai.UserInterface;
@@ -58,9 +56,9 @@ public class UserCompetionService {
 	@Autowired
 	private UserQuestionChildDao userQuestionChildDao;
 	@Autowired
-	private TrainExtDao trainExtDao;
-	@Autowired
-	private UserInterface userInterface;
+	private TrainExtDao trainExtDao;	
+//	@Autowired
+//	private UserInterface userInterface;
 	
 	public UserCompetion get(int id)
 	{
@@ -184,7 +182,7 @@ public class UserCompetionService {
 	 * @param competionId
 	 * @return
 	 */
-	public List<UserCompetionData> getCompetionStudentData(int competionId) {
+	public List<UserCompetionData> getCompetionStudentData(int competionId,UserInterface userInterface) {
 		
 		List<UserCompetion> ucslist = getCompetionStudent(competionId);
 		List<UserCompetionData> ucdlist = new ArrayList<UserCompetionData>();

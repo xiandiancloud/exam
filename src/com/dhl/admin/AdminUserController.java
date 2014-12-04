@@ -1,6 +1,10 @@
 package com.dhl.admin;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,6 +13,8 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.cons.CommonConstant;
@@ -33,6 +39,76 @@ public class AdminUserController extends BaseController {
 	@Autowired
 	private UserInterface userInterface;
 
+	/**
+	 * 管理员到用户頁面
+	 * 
+	 * @param request
+	 * @param index
+	 * @return
+	 */
+	@RequestMapping("/importuser")
+	public ModelAndView importuser(HttpServletRequest request) {
+		ModelAndView view = new ModelAndView();
+		List<User> userlist = userInterface.getAllUser();
+		view.addObject("userlist", userlist);
+		view.setViewName("/admin/importuser");
+		return view;
+	}
+	
+	
+	@RequestMapping("/uploaduser")
+	public void uploaduser(HttpServletRequest request,HttpServletResponse response,@RequestParam(value="qqfile", required=true) MultipartFile file)
+	{
+		response.setContentType("text/html");
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+		} catch (IOException e1) {
+			out.print("{\"success\": \"false\"}");
+		}
+		try
+		{
+			if (!file.isEmpty()) {
+				BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream(),"GBK"));
+				// 读取直到最后一行 
+				String line = ""; 
+				while ((line = br.readLine()) != null) {
+					// 把一行数据分割成多个字段 
+					String[] strs = line.split(",");
+					System.out.println("---------- "+strs.length);
+					if (strs != null && strs[0] != null && strs[0].substring(0,1).equals("#"))
+					{
+						continue;
+					}
+					int len = strs.length;
+					for (int i=0;i<len;i++)
+					{
+						User user = userInterface.getUserBymail(strs[1]);
+						if (user != null)
+						{
+							continue;
+						}
+						userInterface.save(strs[0], strs[1], strs[2], strs[3], strs[4],
+								strs[5], strs[6], strs[7], strs[8],
+								strs[9],strs[10],"","","");
+					}
+				}
+				br.close();
+				out.print("{\"success\": \"true\"}");
+			}
+			else
+			{
+				out.print("{\"success\": \"false\"}");
+			}
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			out.print("{\"success\": \"false\"}");
+		}
+	}
+	
 	/**
 	 * 跳轉到管理员登錄介面
 	 * @param request
@@ -59,17 +135,11 @@ public class AdminUserController extends BaseController {
 			{
 				Role role = user.getRole();//userInterface.getUserRoleByuserId(user.getId());
 				if (!CommonConstant.ROLE_A.equals(role.getRoleName())) {
-	//				ModelAndView view = new ModelAndView();
-	//				view.setViewName("/admin/signin");
 					url = "redirect:/lms/getteamCategory.action";
 				}
 			}
 		}
 		return new ModelAndView(url);
-		
-//		ModelAndView view = new ModelAndView();
-//		view.setViewName("/admin/signin");
-//		return view;
 	}
 	
 	/**
@@ -94,9 +164,6 @@ public class AdminUserController extends BaseController {
 		}
 		String url = "redirect:/admin/school.action";
 		return new ModelAndView(url);
-//		ModelAndView view = new ModelAndView();
-//		view.setViewName("/admin/signin");
-//		return view;
 	}
 	
 	/**

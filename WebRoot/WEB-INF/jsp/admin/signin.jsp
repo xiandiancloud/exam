@@ -49,7 +49,7 @@
               <div class='row'>
                 <div class='col-sm-12'>
                   <div class='text-center'>
-                    <img width="121" height="31" src="assets/images/logo_lg.svg" />
+                    <img width="51" height="48" src="images/logo.png" />
                   </div>
                 </div>
               </div>
