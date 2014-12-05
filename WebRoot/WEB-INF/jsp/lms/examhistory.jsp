@@ -195,9 +195,7 @@
 														                  </a>
 														                </div>
 														              </div>
-														              <div class='col-xs-10 box-content msg-block'>
-														                ${qd.osanswer}
-														              </div>
+														              <div id="osquestion${index}" class='col-xs-10 box-content msg-block'>&nbsp;</div>
 														          </div>
 														          <div class='h10'></div>	
 														          <div class='row'>
@@ -211,7 +209,7 @@
 														                  </a>
 														                </div>
 														              </div>
-														              <div class='col-xs-10 box-content msg-block'>&nbsp;</div>
+														              <div id="numberquestion${index}" class='col-xs-10 box-content msg-block'>&nbsp;</div>
 														          </div>
 														          <div class='row'>
 																 <div class='col-xs-2'>
@@ -632,6 +630,13 @@
                    			{
                     			$("#numberquestion"+index).html(decodeURIComponent(useranswer));
                    			}
+                    		<c:if test="${qd.type == 6}">
+	                    		var osanswer = "${qd.osanswer}";
+	                    		if (osanswer)
+	                   			{
+	                    			$("#osquestion"+index).html(decodeURIComponent(osanswer));
+	                   			}
+                    		</c:if>
                     		if ("${qd.score}" == "${qd.userscore}")
 							{
 								$("#index"+index).addClass("right");

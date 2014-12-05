@@ -131,7 +131,7 @@ public class ShellController extends BaseController {
 						
 						RestShell e = res.getBody();
 						
-						rdata += e.getCondition()+"&&&&&&";
+						rdata += e.getCondition();
 						//检测返回值取得判断正确与否
 //						String result = e.getResult();
 //						result = UtilTools.replaceBr(result);
@@ -162,15 +162,15 @@ public class ShellController extends BaseController {
 							RestShell e = res.getBody();
 							
 							rdata += e.getCondition();
-							String result = e.getResult();
-							result = UtilTools.replaceBr(result);
+//							String result = e.getResult();
+//							result = UtilTools.replaceBr(result);
 							
-							UserQuestion uq = userQuestionService.getUserExamTrainQuestion(user.getId(), examId, trainId);
-							if (uq == null) {
-								userQuestionService.saveQuestionTrain(user.getUsername(),user.getId(), examId, trainId,rdata,number);
-							} else {
-								userQuestionService.updateQuestionTrain(user.getUsername(),uq, user.getId(),examId, trainId, rdata,number);
-							}
+//							UserQuestion uq = userQuestionService.getUserExamTrainQuestion(user.getId(), examId, trainId);
+//							if (uq == null) {
+//								userQuestionService.saveQuestionTrain(user.getUsername(),user.getId(), examId, trainId,rdata,number);
+//							} else {
+//								userQuestionService.updateQuestionTrain(user.getUsername(),uq, user.getId(),examId, trainId, rdata,number);
+//							}
 //							str = "{'sucess':'sucess','result':'" + result + "','revalue':'"
 //									+ rdata + "'}";
 						}
@@ -182,7 +182,10 @@ public class ShellController extends BaseController {
 						}
 					}
 				}
-				
+				if (rdata != null)
+				{
+					rdata = UtilTools.encoding(rdata);
+				}
 				UserQuestion uq = userQuestionService.getUserExamTrainQuestion(user.getId(), examId, trainId);
 				if (uq == null) {
 					userQuestionService.saveQuestionTrain(user.getUsername(),user.getId(), examId, trainId,rdata,1);

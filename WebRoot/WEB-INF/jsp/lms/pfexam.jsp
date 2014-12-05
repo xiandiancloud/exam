@@ -191,6 +191,20 @@
 														                ${qd.answer}
 														              </div>
 														          </div>
+														         <div class='h10'></div>	
+														         <div class='row'>
+																 <div class='col-xs-2'>
+														                <div class='box-quick-link green-background'>
+														                  <a>
+														                    <div class='header'>
+														                      <div class='icon-ok'></div>
+														                    </div>
+														                    <div class='content'>机器答案</div>
+														                  </a>
+														                </div>
+														              </div>
+														              <div id="osquestion${index}" class='col-xs-10 box-content msg-block'>&nbsp;</div>
+														          </div>
 														          <div class='h10'></div>	
 														          <div class='row'>
 																 <div class='col-xs-2'>
@@ -676,6 +690,13 @@
                    			{
                     			$("#numberquestion"+index).html(decodeURIComponent(useranswer));
                    			}
+                    		<c:if test="${qd.type == 6}">
+	                    		var osanswer = "${qd.osanswer}";
+	                    		if (osanswer)
+	                   			{
+	                    			$("#osquestion"+index).html(decodeURIComponent(osanswer));
+	                   			}
+                			</c:if>
                     		if ("${qd.score}" == "${qd.userscore}")
 							{
 								$("#index"+index).addClass("right");

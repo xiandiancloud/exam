@@ -372,7 +372,7 @@
 	{
 		var totalPages = "${fn:length(tlist)}";
 		currentPage = "${currentPage}";
-		resetTrain(currentPage);
+		//resetTrain(currentPage);
 		totalPages = parseInt(totalPages);
 		$
 				.jqPaginator(
@@ -546,6 +546,7 @@
 			var examId = parseInt("${exam.id}");
 			var trainId = parseInt("${train.id}");
 			var useranswer = $("#editor").html();
+			useranswer = encodeURIComponent(useranswer);
 			var data = {
 				examId : examId,
 				trainId : trainId,
@@ -636,7 +637,7 @@
 							$("#trainjoin").show();
 						}
 					}
-					$("#editor").html(a.useranswer);
+					$("#editor").html(decodeURIComponent(a.useranswer));
 					$("#traincon").html(a.conContent);
 					if (a.revalue && a.revalue.length > 0)
 					{

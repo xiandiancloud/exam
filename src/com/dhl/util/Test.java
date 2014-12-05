@@ -1,10 +1,13 @@
 package com.dhl.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang.StringUtils;
 
 
 public class Test {
@@ -85,9 +88,34 @@ public class Test {
 	public static void main(String[] args) {
 //		String REGEX = "11111#22222#333333";
 //		String[] regex = REGEX.split("#");
+		String fileName = "fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf" +
+				" fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf f" +
+				"safasdfaf fsdafsdafafsafaf fsfasf fsafasdf" +
+				"af fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf ";
+		String returnFileName = "";
+		try {
+			returnFileName = URLEncoder.encode(fileName, "UTF-8");
+//			returnFileName = StringUtils.replace(returnFileName, "+", "%20");
+			System.out.println(returnFileName);
+			System.out.println(returnFileName.length());
+//			if (returnFileName.length() > 150) {
+//				returnFileName = new String(fileName.getBytes("GB2312"),
+//						"ISO8859-1");
+//				returnFileName = StringUtils
+//						.replace(returnFileName, " ", "%20");
+//			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
 		
-		String str = "<div style='text-align:center;'> 整治“四风”   清弊除垢<br/><span style='font-size:14px;'> </span><span style='font-size:18px;'>公司召开党的群众路线教育实践活动动员大会</span><br/></div>";  
-        System.out.println(getTextFromHtml(str)); 
+//		String str = "1Bar12";
+//		System.out.println(str.matches("pl[a-z]in")); //false
+//		System.out.println(str.toLowerCase().matches(".{0,}"+"bar".toLowerCase()+".{0,}"));//true
+		
+		
+//		String str = "<div style='text-align:center;'> 整治“四风”   清弊除垢<br/><span style='font-size:14px;'> </span><span style='font-size:18px;'>公司召开党的群众路线教育实践活动动员大会</span><br/></div>";  
+//        System.out.println(getTextFromHtml(str)); 
         
 //		int score = 10;
 //		float b = score * (1f/5);

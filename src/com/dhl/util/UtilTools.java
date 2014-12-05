@@ -31,12 +31,7 @@ import org.apache.tools.tar.TarOutputStream;
 
 import ch.ethz.ssh2.Connection;
 
-import com.dhl.bean.QuestionData;
 import com.dhl.cons.CommonConstant;
-import com.dhl.domain.Question;
-import com.dhl.domain.Train;
-import com.dhl.domain.UserQuestion;
-import com.dhl.domain.UserQuestionChild;
 
 public class UtilTools {
 
@@ -92,20 +87,19 @@ public class UtilTools {
 		return str;
 	}
 
-	public static String encodingFileName(String fileName) {
+	public static String encoding(String fileName) {
 		String returnFileName = "";
 		try {
 			returnFileName = URLEncoder.encode(fileName, "UTF-8");
 			returnFileName = StringUtils.replace(returnFileName, "+", "%20");
-			if (returnFileName.length() > 150) {
-				returnFileName = new String(fileName.getBytes("GB2312"),
-						"ISO8859-1");
-				returnFileName = StringUtils
-						.replace(returnFileName, " ", "%20");
-			}
-		} catch (UnsupportedEncodingException e) {
+//			if (returnFileName.length() > 150) {
+//				returnFileName = new String(fileName.getBytes("GB2312"),
+//						"ISO8859-1");
+//				returnFileName = StringUtils
+//						.replace(returnFileName, " ", "%20");
+//			}
+		} catch (Exception e) {
 			e.printStackTrace();
-
 		}
 		return returnFileName;
 	}
