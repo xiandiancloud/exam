@@ -21,6 +21,7 @@ import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Cloud;
 import com.dhl.domain.RestShell;
 import com.dhl.domain.TrainExt;
+import com.dhl.domain.UserEnvironment;
 import com.dhl.domain.UserQuestion;
 import com.dhl.service.EnvironmentService;
 import com.dhl.service.TrainService;
@@ -46,7 +47,7 @@ public class ShellController extends BaseController {
 	@Autowired
 	private RestTemplate restTemplate;
 	@Autowired
-	private UserEnvironmentService userEnvironmenteService;
+	private UserEnvironmentService userEnvironmentService;
 	@Autowired
 	private EnvironmentService environmenteService;
 	@Autowired
@@ -103,6 +104,8 @@ public class ShellController extends BaseController {
 					if (devinfo != null && !"".equals(devinfo))
 					{
 						
+						String endt = devinfo.substring(devinfo.lastIndexOf(".")+1);
+						
 						String ip;// = environmenteService.getDevIP(devinfo);
 						String userName;// = environmenteService.getDevUserName(devinfo.substring(0,devinfo.lastIndexOf('.'))+".username");
 						String passWord;// = environmenteService.getDevPassword(devinfo.substring(0,devinfo.lastIndexOf('.'))+".password");
@@ -112,11 +115,21 @@ public class ShellController extends BaseController {
 							userName = restusername;
 							passWord = restpassword;
 						}
-						else if (CommonConstant.DYNAMIC.equals(devinfo))//动态模板
+						else if (CommonConstant.DYNAMIC.equals(endt.trim()))//如果是动态模板，查看用户是否赋值了
 						{
-							ip = "";
-							userName = "";
-							passWord = "";
+							UserEnvironment uce = userEnvironmentService.getMyUCE(user.getId(), examId,devinfo);
+							if (uce != null)
+							{
+								ip = uce.getHostname();
+								userName = uce.getUsername();
+								passWord = uce.getPassword();
+							}
+							else
+							{
+								str = "{'sucess':'fail','msg':'你的脚本运行环境还没有保存'}";
+								out.write(str);
+								return;
+							}
 						}
 						else
 						{
