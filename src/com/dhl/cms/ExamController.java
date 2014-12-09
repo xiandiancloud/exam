@@ -243,6 +243,24 @@ public class ExamController extends BaseController {
 	}
 	
 	/**
+	 * 删除环境参数
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/delenvironment")
+	public void delenvironment(HttpServletRequest request,HttpServletResponse response, int envId) {
+		try {
+			PrintWriter out = response.getWriter();
+			environmentService.deleteEnv(envId);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * 保存脚本参数
 	 * 
 	 * @param request
@@ -268,10 +286,10 @@ public class ExamController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/saveenv")
-	public void saveenv(HttpServletRequest request,HttpServletResponse response, String name,String value,String type,String desc) {
+	public void saveenv(HttpServletRequest request,HttpServletResponse response,int id, String name,String value,String type,String desc) {
 		try {
 			PrintWriter out = response.getWriter();
-			boolean flag = environmentService.saveEnv(name, value,type,desc);
+			boolean flag = environmentService.saveEnv(id, name, value,type,desc);
 			String endstr = flag?"sucess":"fail";
 			String str = "{'sucess':'"+endstr+"'}";
 			out.write(str);

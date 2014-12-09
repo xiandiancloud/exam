@@ -1,9 +1,6 @@
 package com.dhl.util;
 
 
-import com.woorea.openstack.base.client.OpenStackSimpleTokenProvider;
-import com.woorea.openstack.keystone.Keystone;
-import com.woorea.openstack.keystone.model.Tenant;
 
 public class Configuration {
 

@@ -1,7 +1,5 @@
 package com.dhl.domain;
 
-
-
 /**
  * @author dhl
  * 返回结果
@@ -14,8 +12,14 @@ public class RestShell {
 	private String ip;
 	private String userName;
 	private String passWord;
-	private String path;
-	
+	private String path;//controller脚本存放路径
+	private String shellparameter;//脚本参数
+	public String getShellparameter() {
+		return shellparameter;
+	}
+	public void setShellparameter(String shellparameter) {
+		this.shellparameter = shellparameter;
+	}
 	public String getIp() {
 		return ip;
 	}

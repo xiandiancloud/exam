@@ -584,7 +584,7 @@ create table t_exam_environment
    CONSTRAINT receivet_exam_environment_ibfk_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;*/
 
-/*用户考试系统对应的环境模块*/
+/*用户考试系统对应的环境模块
 drop table if exists t_user_environment;
 create table t_user_environment
 (
@@ -602,6 +602,22 @@ create table t_user_environment
    UNIQUE KEY (userId,examId,trainId),
    CONSTRAINT receivet_user_environment_ibfk_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE,
    CONSTRAINT receivet_user_environment_ibfk_2 FOREIGN KEY (trainId) REFERENCES t_train (id) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;*/
+
+/*考试系统对应的用户动态模板对应的运行环境*/
+drop table if exists t_user_environment;
+create table t_user_environment
+(
+   id                  int not null AUTO_INCREMENT,
+   userId              int(10) not null,
+   examId              int(10) not null,
+   name                varchar(255) not null,  
+   hostname            varchar(255) default null,
+   username            varchar(255) default null,
+   password            varchar(255) default null,
+   primary key (id),
+   UNIQUE KEY (userId,examId,name),
+   CONSTRAINT receivet_user_environment_ibfk_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 drop table if exists t_cloud;

@@ -396,7 +396,18 @@ public class UserCompetionService {
 															}
 															else if (isflag2 == 2)
 															{
-																int temp = (int)list2.get(1);
+//																int temp = (int)list2.get(1);
+																Object tempsc = list2.get(1);
+																int temp = 0;
+																if (tempsc instanceof String)
+																{
+																	String ttt = (String)tempsc;
+																	temp = Integer.parseInt(ttt);
+																}
+																else
+																{
+																    temp = (int)list2.get(1);
+																}
 																qd.setUserscore(temp);
 																cscore += temp;
 															}

@@ -408,7 +408,7 @@
     <!-- / END - page related files and scripts [optional] -->
 	<script src="js/common.js" type="text/javascript"></script>
 	<script src="js/holder.js" type="text/javascript"></script>
-	<script src="js/stickUp.min.js" type="text/javascript"></script>
+	<script src="js/stickUp.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(function() {
 			/* $("#scroll2").width($("#scroll1").width()); */

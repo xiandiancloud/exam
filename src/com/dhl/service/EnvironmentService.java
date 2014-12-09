@@ -34,8 +34,27 @@ public class EnvironmentService {
 		return envDao.getDevPassword(key);
 	}
 	
-	public boolean saveEnv(String name,String value,String type,String desc)
+	public boolean saveEnv(int id,String name,String value,String type,String desc)
 	{
+		if (id != -1)
+		{
+			Environment e = envDao.get(id);
+			String oldName = e.getName();
+			if (oldName != null && !oldName.equals(name))
+			{
+				Environment ee = envDao.getEnvironmentByname(name);
+				if (ee != null)
+				{
+					return false;
+				}
+			}
+			e.setName(name);
+			e.setValue(value);
+			e.setType(type);
+			e.setDescrible(desc);
+			envDao.update(e);
+			return true;
+		}
 		Environment e = envDao.getEnvironmentByname(name);
 		if (e != null)
 		{
@@ -83,4 +102,7 @@ public class EnvironmentService {
 		return shellEnvDao.getExamShellEnvironment(examId);
 	}
 	
+	public Environment getEnvironmentByname(String name) {
+		return envDao.getEnvironmentByname(name);
+	}
 }

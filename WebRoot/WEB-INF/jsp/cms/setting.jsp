@@ -112,25 +112,25 @@ border-bottom: dashed 1px #c2c2c2;
 
 .tab thead { 
 
-background-color: #FFFFFF; 
+/* background-color: #FFFFFF;  */
 
-border: none; 
+/* border: none;  */
 
 } 
 
 .tab thead tr th { 
 
-background-image:url("/lottery/img/table/bg.gif"); 
+/* background-image:url("/lottery/img/table/bg.gif");  */
 
-height: 22px; 
+height: 32px; 
 
-line-height: 22px; 
+line-height: 32px; 
 
 text-align: center; 
 
-color: #1c5d79; 
+color: #f3f3f3; 
 
-background-repeat : repeat-x; 
+/* background-repeat : repeat-x; 
 
 border-left:solid 1px #326E87; 
 
@@ -138,9 +138,9 @@ border-right:solid 1px #326E87;
 
 border-bottom:solid 1px #326E87; 
 
-border-collapse: collapse; 
+border-collapse: collapse;  */
 
-font-size: 12px; 
+font-size: 18px; 
 
 } 
 
@@ -191,17 +191,17 @@ border: solid 1px #326e87;
 
 font-family: "Trebuchet MS", Trebuchet, Arial, sans-serif;	
 
-font-size: 12px; 
+font-size: 16px; 
 
-padding: 6px; 
+padding: 10px; 
 
 text-align: center; 
 
 font-weight: bold; 
 
-color: #FFFFFF; 
+/* color: #FFFFFF;  */
 
-border-bottom: solid 1px white; 
+/* border-bottom: solid 1px white;  */
 
 } 
 
@@ -321,8 +321,7 @@ border-top: solid 1px #326e87;
 								</header>
 								<p class="instructions"><strong>警告</strong>：不要轻易修改这些策略，除非您已经熟悉了这些策略的目的。</p>
 								<ol class="list-input">
-									<li class="field text required"
-										id="course-start">
+									<li class="field text required">
 										<div class="field date">
 											<label >试卷名称</label> 
 											<input
@@ -348,21 +347,23 @@ border-top: solid 1px #326e87;
 								</header>
 
 								<table class="tab">
+									<tr><th>key</th><th>value</th><th>类型</th><th>描述</th><th></th></tr>
 									<c:forEach var="env" items="${envlist}">
-										<tr><td>${env.name}</td><td>${env.value}</td><td>${env.type}</td><td>${env.describle}</td></tr>
+										<tr><td>${env.name}</td><td>${env.value}</td><td>${env.type}</td><td>${env.describle}</td>
+										<td>
+										<a href="javascript:void(0);" onclick="updateEnv('${env.id}','${env.name}','${env.value}','${env.type}','${env.describle}');" class="button view-button view-live-button">更新</a>
+										<a href="javascript:void(0);" onclick="delEnv(${env.id});" class="button gray-button">删除</a>
+										</td></tr>
 									</c:forEach>
 								</table>
 
 								<div class="h10"></div>
 								<ol class="list-input hide" id="cloud">
-									<li class="field-group field-group-course-start"
-										id="course-start">
+									<li class="field-group field-group-course-start">
+										<input type="hidden" class="start-date date start datepicker hasDatepicker" id="cloudid">
 										<div class="field date">
-											<label >参数</label> <input
-												type="text"
-												class="start-date date start datepicker hasDatepicker"
-												id="cloudname">
-										
+											<label >参数</label> 
+											<input type="text" class="start-date date start datepicker hasDatepicker" id="cloudname">
 										</div>            
 										 <div class="field time">
 							                <label>值</label>
@@ -406,8 +407,7 @@ border-top: solid 1px #326e87;
 
 								<div class="h10"></div>
 								<ol class="list-input hide" id="shell">
-									<li class="field-group field-group-course-start"
-										id="course-start">
+									<li class="field-group field-group-course-start">
 										<div class="field date" id="field-course-start-date">
 											<label >脚本变量</label> <input
 												type="text"
@@ -465,6 +465,7 @@ border-top: solid 1px #326e87;
 		}
         function showcloud()
 		{
+        	$("#cloudid").val(-1);
         	$("#cloud").show();
 		}
         function hideshell()
@@ -495,11 +496,12 @@ border-top: solid 1px #326e87;
 		}
         function saveEnv()
 		{
+        	var id = parseInt($("#cloudid").val());
 			var name = $("#cloudname").val();
 			var value = $("#cloudvalue").val();
 			var type = $("#cloudtype").val();
 			var desc = $("#clouddesc").val();
-			var data = {name:name,value:value,type:type,desc:desc};
+			var data = {id:id,name:name,value:value,type:type,desc:desc};
 			$.ajax({
 				url:"cms/saveenv.action",
 				type:"post",
@@ -512,6 +514,31 @@ border-top: solid 1px #326e87;
 					}
 				}
 			});
+		}
+        function delEnv(envId)
+		{
+			var data = {envId:envId};
+			$.ajax({
+				url:"cms/delenvironment.action",
+				type:"post",
+				data:data,
+				success:function(s){
+					var a=eval("("+s+")");	
+					if (a.sucess=="sucess")
+					{
+						location.reload();
+					}
+				}
+			});
+		}
+        function updateEnv(id,key,value,type,desc)
+		{
+        	$("#cloudid").val(id);
+        	$("#cloudname").val(key);
+			$("#cloudvalue").val(value);
+			$("#cloudtype").val(type);
+			$("#clouddesc").val(desc);
+			$("#cloud").show();
 		}
         function saveExamName()
         {

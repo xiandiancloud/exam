@@ -21,7 +21,6 @@ import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Cloud;
 import com.dhl.domain.RestShell;
 import com.dhl.domain.TrainExt;
-import com.dhl.domain.UserEnvironment;
 import com.dhl.domain.UserQuestion;
 import com.dhl.service.EnvironmentService;
 import com.dhl.service.TrainService;
@@ -89,8 +88,9 @@ public class ShellController extends BaseController {
 				for (int i=0;i<len;i++)
 				{
 					TrainExt te = trainExtList.get(i);
-					int number = i+1;
+//					int number = i+1;
 					String shellpath = te.getShellpath();
+					String shellparameter = te.getShellparameter();
 					if (shellpath ==null)
 					{
 						str = "{'sucess':'fail','msg':'检测脚本为空'}";
@@ -112,6 +112,12 @@ public class ShellController extends BaseController {
 							userName = restusername;
 							passWord = restpassword;
 						}
+						else if (CommonConstant.DYNAMIC.equals(devinfo))//动态模板
+						{
+							ip = "";
+							userName = "";
+							passWord = "";
+						}
 						else
 						{
 							ip = environmenteService.getDevIP(devinfo);
@@ -123,63 +129,64 @@ public class ShellController extends BaseController {
 						rs.setUserName(userName);
 						rs.setPassWord(passWord);
 						rs.setPath(shellpath);
+						rs.setShellparameter(shellparameter);
 						HttpEntity<RestShell> entity = new HttpEntity<RestShell>(rs);
 						
-						String resturl = UtilTools.getConfig().getProperty("REST_URL");
+						String resturl = "http://"+restid+":8080/restdemo/service/shell";//UtilTools.getConfig().getProperty("REST_URL");
 						ResponseEntity<RestShell> res = restTemplate.postForEntity(resturl, 
 								entity, RestShell.class);
 						
 						RestShell e = res.getBody();
 						
 						rdata += e.getCondition();
+						if (i < (len -1))
+						{
+							rdata += "</hr>";
+						}
 						//检测返回值取得判断正确与否
 //						String result = e.getResult();
 //						result = UtilTools.replaceBr(result);
-						
-						
 //						str = "{'sucess':'sucess','revalue':'"+ rdata + "'}";
 					}
 					else
 					{
-						UserEnvironment uce = userEnvironmenteService.getMyUCE(user.getId(), examId, trainId);
-						if (uce != null)
-						{
-							String ip = uce.getHostname();
-							String userName = uce.getUsername();
-							String passWord = uce.getPassword();
-							
-							RestShell rs = new RestShell();
-							rs.setIp(ip);
-							rs.setUserName(userName);
-							rs.setPassWord(passWord);
-							rs.setPath(shellpath);
-							HttpEntity<RestShell> entity = new HttpEntity<RestShell>(rs);
-							
-							String resturl = UtilTools.getConfig().getProperty("REST_URL");
-							ResponseEntity<RestShell> res = restTemplate.postForEntity(resturl, 
-									entity, RestShell.class);
-							
-							RestShell e = res.getBody();
-							
-							rdata += e.getCondition();
-//							String result = e.getResult();
-//							result = UtilTools.replaceBr(result);
-							
-//							UserQuestion uq = userQuestionService.getUserExamTrainQuestion(user.getId(), examId, trainId);
-//							if (uq == null) {
-//								userQuestionService.saveQuestionTrain(user.getUsername(),user.getId(), examId, trainId,rdata,number);
-//							} else {
-//								userQuestionService.updateQuestionTrain(user.getUsername(),uq, user.getId(),examId, trainId, rdata,number);
+						str = "{'sucess':'fail','msg':'脚本运行环境为空'}";
+						out.write(str);
+						return;
+						
+//						UserEnvironment uce = userEnvironmenteService.getMyUCE(user.getId(), examId, trainId);
+//						if (uce != null)
+//						{
+//							String ip = uce.getHostname();
+//							String userName = uce.getUsername();
+//							String passWord = uce.getPassword();
+//							
+//							RestShell rs = new RestShell();
+//							rs.setIp(ip);
+//							rs.setUserName(userName);
+//							rs.setPassWord(passWord);
+//							rs.setPath(shellpath);
+//							rs.setShellparameter(shellparameter);
+//							HttpEntity<RestShell> entity = new HttpEntity<RestShell>(rs);
+//							
+//							String resturl = UtilTools.getConfig().getProperty("REST_URL");
+//							ResponseEntity<RestShell> res = restTemplate.postForEntity(resturl, 
+//									entity, RestShell.class);
+//							
+//							RestShell e = res.getBody();
+//							
+//							rdata += e.getCondition();
+//							if (i < (len -1))
+//							{
+//								rdata += "</hr>";
 //							}
-//							str = "{'sucess':'sucess','result':'" + result + "','revalue':'"
-//									+ rdata + "'}";
-						}
-						else
-						{
-							str = "{'sucess':'fail','msg':'环境还没有创建'}";
-							out.write(str);
-							return;
-						}
+//						}
+//						else
+//						{
+//							str = "{'sucess':'fail','msg':'环境还没有创建'}";
+//							out.write(str);
+//							return;
+//						}
 					}
 				}
 				if (rdata != null)
@@ -195,16 +202,6 @@ public class ShellController extends BaseController {
 				
 				conn.close();
 				str = "{'sucess':'sucess'}";
-				/*UserEnvironment uce = userEnvironmenteService.getMyUCE(user.getId(), examId, trainId);
-				if (uce != null)
-				{
-					
-				}
-				else
-				{
-					String str = "{'sucess':'fail','msg':'环境还没有创建'}";
-					out.write(str);
-				}*/
 			}
 			else
 			{

@@ -69,9 +69,8 @@
     <script src="js/common.js" type="text/javascript"></script>
     <script src="js/holder.js"></script>
 	<script src="js/jqPaginator.js"></script>
-	
-	<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
-	
+	<script src="assets/javascripts/plugins/slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>	
 	<link rel="stylesheet" type="text/css" href="easyui/themes/bootstrap/easyui.css">
 
     <style>
@@ -92,193 +91,191 @@
 	</style>
   </head>
 <body class='easyui-layout'>
-  
 <div data-options="region:'north',border:false" style="height:60px;padding:0px">
 	<div class="tt"><jsp:include page="theader.jsp"></jsp:include></div>
 </div>
-
-<div data-options="region:'west',split:true" style="width:450px;">
+<div data-options="region:'west',split:true" style="width:450px;overflow: hidden;" id="left">
 	<div id="leftpanel">
+			<div style="height:70px;;">
 			<div id="pagination" class="center"></div>
-			<div class='box box-bordered searchback box-nomargin cmargin5'>
-		                    <div class='box-header box-header-small searchback'>
-		                      <div class='title'>实验定义</div>
-		                      <div class='actions'>
-		                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
-		                        </a>
-		                        
-		                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
-		                        </a>
-		                      </div>
-		                    </div>
-		                    <div class='box-content'>
-					          <form class="form-horizontal" role="form">
+			</div>
+			
+			<div class='box-content noborder nospace'>
+			<div id="leftcon" class='scrollable' data-scrollable-height='' data-scrollable-start='top'>
+				<div class='box box-bordered searchback box-nomargin cmargin5'>
+			                    <div class='box-header box-header-small searchback'>
+			                      <div class='title'>实验定义</div>
+			                      <div class='actions'>
+			                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+			                        </a>
+			                        
+			                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+			                        </a>
+			                      </div>
+			                    </div>
+			                    <div class='box-content'>
+						          <form class="form-horizontal" role="form">
+								  <div class="form-group">
+								    <label for="trainname" class="col-sm-2 control-label"><div class="h2font">名称</div></label>
+								    <div class="col-sm-10">
+								      <input type="text" class="form-control" id="trainname" disabled="disabled">
+								    </div>
+								  </div>
+								  <div class="form-group">
+								    <label for="traincode" class="col-sm-2 control-label"><div class="h2font">编号</div></label>
+								    <div class="col-sm-10">
+								      <input type="text" class="form-control" id="traincode" disabled="disabled">
+								    </div>
+								  </div>
+								</form>
+			                    </div>
+			    </div>
+				
+				<div class='box box-bordered searchback box-nomargin cmargin5'>
+	                   <div class='box-header box-header-small searchback'>
+	                     <div class='title'>环境</div>
+	                     <div class='actions'>
+	                       <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+	                       </a>
+	                       
+	                       <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+	                       </a>
+	                     </div>
+	                   </div>
+	                   <div class='box-content'>
+	                    <form class="form-horizontal" role="form">
+						  <div class="form-group">
+						    <label for="trainprename" class="col-sm-2 control-label"><div class="h2font">模板</div></label>
+						    <div class="col-sm-10">
+						      <input type="text" class="form-control" id="trainprename" disabled="disabled">
+						    </div>
+						  </div>
+						  <h5 id="hasenv" class="none">
+								<table class="table table-bordered">
+									<tbody>
+										<tr>
+											<td>ip</td>
+											<td id="ip"></td>
+										</tr>
+										<tr>
+											<td>username</td>
+											<td id="username"></td>
+										</tr>
+										<tr>
+											<td>password</td>
+											<td id="password"></td>
+										</tr>
+										<tr>
+											<td>serverId</td>
+											<td id="ssh"></td>
+										</tr>
+									</tbody>
+								</table>
+							</h5>
+							<a href="javascript:void(0);" id="trainjoin" class="none">
+								<button type="button" class="btn btn-primary">创建环境</button>
+							</a>
+							<img src="images/Loading.gif" class="none" id="imgenv"/>
+						</form>
+	                   </div>
+			    </div>
+				
+				<div class='box box-bordered searchback box-nomargin cmargin5'>
+	                    <div class='box-header box-header-small searchback'>
+	                      <div class='title'>题目</div>
+	                      <div class='actions'>
+	                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+	                        </a>
+	                        
+	                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+	                        </a>
+	                      </div>
+	                    </div>
+	                    <div class='box-content'>
+	                    <!-- <label for="trainname" class="control-label"><div class="h2font">内容</div></label> -->
+			    		<h5 id="traincon" class="trainimg"></h5>
+	                    </div>
+			    </div>
+	              
+				<div class='box box-bordered searchback box-nomargin cmargin5'>
+	                    <div class='box-header box-header-small searchback'>
+	                      <div class='title'>结果</div>
+	                      <div class='actions'>
+	                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+	                        </a>
+	                        
+	                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+	                        </a>
+	                      </div>
+	                    </div>
+	                    <div class='box-content'>
+	                    <form role="form">
+							<div class="form-group">
+							<p><div class="h2font">完成实训后点击下面的按钮,否则机器将无法自动评分,如果实训有用户自己的环境还没有保存的，先保存环境再提交。</div></p>
+							
+							<div id="userenv">
+							     <!-- <p><div class="h2font">desc</div></p>
+							     <label class="col-sm-2 control-label"><div class="h2font">IP</div></label>
+							     <div class="col-sm-10">
+							      <input type="text" class="form-control">
+							     </div>
+							     <label class="col-sm-12 control-label">&nbsp;</label>
+							     <label class="col-sm-2 control-label"><div class="h2font">用户名</div></label>
+							     <div class="col-sm-10">
+							      <input type="text" class="form-control">
+							     </div>
+							     <label class="col-sm-12 control-label">&nbsp;</label>
+							     <label class="col-sm-2 control-label"><div class="h2font">密码</div></label>
+							     <div class="col-sm-10">
+							      <input type="text" class="form-control">
+							     </div>
+							    <label class="col-sm-12 control-label">&nbsp;</label>
+							     <a href="javascript:void(0);">
+							     <button type="button" class="col-sm-12 btn btn-primary" onclick="saveuserenv();">保存环境</button>
+							     </a> -->
+						    </div>
+						  
+							<p></p>
+							<a href="javascript:void(0);" id="trainsubmit">
+								<button type="button" class="btn btn-primary" id="trainbutton">提交</button>
+							</a>
+							<img src="images/Loading.gif" class="none" id="imgsubmit"/>
+							</div>
+							</form>
+							<form role="form">
 							  <div class="form-group">
-							    <label for="trainname" class="col-sm-2 control-label"><div class="h2font">名称</div></label>
-							    <div class="col-sm-10">
-							      <input type="text" class="form-control" id="trainname" disabled="disabled">
-							    </div>
-							  </div>
-							  <div class="form-group">
-							    <label for="traincode" class="col-sm-2 control-label"><div class="h2font">编号</div></label>
-							    <div class="col-sm-10">
-							      <input type="text" class="form-control" id="traincode" disabled="disabled">
-							    </div>
+						<!-- 	    <label for="trainresult"><div class="h2font">内容</div></label>
+							    <textarea class="form-control" rows="6" id="trainresult"></textarea> -->
+							    <label for="useranswer"><div class="h2font">你也可以手工输入你的答案</div></label>
+							    <!-- <textarea class="form-control" rows="3" id="useranswer"></textarea> -->
+								<div>
+									<div id="alerts"></div>
+								    <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
+								      <div class="btn-group">
+								        <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="icon-bold"></i></a>
+								        <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="icon-italic"></i></a>
+								       <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="icon-align-left"></i></a>
+								        <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="icon-align-center"></i></a>
+								        <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="icon-align-right"></i></a>
+								        <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="icon-align-justify"></i></a>
+								         <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="icon-picture"></i></a>
+								        <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
+								      </div>
+								      <input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="">
+								    </div>
+								    <div id="editor">
+								    </div>
+								 </div>
+							    <div class="h10"></div>
+							    <a href="javascript:void(0);" id="usertrainsubmit">
+									<button type="button" class="btn btn-primary" id="usertrainbutton">手工提交</button>
+								</a>
 							  </div>
 							</form>
-		                    </div>
-		    </div>
-			
-			<div class='box box-bordered searchback box-nomargin cmargin5'>
-                   <div class='box-header box-header-small searchback'>
-                     <div class='title'>环境</div>
-                     <div class='actions'>
-                       <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
-                       </a>
-                       
-                       <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
-                       </a>
-                     </div>
-                   </div>
-                   <div class='box-content'>
-                    <form class="form-horizontal" role="form">
-					  <div class="form-group">
-					    <label for="trainprename" class="col-sm-2 control-label"><div class="h2font">模板</div></label>
-					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="trainprename" disabled="disabled">
-					    </div>
-					  </div>
-					  <h6 id="hasenv" class="none">
-							<table class="table table-bordered">
-								<tbody>
-									<tr>
-										<td>ip</td>
-										<td id="ip"></td>
-									</tr>
-									<tr>
-										<td>username</td>
-										<td id="username"></td>
-									</tr>
-									<tr>
-										<td>password</td>
-										<td id="password"></td>
-									</tr>
-									<tr>
-										<td>serverId</td>
-										<td id="ssh"></td>
-									</tr>
-								</tbody>
-							</table>
-						</h6>
-						<a href="javascript:void(0);" id="trainjoin" class="none">
-							<button type="button" class="btn btn-primary">创建环境</button>
-						</a>
-						<img src="images/Loading.gif" class="none" id="imgenv"/>
-					</form>
-                   </div>
-		    </div>
-			
-			<div class='box box-bordered searchback box-nomargin cmargin5'>
-                    <div class='box-header box-header-small searchback'>
-                      <div class='title'>题目</div>
-                      <div class='actions'>
-                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
-                        </a>
-                        
-                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
-                        </a>
-                      </div>
-                    </div>
-                    <div class='box-content'>
-                    <!-- <label for="trainname" class="control-label"><div class="h2font">内容</div></label> -->
-		    		<h6 id="traincon" class="trainimg"></h6>
-                    </div>
-		    </div>
-              
-			<div class='box box-bordered searchback box-nomargin cmargin5'>
-                    <div class='box-header box-header-small searchback'>
-                      <div class='title'>结果</div>
-                      <div class='actions'>
-                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
-                        </a>
-                        
-                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
-                        </a>
-                      </div>
-                    </div>
-                    <div class='box-content'>
-                    <form role="form">
-						  <div class="form-group">
-						<p><div class="h2font">完成实训后点击下面的按钮,否则机器将无法自动评分</div></p>
-						<a href="javascript:void(0);" id="trainsubmit">
-							<button type="button" class="btn btn-primary" id="trainbutton">提交</button>
-						</a>
-						<img src="images/Loading.gif" class="none" id="imgsubmit"/>
-						</div>
-						</form>
-						<form role="form">
-						  <div class="form-group">
-					<!-- 	    <label for="trainresult"><div class="h2font">内容</div></label>
-						    <textarea class="form-control" rows="6" id="trainresult"></textarea> -->
-						    <label for="useranswer"><div class="h2font">你也可以手工输入你的答案</div></label>
-						    <!-- <textarea class="form-control" rows="3" id="useranswer"></textarea> -->
-							<div>
-								<div id="alerts"></div>
-							    <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
-							      <div class="btn-group">
-							        <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="icon-bold"></i></a>
-							        <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="icon-italic"></i></a>
-							       <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="icon-align-left"></i></a>
-							        <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="icon-align-center"></i></a>
-							        <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="icon-align-right"></i></a>
-							        <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="icon-align-justify"></i></a>
-							         <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="icon-picture"></i></a>
-							        <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
-							      </div>
-							      <input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="">
-							    </div>
-							    <div id="editor">
-							    </div>
-							 </div>
-						    <div class="h10"></div>
-						    <a href="javascript:void(0);" id="usertrainsubmit">
-								<button type="button" class="btn btn-primary" id="usertrainbutton">手工提交</button>
-							</a>
-						  </div>
-						</form>
-                    </div>
-		    </div>
-			
-			<!-- <div class='box box-bordered purple-border box-nomargin cmargin5'>
-                    <div class='box-header box-header-small purple-background'>
-                      <div class='title'>成绩</div>
-                      <div class='actions'>
-                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
-                        </a>
-                        
-                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
-                        </a>
-                      </div>
-                    </div>
-                    <div class='box-content'>
-                    </div>
-		    </div>
-			
-			<div class='box box-bordered muted-border box-nomargin cmargin5'>
-                    <div class='box-header box-header-small muted-background'>
-                      <div class='title'>答案</div>
-                      <div class='actions'>
-                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
-                        </a>
-                        
-                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
-                        </a>
-                      </div>
-                    </div>
-                    <div class='box-content'>
-                    <h6 id="trainanswer"></h6>
-                    </div>
-		    </div> -->
+	                    </div>
+			    </div>
+			</div>
+			</div>
 	</div>
 </div>
 
@@ -314,26 +311,31 @@
     <script>
     var currentPage;
 	$(function() {
-		$("#trainjoin").click(function() {
+		/* $("#trainjoin").click(function() {
 			createServer();
-			//timeservice(0);
-		});
+		}); */
 		$("#trainsubmit").click(function() {
 			myshell();
-			//timeservice(0);
 		});
 		$("#usertrainsubmit").click(function() {
 			submituseranswer();
-			//timeservice(0);
 		});
 		//initClock();
-		//var mainheight = $("#leftpanel").height();
+		var mainheight = document.body.clientHeight - 175;
+		$("#leftcon").height(mainheight);
+		$("#leftcon").attr("data-scrollable-height",mainheight);
+		$(".slimScrollBar").hide();
 		//$("#iframe").height(mainheight);
 		initlist();
 		//edit----------
 	    initToolbarBootstrapBindings(); 
 		$('#editor').wysiwyg({ fileUploadError: showErrorAlert} );
 	});
+	window.onresize = function(){ 
+		var mainheight = document.body.clientHeight - 175;
+		$("#leftcon").height(mainheight);
+		$("#leftcon").attr("data-scrollable-height",mainheight);
+	}
 	function initToolbarBootstrapBindings() {
       var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier', 
             'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
@@ -371,7 +373,7 @@
 	function initlist()
 	{
 		var totalPages = "${fn:length(tlist)}";
-		currentPage = "${currentPage}";
+		currentPage = parseInt("${currentPage}");
 		//resetTrain(currentPage);
 		totalPages = parseInt(totalPages);
 		$
@@ -379,7 +381,7 @@
 						'#pagination',
 						{
 							totalPages : totalPages,
-							visiblePages : 4,
+							visiblePages : 5,
 							currentPage : currentPage,
 
 							wrapper : '<ul class="pagination lastspan"></ul>',
@@ -602,6 +604,52 @@
 		}
 		</c:forEach>
 	}
+	function saveuserenv(i,devinfo)
+	{
+		//alert(i);
+		var ip = '';
+		var username = '';
+		var password = '';
+		$('#trainextlist'+i+' input').each(function(index){
+		    if (index == 0)
+	    	{
+	    		ip = $(this).val();
+	    	}
+		    else if (index == 1)
+	    	{
+		    	username = $(this).val();
+	    	}
+		    else if (index == 2)
+	    	{
+		    	password = $(this).val();
+	    	}
+		});
+		
+		if (isNull(ip) || isNull(username) || isNull(password))
+		{
+			alert("ip,用户名，密码都不能为空");
+			return;
+		}
+		var examId = parseInt("${exam.id}");
+		var data = {
+				examId : examId,
+				ip : ip,
+				username : username,
+				password : password,
+				devinfo : devinfo
+			};
+		$.ajax({
+			url : "lms/saveuserenv.action",
+			type : "post",
+			data : data,
+			success : function(s) {
+				var a = eval("(" + s + ")");
+				if (a.sucess == "sucess") {
+					alert("保存成功");
+				}
+			}
+		});
+	}
 	function resetTrain(currentPage) {
 		<c:forEach items="${tlist}" var="train" varStatus="status">
 		if ("${status.count}" == currentPage) {
@@ -620,13 +668,40 @@
 				success : function(s) {
 					var a = eval("(" + s + ")");
 					if (a.sucess == "sucess") {
-						$("#hasenv").show();
+						/* $("#hasenv").show();
 						$("#trainjoin").hide();
 						$("#ip").html(a.ip);
 						$("#username").html(a.username);
 						$("#password").html(a.password);
-						$("#ssh").html(a.ssh);
-					} else {
+						$("#ssh").html(a.ssh); */
+						var tel = a.trainextlist;
+						var html="";
+						for (var i = 0; i < tel.length; i++) {   
+							var tid = "trainextlist"+i;
+							html += '<p><div class="h2font">'+tel[i]['desc']+'</div></p>'+
+						    '<table class="table table-bordered" id="'+tid+'">'+
+								'<tbody>'+
+									'<tr>'+
+										'<td>ip</td>'+
+										'<td><input type="text" class="form-control" value="'+tel[i]['ip']+'"/></td>'+
+									'</tr>'+
+									'<tr>'+
+										'<td>用户名</td>'+
+										'<td><input type="text" class="form-control" value="'+tel[i]['username']+'"/></td>'+
+									'</tr>'+
+									'<tr>'+
+										'<td>密码</td>'+
+										'<td><input type="password" class="form-control" value="'+tel[i]['password']+'"/></td>'+
+									'</tr>'+
+								'</tbody>'+
+							'</table>'+
+						    '<a href="javascript:void(0);">'+
+							'<button type="button" class="col-sm-12 btn btn-primary" onclick="saveuserenv(\''+i+'\',\''+tel[i]['devinfo']+'\');">保存环境</button>'+
+							'</a>';
+			            }   
+						$('#userenv').html(html);
+					}
+					/* else {
 						$("#hasenv").hide();
 						if ("无" == "${train.envname}")
 						{
@@ -636,7 +711,7 @@
 						{
 							$("#trainjoin").show();
 						}
-					}
+					} */
 					$("#editor").html(decodeURIComponent(a.useranswer));
 					$("#traincon").html(a.conContent);
 					if (a.revalue && a.revalue.length > 0)

@@ -1,8 +1,5 @@
 package com.dhl.lms;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -42,75 +39,77 @@ public class ISController extends BaseController {
 	@RequestMapping("/createExamServer")
 	public void createExamServer(HttpServletRequest request,
 			HttpServletResponse response, int examId,int trainId,String name) {
-		try {
-			PrintWriter out = response.getWriter();
-			User user = getSessionUser(request);
-
-			UserEnvironment uce = userEnvironmenteService.getMyUCE(user.getId(), examId, trainId);
-			if (uce != null) {
-				String uh = uce.getHostname();
-				if (uh != null && uh.length() > 0) {
-					// zai wansh
-					out.write(uh);
-				} else {
-
-					String[] servers = userCloudService.createServer(user.getId(),user.getUsername() + System.currentTimeMillis());
-					if (servers == null)
-					{
-						String str = "{'sucess':'fail'}";
-						out.write(str);
-					}
-					else
-					{
-						// 创建成功后，保存hostname
-						String ip = servers[0];
-						String username = servers[1];
-						String password = servers[2];
-						String ssh = servers[3];
-						String str = "{'sucess':'sucess','ip':'" + ip
-								+ "','username':'" + username
-								+ "','password':'" + password + "','ssh':'"
-								+ ssh + "'}";
-						userEnvironmenteService.update(uce, ip, username, password, ssh);
-						out.write(str);
-					}
-				}
-			} else {
-				String[] servers = userCloudService.createServer(user.getId(),user.getUsername() + System.currentTimeMillis());
-				if (servers == null)
-				{
-					String str = "{'sucess':'fail'}";
-					out.write(str);
-				}
-				else
-				{
-					// 创建成功后，保存hostname
-					String ip = servers[0];
-					String username = servers[1];
-					String password = servers[2];
-					String ssh = servers[3];
-					String str = "{'sucess':'sucess','ip':'" + ip
-							+ "','username':'" + username + "','password':'"
-							+ password + "','ssh':'" + ssh + "'}";
-					userEnvironmenteService.save(user.getId(),examId,trainId, name, ip, username,
-							password, ssh);
-					out.write(str);
-				}
-			}
-
-		} catch (Exception e) {
-			PrintWriter out = null;
-			try {
-				out = response.getWriter();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} finally {
-				String str = "{'sucess':'fail'}";
-				if (out != null)
-					out.write(str);
-			}
-		}
+		
+		//创建虚拟机的环境暂时先待实现
+		
+//		try {
+//			PrintWriter out = response.getWriter();
+//			User user = getSessionUser(request);
+//
+//			UserEnvironment uce = userEnvironmenteService.getMyUCE(user.getId(), examId, trainId);
+//			if (uce != null) {
+//				String uh = uce.getHostname();
+//				if (uh != null && uh.length() > 0) {
+//					out.write(uh);
+//				} else {
+//
+//					String[] servers = userCloudService.createServer(user.getId(),user.getUsername() + System.currentTimeMillis());
+//					if (servers == null)
+//					{
+//						String str = "{'sucess':'fail'}";
+//						out.write(str);
+//					}
+//					else
+//					{
+//						// 创建成功后，保存hostname
+//						String ip = servers[0];
+//						String username = servers[1];
+//						String password = servers[2];
+//						String ssh = servers[3];
+//						String str = "{'sucess':'sucess','ip':'" + ip
+//								+ "','username':'" + username
+//								+ "','password':'" + password + "','ssh':'"
+//								+ ssh + "'}";
+//						userEnvironmenteService.update(uce, ip, username, password, ssh);
+//						out.write(str);
+//					}
+//				}
+//			} else {
+//				String[] servers = userCloudService.createServer(user.getId(),user.getUsername() + System.currentTimeMillis());
+//				if (servers == null)
+//				{
+//					String str = "{'sucess':'fail'}";
+//					out.write(str);
+//				}
+//				else
+//				{
+//					// 创建成功后，保存hostname
+//					String ip = servers[0];
+//					String username = servers[1];
+//					String password = servers[2];
+//					String ssh = servers[3];
+//					String str = "{'sucess':'sucess','ip':'" + ip
+//							+ "','username':'" + username + "','password':'"
+//							+ password + "','ssh':'" + ssh + "'}";
+//					userEnvironmenteService.save(user.getId(),examId,trainId, name, ip, username,
+//							password, ssh);
+//					out.write(str);
+//				}
+//			}
+//
+//		} catch (Exception e) {
+//			PrintWriter out = null;
+//			try {
+//				out = response.getWriter();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			} finally {
+//				String str = "{'sucess':'fail'}";
+//				if (out != null)
+//					out.write(str);
+//			}
+//		}
 	}
 
 	@RequestMapping("/deleteExamEnv")
@@ -119,13 +118,12 @@ public class ISController extends BaseController {
 		User user = getSessionUser(request);
 		UserEnvironment uce = userEnvironmenteService.get(id);
 		if (uce != null) {
-			String uh = uce.getServerId();
+			String uh = null;//uce.getServerId();
 			if (uh != null && uh.length() > 0) {
 				userCloudService.delServer(user.getId(),uh);
 			}
 			userEnvironmenteService.delete(uce);
 		}
-//		String url = "redirect:/lms/mysetting.action?index=2";
 		String url = "redirect:/lms/myexamenv.action";
 		return new ModelAndView(url);
 	}

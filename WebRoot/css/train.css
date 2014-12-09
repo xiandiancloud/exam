@@ -178,7 +178,7 @@ box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);}
 .cmargin{margin-left: 80px;margin-right: 80px;}
 .cpading{padding: 0 120px;}
 .margin5{padding: 5px 0px;}
-.cmargin5{margin-left: 5px;}
+.cmargin5{margin-left: 5px;margin-right: 10px;}
 .center {
 	text-align:center;;margin:0px auto;
 }

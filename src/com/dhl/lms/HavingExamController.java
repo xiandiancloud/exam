@@ -17,19 +17,22 @@ import org.springframework.web.servlet.ModelAndView;
 import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Cloud;
 import com.dhl.domain.Competion;
+import com.dhl.domain.Environment;
 import com.dhl.domain.Exam;
 import com.dhl.domain.ExamChapter;
 import com.dhl.domain.ExamQuestion;
 import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Train;
+import com.dhl.domain.TrainExt;
 import com.dhl.domain.UserEnvironment;
 import com.dhl.domain.UserExam;
-import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
 import com.dhl.service.CompetionService;
+import com.dhl.service.EnvironmentService;
 import com.dhl.service.ExamQuestionService;
 import com.dhl.service.ExamService;
+import com.dhl.service.TrainService;
 import com.dhl.service.UserCloudService;
 import com.dhl.service.UserEnvironmentService;
 import com.dhl.service.UserExamHistoryService;
@@ -66,6 +69,10 @@ public class HavingExamController extends BaseController {
 	private CompetionService competionService;
 	@Autowired
 	private UserCloudService userCloudService;
+	@Autowired
+	private TrainService trainService;
+	@Autowired
+	private EnvironmentService environmentService;
 	
 	//判断是否有权限去考试
 	private boolean isHaving(Exam exam)
@@ -492,7 +499,7 @@ public class HavingExamController extends BaseController {
 		try {
 			User user = getSessionUser(request);
 			PrintWriter out = response.getWriter();
-			UserEnvironment uce = userEnvironmentService.getMyUCE(user.getId(), examId,trainId);
+//			UserEnvironment uce = userEnvironmentService.getMyUCE(user.getId(), examId,trainId);
 			UserQuestionChild userTrain = userQuestionService.getUserExamTrainQuestionChild(user.getId(),
 					examId, trainId);
 //			String result = userTrain == null ? "" : userTrain.getResult();
@@ -502,14 +509,46 @@ public class HavingExamController extends BaseController {
 			{
 				useranswer = "";
 			}
-			Train train = examService.getTrain(trainId);
+			Train train = trainService.get(trainId);
 			String con = train.getConContent();
 			con = UtilTools.replaceBackett(con);
-			if (uce != null) {
-				String str = "{'sucess':'sucess','ip':'" + uce.getHostname()
-						+ "','username':'" + uce.getUsername()  + "','revalue':'" + revalue+ "','conContent':'" + con+ "','useranswer':'" + useranswer + "','password':'"
-						+ uce.getPassword() + "','ssh':'" + uce.getServerId()
-						+ "'}";
+			
+			List<TrainExt> telist = trainService.getTrainExtList(train.getId());
+			String trainextlist = "[";
+			//有可能实训下的所有脚本的执行环境都是一样的，仅仅需要显示一个就ok了
+			List textlist = new ArrayList();
+			for (TrainExt ext:telist)
+			{
+				String extstr = ext.getDevinfo();
+				
+				if (extstr != null && !textlist.contains(extstr))
+				{
+					String endt = extstr.substring(extstr.lastIndexOf(".")+1);
+					//如果是动态模板，查看用户是否赋值了
+					if (CommonConstant.DYNAMIC.equals(endt.trim()))
+					{
+						UserEnvironment uce = userEnvironmentService.getMyUCE(user.getId(), examId,extstr);
+						//取得运行环境的具体描述
+						Environment env = environmentService.getEnvironmentByname(extstr);
+						if (uce == null)
+						{
+							trainextlist += "{'desc':'"+env.getDescrible()+"','ip':'','username':'','password':'','devinfo':'"+extstr+"'},";
+						}
+						else
+						{
+							trainextlist += "{'desc':'"+env.getDescrible()+"','ip':'"+uce.getHostname()+"','username':'"+uce.getUsername()+"','password':'"+uce.getPassword()+"','devinfo':'"+extstr+"'},";
+						}
+						textlist.add(extstr);
+					}
+				}
+			}
+			if (trainextlist != null && trainextlist.length() > 1)
+			{
+				trainextlist = trainextlist.substring(0,trainextlist.length()-1);
+			}
+			trainextlist += "]";
+			if (trainextlist != null && trainextlist.length() > 2) {
+				String str = "{'sucess':'sucess','trainextlist':" + trainextlist+ ",'revalue':'" + revalue+ "','conContent':'" + con + "','useranswer':'"+useranswer+"'}";
 				out.write(str);
 			} else {
 				String str = "{'sucess':'fail','revalue':'" + revalue+ "','conContent':'" + con + "','useranswer':'"+useranswer+"'}";
@@ -519,4 +558,32 @@ public class HavingExamController extends BaseController {
 
 		}
 	}
+	
+	/**
+	 * 保存用户对应的实训运行环境
+	 */
+	@RequestMapping("/saveuserenv")
+	public void saveuserenv(HttpServletRequest request,
+			HttpServletResponse response, int examId, String ip,String username,String password,String devinfo) {
+
+		try {
+			User user = getSessionUser(request);
+			int userId = user.getId();
+			UserEnvironment uce = userEnvironmentService.getMyUCE(userId, examId,devinfo);
+			if (uce != null)
+			{
+				userEnvironmentService.update(uce, ip, username, password);
+			}
+			else
+			{
+				userEnvironmentService.save(userId, examId, devinfo, ip, username, password);
+			}
+			String str = "{'sucess':'sucess'}";
+			PrintWriter out = response.getWriter();
+			out.write(str);
+		} catch (Exception e) {
+
+		}
+	}
+	
 }

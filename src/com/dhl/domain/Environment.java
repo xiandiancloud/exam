@@ -19,9 +19,9 @@ public class Environment extends BaseDomain {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-	private String name;//模板名称
+	private String name;//模板名称---key
 	private String value;//
-	private String type;//
+	private String type;//type 如果是动态模板，需要学生手工指定运行环境
 	private String describle;
 	
 	public String getDescrible() {

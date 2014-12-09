@@ -1,13 +1,13 @@
 package com.dhl.util;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.lang.StringUtils;
 
 
 public class Test {
@@ -82,36 +82,68 @@ public class Test {
         return htmlStr;  
     }  
     
+    
+    public static void readFileByLines(String fileName) {
+        File file = new File(fileName);
+        BufferedReader reader = null;
+        try {
+            System.out.println("以行为单位读取文件内容，一次读一整行：");
+            reader = new BufferedReader(new FileReader(file));
+            String tempString = null;
+            int line = 1;
+            // 一次读入一行，直到读入null为文件结束
+            String aaa = "";
+//            while ((tempString = reader.readLine()) != null) {
+//                // 显示行号
+//                System.out.println("line " + line + ": " + tempString);
+//                aaa += tempString;
+//                line++;
+//            }
+            while (true) {
+				String bbb = reader.readLine();
+				if (bbb == null) {
+					break;
+				}
+				line++;
+				aaa += bbb + "</br>";
+			}
+            System.out.println("aaaa---- "+aaa+"  ,   "+aaa.length());
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                }
+            }
+        }
+    }
+    
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-//		String REGEX = "11111#22222#333333";
-//		String[] regex = REGEX.split("#");
-		String fileName = "fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf" +
-				" fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf f" +
-				"safasdfaf fsdafsdafafsafaf fsfasf fsafasdf" +
-				"af fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf fsfasf fsafasdfaf fsdafsdafafsafaf ";
-		String returnFileName = "";
-		try {
-			returnFileName = URLEncoder.encode(fileName, "UTF-8");
-//			returnFileName = StringUtils.replace(returnFileName, "+", "%20");
-			System.out.println(returnFileName);
-			System.out.println(returnFileName.length());
-//			if (returnFileName.length() > 150) {
-//				returnFileName = new String(fileName.getBytes("GB2312"),
-//						"ISO8859-1");
-//				returnFileName = StringUtils
-//						.replace(returnFileName, " ", "%20");
-//			}
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		}
 		
-//		String str = "1Bar12";
+//		readFileByLines("D://aaa.txt");
+//		String REGEX = "11111 22222 333333";
+//		String[] regex = REGEX.split("#");
+////		String[] tstrs = shellparameter.split("#");
+//		for (String s:regex)
+//		{
+//			System.out.println(s);
+//		}
+		
+		String str = "fsdfasfsf.sfaff.fdsafadsfa.dynamic";
+		
+		String endt = str.substring(str.lastIndexOf(".")+1);
+		
+		System.out.println(endt);
+		
+		
 //		System.out.println(str.matches("pl[a-z]in")); //false
-//		System.out.println(str.toLowerCase().matches(".{0,}"+"bar".toLowerCase()+".{0,}"));//true
+//		System.out.println(str.toLowerCase().matches(".{0,}"+"172.16.15.1".toLowerCase()+".{0,}"));//true
 		
 		
 //		String str = "<div style='text-align:center;'> 整治“四风”   清弊除垢<br/><span style='font-size:14px;'> </span><span style='font-size:18px;'>公司召开党的群众路线教育实践活动动员大会</span><br/></div>";  

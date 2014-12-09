@@ -2,12 +2,9 @@ package com.dhl.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -23,32 +20,37 @@ public class UserEnvironment extends BaseDomain {
 	@Column(name = "id")
 	private int id;
 	private int userId;
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "examId")
-	private Exam exam;
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "trainId")
-	private Train train;
-	//环境模板名
+	private int examId;
+	//运行环境devinfo，跟后台定义的t_environment的name一致
 	private String name;
 //	private String result;
-	private String createtime;
 	private String hostname;
 	private String username;
 	private String password;
-	private String serverId;
 	
-	public Exam getExam() {
-		return exam;
+	public int getId() {
+		return id;
 	}
-	public void setExam(Exam exam) {
-		this.exam = exam;
+	public void setId(int id) {
+		this.id = id;
 	}
-	public Train getTrain() {
-		return train;
+	public int getUserId() {
+		return userId;
 	}
-	public void setTrain(Train train) {
-		this.train = train;
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	public int getExamId() {
+		return examId;
+	}
+	public void setExamId(int examId) {
+		this.examId = examId;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getHostname() {
 		return hostname;
@@ -67,48 +69,6 @@ public class UserEnvironment extends BaseDomain {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public String getServerId() {
-		return serverId;
-	}
-	public void setServerId(String serverId) {
-		this.serverId = serverId;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getUserId() {
-		return userId;
-	}
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-//	public int getExamId() {
-//		return examId;
-//	}
-//	public void setExamId(int examId) {
-//		this.examId = examId;
-//	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-//	public String getResult() {
-//		return result;
-//	}
-//	public void setResult(String result) {
-//		this.result = result;
-//	}
-	public String getCreatetime() {
-		return createtime;
-	}
-	public void setCreatetime(String createtime) {
-		this.createtime = createtime;
 	}
 	
 }

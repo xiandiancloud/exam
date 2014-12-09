@@ -18,7 +18,7 @@
 							class="logo" alt="Flatty" src="images/logo-lab.png" />
 					</a>
 				</div>
-				<div class="collapse navbar-collapse" id="example-navbar-collapse">
+				<div class="collapse navbar-collapse l3back" id="example-navbar-collapse">
 					<!--向左对齐-->
 					<ul class="nav navbar-nav navbar-left pleft15">
 						<li><a href="lms/getteamCategory.action">首页</a></li>

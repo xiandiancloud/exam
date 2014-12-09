@@ -76,6 +76,8 @@ public class CommonConstant
    public static final String LOG_4 = "结束判分：";
    public static final String LOG_5 = "更新答案：";
    
-   //
-   public static final String CONTROL_NODE = "iaas.host.controller.ip";
+   //运行环境固定值
+   public static final String CONTROL_NODE = "iaas.host.controller.ip";//controller 节点
+   public static final String DYNAMIC = "dynamic";//动态模板
+   
 }
