@@ -211,7 +211,7 @@
 	                    <div class='box-content'>
 	                    <form role="form">
 							<div class="form-group">
-							<p><div class="h2font">完成实训后点击下面的按钮,否则机器将无法自动评分,如果实训有用户自己的环境还没有保存的，先保存环境再提交。</div></p>
+							<p><div class="h2font">完成实训后点击下面的提交按钮,否则机器将无法自动评分,如果实训有用户自己的环境还没有保存的，先保存环境再提交。</div></p>
 							
 							<div id="userenv">
 							     <!-- <p><div class="h2font">desc</div></p>

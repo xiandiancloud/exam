@@ -114,12 +114,12 @@
 									<li class="field-group field-group-course-start"
 										id="course-start">
 										<div class="field date" id="field-course-start-date">
-											<label for="course-start-date">试卷开始日期</label> <input
+											<label for="course-start-date">试卷开始时间</label> <input
 												type="text"
 												class="start-date date start datepicker hasDatepicker"
-												id="starttimedetail" placeholder="YYYY-MM-DD"
+												id="starttimedetail" placeholder="yyyy-mm-dd hh:mm:ss"
 												autocomplete="off" value="${exam.starttimedetail}">
-											<span class="tip tip-stacked">试卷开始的第一天</span>
+											<span class="tip tip-stacked">试卷开始的时间</span>
 										</div> <!--               <div class="field time" id="field-course-start-time">
                 <label for="course-start-time">试卷开始时间</label>
                 <input type="text" class="time start timepicker ui-timepicker-input" id="course-start-time" value="" placeholder="HH:MM" autocomplete="off">
@@ -129,11 +129,11 @@
 
 									<li class="field-group field-group-course-end" id="course-end">
 										<div class="field date" id="field-course-end-date">
-											<label for="course-end-date">试卷结束日期</label> <input
+											<label for="course-end-date">试卷结束时间</label> <input
 												type="text" class="end-date date end hasDatepicker"
-												id="endtimedetail" placeholder="YYYY-MM-DD"
+												id="endtimedetail" placeholder="yyyy-mm-dd hh:mm:ss"
 												autocomplete="off" value="${exam.endtimedetail}"> <span
-												class="tip tip-stacked">您试卷结束的最后一天</span>
+												class="tip tip-stacked">您试卷结束的时间</span>
 										</div> <!--               <div class="field time" id="field-course-end-time">
                 <label for="course-end-time">试卷结束时间</label>
                 <input type="text" class="time end ui-timepicker-input" id="course-end-time" value="" placeholder="HH:MM" autocomplete="off">
@@ -270,6 +270,24 @@
 			describle = replaceTextarea1(describle);
 			var endtimedetail = $("#endtimedetail").val();
 			var starttimedetail = $("#starttimedetail").val();
+			
+			if (!isNull(starttimedetail))
+			{
+				if (!isDate(starttimedetail))
+				{
+					alert("试卷开始时间请输入格式正确的日期\n\r日期格式：yyyy-mm-dd hh-mm-ss\n\r例    如：2008-08-08 08:30:00\n\r");
+					return;
+				}
+			}
+			
+			if (!isNull(endtimedetail))
+			{
+				if (!isDate(endtimedetail))
+				{
+					alert("试卷结束时间请输入格式正确的日期\n\r日期格式：yyyy-mm-dd hh-mm-ss\n\r例    如：2008-08-08 08:30:00\n\r");
+					return;
+				}
+			}
 			var imgpath = $("#imgpath").val();
 			var data = {examId:courseId,describle:describle,starttimedetail:starttimedetail,endtimedetail:endtimedetail,imgpath:imgpath};
 			$.ajax({

@@ -1,7 +1,9 @@
 package com.dhl.lms;
 
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -154,6 +156,13 @@ public class HavingExamController extends BaseController {
 		view.addObject("uedlist",clist.get(1));
 		view.addObject("userexam",ucs);
 		view.addObject("exam", exam);
+		
+		String endtime = exam.getEndtimedetail();
+		long time = UtilTools.getTime(endtime);
+		if (time > 0)
+		{
+			view.addObject("examtime", time);
+		}
 		view.addObject("competionId",competionId);
 		view.setViewName("/lms/exam");
 		return view;

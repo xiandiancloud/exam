@@ -327,9 +327,9 @@
 					<div class='box bordered-box blue-border'>
 						<div class='box-content'>
 							<div class='row'>
-								<!-- <div class='col-xs-3'>
+								<div class='col-xs-3'>
 									<div id="timer" style="color:green;font-family:Arial;font-size:170%;"></div>
-								</div> -->
+								</div>
 								<div class='col-xs-12'>
 									<div class="pull-right">
 										<!-- <a class="btn">暂停</a>  -->
@@ -560,22 +560,27 @@
 		}
 		 
 		//一个小时，按秒计算，可以自己调整时间
-		/* var maxtime = 60 * 60;
+		var maxtime = "${examtime}";//2*60 * 60;
 		function CountDown() {
 			if (maxtime >= 0) {
-				minutes = Math.floor(maxtime / 60);
-				seconds = Math.floor(maxtime % 60)>9?Math.floor(maxtime % 60):"0"+Math.floor(maxtime % 60);
-				msg = minutes + ":" + seconds ;
+				var s = maxtime;
+				hours = Math.floor(s / 3600);
+				s = s%3600;
+				minutes = Math.floor(s / 60);
+				s = s%60;
+				seconds = Math.floor(s);
+				//seconds = Math.floor(maxtime % 60)>9?Math.floor(maxtime % 60):"0"+Math.floor(maxtime % 60);
+				msg = hours + ":" +minutes + ":" + seconds ;
 				$("#timer").html(msg);
-				if (maxtime == 5 * 60)
-					alert('注意，还有5分钟!');
+				//if (maxtime == 5 * 60)
+					//alert('注意，还有5分钟!');
 				--maxtime;
 			} else {
 				clearInterval(timer);
-				alert("时间到，结束!");
+				//alert("时间到，结束!");
 			}
 		}
-		timer = setInterval("CountDown()", 1000); */
+		timer = setInterval("CountDown()", 1000);
 		
 		//提交答案------单选
 		function submitquesstion(questionId,number,useranswer,index)

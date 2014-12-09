@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -135,11 +137,37 @@ public class Test {
 //			System.out.println(s);
 //		}
 		
-		String str = "fsdfasfsf.sfaff.fdsafadsfa.dynamic";
+//		 int s=24*60*60+6;
+////		  int L = s/86400;
+////		  s = s%86400;
+//	       int N = s/3600;
+//	       s = s%3600;
+//	       int K = s/60;
+//	       s = s%60;
+//	       int M = s;
+//	       System.out.println("时间是："+N+"小时 "+K+"分钟 "+M+"秒"); 
+	      
+		try
+		{
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		java.util.Date end = df.parse("2014-12-09 16:28:40");
+		java.util.Date start=new Date();
+		long l=end.getTime()-start.getTime();
+		if (l > 0)
+		System.out.println(l/1000+"秒");
+//		long day=l/(24*60*60*1000);
+//		long hour=(l/(60*60*1000)-day*24);
+//		long min=((l/(60*1000))-day*24*60-hour*60);
+//		long s=(l/1000-day*24*60*60-hour*60*60-min*60);
+//		System.out.println(""+day+"天"+hour+"小时"+min+"分"+s+"秒");
+		}
+		catch(Exception e)
+		{}
+//		String str = "范德萨发生大发放大师傅172.16.15.2飞洒发萨菲答复";
 		
-		String endt = str.substring(str.lastIndexOf(".")+1);
-		
-		System.out.println(endt);
+//		String endt = str.substring(str.lastIndexOf(".")+1);
+//		
+//		System.out.println(endt);
 		
 		
 //		System.out.println(str.matches("pl[a-z]in")); //false

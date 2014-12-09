@@ -143,6 +143,21 @@ public class UtilTools {
 		return strDate;
 	}
 	
+	public static long getTime(String endtime)
+	{
+		try
+		{
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date end = df.parse(endtime);
+			Date start= new Date();
+			long l=end.getTime()-start.getTime();
+			return l/1000;
+		}
+		catch (Exception e)
+		{
+			return -1;
+		}
+	}
 	public static String htmlspecialchars(String str) {
 		str = str.replaceAll("&", "&amp;");
 		str = str.replaceAll("<", "&lt;");
