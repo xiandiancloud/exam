@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.SCPClient;
 
+import com.dhl.dao.CompetionDao;
 import com.dhl.dao.CompetionExamDao;
 import com.dhl.dao.ECategoryDao;
 import com.dhl.dao.ExamCategoryDao;
@@ -36,6 +37,7 @@ import com.dhl.dao.TrainDao;
 import com.dhl.dao.TrainExtDao;
 import com.dhl.dao.UserExamDao;
 import com.dhl.dao.UserQuestionDao;
+import com.dhl.domain.Competion;
 import com.dhl.domain.CompetionExam;
 import com.dhl.domain.ECategory;
 import com.dhl.domain.Exam;
@@ -85,6 +87,8 @@ public class ExamService {
 	private TeacherExamDao teacherExamDao;
 	@Autowired
 	private CompetionExamDao competionExamDao;
+	@Autowired
+	private CompetionDao competionDao;
 	@Autowired
 	private QuestionDao questionDao;
 	@Autowired
@@ -390,9 +394,13 @@ public class ExamService {
 	 * @param competionId
 	 */
 	public void createExam(String name,int userId, int competionId) {
+		Competion competion = competionDao.get(competionId);
+		
 		Exam c = new Exam();
 		c.setName(name);
 		c.setIsnormal(1);
+		c.setStarttimedetail(competion.getExamstarttime());
+		c.setEndtimedetail(competion.getExamendtime());
 		save(c);
 		
 		CompetionExam ce = new CompetionExam();
@@ -668,17 +676,14 @@ public class ExamService {
 						createTrain(course, v, path, rootelement, chapter_url_name);
 					}
 				}
-				else
+				Iterator iter2 = rt.elementIterator("question");
+				if (iter2 != null)
 				{
-					Iterator iter2 = rt.elementIterator("question");
-					if (iter2 != null)
-					{
-						while (iter2.hasNext()) {
-							Element recordEle = (Element) iter.next();
-							String chapter_url_name = recordEle
-									.attributeValue("url_name");
-							createQuestion(course, v, path, rootelement, chapter_url_name);
-						}
+					while (iter2.hasNext()) {
+						Element recordEle = (Element) iter2.next();
+						String chapter_url_name = recordEle
+								.attributeValue("url_name");
+						createQuestion(course, v, path, rootelement, chapter_url_name);
 					}
 				}
 			} catch (Exception e) {

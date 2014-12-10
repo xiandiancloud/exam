@@ -28,7 +28,7 @@
 					</ul>
 					<!--向右对齐-->
 					<ul class="nav navbar-nav navbar-right">
-					    <li class=''>
+					    <li style='max-width:250px;display:block;overflow:hidden;word-break:keep-all;white-space:nowrap;text-overflow:ellipsis;'>
 				           <a href="javascript:gotouppage();"><span
 														class="glyphicon glyphicon-arrow-left">${exam.name}</span></a>
 						</li>
