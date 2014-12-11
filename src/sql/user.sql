@@ -82,3 +82,10 @@ create table t_roleuser
   CONSTRAINT receivet_roleuser_ibfk_1 FOREIGN KEY (userId) REFERENCES auth_user (id) ON DELETE CASCADE,
   CONSTRAINT receivet_roleuser_ibfk_2 FOREIGN KEY (roleId) REFERENCES t_role (id) ON DELETE CASCADE
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+INSERT INTO `auth_school` VALUES ('1', '先电');
+INSERT INTO `auth_user` VALUES ('1', 'admin', '', '', 'admin@163.com', 'e10adc3949ba59abbe56e057f20f883e', '1', '1', '1', '2014-10-13 15:33:02', '2014-10-21 15:32:59');
+INSERT INTO `t_role` VALUES ('1', '学生', '学生');
+INSERT INTO `t_role` VALUES ('2', '老师', '老师');
+INSERT INTO `t_role` VALUES ('3', '管理员', '管理员');
+INSERT INTO `t_roleuser` VALUES ('1', '1', '3');

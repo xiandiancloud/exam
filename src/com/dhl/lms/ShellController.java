@@ -145,7 +145,7 @@ public class ShellController extends BaseController {
 						rs.setShellparameter(shellparameter);
 						HttpEntity<RestShell> entity = new HttpEntity<RestShell>(rs);
 						
-						String resturl = "http://"+restid+":8080/restdemo/service/shell";//UtilTools.getConfig().getProperty("REST_URL");
+						String resturl = "http://"+restid+":8080/rest/service/shell";//UtilTools.getConfig().getProperty("REST_URL");
 						ResponseEntity<RestShell> res = restTemplate.postForEntity(resturl, 
 								entity, RestShell.class);
 						

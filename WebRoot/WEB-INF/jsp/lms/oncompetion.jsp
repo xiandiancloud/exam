@@ -111,10 +111,16 @@
 				<div class="clear"></div>
 				<c:forEach var="ec" items="${competionlist}">
 				<div class="row wback ">
-					<div class="col-xs-3 courseh">
-						<a> <img src="${(empty ec.competion.imgpath)?'images/exam.jpg':ec.competion.imgpath}" width="100%" height="150px;"
+					<div class="col-xs-3">
+<%-- 						<a> <img src="${(empty ec.competion.imgpath)?'images/exam.jpg':ec.competion.imgpath}" width="100%" height="150px;"
 							class="img-rounded">
-						</a>
+						</a> --%>
+						<ul class="list_style"><li class="cf"><div class="img fl">
+							<div class="cover">
+								<!-- <a href="/courses/XIANDIAN/A109/201410/about" title="" target="_blank">点击查看</a> -->
+							</div>
+							<img src="${(empty ec.competion.imgpath)?'images/exam.png':ec.competion.imgpath}" alt="" title="">
+						</div></li></ul>
 					</div>
 					<div class="col-xs-7">
 						<p>

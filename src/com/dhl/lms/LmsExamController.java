@@ -135,10 +135,10 @@ public class LmsExamController extends BaseController {
 			buffer.append("\"" + p.getExam().getOrg() + "\"");
 			buffer.append(",\"imgpath\":");
 			String img = p.getExam().getImgpath();
-			if (img == null || img.length() < 1)
-			{
-				img = "images/exam.jpg";
-			}
+//			if (img == null || img.length() < 1)
+//			{
+//				img = "images/exam.jpg";
+//			}
 			buffer.append("\"" + img + "\"");
 			buffer.append(",\"desc\":");
 			buffer.append("\"" + p.getExam().getDescrible() + "\"");

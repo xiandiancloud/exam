@@ -120,7 +120,7 @@
 					<div class="clear"></div>
 					<c:forEach var="groom" items="${groomlist}">
 						<div class="col-xs-3">
-							<a href="lms/toexamintroduce.action?competionId=-1&examId=${groom.id}" class=""><img src="${(empty groom.imgpath)?'images/exam.jpg':groom.imgpath}" class="img-thumbnail"><h5>${groom.name}</h5></a>
+							<a href="lms/toexamintroduce.action?competionId=-1&examId=${groom.id}" class=""><img src="${(empty groom.imgpath)?'images/exam.png':groom.imgpath}" class="img-thumbnail"><h5>${groom.name}</h5></a>
 						</div>
 					</c:forEach>
 				</div>
@@ -267,6 +267,10 @@
 								var name = course.name;
 								var desc = course.desc;
 								var imgpath = course.imgpath;
+								if (!imgpath)
+								{
+									imgpath = "images/exam.png";
+								}
 								var org = course.org;
 								/* tmp += '<div class="col-sm-3 boxgrid">'
 										+ '<a href="lms/getCourse.action?courseId='

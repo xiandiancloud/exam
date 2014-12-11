@@ -494,7 +494,7 @@ public class CompetionController extends BaseController {
 				int len = strs.length;
 				for (int i=0;i<len;i++)
 				{
-					usercompetionService.save(Integer.parseInt(strs[0]), competionId, CommonConstant.CROLE_5);
+					usercompetionService.save(Integer.parseInt(strs[i]), competionId, CommonConstant.CROLE_5);
 				}
 			}
 			//examService.createExam(name, userId, competionId);
