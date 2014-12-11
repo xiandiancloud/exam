@@ -246,6 +246,8 @@
         },
 
         dragStart: function(e)
+        {},
+        dhldragStart: function(e)//dhl 简单注释实现方法，修改试卷页面不能拖拽
         {
             var mouse    = this.mouse,
                 target   = $(e.target),
