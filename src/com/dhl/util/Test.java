@@ -147,22 +147,44 @@ public class Test {
 //	       int M = s;
 //	       System.out.println("时间是："+N+"小时 "+K+"分钟 "+M+"秒"); 
 	      
-		try
+		
+		String aaa = "-P INPUT ACCEPT" +
+				"-P FORWARD ACCEPT" +
+				"-P OUTPUT ACCEPT" +
+				"-N nova-api-FORWARD" +
+				"-N nova-api-INPUT";
+		
+		
+		String tempuseranswer = UtilTools.getTextFromHtml(aaa);
 		{
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		java.util.Date end = df.parse("2014-12-09 16:28:40");
-		java.util.Date start=new Date();
-		long l=end.getTime()-start.getTime();
-		if (l > 0)
-		System.out.println(l/1000+"秒");
-//		long day=l/(24*60*60*1000);
-//		long hour=(l/(60*60*1000)-day*24);
-//		long min=((l/(60*1000))-day*24*60-hour*60);
-//		long s=(l/1000-day*24*60*60-hour*60*60-min*60);
-//		System.out.println(""+day+"天"+hour+"小时"+min+"分"+s+"秒");
+			String regex = ".{0,}"+"FORWARD"+".{0,}";
+			regex = "-P FORWARD ACCEPT";
+			Pattern p = Pattern.compile(regex);
+		    Matcher m = p.matcher(tempuseranswer);
+		    boolean aa = tempuseranswer.matches(regex);
+		    System.out.println("--------- aa "+aa);
+		    if (m.find())
+		    {
+		    	System.out.println("--------- 111111111");
+		    }
 		}
-		catch(Exception e)
-		{}
+		
+//		try
+//		{
+//		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		java.util.Date end = df.parse("2014-12-09 16:28:40");
+//		java.util.Date start=new Date();
+//		long l=end.getTime()-start.getTime();
+//		if (l > 0)
+//		System.out.println(l/1000+"秒");
+////		long day=l/(24*60*60*1000);
+////		long hour=(l/(60*60*1000)-day*24);
+////		long min=((l/(60*1000))-day*24*60-hour*60);
+////		long s=(l/1000-day*24*60*60-hour*60*60-min*60);
+////		System.out.println(""+day+"天"+hour+"小时"+min+"分"+s+"秒");
+//		}
+//		catch(Exception e)
+//		{}
 //		String str = "范德萨发生大发放大师傅172.16.15.2飞洒发萨菲答复";
 		
 //		String endt = str.substring(str.lastIndexOf(".")+1);

@@ -666,6 +666,7 @@ public class UtilTools {
 			FileOutputStream fout = new FileOutputStream(targzipFilePath);
 			// 建立tar压缩输出流
 			TarOutputStream tout = new TarOutputStream(fout);
+			tout.setLongFileMode(TarOutputStream.LONGFILE_GNU);
 			addFiles(rootPath, tout, folderPath);
 			tout.close();
 			fout.close();
@@ -854,7 +855,7 @@ public class UtilTools {
 	 private static final String regEx_script = "<script[^>]*?>[\\s\\S]*?<\\/script>"; // 定义script的正则表达式  
 	    private static final String regEx_style = "<style[^>]*?>[\\s\\S]*?<\\/style>"; // 定义style的正则表达式  
 	    private static final String regEx_html = "<[^>]+>"; // 定义HTML标签的正则表达式  
-	    private static final String regEx_space = "\\s*|\t|\r|\n";//定义空格回车换行符  
+//	    private static final String regEx_space = "\\s*|\t|\r|\n";//定义空格回车换行符  
 	    
 	    public static String delHTMLTag(String htmlStr) {  
 	        Pattern p_script = Pattern.compile(regEx_script, Pattern.CASE_INSENSITIVE);  
@@ -869,9 +870,9 @@ public class UtilTools {
 	        Matcher m_html = p_html.matcher(htmlStr);  
 	        htmlStr = m_html.replaceAll(""); // 过滤html标签  
 	  
-	        Pattern p_space = Pattern.compile(regEx_space, Pattern.CASE_INSENSITIVE);  
-	        Matcher m_space = p_space.matcher(htmlStr);  
-	        htmlStr = m_space.replaceAll(""); // 过滤空格回车标签  
+//	        Pattern p_space = Pattern.compile(regEx_space, Pattern.CASE_INSENSITIVE);  
+//	        Matcher m_space = p_space.matcher(htmlStr);  
+//	        htmlStr = m_space.replaceAll(""); // 过滤空格回车标签  
 	        return htmlStr.trim(); // 返回文本字符串  
 	    }  
 	      
