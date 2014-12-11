@@ -14,7 +14,8 @@
 		p:driverClassName="${jdbcuser.driverClassName}"
 		p:url="${jdbcuser.url}"
 		p:username="${jdbcuser.username}"
-		p:password="${jdbcuser.password}" />
+		p:password="${jdbcuser.password}" 
+		p:maxIdle = "${jdbcuser.maxIdle}"/>
 
 	<bean id="jdbcTemplate" 
 	      class="org.springframework.jdbc.core.JdbcTemplate"
