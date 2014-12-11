@@ -203,7 +203,7 @@
 										</p>
 										<div>
 											<div class='datetimepicker input-group' id='datetimepicker'>
-												<input class='form-control' data-format='yyyy-MM-dd HH:mm:ss PP' placeholder='Select timepicker' type='text' id="examstarttime" value="${competion.examstarttime}"> 
+												<input class='form-control' data-format='yyyy-MM-dd hh:mm:ss' placeholder='Select timepicker' type='text' id="examstarttime" value="${competion.examstarttime}"> 
 												<span class='input-group-addon'> 
 													<span data-date-icon='icon-calendar' data-time-icon='icon-time'></span>
 												</span>
@@ -216,7 +216,7 @@
 										</p>
 										<div>
 											<div class='datetimepicker input-group' id='datetimepicker'>
-												<input class='form-control' data-format='yyyy-MM-dd HH:mm:ss PP' placeholder='Select timepicker' type='text' id="examendtime" value="${competion.examendtime}"> 
+												<input class='form-control' data-format='yyyy-MM-dd hh:mm:ss' placeholder='Select timepicker' type='text' id="examendtime" value="${competion.examendtime}"> 
 												<span class='input-group-addon'> 
 													<span data-date-icon='icon-calendar' data-time-icon='icon-time'></span>
 												</span>
