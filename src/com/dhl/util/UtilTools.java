@@ -185,6 +185,7 @@ public class UtilTools {
 	{
 		str = str.replaceAll("\'","\\\\\'");  
 		str = str.replaceAll("\"","\\\\\"");  
+		str = str.replaceAll("\\\\", "\\\\\\\\");
 		return str;
 	}
 //	public static String[] createServer(String serverName) {

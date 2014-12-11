@@ -123,6 +123,43 @@ public class Test {
         }
     }
     
+    
+    public static String string2Json(String s) {        
+        StringBuffer sb = new StringBuffer();        
+        for (int i=0; i<s.length(); i++) {  
+            char c = s.charAt(i);    
+             switch (c){  
+             case '\"':        
+                 sb.append("\\\"");        
+                 break;        
+             case '\\':        
+                 sb.append("\\\\");        
+                 break;        
+             case '/':        
+                 sb.append("\\/");        
+                 break;        
+             case '\b':        
+                 sb.append("\\b");        
+                 break;        
+             case '\f':        
+                 sb.append("\\f");        
+                 break;        
+             case '\n':        
+                 sb.append("\\n");        
+                 break;        
+             case '\r':        
+                 sb.append("\\r");        
+                 break;        
+             case '\t':        
+                 sb.append("\\t");        
+                 break;        
+             default:        
+                 sb.append(c);     
+             }  
+         }      
+        return sb.toString();     
+        }  
+    
 	/**
 	 * @param args
 	 */
@@ -147,27 +184,31 @@ public class Test {
 //	       int M = s;
 //	       System.out.println("时间是："+N+"小时 "+K+"分钟 "+M+"秒"); 
 	      
-		
-		String aaa = "-P INPUT ACCEPT" +
-				"-P FORWARD ACCEPT" +
-				"-P OUTPUT ACCEPT" +
-				"-N nova-api-FORWARD" +
-				"-N nova-api-INPUT";
-		
-		
-		String tempuseranswer = UtilTools.getTextFromHtml(aaa);
-		{
-			String regex = ".{0,}"+"FORWARD"+".{0,}";
-			regex = "-P FORWARD ACCEPT";
-			Pattern p = Pattern.compile(regex);
-		    Matcher m = p.matcher(tempuseranswer);
-		    boolean aa = tempuseranswer.matches(regex);
-		    System.out.println("--------- aa "+aa);
-		    if (m.find())
-		    {
-		    	System.out.println("--------- 111111111");
-		    }
-		}
+		String s ="shell\\8958772f-13bd-4eeb-a84a-12f5a63c1b4eunit3.4.1.sh";
+		//把s中的反斜杠\ 替换为\\
+//		System.out.println(s);
+		System.out.println(s.replaceAll("\\\\", "\\\\\\\\"));
+		System.out.println(s.replace("\\", "\\\\"));
+//		String aaa = "-P INPUT ACCEPT" +
+//				"-P FORWARD ACCEPT" +
+//				"-P OUTPUT ACCEPT" +
+//				"-N nova-api-FORWARD" +
+//				"-N nova-api-INPUT";
+//		
+//		
+//		String tempuseranswer = UtilTools.getTextFromHtml(aaa);
+//		{
+//			String regex = ".{0,}"+"FORWARD"+".{0,}";
+//			regex = "-P FORWARD ACCEPT";
+//			Pattern p = Pattern.compile(regex);
+//		    Matcher m = p.matcher(tempuseranswer);
+//		    boolean aa = tempuseranswer.matches(regex);
+//		    System.out.println("--------- aa "+aa);
+//		    if (m.find())
+//		    {
+//		    	System.out.println("--------- 111111111");
+//		    }
+//		}
 		
 //		try
 //		{

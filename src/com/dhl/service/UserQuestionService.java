@@ -72,7 +72,8 @@ public class UserQuestionService {
 				for (int i=0;i<len;i++)
 				{
 					TrainExt pm = zyList.get(i);
-					temp += "{\"shellpath\":\""+pm.getShellpath()+"\",\"devinfo\":\""+pm.getDevinfo()+"\",\"scoretag\":\""+pm.getScoretag()+"\",\"shellparameter\":\""+pm.getShellparameter()+"\",\"shellname\":\""+pm.getShellname()+"\"},";
+					String tsp = UtilTools.replaceBackett(pm.getShellpath());
+					temp += "{\"shellpath\":\""+tsp+"\",\"devinfo\":\""+pm.getDevinfo()+"\",\"scoretag\":\""+pm.getScoretag()+"\",\"shellparameter\":\""+pm.getShellparameter()+"\",\"shellname\":\""+pm.getShellname()+"\"},";
 				}
 				if (temp.length() > 1)
 				{

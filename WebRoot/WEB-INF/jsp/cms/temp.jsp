@@ -341,62 +341,10 @@
 
 		<div class="wrapper-sock wrapper">
 			<ul class="list-actions list-cta">
-				<li class="action-item"><a href="#sock"
+				<li class="action-item"><a href="#"
 					class="cta cta-show-sock"><i class="icon-question-sign"></i> <span
 						class="copy">向云平台求助?</span></a></li>
 			</ul>
-
-			<div class="wrapper-inner wrapper">
-				<section class="sock" id="sock">
-					<header>
-						<h2 class="title sr">edX Studio Documentation</h2>
-					</header>
-
-					<div class="support">
-						<h3 class="title">edX Studio Documentation</h3>
-
-						<div class="copy">
-							<p>You can click Help in the upper right corner of any page
-								to get more information about the page you're on. You can also
-								use the links below to download the Building and Running an edX
-								Course PDF file, to go to the edX Author Support site, or to
-								enroll in edX101.</p>
-						</div>
-
-						<ul class="list-actions">
-							<li class="action-item js-help-pdf"><a
-								href="https://media.readthedocs.org/pdf/edx-partner-course-staff/latest/edx-partner-course-staff.pdf"
-								target="_blank" rel="external" class="action action-primary">Building
-									and Running an edX Course PDF</a></li>
-
-							<li class="action-item"><a href="http://help.edge.edx.org/"
-								rel="external" class="action action-primary">edX Studio
-									Author Support</a> <span class="tip">edX Studio Author
-									Support</span></li>
-							<li class="action-item"><a
-								href="https://edge.edx.org/courses/edX/edX101/How_to_Create_an_edX_Course/about"
-								rel="external" class="action action-primary">注册edX101</a> <span
-								class="tip">How to use edX Studio to build your course</span></li>
-						</ul>
-					</div>
-
-					<div class="feedback">
-						<h3 class="title">Request help with edX Studio</h3>
-
-						<div class="copy">
-							<p>Have problems, questions, or suggestions about edX Studio?</p>
-						</div>
-
-						<ul class="list-actions">
-							<li class="action-item"><a
-								href="http://help.edge.edx.org/discussion/new"
-								class="action action-primary show-tender"
-								title="请使用工具Tender来分享您的反馈"><i class="icon-comments"></i>联系我们</a>
-							</li>
-						</ul>
-					</div>
-				</section>
-			</div>
 		</div>
 
 		<jsp:include page="tfooter.jsp"></jsp:include>

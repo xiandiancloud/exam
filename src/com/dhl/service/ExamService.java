@@ -812,7 +812,7 @@ public class ExamService {
 
 				TrainExt te = new TrainExt();
 				te.setTrainId(train.getId());
-				te.setShellpath("shell"+ File.separator + endshell);
+				te.setShellpath("shell/"+ endshell);
 				te.setShellname(shellname);
 				te.setShellparameter(shellparameter);
 				te.setDevinfo(devinfo);

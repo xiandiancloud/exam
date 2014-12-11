@@ -367,9 +367,10 @@
 											<a class="btn btn-danger btn-block btn-lg" href="lms/submitallquesstion.action?competionId=${competionId}&examId=${exam.id}">提交试卷</a>
 										</c:if>
 										<c:if test="${userexam.state == 1}">
-											<c:if test="${exam.isnormal == 0}">
+										    <!--测试放开  -->
+											<%-- <c:if test="${exam.isnormal == 0}"> --%>
 												<a class="btn btn-danger btn-block btn-lg" href="lms/toagainexamintroduce.action?competionId=${competionId}&examId=${exam.id}">再做一次</a>
-											</c:if>
+											<%-- </c:if> --%>
 										</c:if>
 									</div>
 								</div>
@@ -408,7 +409,7 @@
     <!-- / END - page related files and scripts [optional] -->
 	<script src="js/common.js" type="text/javascript"></script>
 	<script src="js/holder.js" type="text/javascript"></script>
-	<script src="js/stickUp.js" type="text/javascript"></script>
+	<script src="js/stickUp.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(function() {
 			/* $("#scroll2").width($("#scroll1").width()); */
@@ -445,6 +446,12 @@
 	        });
 	      	//填充试卷内容，判断对错，或者是否已经做过  
 			initquestion();
+			//一个小时，按秒计算，可以自己调整时间
+			var maxtime = "${examtime}";//2*60 * 60;
+			if (maxtime)
+			{
+				timer = setInterval("CountDown()", 1000);
+			}
 	      });
 		//这个方法多次提交，如果性能有问题再优化
 		function initquestion()
@@ -559,8 +566,7 @@
           </c:forEach>
 		}
 		 
-		//一个小时，按秒计算，可以自己调整时间
-		var maxtime = "${examtime}";//2*60 * 60;
+		
 		function CountDown() {
 			if (maxtime >= 0) {
 				var s = maxtime;
@@ -580,7 +586,6 @@
 				//alert("时间到，结束!");
 			}
 		}
-		timer = setInterval("CountDown()", 1000);
 		
 		//提交答案------单选
 		function submitquesstion(questionId,number,useranswer,index)
