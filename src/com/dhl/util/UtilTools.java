@@ -976,6 +976,12 @@ public class UtilTools {
 	public static List isCorrect(int type,String useranswer,List<String> answerlist,String REGEX,int score)
 	{
 		List list = new ArrayList();
+		if (answerlist == null)
+		{
+			list.add(0);
+			list.add(0);
+			return list;
+		}
 		try {
 			useranswer = java.net.URLDecoder.decode(useranswer,"UTF-8");
 		} catch (UnsupportedEncodingException e) {

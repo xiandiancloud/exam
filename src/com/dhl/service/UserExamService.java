@@ -493,109 +493,57 @@ public class UserExamService {
 										}
 									}
 									else
-									{		
-										if (useranswer != null)
+									{	
+										List<String> answerlist = qd.getAnswer();
+										List<TrainExt> te = trainExtDao.getTrainExtList(t.getId());
+										String REGEX = "";
+										for (TrainExt text:te)
 										{
-											List<String> answerlist = qd.getAnswer();
-											if (answerlist != null)
+											REGEX += text.getScoretag();
+											REGEX += "#";
+										}
+										if (revalue != null)
+										{
+											List list2 = UtilTools.isCorrect(CommonConstant.QTYPE_6,revalue,answerlist,REGEX,quscore);
+											int isflag2 = (int)list2.get(0);
+											if (isflag2 == 1)
 											{
-												List<TrainExt> te = trainExtDao.getTrainExtList(t.getId());
-												String REGEX = "";
-												for (TrainExt text:te)
-												{
-													REGEX += text.getScoretag();
-													REGEX += "#";
-												}
-												List list = UtilTools.isCorrect(CommonConstant.QTYPE_6,useranswer,answerlist,REGEX,quscore);
-												int isflag = (int)list.get(0);
-												if (isflag == 1)
-												{
-													qd.setUserscore(quscore);
-													cscore += quscore;
-													right++;
-												}
-												else if (isflag == 2)
-												{
-													int temp = (int)list.get(1);
-													qd.setUserscore(temp);
-													cscore += temp;
-													wrong++;
-												}
-												else
-												{
-													if (revalue != null)
-													{
-														List list2 = UtilTools.isCorrect(CommonConstant.QTYPE_6,revalue,answerlist,REGEX,quscore);
-														int isflag2 = (int)list2.get(0);
-														if (isflag2 == 1)
-														{
-															qd.setUserscore(quscore);
-															cscore += quscore;
-															right++;
-														}
-														else if (isflag2 == 2)
-														{
-															int temp = (int)list2.get(1);
-															qd.setUserscore(temp);
-															cscore += temp;
-															wrong++;
-														}
-														else
-														{
-															wrong++;
-														}
-													}
-													else
-													{
-														wrong++;
-													}
-												}
+												qd.setUserscore(quscore);
+												cscore += quscore;
+												right++;
+											}
+											else if (isflag2 == 2)
+											{
+												int temp = (int)list2.get(1);
+												qd.setUserscore(temp);
+												cscore += temp;
+												wrong++;
+											}
+											else
+											{
+												wrong++;
 											}
 										}
-										else
+										else if (useranswer != null)
 										{
-											List<String> answerlist = qd.getAnswer();
-											if (answerlist != null)
+											List list = UtilTools.isCorrect(CommonConstant.QTYPE_6,useranswer,answerlist,REGEX,quscore);
+											int isflag = (int)list.get(0);
+											if (isflag == 1)
 											{
-												if (revalue != null)
-												{
-													List<TrainExt> te = trainExtDao.getTrainExtList(t.getId());
-													String REGEX = "";
-													for (TrainExt text:te)
-													{
-														REGEX += text.getScoretag();
-														REGEX += "#";
-													}
-													List list2 = UtilTools.isCorrect(CommonConstant.QTYPE_6,revalue,answerlist,REGEX,quscore);
-													int isflag2 = (int)list2.get(0);
-													if (isflag2 == 1)
-													{
-														qd.setUserscore(quscore);
-														cscore += quscore;
-														right++;
-													}
-													else if (isflag2 == 2)
-													{
-														Object tempsc = list2.get(1);
-														int temp = 0;
-														if (tempsc instanceof String)
-														{
-															String ttt = (String)tempsc;
-															temp = Integer.parseInt(ttt);
-														}
-														else
-														{
-														    temp = (int)list2.get(1);
-														}
-														qd.setUserscore(temp);
-														cscore += temp;
-														wrong++;
-													}
-													else
-													{
-														wrong++;
-													}
-												}
+												qd.setUserscore(quscore);
+												cscore += quscore;
+												right++;
+											}
+											else if (isflag == 2)
+											{
+												int temp = (int)list.get(1);
+												qd.setUserscore(temp);
+												cscore += temp;
+												wrong++;
+											}
+											else
+											{
+												wrong++;
 											}
 										}
 									}
