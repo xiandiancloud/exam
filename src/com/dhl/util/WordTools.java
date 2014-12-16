@@ -27,6 +27,7 @@ import com.dhl.domain.ExamChapter;
 import com.dhl.domain.ExamQuestion;
 import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
+import com.sun.org.apache.bcel.internal.util.ByteSequence;
 
 /**
  * 试卷转成word文档的工具类
@@ -40,12 +41,7 @@ public class WordTools {
 		MainDocumentPart mdp = wordMLPackage.getMainDocumentPart();
 		mdp.addStyledParagraphOfText("a5", exam.getName());
 		mdp.addStyledParagraphOfText("1", "部分1");
-		boolean save = true;
-		if (save) {
-			String filename = System.getProperty("user.dir") + "/WordprocessingMLDocument.docx";
-			wordMLPackage.save(new java.io.File(filename) );
-			System.out.println("Saved " + filename);
-		}
+
 	}
 	//文档章节
 	public static void writeChapter(WordprocessingMLPackage wordMLPackage,ExamChapter ec)
@@ -72,80 +68,171 @@ public class WordTools {
 	public static void writeQuestion(WordprocessingMLPackage wordMLPackage,int s,ExamQuestion eq) throws Exception
 	{
 		MainDocumentPart mdp = wordMLPackage.getMainDocumentPart();
-		//1.html描述
-		if (eq.getQuestion().getType()==1) 
+		if (eq.getQuestion()!= null)
 		{
-			mdp.addStyledParagraphOfText("a", s+"、");
-			BASE64Decoder decoder = new BASE64Decoder(); 
-			String contents=eq.getQuestion().getContent();
-			//Base64解码  转换成bytes
-			/*String splitString = eq.getQuestion().getContent().split(",")[1];
-			String imgString = splitString.substring(0,splitString.length()-2);
-			byte[] b = decoder.decodeBuffer(imgString); */ 
-			String imgString="<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>";//找出img标签
-			Pattern p = Pattern.compile(imgString);//匹配正则表达式
-			//处理图片前面的文字
-			int endtext=contents.indexOf("<img");
-			if (endtext!=0) {
-				String foretext=contents.substring(0, endtext);
-				mdp.addStyledParagraphOfText("a", foretext);
-//				System.out.println("wenzi"+foretext);
-			}
-			//处理图片
-			Matcher m=p.matcher(contents);
-			if (m.find()) {
-				String strimage=m.group(1).split(",")[1];
-				String text=m.group().split(",")[1];
-				String imgcode=text.substring(0, text.length()-2);
-				byte[] b=decoder.decodeBuffer(imgcode);
-				addImageToPackage(wordMLPackage, b);
-			}
-			String strcontent=HtmlText(contents);
-			String behindtext=strcontent.substring(endtext,strcontent.length());
-			mdp.addStyledParagraphOfText("a", behindtext); 
-		}
-		else 
-		{
-			List<QuestionData> list=ParseQuestion.changetohtml(eq.getQuestion().getContent(), eq.getId());
-			//2.单选
-			for (int i = 0; i < list.size(); i++) 
-			{	
-				if (list.get(i).getType()==2) 
-				{
-					String string=list.get(i).getContent().toString();
-					int beginindex=list.get(i).getContent().toString().indexOf("[");
-					int endindex=list.get(i).getContent().toString().lastIndexOf("]");
-					String str=string.substring(beginindex+1, endindex);
-					String[] strs=str.split(",");
-					mdp.addStyledParagraphOfText("a",s+"、"+list.get(i).getTitle()+"（本题共"+String.valueOf(list.get(i).getScore())+"分)");
-					for (int j = 0; j < strs.length; j++) {
-						mdp.addStyledParagraphOfText("b", "\u25CB"+strs[j]);
+			//1.html描述
+			if (eq.getQuestion().getType()==1) 
+			{
+				List<String> listSrc=UtilTools.getImgStrOfSrc(eq.getQuestion().getContent());
+				BASE64Decoder decoder = new BASE64Decoder();
+				for (int i = 0; i < listSrc.size(); i++) {
+					String str=listSrc.get(i).toString().split(",")[1];
+					if (str.indexOf("=")!=-1&&str.indexOf("=")>0) {
+						String srcstr=str.substring(0, str.lastIndexOf("="));
+						/*System.out.println("++"+srcstr);*/
+						byte[] bytes=decoder.decodeBuffer(srcstr);
+						addImageToPackage(wordMLPackage, bytes);
+					}
+					else 
+					{
+						String srcstr=str.substring(0, str.length());
+						/*System.out.println("srr是为:"+srcstr);*/
+						byte[] bytes=decoder.decodeBuffer(srcstr);
+						addImageToPackage(wordMLPackage, bytes);
 					}
 				}
-				else if (list.get(i).getType()==3) 
+				//mdp.addStyledParagraphOfText("a", s+"、");
+				String contents=UtilTools.delTagSpan(eq.getQuestion().getContent());
+				contents=UtilTools.delHTMLTag(contents);
+				mdp.addStyledParagraphOfText("a", contents);
+				//找出img标签
+				/*	String imgString="<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>";
+				//匹配正则表达式
+				Pattern p = Pattern.compile(imgString);*/
+				//处理图片前面的文字
+				/*
+				int endtext=contents.indexOf("<img");
+				if (endtext!=0) {
+					String foretext=contents.substring(0, endtext);
+					mdp.addStyledParagraphOfText("a", foretext);
+					System.out.println("wenzi"+foretext);
+				}
+
+				 处理图片
+				Matcher m=p.matcher(contents);
+				if (m.find()) {
+					String strimage=m.group(1).split(",")[1];
+					String text=m.group().split(",")[1];
+					String imgcode=text.substring(0, text.length()-2);
+					byte[] b=decoder.decodeBuffer(imgcode);
+					addImageToPackage(wordMLPackage, b);
+				}
+				String strcontent=HtmlText(contents);
+				String behindtext=strcontent.substring(endtext,strcontent.length());
+				System.out.println("------"+behindtext);
+				mdp.addStyledParagraphOfText("a", behindtext); */
+			}
+			else {
 				{
-					String string=list.get(i).getContent().toString();
-					int beginindex=list.get(i).getContent().toString().indexOf("[");
-					int endindex=list.get(i).getContent().toString().lastIndexOf("]");
-					String str=string.substring(beginindex+1, endindex);
-					String[] strs=str.split(",");
-					mdp.addStyledParagraphOfText("a", s+"、"+list.get(i).getTitle()+"（本题共"+String.valueOf(list.get(i).getScore())+"分)");
-					for (int j = 0; j < strs.length; j++) {
-						mdp.addStyledParagraphOfText("b", "\u25A1"+strs[j]);
+					List<QuestionData> list=ParseQuestion.changetohtml(eq.getQuestion().getContent(), eq.getId());
+					for (int i = 0; i < list.size(); i++) {	//2.单选
+						if (list.get(i).getType()==2) 
+						{
+							/*String string=list.get(i).getContent().toString();
+							int beginindex=list.get(i).getContent().toString().indexOf("[");
+							int endindex=list.get(i).getContent().toString().lastIndexOf("]");
+							String str=string.substring(beginindex+1, endindex);
+							String[] strs=str.split(",");*/
+							String title=UtilTools.getTextFromHtml(list.get(i).getTitle());
+							title=UtilTools.delTagSpan(title);
+							String choiceString=UtilTools.delTagSpan(list.get(i).getContent().toString());
+							choiceString=UtilTools.getTextFromHtml(choiceString);
+							String[] strs=choiceString.split(",");
+							mdp.addStyledParagraphOfText("a",title);
+							//					mdp.addStyledParagraphOfText("a",s+"、"+list.get(i).getTitle()+"（本题共"+String.valueOf(list.get(i).getScore())+"分)");
+							for (int j = 0; j < strs.length; j++) {
+								mdp.addStyledParagraphOfText("b", "\u25CB"+strs[j]);
+							}
+						}
+						//多选
+						else if (list.get(i).getType()==3) 
+						{
+							/*String string=list.get(i).getContent().toString();
+							int beginindex=list.get(i).getContent().toString().indexOf("[");
+							int endindex=list.get(i).getContent().toString().lastIndexOf("]");
+							String str=string.substring(beginindex+1, endindex);
+							String[] strs=str.split(",");*/
+							String title=list.get(i).getTitle();
+							title=UtilTools.delTagSpan(title);
+							title=UtilTools.getTextFromHtml(title);
+							String multichoice=list.get(i).getContent().toString();
+							multichoice=UtilTools.getTextFromHtml(multichoice);
+							String[] strs=multichoice.split(",");
+							mdp.addStyledParagraphOfText("a",title);
+							//					mdp.addStyledParagraphOfText("a", s+"、"+list.get(i).getTitle()+"（本题共"+String.valueOf(list.get(i).getScore())+"分)");
+							for (int j = 0; j < strs.length; j++) {
+								mdp.addStyledParagraphOfText("b", "\u25A1"+strs[j]);
+							}
+						}
+						//4.填空题
+						else if (list.get(i).getType()==4) {
+							String blank=list.get(i).getTitle();
+							blank=UtilTools.delTagSpan(blank);
+							blank=UtilTools.getTextFromHtml(blank);
+							mdp.addStyledParagraphOfText("a", blank);
+							/*mdp.addStyledParagraphOfText("a", s+"、"+list.get(i).getTitle()+" (本题共"+list.get(i).getScore()+"分)");*/
+							mdp.addStyledParagraphOfText("a", "\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f");
+						}
+						//5.多行填空题
+						else if (list.get(i).getType()==5) {
+
+							String multiblank = list.get(i).getTitle();
+							multiblank=UtilTools.delTagSpan(multiblank);
+							multiblank = UtilTools.getTextFromHtml(multiblank);//
+							mdp.addStyledParagraphOfText("a", multiblank);
+
+							/*mdp.addStyledParagraphOfText("a",s+"、"+ss+" (本题共"+list.get(i).getScore()+"分)");*/
+							mdp.addStyledParagraphOfText("a", "\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f");
+						}
 					}
-				}
-				//4.填空题
-				else if (list.get(i).getType()==4) {
-					mdp.addStyledParagraphOfText("a", s+"、"+list.get(i).getTitle()+" (本题共"+list.get(i).getScore()+"分)");
-					mdp.addStyledParagraphOfText("a", "\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f");
-				}
-				//5.多行填空题
-				else if (list.get(i).getType()==5) {
-					mdp.addStyledParagraphOfText("a",s+"、"+list.get(i).getTitle()+" (本题共"+list.get(i).getScore()+"分)");
-					mdp.addStyledParagraphOfText("a", "\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f\u005f");
 				}
 			}
 		}
+		if(null!=eq.getTrain()) {
+			
+
+			//实验名称
+			String trainTitle=eq.getTrain().getName();
+			//实验编号
+			String traincode=eq.getTrain().getCodenum();
+			//环境模板
+			String envmodel=eq.getTrain().getEnvname();
+			//实验内容
+			//			String strTrain=UtilTools.htmlText(eq.getTrain().getConContent());
+			String strTrain=UtilTools.delTagSpan(eq.getTrain().getConContent());
+			strTrain=UtilTools.delHTMLTag(strTrain);
+			/*System.out.println("字符串aa:"+strTrain);*/
+			//分值
+			int score=eq.getTrain().getScore();
+			mdp.addStyledParagraphOfText("a", traincode);
+			mdp.addStyledParagraphOfText("a", trainTitle+"(本题"+score+"分)");
+			mdp.addStyledParagraphOfText("a", "环境模板："+envmodel);
+			mdp.addStyledParagraphOfText("a", strTrain);
+			int index=eq.getTrain().getConContent().indexOf("img");
+			if(index!=-1&&index>0){
+				List<String> listSrc=UtilTools.getImgStrOfSrc(eq.getTrain().getConContent());
+				BASE64Decoder decoder = new BASE64Decoder();
+				for (int i = 0; i < listSrc.size(); i++)
+				{
+					String str=listSrc.get(i).toString().split(",")[1];
+					if (str.indexOf("=")!=-1&&str.indexOf("=")>0) 
+					{
+						String srcstr=str.substring(0, str.lastIndexOf("="));
+						/*System.out.println("++"+srcstr);*/
+						byte[] bytes=decoder.decodeBuffer(srcstr);
+						addImageToPackage(wordMLPackage, bytes);
+					}
+					else 
+					{
+						String srcstr=str.substring(0, str.length());
+						/*System.out.println("srr是为:"+srcstr);*/
+						byte[] bytes=decoder.decodeBuffer(srcstr);
+						addImageToPackage(wordMLPackage, bytes);
+					}
+				}
+			}
+		}
+
 	}  
 	/** 
 	 *  Docx4j拥有一个由字节数组创建图片部件的工具方法, 随后将其添加到给定的包中. 为了能将图片添加 
@@ -179,6 +266,7 @@ public class WordTools {
 		drawing.getAnchorOrInline().add(inline);  
 		return paragraph;  
 	}  
+
 	/*private static void parseImgContent(String contents) throws DocumentException, SAXException, ParserConfigurationException
 	{
 
@@ -202,10 +290,10 @@ public class WordTools {
 		System.out.println("zifuchuanshi-------"+strcontent);
 		String behindtext=strcontent.substring(endtext,strcontent.length());
 		System.out.println("---"+behindtext);
-		
+
 	}*/
 	//过滤字符串中的所有标签,获取字符串中的文本内容
-	public static String HtmlText(String inputString) { 
+	/*public static String HtmlText(String inputString) { 
 		String htmlStr = inputString; //含html标签的字符串 
 		String textStr =""; 
 		java.util.regex.Pattern p_script; 
@@ -229,15 +317,13 @@ public class WordTools {
 			m_html = p_html.matcher(htmlStr); 
 			htmlStr = m_html.replaceAll(""); //过滤html标签 
 
-			/* 空格 ——   */
+			 空格 ——   
 			// p_html = Pattern.compile("\\ ", Pattern.CASE_INSENSITIVE);
 			m_html = p_html.matcher(htmlStr);
-			htmlStr = htmlStr.replaceAll(" "," ");
-
+			htmlStr = htmlStr.replaceAll(" ","");
 			textStr = htmlStr; 
-
-		}catch(Exception e) { 
+		}catch(Exception e){ 
 		} 
 		return textStr;
-	} 
+	} */
 }

@@ -857,7 +857,7 @@ public class UtilTools {
 	    private static final String regEx_style = "<style[^>]*?>[\\s\\S]*?<\\/style>"; // 定义style的正则表达式  
 	    private static final String regEx_html = "<[^>]+>"; // 定义HTML标签的正则表达式  
 //	    private static final String regEx_space = "\\s*|\t|\r|\n";//定义空格回车换行符  
-	    
+	    private static final String regEx_br="<\\/br>";
 	    public static String delHTMLTag(String htmlStr) {  
 	        Pattern p_script = Pattern.compile(regEx_script, Pattern.CASE_INSENSITIVE);  
 	        Matcher m_script = p_script.matcher(htmlStr);  
@@ -884,6 +884,41 @@ public class UtilTools {
 	        return htmlStr;  
 	    }  
 	    
+		public static String delTagSpan(String str){
+			Pattern p_span = Pattern.compile(regEx_br, Pattern.CASE_INSENSITIVE);  
+			Matcher m_span = p_span.matcher(str);  
+			str = m_span.replaceAll(""); // 过滤script标签
+			str.replace("&quot;", "");
+			return str;
+		}
+		
+		//找出img标签中的src的值
+		public static List<String> getImgStrOfSrc(String htmlStr){   
+			//重点在于正则表达式 <img.*src=(.*?)[^>]*?>   
+			//               src=\"?(.*?)(\"|>|\\s+)       
+			/*String regxpForImgTag = "<\\s*img\\s+([^>]*)\\s*>"; // 找出IMG标签
+			String regxpForImaTagSrcAttrib = "src=\"([^\"]+)\""; // 找出IMG标签的SRC属性
+	*/		// String regxp = "<\\s*" + img + "\\s+([^>]*)\\s*>";   红色的 tag 是动态的变（指定标签）
+			String img="";   
+			Pattern p_image;   
+			Matcher m_image;   
+			List<String> pics = new ArrayList<String>();
+			//     String regEx_img = "<img.*src=(.*?)[^>]*?>"; //图片链接地址  
+			String regEx_img = "<img.*src\\s*=\\s*(.*?)[^>]*?>"; 
+			p_image = Pattern.compile(regEx_img,Pattern.CASE_INSENSITIVE); //找出img标签  
+			m_image = p_image.matcher(htmlStr); //匹配img标签
+			
+			while(m_image.find()){   
+				img = img + "," + m_image.group();   
+				// Matcher m  = Pattern.compile("src=\"?(.*?)(\"|>|\\s+)").matcher(img); //匹配src
+				Matcher m  = Pattern.compile("src\\s*=\\s*\"?(.*?)(\"|>|\\s+)").matcher(img);
+				while(m.find()){
+					pics.add(m.group(1));
+				}
+			}
+			return pics;
+		}
+		
 	//动态计算得分情况
 //	public static String getScore(UserQuestion uq,UserQuestionChild uqc,int number)
 //	{
