@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import net.sf.json.JSONObject;
@@ -478,19 +480,21 @@ public class ExamService {
 	
 	/**
 	 * 选择试卷导入的时候更新试卷
+	 * 文件名不更新，试卷类别也不更新
 	 */
-	public void updateCourse(int examId, int texamId) {
+	public void updateCourse(String upath,int examId, int texamId) {
 		
 		Exam texam = get(texamId);
-		Exam exam = get(examId);
-		
-		
+		Exam exam = get(examId);		
 		
 		texam.setCoursecode(exam.getCoursecode());
 		//复制图片
+		// copy试卷图片到upload目录
 		String oldimage = exam.getImgpath();
-//		texam.setImgpath();
-//		course.setName(display_name);
+		String newimage = "upload"+ File.separator+UUID.randomUUID().toString()+oldimage.substring(oldimage.lastIndexOf('.'));
+		UtilTools.copyFile(upath + oldimage, upath+newimage);
+		
+		texam.setImgpath(newimage);
 		texam.setOrg(exam.getOrg());
 		texam.setStarttime(exam.getStarttime());
 		texam.setStarttimedetail(exam.getStarttimedetail());
@@ -498,6 +502,53 @@ public class ExamService {
 		texam.setDescrible(exam.getDescrible());
 		texam.setRank(exam.getRank());
 		
+		// 删除试卷下的章节
+		chapterDao.removeChapterByExamId(texamId);
+		// 删除试卷下的实验
+		examQuestionDao.removeExamQuestionByExamId(texamId);
+		// 删除试卷下的用户对应的实验问题等信息
+		userQuestionDao.removeUserQuestionByExamId(texamId);
+		// 更新所有用户对应的试卷信息
+		userExamDao.updateUserExam(texamId);
+		update(texam);
+		
+		// 更新对应的章节等信息
+		Set<ExamChapter> chapterset = exam.getExamchapters();
+		Iterator it = chapterset.iterator();
+		List<Train> tlist = new ArrayList();
+		while (it.hasNext()) {
+			ExamChapter chapter = (ExamChapter) it.next();
+			
+			ExamChapter tchapter = new ExamChapter();
+			tchapter.setName(chapter.getName());
+			tchapter.setExam(texam);
+			chapterDao.save(tchapter);
+			
+			Set<ExamSequential> sequentialset = chapter.getEsequentials();
+			Iterator it2 = sequentialset.iterator();
+			while (it2.hasNext()) {
+				ExamSequential sequential = (ExamSequential) it2.next();
+				
+				ExamSequential s = new ExamSequential();
+				s.setName(sequential.getName());
+				s.setEchapter(tchapter);
+				sequentialDao.save(s);
+				
+				Set<ExamVertical> verticalset = sequential.getExamVerticals();
+				Iterator it3 = verticalset.iterator();
+				while (it3.hasNext()) {
+					ExamVertical vertical = (ExamVertical) it3.next();
+					
+					
+					
+					Set<ExamQuestion> verticalTrainset = vertical.getExamQuestion();
+					Iterator it4 = verticalTrainset.iterator();
+					while (it4.hasNext()) {
+						ExamQuestion vt = (ExamQuestion) it4.next();
+					}
+				}
+			}
+		}
 	}
 	
 	/**

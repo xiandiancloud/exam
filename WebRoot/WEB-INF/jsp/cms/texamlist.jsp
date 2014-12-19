@@ -32,6 +32,7 @@
 
 <script src="js/jquery-1.11.1.js"></script>
 <script src="js/index.js"></script>
+<script src="js/common.js"></script>
 </head>
 
 <body class="is-signedin index view-dashboard hide-wip lang_zh-cn">
@@ -140,7 +141,7 @@
 										for="starttime">试卷时间</label> <input
 										class="new-course-run" id="starttime" type="text"
 										name="new-course-run" aria-required="true"
-										placeholder="例如：2014_T1" /> <span class="tip">
+										placeholder="例如：2014-01-01" /> <span class="tip">
 											您课程开设的学期。 <strong>注意：这是课程URL的一部分，请勿使用空格或特殊字符，一旦设定不可更改。</strong>
 									</span> <span class="tip tip-error is-hiding"></span></li>
 								</ol>
@@ -264,6 +265,16 @@
 			var starttime = $("#starttime").val();
 			var category = $("#category").val();
 			var rank = $("#rank").val();
+			if (isNull(name) || isNull(org) ||isNull(coursecode) ||isNull(starttime) ||isNull(category))
+			{
+				alert("你还有未填项，请重新填写");
+				return;
+			}
+			if (!isDateYYMMDD(starttime))
+			{
+				alert("不是标准的日期格式");
+				return;
+			}
 			var data = {name:name,org:org,coursecode:coursecode,starttime:starttime,category:category,rank:rank};
 			$.ajax({
 				url:"cms/createexam.action",

@@ -132,11 +132,13 @@ public class CmsUploadExamController extends BaseController {
 	@RequestMapping("/importsexam")
 	public void importsexam(HttpServletRequest request,HttpServletResponse response, int examId,int texamId) {
 		
-		examService.updateCourse(examId, texamId);
 		try
 		{
-		PrintWriter	out = response.getWriter();
-		out.print("{\"success\": \"true\"}");
+			String upath = request.getSession().getServletContext()
+					.getRealPath("/");
+			examService.updateCourse(upath,examId, texamId);
+			PrintWriter	out = response.getWriter();
+			out.print("{\"success\": \"true\"}");
 		}
 		catch(Exception e)
 		{}

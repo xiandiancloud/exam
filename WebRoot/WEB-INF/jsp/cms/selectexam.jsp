@@ -126,6 +126,10 @@ function exportsexam()
 		data:data,
 		success:function(s){
 			var a=eval("("+s+")");	
+			if ("true" == a.success)
+			{
+				alert("导入成功");
+			}
 		}
 	});
 }

@@ -1,10 +1,8 @@
 package com.dhl.lms;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.dhl.bean.QuestionData;
 import com.dhl.cons.CommonConstant;
 import com.dhl.dao.Page;
 import com.dhl.domain.Competion;
@@ -23,13 +20,7 @@ import com.dhl.domain.CompetionExam;
 import com.dhl.domain.ECategory;
 import com.dhl.domain.Exam;
 import com.dhl.domain.ExamCategory;
-import com.dhl.domain.ExamChapter;
-import com.dhl.domain.ExamQuestion;
-import com.dhl.domain.ExamSequential;
-import com.dhl.domain.ExamVertical;
-import com.dhl.domain.Question;
 import com.dhl.domain.TeacherExam;
-import com.dhl.domain.Train;
 import com.dhl.domain.UserCompetion;
 import com.dhl.domain.UserExam;
 import com.dhl.domain.UserExamHistory;
@@ -43,7 +34,6 @@ import com.dhl.service.TeacherExamService;
 import com.dhl.service.UserCompetionService;
 import com.dhl.service.UserExamHistoryService;
 import com.dhl.service.UserExamService;
-import com.dhl.util.ParseQuestion;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
 import com.xiandian.model.User;
@@ -214,63 +204,6 @@ public class LmsExamController extends BaseController {
 	}
 	
 	/**
-	 * 首页显示最近操作的试卷，登陆后显示
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	@RequestMapping("/recentexam")
-	public void recentexam(HttpServletRequest request,
-			HttpServletResponse response) {
-
-		try {
-			PrintWriter out = response.getWriter();
-			User user = getSessionUser(request);
-			if (user == null) {
-				String str = "{'sucess':'fail'}";
-
-				out.write(str);
-			} else {
-
-				UserExam userCourse = userExamService
-						.getUserRecentlyExam(user.getId());
-				if (userCourse == null) {
-					String str = "{'sucess':'fail'}";
-
-					out.write(str);
-				} else {
-					//拿到试卷下的所有问题及实验
-					List<ExamQuestion> vtlist = examquestionService
-							.getAllTrainByExamId(userCourse.getExam()
-									.getId());
-//					List<UserTrain> utlist = utService.getMyFinishCourseTrain(
-//							user.getId(), userCourse.getCourse().getId());
-//					int counts = vtlist == null ? 0 : vtlist.size();
-//					int ncounts = utlist == null ? 0 : utlist.size();
-//					String complete = "0%";
-//					if (utlist != null) {
-//						double c = 0;
-//						if (c != 0) {
-//							c = ncounts * 100 / counts;
-//							complete = Math.floor(c) + "%";
-//						}
-//
-//					}
-//					String str = "{'sucess':'sucess','name':'"
-//							+ userCourse.getExam().getName() + "','img':'"
-//							+ userCourse.getExam().getImgpath()
-//							+ "','courseId':'" + userCourse.getExam().getId()
-//							+ "','complete':'" + complete + "'}";
-//
-//					out.write(str);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	/**
 	 * 检测竞赛是否已经开始
 	 */
 	@RequestMapping("/isstartcompetion")
@@ -315,7 +248,6 @@ public class LmsExamController extends BaseController {
 		ModelAndView view = new ModelAndView();
 		if (s != null)
 		s=UtilTools.converStr(s);
-		//examService.getAllExamnotcompetion(currentpage, CommonConstant.EXAMLIST_PAGE_SIZE);
 		Page page = examCategoryService.searchExam(c, r, s, currentpage, CommonConstant.EXAMLIST_PAGE_SIZE);
 		List<ExamCategory> courses = page.getResult();
 		int totalpage = (int) page.getTotalPageCount();
@@ -370,10 +302,6 @@ public class LmsExamController extends BaseController {
 	@RequestMapping("/entercompetion")
 	public ModelAndView entercompetion(HttpServletRequest request, int competionId) {
 		ModelAndView view = new ModelAndView();
-		
-		User user = getSessionUser(request);
-		//
-		
 		view.setViewName("/lms/oncompetion");
 		return view;
 	}

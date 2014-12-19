@@ -60,6 +60,17 @@ var regu = /^[-]{0,1}[0-9]{1,}$/;
 return regu.test(str);
 }
 
+function isDateYYMMDD(dateString){
+	  if(dateString.trim()=="")return true;
+	  //年月日时分秒正则表达式
+	  var r = dateString.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);     
+	  if(r==null){
+	   return false;
+	  }
+	 return true;
+	  
+	} 
+
 /**   
 判断输入框中输入的日期格式是否为年月日时分秒 即 yyyy-mm-dd hh:mi:ss 
 */  
