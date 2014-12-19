@@ -672,6 +672,11 @@
  			var examId = "${exam.id}";
  			var competionId = "${competionId}";
  			var useranswer = $(element).val();
+ 			if (isNull(useranswer))
+			{
+ 				return;
+			}
+ 			
  			useranswer = encodeURIComponent(useranswer);
 			var data = {competionId:competionId,examId:examId,questionId:questionId,number:number,useranswer:useranswer};
 			$.ajax({
@@ -704,6 +709,10 @@
 				return;
 			}
 			var useranswer = UE.getEditor(element).getContent();//$("#"+element).contents().find("#editor").html();
+			if (isNull(useranswer))
+			{
+ 				return;
+			}
 			useranswer = encodeURIComponent(useranswer);
 			//var useranswer = replaceTextarea1($(element).val());
  			var examId = "${exam.id}";

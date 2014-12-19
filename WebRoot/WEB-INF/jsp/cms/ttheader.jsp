@@ -89,6 +89,9 @@
                   <li class="nav-item nav-course-tools-export">
                     <a href="cms/totexportexamword.action?examId=${examId}">导出Word</a>
                   </li>
+                  <li class="nav-item nav-course-tools-export">
+                    <a href="cms/totselectexam.action?examId=${examId}">选择试卷导入</a>
+                  </li>
                 </ul>
               </div>
             </div>

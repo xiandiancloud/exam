@@ -109,6 +109,38 @@ public class CmsUploadExamController extends BaseController {
 		return view;
 	}
 
+	/**
+	 * 跳转到老师选择试卷页面
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/totselectexam")
+	public ModelAndView totselectexam(HttpServletRequest request, int examId) {
+		ModelAndView view = new ModelAndView();
+		view.addObject("examId", examId);
+		Exam exam = examService.get(examId);
+		
+		List<Exam> examlist = examService.getAllExam();
+		view.addObject("examlist", examlist);
+		
+		view.addObject("exam", exam);
+		view.setViewName("/cms/selectexam");
+		return view;
+	}
+	
+	@RequestMapping("/importsexam")
+	public void importsexam(HttpServletRequest request,HttpServletResponse response, int examId,int texamId) {
+		
+		examService.updateCourse(examId, texamId);
+		try
+		{
+		PrintWriter	out = response.getWriter();
+		out.print("{\"success\": \"true\"}");
+		}
+		catch(Exception e)
+		{}
+	}
 	
 	/**
 	 * 导入课程

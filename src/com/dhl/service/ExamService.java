@@ -326,9 +326,15 @@ public class ExamService {
 	public Page getAllExamnotcompetion(int pageNo, int pageSize) {
 		return examDao.getAllExamnotcompetion(pageNo, pageSize);
 	}
+	
+	/**
+	 * 得到所有发布的普通试卷
+	 * @return
+	 */
 	public List<Exam> getAllExam(){
 		return examDao.getAllExam();
 	}
+	
 	/**
 	 * 得到所有的日志记录
 	 * @return
@@ -468,6 +474,30 @@ public class ExamService {
 			exam.setName(name);
 			update(exam);
 		}
+	}
+	
+	/**
+	 * 选择试卷导入的时候更新试卷
+	 */
+	public void updateCourse(int examId, int texamId) {
+		
+		Exam texam = get(texamId);
+		Exam exam = get(examId);
+		
+		
+		
+		texam.setCoursecode(exam.getCoursecode());
+		//复制图片
+		String oldimage = exam.getImgpath();
+//		texam.setImgpath();
+//		course.setName(display_name);
+		texam.setOrg(exam.getOrg());
+		texam.setStarttime(exam.getStarttime());
+		texam.setStarttimedetail(exam.getStarttimedetail());
+		texam.setEndtimedetail(exam.getEndtimedetail());
+		texam.setDescrible(exam.getDescrible());
+		texam.setRank(exam.getRank());
+		
 	}
 	
 	/**

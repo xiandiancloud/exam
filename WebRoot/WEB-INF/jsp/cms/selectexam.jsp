@@ -11,7 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <base href="<%=basePath%>">
     
     <title>
-        试卷导入
+        选择试卷导入
     </title>
     
 	<meta http-equiv="pragma" content="no-cache">
@@ -28,16 +28,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link href="tcss/codemirror.css" rel="stylesheet" type="text/css" />
 	<link href="tcss/jquery-ui-1.8.22.custom.css" rel="stylesheet" type="text/css" />
 	<link href="tcss/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
-	<link href="tcss//style.css" rel="stylesheet" type="text/css" />
+
 	<link href="tcss/content.min.css" rel="stylesheet" type="text/css" />
 	<link href="tcss/tinymce-studio-content.css" rel="stylesheet" type="text/css" />
     <link href="tcss/skin.min.css" rel="stylesheet" type="text/css" />
     <link href="tcss/style-app.css" rel="stylesheet" type="text/css" />
     <link href="tcss/style-app-extend1.css" rel="stylesheet" type="text/css" />
     <link href="tcss/style-xmodule.css" rel="stylesheet" type="text/css" />
-
-<link href="css/fineuploader.css" rel="stylesheet" type="text/css" />
-
+	<link href="tcss//style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 <script type="text/javascript" src="js/jquery-ui.js"></script> 
@@ -53,7 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <header class="mast has-subtitle">
     <h1 class="page-header">
       <small class="subtitle">工具</small>
-      <span class="sr">&gt; </span>试卷导入
+      <span class="sr">&gt; </span>选择试卷导入
     </h1>
   </header>
 </div>
@@ -61,22 +59,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <section class="content">
     <article class="content-primary" role="main">
       <div class="introduction">
-          <p>在继续前请确保你想要导入一门试卷。当前试卷的所有内容会被导入的内容所取代。<strong> 试卷导入无法撤销 </strong>。我们建议先将当前试卷导出，这样你可以有个备份。</p>
-          <p>你将要导入的试卷必须为.tar.gz格式的文件( 即一个采用GNU zip压缩后的.tar文件)。这个.tar.gz文件必须包含一个course.xml文件。另外也可能包含其他文件。</p>
-          <p>我们建议在导入操作结束前你都不要对试卷做任何更改调整。</p>
+          <p>在继续前请确保你想要导入一份试卷。当前试卷的所有内容会被导入的内容所取代。<strong> 选择试卷导入无法撤销 </strong>。我们建议先将当前试卷导出，这样你可以有个备份。</p>
       </div>
       <form id="fileupload" method="post" enctype="multipart/form-data" class="import-form">
 
-        <h2 class="title">选择一个.tar.gz 文件以覆盖当前试卷内容</h2>
+        <h2 class="title">选择一份试卷</h2>
 
         <p class="error-block"></p>
 
-		
-        <!-- <a href="javascript:void(0);" class="action action-choose-file choose-file-button">
+		<select class="dhlselect" id="selectexam">
+			<c:forEach var="exam" items="${examlist}">
+				<option value="${exam.id}">${exam.name}</option>
+			</c:forEach>
+		</select>
+        <a href="javascript:void(0);" class="action action-choose-file choose-file-button" onclick="exportsexam();">
          <i class="icon-upload"></i>
-          <span class="copy">选择要导入的文件</span>
-        </a> -->
-		<div id="bootstrapped-fine-uploader"></div>
+          <span class="copy">导入试卷</span>
+        </a>
       </form>
     </article>
 
@@ -114,43 +113,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <script>
 $(document).ready(function(){
-	createUploader();
 });
-function createUploader() { 
-	var uploader = new qq.FineUploader({ 
-	element: document.getElementById('bootstrapped-fine-uploader'), 
-	request: { 
-	endpoint: 'cms/importExam.action?examId=${examId}'
-	}, 
-	text: { 
-	uploadButton: '<button class="btn btn-warning"><i class="icon-upload"></i>选择要导入的文件</button>' 
-	}, 
-	validation:{
-		allowedExtensions: ['tar.gz']
-	},
-	template: 
-	'<div class="qq-uploader">' + 
-	'<pre class="qq-upload-drop-area"><span>{dragZoneText}</span></pre>' + 
-	'<div class="qq-upload-button action action-choose-file choose-file-button" style="width: auto;">选择要导入的文件</div>' + 
-	'<span class="qq-drop-processing"><span>{dropProcessingText}</span>'+ 
-	'<span class="qq-drop-processing-spinner"></span></span>' + 
-	'<ul class="qq-upload-list" style="margin-top: 10px; text-align: center;display:none"></ul>' + 
-	'</div>', 
-	classes: { 
-	success: 'alert alert-success', 
-	fail: 'alert alert-error' 
-	}, 
-	callbacks:{
-		onComplete: function(id,  fileName,  responseJSON){		
-			if (responseJSON.success == "true")
-			{
-				alert("导入成功");
-			}
-		}
-	},
-	debug: true 
-	}); 
-	}
 
+function exportsexam()
+{
+	var examId = $("#selectexam").val();
+	var texamId = "${exam.id}";
+	var data = {examId:examId,texamId:texamId};
+	$.ajax({
+		url:"cms/importsexam.action",
+		type:"post",
+		data:data,
+		success:function(s){
+			var a=eval("("+s+")");	
+		}
+	});
+}
 </script>
 </html>
