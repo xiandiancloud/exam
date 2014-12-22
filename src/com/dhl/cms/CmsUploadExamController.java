@@ -61,6 +61,86 @@ public class CmsUploadExamController extends BaseController {
 	private TrainExtDao trainExtDao;
 	
 	/**
+	 * 上传更新课程的图片
+	 * 
+	 * @param request
+	 * @param response
+	 * @param file
+	 */
+	@RequestMapping("/importCourseimg")
+	public void importCourseimg(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value = "qqfile", required = true) MultipartFile file) {
+		response.setContentType("text/html");
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+		} catch (IOException e1) {
+			// out.print("{\"success\": \"false\"}");
+		}
+		try {
+			if (!file.isEmpty()) {
+				byte[] bytes = file.getBytes();
+				String upath = request.getSession().getServletContext()
+						.getRealPath("/");
+				String uuid = UUID.randomUUID().toString();
+				String path = "upload/" + uuid + file.getOriginalFilename();
+				FileOutputStream fos = new FileOutputStream(upath + path);
+				fos.write(bytes);
+				fos.close();
+				out.print("{\"success\": \"true\",\"imgpath\":\"" + path
+						+ "\"}");
+				// out.write("<script>parent.callback('sucess')</script>");
+			} else {
+				// out.write("<script>parent.callback('fail')</script>");
+				out.print("{\"success\": \"false\"}");
+			}
+
+		} catch (Exception e) {
+			out.print("{\"success\": \"false\"}");
+		}
+	}
+
+	/**
+	 * 上传实验自动验证脚本
+	 * @param request
+	 * @param response
+	 * @param file
+	 */
+	@RequestMapping("/uploadtrain")
+	public void uploadtrain(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value = "qqfile", required = true) MultipartFile file) {
+		response.setContentType("text/html");
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+		} catch (IOException e1) {
+			// out.print("{\"success\": \"false\"}");
+		}
+		try {
+			if (!file.isEmpty()) {
+				byte[] bytes = file.getBytes();
+				String upath = request.getSession().getServletContext()
+						.getRealPath("/");
+				String uuid = UUID.randomUUID().toString();
+				String path = "shell/" + uuid + file.getOriginalFilename();
+				FileOutputStream fos = new FileOutputStream(upath + path);
+				fos.write(bytes);
+				fos.close();
+				out.print("{\"success\": \"true\",\"shell\":\"" + path + "\"}");
+				// out.write("<script>parent.callback('sucess')</script>");
+			} else {
+				// out.write("<script>parent.callback('fail')</script>");
+				out.print("{\"success\": \"false\"}");
+			}
+
+		} catch (Exception e) {
+			out.print("{\"success\": \"false\"}");
+		}
+	}
+	
+	/**
 	 * 跳转到老师试卷导出页面
 	 * 
 	 * @param request
@@ -136,12 +216,14 @@ public class CmsUploadExamController extends BaseController {
 		{
 			String upath = request.getSession().getServletContext()
 					.getRealPath("/");
-			examService.updateCourse(upath,examId, texamId);
+			examService.updateExam(upath, examId, texamId);
 			PrintWriter	out = response.getWriter();
 			out.print("{\"success\": \"true\"}");
 		}
 		catch(Exception e)
-		{}
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	/**

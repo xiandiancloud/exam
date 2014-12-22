@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -183,18 +185,10 @@ public class Test {
 //	       int M = s;
 //	       System.out.println("时间是："+N+"小时 "+K+"分钟 "+M+"秒"); 
 	      
-		int[] array = {0,1,2,3,4,5,6,7,8,9};
-		Random rand = new Random();
-		for (int i = 10; i > 1; i--) {
-		    int index = rand.nextInt(i);
-		    int tmp = array[index];
-		    array[index] = array[i - 1];
-		    array[i - 1] = tmp;
-		}
-		int result = 0;
-		for(int i = 0; i < 6; i++)
-		    result = result * 10 + array[i];
-		System.out.println(result);
+		Map<String, Object> metadata = new HashMap<String, Object>();
+		metadata.put("isDir", "false");
+		metadata.put("path", "sssss");
+		System.out.println(metadata.get("path"));
 		
 //		String s ="shell\\8958772f-13bd-4eeb-a84a-12f5a63c1b4eunit3.4.1.sh";
 //		//把s中的反斜杠\ 替换为\\

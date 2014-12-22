@@ -482,7 +482,7 @@ public class ExamService {
 	 * 选择试卷导入的时候更新试卷
 	 * 文件名不更新，试卷类别也不更新
 	 */
-	public void updateCourse(String upath,int examId, int texamId) {
+	public void updateExam(String upath,int examId, int texamId) {
 		
 		Exam texam = get(texamId);
 		Exam exam = get(examId);		
@@ -539,12 +539,69 @@ public class ExamService {
 				while (it3.hasNext()) {
 					ExamVertical vertical = (ExamVertical) it3.next();
 					
-					
+					ExamVertical v = new ExamVertical();
+					v.setName(vertical.getName());
+					v.setEsequential(s);
+					verticalDao.save(v);
 					
 					Set<ExamQuestion> verticalTrainset = vertical.getExamQuestion();
 					Iterator it4 = verticalTrainset.iterator();
 					while (it4.hasNext()) {
 						ExamQuestion vt = (ExamQuestion) it4.next();
+						
+						Question question = vt.getQuestion();
+						if (question != null)
+						{
+							Question q = new Question();
+							q.setContent(question.getContent());
+							q.setLowcontent(question.getLowcontent());
+							q.setType(question.getType());
+							questionDao.save(q);
+							
+							ExamQuestion newvt = new ExamQuestion();
+							newvt.setExam(texam);
+							newvt.setExamVertical(v);
+							newvt.setQuestion(q);
+							examQuestionDao.save(newvt);
+						}
+						else
+						{
+							Train vtrain = vt.getTrain();
+							
+							Train train = new Train();
+							train.setCodenum(vtrain.getCodenum());
+							train.setConAnswer(vtrain.getConAnswer());
+							train.setConContent(vtrain.getConContent());
+							train.setEnvname(vtrain.getEnvname());
+							train.setName(vtrain.getName());
+							train.setScore(vtrain.getScore());
+							train.setIscreate(vtrain.getIscreate());
+							trainDao.save(train);
+							
+							ExamQuestion newvt = new ExamQuestion();
+							newvt.setExam(texam);
+							newvt.setExamVertical(v);
+							newvt.setTrain(train);
+							examQuestionDao.save(newvt);
+							
+							
+							List<TrainExt> telist = trainExtDao.getTrainExtList(vtrain.getId());
+							for (TrainExt ext:telist)
+							{
+								String endshell = UUID.randomUUID().toString() + ".sh";
+								UtilTools.copyFile(upath+File.separator +ext.getShellpath(), upath + File.separator + "shell"
+										+ File.separator + endshell);
+	
+								TrainExt te = new TrainExt();
+								te.setTrainId(train.getId());
+								te.setShellpath("shell/"+ endshell);
+								te.setShellname(ext.getShellname());
+								te.setShellparameter(ext.getShellparameter());
+								te.setDevinfo(ext.getDevinfo());
+								te.setScoretag(ext.getScoretag());
+								trainExtDao.save(te);
+							}
+						}
 					}
 				}
 			}
