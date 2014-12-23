@@ -32,11 +32,17 @@ public class ExamSequential extends BaseDomain {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "echapterId")
 	private ExamChapter echapter;
-
+	private int sortnumber;
 	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "esequential")
 	@OrderBy(value = "id ASC")
 	private Set<ExamVertical> examVerticals;
+	public int getSortnumber() {
+		return sortnumber;
+	}
 
+	public void setSortnumber(int sortnumber) {
+		this.sortnumber = sortnumber;
+	}
 	public Set<ExamVertical> getExamVerticals() {
 		return examVerticals;
 	}

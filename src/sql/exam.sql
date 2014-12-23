@@ -111,7 +111,7 @@ drop table if exists t_competion_category;
 create table t_competion_category
 (
    id                  int not null AUTO_INCREMENT,
-   competionId              int(10) not null,
+   competionId         int(10) not null,
    ecategoryId         int(10) not null,
    primary key (id),
    CONSTRAINT receivet_competion_category_ibfk_1 FOREIGN KEY (competionId) REFERENCES t_competion (id) ON DELETE CASCADE,
@@ -125,6 +125,7 @@ create table t_echapter
    id                  int not null AUTO_INCREMENT,
    name                varchar(255) not null,   
    examId              int(10) not null,
+   sortnumber          int(10) default 10000,
    primary key (id),  
    CONSTRAINT receivet_echapter_ibfk_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -136,6 +137,7 @@ create table t_esequential
    id                  int not null AUTO_INCREMENT,
    name                varchar(255) not null,   
    echapterId          int(10) not null,
+   sortnumber          int(10) default 10000,
    primary key (id),   
    CONSTRAINT receivet_esequential_ibfk_1 FOREIGN KEY (echapterId) REFERENCES t_echapter (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -147,6 +149,7 @@ create table t_evertical
    id                  int not null AUTO_INCREMENT,
    name                varchar(255) not null,   
    esequentialId       int(10) not null,
+   sortnumber          int(10) default 10000,
    primary key (id),
    CONSTRAINT receivet_evertical_ibfk_1 FOREIGN KEY (esequentialId) REFERENCES t_esequential (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

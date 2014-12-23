@@ -24,13 +24,11 @@
 <link type="text/css" rel="stylesheet" href="tcss/font-awesome.css">
 <link type="text/css" rel="stylesheet" href="tcss/number-polyfill.css">
 <link type="text/css" rel="stylesheet" href="tcss/codemirror.css">
-<link type="text/css" rel="stylesheet"
-	href="tcss/jquery-ui-1.8.22.custom.css">
+<link type="text/css" rel="stylesheet" href="tcss/jquery-ui-1.8.22.custom.css">
 <link type="text/css" rel="stylesheet" href="tcss/jquery.qtip.min.css">
 <link type="text/css" rel="stylesheet" href="tcss/style.css">
 <link type="text/css" rel="stylesheet" href="tcss/content.min.css">
-<link type="text/css" rel="stylesheet"
-	href="tcss/tinymce-studio-content.css">
+<link type="text/css" rel="stylesheet" href="tcss/tinymce-studio-content.css">
 <link type="text/css" rel="stylesheet" href="tcss/skin.min.css">
 <link type="text/css" rel="stylesheet" href="tcss/style-app.css">
 <link type="text/css" rel="stylesheet" href="tcss/style-app-extend1.css">

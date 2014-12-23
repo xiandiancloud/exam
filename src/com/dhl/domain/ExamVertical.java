@@ -33,7 +33,7 @@ public class ExamVertical extends BaseDomain {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "esequentialId")
 	private ExamSequential esequential;
-
+	private int sortnumber;
 //	@Transient
 //	private List<Train> trainList;
 
@@ -41,7 +41,13 @@ public class ExamVertical extends BaseDomain {
 	@OrderBy(value="id ASC")
 	private Set<ExamQuestion> examQuestion;
 
+	public int getSortnumber() {
+		return sortnumber;
+	}
 
+	public void setSortnumber(int sortnumber) {
+		this.sortnumber = sortnumber;
+	}
 	public Set<ExamQuestion> getExamQuestion() {
 		return examQuestion;
 	}
