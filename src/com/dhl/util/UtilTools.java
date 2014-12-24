@@ -183,9 +183,9 @@ public class UtilTools {
 
 	public static String replaceBackett(String str)
 	{
+		str = str.replaceAll("\\\\", "\\\\\\\\");
 		str = str.replaceAll("\'","\\\\\'");  
 		str = str.replaceAll("\"","\\\\\"");  
-		str = str.replaceAll("\\\\", "\\\\\\\\");
 		return str;
 	}
 //	public static String[] createServer(String serverName) {
