@@ -97,6 +97,18 @@ public class ExamService {
 	private ExamQuestionDao examquestionDao;
 	@Autowired
 	private LogDao logDao;
+	
+	public void sortChapter(String charpters) {
+		String[] strs = charpters.split(",");
+		int len = strs.length;
+		for (int i=0;i<len;i++)
+		{
+			ExamChapter ec = chapterDao.get(Integer.parseInt(strs[i]));
+			ec.setSortnumber(i+1);
+			chapterDao.update(ec);
+		}
+	}
+	
 	/**
 	 * 备份实训
 	 * @param trainstr
@@ -184,16 +196,6 @@ public class ExamService {
 	public ExamCategory getExamCategoryByExamId(int examId) {
 		return examCategoryDao.getExamCategoryByExamId(examId);
 	}
-
-	/**
-	 * 根据名字查试卷
-	 * 
-	 * @param name
-	 * @return
-	 */
-//	public List<Exam> getCourseByName(String name) {
-//		return examDao.getCourseByName(name);
-//	}
 
 	/**
 	 * 得到推荐试卷

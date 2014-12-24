@@ -87,7 +87,7 @@ public class Exam extends BaseDomain {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "exam")
-	@OrderBy(value = "id ASC")
+	@OrderBy(value = "sortnumber ASC,id ASC")
 	private Set<ExamChapter> examchapters;
 
 	// @ManyToOne(fetch = FetchType.EAGER)

@@ -33,7 +33,7 @@ public class ExamChapter extends BaseDomain {
 	private Exam exam;
 	private int sortnumber;
 	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "echapter")
-	@OrderBy(value = "id ASC")
+	@OrderBy(value = "sortnumber ASC,id ASC")
 	private Set<ExamSequential> esequentials;
 	public int getSortnumber() {
 		return sortnumber;

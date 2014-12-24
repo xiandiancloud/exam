@@ -91,6 +91,25 @@ public class ExamController extends BaseController {
 	@Autowired
 	private RestTemplate restTemplate;
 	
+	/**
+	 * 老师更新试卷章节次序
+	 * 
+	 * @param request
+	 * @param name
+	 * @return
+	 */
+	@RequestMapping("/sortChapter")
+	public void sortChapter(HttpServletRequest request,
+			HttpServletResponse response,String charpters) {
+		try {
+			PrintWriter out = response.getWriter();
+			examService.sortChapter(charpters);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	//判断是否是竞赛试卷，并且试卷锁定
 	private boolean examPermission(Exam exam)
@@ -843,35 +862,6 @@ public class ExamController extends BaseController {
 	{
 		return ParseQuestion.changetohtml(content,id);
 	}
-	
-//	/**
-//	 * 复制实训系统的课程
-//	 * @param request
-//	 * @param response
-//	 */
-//	@RequestMapping("/copycourse")
-//	public void copycourse(HttpServletRequest request,
-//			HttpServletResponse response,int courseId,int examId,int everticalId) {
-//
-//		try {
-//			PrintWriter out = response.getWriter();
-//			
-//			RestTrain rs = new RestTrain();
-//			rs.setCourseId(courseId);
-//			HttpEntity<RestTrain> entity = new HttpEntity<RestTrain>(rs);
-//
-//			String resturl = UtilTools.getConfig().getProperty("REST_URL_COURSE");
-//			ResponseEntity<RestTrain> res = restTemplate.postForEntity(resturl,
-//					entity, RestTrain.class);
-//			RestTrain e = res.getBody();
-//			User user = getSessionUser(request);
-//			courseService.copyCourse(e.getCourse(),user.getId(),examId,everticalId);
-//			String str = "{'sucess':'sucess'}";
-//			out.write(str);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
 	
 	/**
 	 * 复制实训系统的实验

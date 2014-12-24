@@ -158,7 +158,7 @@
     								</ol>									
 									<!-- 章节 -->
 									<c:forEach var="chapter" items="${exam.examchapters}">
-										<ol class="list-sections is-sortable">
+										<ol class="list-sections is-sortable _Section" id="${chapter.id}">
 											<li class="outline-item outline-section has-warnings is-draggable is-collapsible ">
 												<div class="section-header">
 													<h3 title="Collapse/Expand this section"
