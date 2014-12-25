@@ -78,8 +78,8 @@ $(document).ready(function() {
 			
 			
 			
-			$( ".subsection-content" ).sortable({
-				connectWith: ".subsection-content",
+			$( ".subsection-content1" ).sortable({
+				connectWith: ".subsection-content1",
 				handle: ".unit-drag-handle",
 				update:function(){
 					 var Ch="";

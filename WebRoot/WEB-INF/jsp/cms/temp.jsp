@@ -235,7 +235,7 @@
 																	</div>
 																</div>
 
-																<div class="outline-content subsection-content">
+																<div class="outline-content subsection-content1">
 																	<!-- 单元  -->
 																	<c:forEach var="vertical" items="${sequential.examVerticals}">
 																		<ol class="list-units is-sortable _unit" id="${vertical.id}" >
@@ -297,7 +297,7 @@
         															<input type="button" value="取消" class="new-subsection-name-cancel" />
       															</form>
     														</div>
-															<div class="outline-content subsection-content">
+															<div class="outline-content subsection-content1">
 																<div class="add-unit add-item">
 																	<a href="#" class="button button-new" data-category="vertical" data-parent="" data-default-name="单元" title="Click to add a new 单元"> 
 																		<i class="icon icon-plus"></i>新建单元
