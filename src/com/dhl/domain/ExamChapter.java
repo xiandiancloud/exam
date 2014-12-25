@@ -31,7 +31,7 @@ public class ExamChapter extends BaseDomain {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "examId")
 	private Exam exam;
-	private int sortnumber;
+	private int sortnumber = 10000;
 	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "echapter")
 	@OrderBy(value = "sortnumber ASC,id ASC")
 	private Set<ExamSequential> esequentials;

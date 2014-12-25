@@ -24,7 +24,9 @@ $(document).ready(function() {
 		                new_order.push(this.id); 
 		             }); 
 		             var charpters = new_order.join(','); 
+		             //var examId="${exam.id}"
 		             var data={charpters:charpters};
+		            
 		             $.ajax({
 		 				url : "cms/sortChapter.action",
 		 				type : "post",
@@ -40,17 +42,33 @@ $(document).ready(function() {
 				connectWith: ".section-content",
 				handle: ".subsection-drag-handle",
 				update:function(){
+				 var Ch="";
 			     var a=this.parentNode;
-			     var b=a.parentNode;			     
-			     var section_id=b.id;
+			     var b=a.parentNode;
+			     var c=b.parentNode;
+			     var d=$(c).children("._Section");
+			     for(var i=0;i<d.length;i++){
+			     var charpter=d[i].id;
+			     var e=d[i].childNodes;
+			     var f=e[1].childNodes;
+			      
+			     var h=$(f[3]).children("._Subsection");		    
 				 var new_order = []; 
-				  $(this).children("._Subsection").each(function() { 
-		                new_order.push(this.id); 
-		             }); 
-		             var newid = new_order.join(','); 
-		             var data={section_id:section_id,newid:newid};
+				 for(var y=0;y<h.length;y++) {  
+					 var j=h[y].id;					  
+		               new_order.push(j); 
+		             }; 
+		             var sequential = new_order.join(','); 
+		             var Cha="{'charpter':'"+charpter+"','sequential':'"+sequential+"'}";
+		              Ch+=Cha+",";
+		             }
+			     Ch = Ch.substring(0,Ch.length -1);		    
+			    var charpters='['+Ch+']';
+			    var examId = "${exam.id}";
+			    alert(charpters);
+			    var data={examId:examId,charpters:charpters};
 		             $.ajax({
-			 				url : "",
+			 				url : "cms/sortSequential.action",
 			 				type : "post",
 			 				data : data,
 			 				success : function(s) {
@@ -65,28 +83,47 @@ $(document).ready(function() {
 				connectWith: ".subsection-content",
 				handle: ".unit-drag-handle",
 				update:function(){
-					var a=this.parentNode;
-					var b=a.parentNode;
-					var subssection_id=b.id;
-					var c=b.parentNode;
-					var d=c.parentNode;
-					var e=d.parentNode;
-					var section_id=e.id;
-					var new_order = []; 
-					 $(this).children("._unit").each(function() { 
-			                new_order.push(this.id); 
-			             }); 
-					 var newid = new_order.join(','); 
-					 var data={section_id:section_id,subssection_id:subssection_id,newid:newid};
-		             $.ajax({
-			 				url : "",
-			 				type : "post",
-			 				data : data,
-			 				success : function(s) {
-			 				}				
-			 			});  
-				}
-			});
+					 var Ch="";
+				     var a=this.parentNode;
+				     var b=a.parentNode;
+				     var c=b.parentNode;
+				     var k=c.parentNode;
+				     var l=k.parentNode;
+				     var m=l.parentNode;
+				     var d=$(m).children("._Section");
+				     for(var i=0;i<d.length;i++){
+				     var charpter=d[i].id;
+				     var e=d[i].childNodes;
+				     var f=e[1].childNodes;				      
+				     var h=$(f[3]).children("._Subsection");		
+				     for(var z=0;z<h.length;z++){
+				    var sequential=h[z].id;
+					 
+				    //未修改
+				    var new_order = []; 
+					 for(var y=0;y<h.length;y++) {  
+						 var j=h[y].id;					  
+			               new_order.push(j); 
+			             }; 
+			             
+			             var sequential = new_order.join(','); 
+			             var Cha={charpter:charpter,sequential:sequential};
+			              Ch+=Cha+",";
+				     }
+			             }
+				     Ch = Ch.substring(0,Ch.length -1);		    
+				    var charpters='['+Ch+']';
+				    var examId = "${exam.id}";
+				    var data={examId:examId,charpters:charpters};
+			             $.ajax({
+				 				url : "",
+				 				type : "post",
+				 				data : data,
+				 				success : function(s) {
+				 				}				
+				 			});      	             
+					}
+				});
 		
 	})();
 });

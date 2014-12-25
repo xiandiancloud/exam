@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.dom4j.Document;
@@ -107,6 +108,36 @@ public class ExamService {
 			ec.setSortnumber(i+1);
 			chapterDao.update(ec);
 		}
+	}
+	
+	public void sortSequential(String charpters) {
+		
+		JSONArray array = JSONArray.fromObject(charpters); 
+		System.out.println(array);
+		for (int i = 0; i < array.size(); i++) {
+           String a = array.getJSONObject(i).getString("charpter");
+           String b = array.getJSONObject(i).getString("sequential");
+//           System.out.println(a+"  &    "+b);
+           ExamChapter ec = chapterDao.get(Integer.parseInt(a));
+           if (!"".equals(b))
+           {
+	           String[] strs = b.split(",");
+	           int len = strs.length;
+	           for (int j=0;j<len;j++)
+		   	   {
+//	        	   System.out.println(strs[j]);
+	        	   
+	        	   ExamSequential es = sequentialDao.get(Integer.parseInt(strs[j]));
+	        	   es.setEchapter(ec);
+	        	   es.setSortnumber(j+1);
+	        	   sequentialDao.update(es);
+	//	   			ExamChapter ec = chapterDao.get(Integer.parseInt(strs[i]));
+	//	   			ec.setSortnumber(i+1);
+	//	   			chapterDao.update(ec);
+		   	   }
+           }
+       }
+		
 	}
 	
 	/**

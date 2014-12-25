@@ -33,7 +33,7 @@ public class ExamVertical extends BaseDomain {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "esequentialId")
 	private ExamSequential esequential;
-	private int sortnumber;
+	private int sortnumber = 10000;
 //	@Transient
 //	private List<Train> trainList;
 

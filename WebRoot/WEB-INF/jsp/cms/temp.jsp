@@ -194,10 +194,10 @@
 													</div>
 												</div>
 
-												<div class="outline-content section-content">
+												<div class="outline-content section-content" style="min-height:20px">
 													<!-- 小节 -->
 													<c:forEach var="sequential" items="${chapter.esequentials}">
-														<ol class="list-subsections is-sortable">
+														<ol class="list-subsections is-sortable _Subsection" id="${sequential.id}">
 															<li class="outline-item outline-subsection has-warnings is-draggable is-collapsible is-collapsed">
 																<div class="subsection-header">
 																	<h3 title="Collapse/Expand this subsection"
@@ -308,7 +308,7 @@
 													</ol>
 													<!-- 小节结束 -->
 												</div>
-												<div class="outline-content section-content">
+												<div class="outline-content">
 													<div class="add-subsection add-item">
 														<a title="Click to add a new Subsection" data-default-name="Subsection" data-parent="" data-category="sequential" class="button button-new button-new-subsection"> 
 															<i class="icon icon-plus"></i>添加新的小节
