@@ -111,13 +111,10 @@ public class ExamService {
 	}
 	
 	public void sortSequential(String charpters) {
-		
 		JSONArray array = JSONArray.fromObject(charpters); 
-		System.out.println(array);
 		for (int i = 0; i < array.size(); i++) {
            String a = array.getJSONObject(i).getString("charpter");
            String b = array.getJSONObject(i).getString("sequential");
-//           System.out.println(a+"  &    "+b);
            ExamChapter ec = chapterDao.get(Integer.parseInt(a));
            if (!"".equals(b))
            {
@@ -125,21 +122,40 @@ public class ExamService {
 	           int len = strs.length;
 	           for (int j=0;j<len;j++)
 		   	   {
-//	        	   System.out.println(strs[j]);
-	        	   
 	        	   ExamSequential es = sequentialDao.get(Integer.parseInt(strs[j]));
 	        	   es.setEchapter(ec);
 	        	   es.setSortnumber(j+1);
 	        	   sequentialDao.update(es);
-	//	   			ExamChapter ec = chapterDao.get(Integer.parseInt(strs[i]));
-	//	   			ec.setSortnumber(i+1);
-	//	   			chapterDao.update(ec);
 		   	   }
            }
        }
-		
 	}
 	
+	
+public void sortVertical(String charpters) {
+		
+		JSONArray array = JSONArray.fromObject(charpters); 
+		System.out.println(array);
+		for (int i = 0; i < array.size(); i++) {
+//	           String a = array.getJSONObject(i).getString("charpter");
+	           String b = array.getJSONObject(i).getString("sequential");
+	           String c = array.getJSONObject(i).getString("vertical");
+	           ExamSequential es = sequentialDao.get(Integer.parseInt(b));
+	           if (!"".equals(c))
+	           {
+		           String[] strs = c.split(",");
+		           int len = strs.length;
+		           for (int j=0;j<len;j++)
+			   	   {
+		        	   ExamVertical ev = verticalDao.get(Integer.parseInt(strs[j]));
+		        	   ev.setEsequential(es);
+		        	   ev.setSortnumber(j+1);
+		        	   verticalDao.update(ev);
+			   	   }
+	           }
+	       }
+	}
+
 	/**
 	 * 备份实训
 	 * @param trainstr

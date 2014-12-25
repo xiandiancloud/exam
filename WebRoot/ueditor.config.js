@@ -34,7 +34,7 @@
 
         //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的从新定义
         
-        , toolbars: [["undo","redo","insertunorderedlist","insertorderedlist","simpleupload","bold","italic","underline","justifyleft","justifycenter","justifyright","justifyjustify","inserttable","insertcode"]]
+        , toolbars: [["undo","redo","insertunorderedlist","insertorderedlist","justifyleft","justifycenter","justifyright","justifyjustify","simpleupload","insertvideo","attachment","inserttable","insertcode"]]
         //当鼠标放在工具栏上时显示的tooltip提示,留空支持自动多语言配置，否则以配置值为准
         //,labelMap:{
         //    'anchor':'', 'undo':''
@@ -82,6 +82,8 @@
         //,autoClearEmptyNode : true //getContent时，是否删除空的inlineElement节点（包括嵌套的情况）
 
         //,imagePopup:true      //图片操作的浮层开关，默认打开
+
+        //,autoSyncData:true //自动同步编辑器要提交的数据
 
         //粘贴只保留标签，去除标签所有属性
         //,retainOnlyLabelPasted: false

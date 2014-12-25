@@ -238,7 +238,7 @@
 																<div class="outline-content subsection-content">
 																	<!-- 单元  -->
 																	<c:forEach var="vertical" items="${sequential.examVerticals}">
-																		<ol class="list-units is-sortable">
+																		<ol class="list-units is-sortable _unit" id="${vertical.id}" >
 																			<li class="outline-item outline-unit  is-draggable  ">
 																				<div class="unit-header">
 																					<h3 class="unit-header-details">

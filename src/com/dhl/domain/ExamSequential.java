@@ -34,7 +34,7 @@ public class ExamSequential extends BaseDomain {
 	private ExamChapter echapter;
 	private int sortnumber = 10000;
 	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "esequential")
-	@OrderBy(value = "id ASC")
+	@OrderBy(value = "sortnumber ASC,id ASC")
 	private Set<ExamVertical> examVerticals;
 	public int getSortnumber() {
 		return sortnumber;

@@ -64,9 +64,8 @@ $(document).ready(function() {
 		             }
 			     Ch = Ch.substring(0,Ch.length -1);		    
 			    var charpters='['+Ch+']';
-			    var examId = "${exam.id}";
-			    alert(charpters);
-			    var data={examId:examId,charpters:charpters};
+			    //var examId = "${exam.id}";
+			    var data={charpters:charpters};
 		             $.ajax({
 			 				url : "cms/sortSequential.action",
 			 				type : "post",
@@ -97,26 +96,26 @@ $(document).ready(function() {
 				     var f=e[1].childNodes;				      
 				     var h=$(f[3]).children("._Subsection");		
 				     for(var z=0;z<h.length;z++){
-				    var sequential=h[z].id;
-					 
-				    //未修改
+				     var sequential=h[z].id;
+					 var g=h[z].childNodes;
+					 var n=g[1].childNodes;
+					 var o=$(n[3]).children("._unit");
 				    var new_order = []; 
-					 for(var y=0;y<h.length;y++) {  
-						 var j=h[y].id;					  
+					 for(var y=0;y<o.length;y++) {  
+						 var j=o[y].id;					  
 			               new_order.push(j); 
-			             }; 
-			             
-			             var sequential = new_order.join(','); 
-			             var Cha={charpter:charpter,sequential:sequential};
+			             };     
+			             var vertical = new_order.join(','); 
+			             var Cha="{'charpter':'"+charpter+"','sequential':'"+sequential+"','vertical':'"+vertical+"'}";
 			              Ch+=Cha+",";
 				     }
 			             }
 				     Ch = Ch.substring(0,Ch.length -1);		    
 				    var charpters='['+Ch+']';
-				    var examId = "${exam.id}";
-				    var data={examId:examId,charpters:charpters};
+				    //var examId = "${exam.id}";
+				    var data={charpters:charpters};
 			             $.ajax({
-				 				url : "",
+				 				url : "cms/sortVertical.action",
 				 				type : "post",
 				 				data : data,
 				 				success : function(s) {

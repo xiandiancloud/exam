@@ -131,6 +131,26 @@ public class ExamController extends BaseController {
 		}
 	}
 	
+	/**
+	 * 老师更新试卷单元次序
+	 * 
+	 * @param request
+	 * @param name
+	 * @return
+	 */
+	@RequestMapping("/sortVertical")
+	public void sortVertical(HttpServletRequest request,
+			HttpServletResponse response,String charpters) {
+		try {
+			PrintWriter out = response.getWriter();
+			examService.sortVertical(charpters);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	//判断是否是竞赛试卷，并且试卷锁定
 	private boolean examPermission(Exam exam)
 	{
