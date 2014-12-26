@@ -144,11 +144,9 @@ public class ShellController extends BaseController {
 						HttpEntity<RestShell> entity = new HttpEntity<RestShell>(rs);
 						
 						String resturl = "http://"+restid+":8080/rest/service/shell";//UtilTools.getConfig().getProperty("REST_URL");
-						ResponseEntity<RestShell> res = restTemplate.postForEntity(resturl, 
-								entity, RestShell.class);
+						ResponseEntity<RestShell> res = restTemplate.postForEntity(resturl, entity, RestShell.class);
 						
 						RestShell e = res.getBody();
-						
 						rdata += e.getCondition();
 						if (i < (len -1))
 						{
@@ -193,7 +191,7 @@ public class ShellController extends BaseController {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			} finally {
-				String str = "{'sucess':'fail','msg':'服务器有异常，请联系管理员,有可能你的控制节点的ssh服务没有安装，请在控制节点执行如下命令：yum install openssh-clients'}";
+				String str = "{'sucess':'fail','msg':'服务器有异常，有些可能你可以排除下：1 控制节点的ssh没有安装 2 rest传输服务没有启动'}";
 				if (out != null)
 					out.write(str);
 			}

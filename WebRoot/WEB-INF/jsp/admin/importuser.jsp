@@ -109,9 +109,8 @@
                           <table class='table' style='margin-bottom:0;'>
                             <thead>
                               <tr>
-                                <th>
-                                  	名称
-                                </th>
+                                <th>用户名</th>
+                                <th>角色</th>
                                 <th>
                                   	所属学校
                                 </th>
@@ -122,6 +121,7 @@
 	                            <c:forEach var="user" items="${userlist}">
 		                            <tr>
 	                                <td>${user.username}</td>
+	                                <td>${user.role.roleName}</td>
 	                                <td>${user.schoolname}</td>
 	                                <td>
 	                                  <div class='text-center'>
