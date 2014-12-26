@@ -399,3 +399,5 @@ create table t_log
    dotime            varchar(255) default null,
    primary key (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+INSERT INTO `t_examcategory` VALUES ('1', '国赛', '国赛');

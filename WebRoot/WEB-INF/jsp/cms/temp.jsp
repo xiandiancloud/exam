@@ -114,10 +114,10 @@
 									</span> -->
 								</a>
 							</li>
-							<!-- <li class="nav-item">
-                    <a href="#" rel="external" class="button view-button view-live-button"
-                       title="Click to open the courseware in the LMS in a new tab">在线查看</a>
-                </li> -->
+							<li class="nav-item">
+		                    <a href="lms/toexamview.action?examId=${exam.id}" rel="external" class="button view-button view-live-button" target="_blank"
+		                       title="Click to open the courseware in the LMS in a new tab">在线查看</a>
+		                	</li> 
 							<c:choose>
 								<c:when test="${exam.publish == 0}">
 									<li class="nav-item"><a href="javascript:void(0);"

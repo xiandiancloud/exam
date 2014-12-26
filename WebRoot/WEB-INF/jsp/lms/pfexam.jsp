@@ -157,7 +157,7 @@
                               <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
                               <ol class='dd-list'>
                                 <li class='dd-item' data-id='4'>
-                                  <div class='dd-handle noborder'>${vertical.name}</div>
+                                  <div class='dd-handle noborder'><%-- ${vertical.name} --%></div>
                                   <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
 			                 		<c:forEach var="qd" items="${examq.qdlist}" varStatus="nn">
 			                 			<%-- 实训 --%>
@@ -167,7 +167,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<c:set value="${index + 1}" var="index" />
 														<div class='form-group col-sm-12'>
-															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -242,7 +242,7 @@
 												<div class='col-xs-12'>
 													<form class="form form-horizontal" method="post" action="#">
 														<div class='form-group col-sm-12'>
-															<c:set value="${index + 1}" var="index" />
+															<%-- <c:set value="${index + 1}" var="index" /> --%>
 															<span class='trainimg' id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
 														</div>
 													</form>
@@ -256,7 +256,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<c:set value="${index + 1}" var="index" />
 														<div class='form-group col-sm-12'>
-															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -320,7 +320,7 @@
 													<form class="form form-horizontal" method="post" action="#" id="${examq.id}${qd.id}">
 														<c:set value="${index + 1}" var="index" />
 														<div class='form-group col-sm-12'>
-															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -384,7 +384,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<c:set value="${index + 1}" var="index" />
 														<div class='form-group col-sm-12'>
-															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -446,7 +446,7 @@
 													<form class="form form-horizontal" method="post" action="#">
 														<c:set value="${index + 1}" var="index" />
 														<div class='form-group col-sm-12'>
-															<span id="number${index}"><%-- <label class="numberfont">${index}&nbsp;</label> --%>${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -545,44 +545,25 @@
 						<div class="fixtop" id="scroll2">
 							<div class='box bordered-box blue-border'>
 								<div class='box-content'>
-									<!-- <div class='row'>
-										<div class='col-xs-12'>
-											<div id="timer" style="color:green;font-family:Arial;font-size:170%;"></div>
-										</div> -->
-										<!-- <div class='col-xs-12'> -->
-									<!-- 		<div class="pull-right">
-												<a class="btn">暂停</a> 
-												<a class="btn">下次再做</a>
-											</div> -->
-										<!-- </div> -->
-									<!-- </div> -->
-									<!-- <hr class='hr-normal'> -->
-									<!-- <div class='row'>
-										<div class='col-xs-12'> -->
-											<div data-offset-top="125" class="nav nav-tabs nav-stacked section">
-												<!-- <li><a href="javascript:void(0)" onclick="document.getElementById('section-2').scrollIntoView();" class="j-item item  f-fl">31</a></li> -->
-												<c:set value="0" var="sum" />
-												<c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
-							                          <c:forEach var="sequential" items="${chapter.esequentials}" varStatus="j">
-							                              <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
-							                                  <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
-							                                  
-										                 		<c:forEach var="qd" items="${examq.qdlist}">
-										                 		<!-- <li> -->
-										                 		<c:set value="${sum + 1}" var="sum" /> 
-										                 		<a href="javascript:void(0)" onclick="document.getElementById('number${sum}').scrollIntoView();" class="j-item item  f-fl"  id="index${sum}">
-										                 		${sum}
-										                 		</a>
-										                 		<!-- </li> -->
-
-										                 		</c:forEach>
-										                 	</c:forEach>
-							                              </c:forEach>
-							                          </c:forEach>
-							                      </c:forEach>
-											</div>
-										<!-- </div>
-									</div> -->
+									<div data-offset-top="125" class="nav nav-tabs nav-stacked section">
+										<c:set value="0" var="sum" />
+										<c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
+					                          <c:forEach var="sequential" items="${chapter.esequentials}" varStatus="j">
+					                              <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
+					                                  <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
+								                 		<c:forEach var="qd" items="${examq.qdlist}">
+								                 		<c:if test="${qd.type != 1}">
+									                 		<c:set value="${sum + 1}" var="sum" /> 
+									                 		<a href="javascript:void(0)" onclick="document.getElementById('number${sum}').scrollIntoView();" class="j-item item  f-fl"  id="index${sum}">
+									                 		${sum}
+									                 		</a>
+														</c:if>
+								                 		</c:forEach>
+								                 	</c:forEach>
+					                              </c:forEach>
+					                          </c:forEach>
+					                      </c:forEach>
+									</div>
 									<div class='row'>
 										<div class='col-xs-4'>
 											<div class="section">
@@ -601,13 +582,9 @@
 										</div>
 									</div>	
 									<hr class='hr-normal'>
-									<!-- <div class='row'>
-										<div class='col-xs-12'> -->
-											<div class='box-content' style="padding:0">
-												<a class="btn btn-danger btn-block btn-lg" href="javascript:void(0);" onclick="finishpf();">评分结束</a>
-											</div>
-										<!-- </div>
-									</div>	 -->								
+									<div class='box-content' style="padding:0">
+										<a class="btn btn-danger btn-block btn-lg" href="javascript:void(0);" onclick="finishpf();">评分结束</a>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -684,86 +661,27 @@
                 <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
                     <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
                     	<c:forEach var="qd" items="${examq.qdlist}" varStatus="nn">
-                    		index ++;
-                    		var useranswer = "${qd.useranswer}";
-                    		if (useranswer)
-                   			{
-                    			$("#numberquestion"+index).html(decodeURIComponent(useranswer));
-                   			}
-                    		<c:if test="${qd.type == 6}">
-	                    		var osanswer = "${qd.osanswer}";
-	                    		if (osanswer)
+                    		<c:if test="${qd.type != 1}">
+	                    		index ++;
+	                    		var useranswer = "${qd.useranswer}";
+	                    		if (useranswer)
 	                   			{
-	                    			$("#osquestion"+index).html(decodeURIComponent(osanswer));
+	                    			$("#numberquestion"+index).html(decodeURIComponent(useranswer));
 	                   			}
-                			</c:if>
-                    		if ("${qd.score}" == "${qd.userscore}")
-							{
-								$("#index"+index).addClass("right");
-							}
-							else
-							{
-								$("#index"+index).addClass("wrong");
-							}
-                    		/* var qdtype = "${qd.type}";
-                    		var questionId = "${qd.id}";
-                    		var number = "${nn.index+1}";
-	                    	var data = {qdtype:qdtype,examId:examId,questionId:questionId,number:number,index:index,userId:userId};
-	            			$.ajax({
-	            				url : "lms/getUserQuestionAnswer.action",
-	            				type : "post",
-	            				data : data,
-	            				success : function(s) {
-	            					var a = eval("(" + s + ")");
-	            					if ("sucess" == a.sucess) {
-	            						var pfscore = a.pfscore;
-            							{
-	            							<c:if test="${qd.type == 6}">
-	            							    $("#numberquestion"+a.index).html(a.answer);
-	            								$("#revalue"+a.index).html(a.revalue);
-        										$("#scorequestion"+a.index).html(pfscore);
-        									</c:if>
-	            							<c:if test="${qd.type == 2}">
-            									$("#numberquestion"+a.index+" :radio").each(function(){
-											         if ($(this).val() == a.answer)
-										        	 {
-											        	 $(this).attr("checked","checked");
-										        	 }
-											     });
-            									 $("#scorequestion"+a.index).html(pfscore);
-            								</c:if>
-            								<c:if test="${qd.type == 3}">
-            								var strs = a.answer.split('#');
-        									$("#numberquestion"+a.index+" :checkbox").each(function(i){
-        										 if ($.inArray($(this).val(), strs) != -1)
-									        	 {
-										        	 $(this).attr("checked","checked");
-									        	 }
-										     });
-        									$("#scorequestion"+a.index).html(pfscore);
-        									</c:if>
-            								<c:if test="${qd.type == 4}">
-            									$("#numberquestion"+a.index).attr("value",decodeURIComponent(a.answer));
-            									$("#scorequestion"+a.index).html(pfscore);
-	        								</c:if>
-	        								<c:if test="${qd.type == 5}">
-	        									var iframe = document.getElementById("numberquestion"+a.index);
-												if (iframe.attachEvent) {  
-												    iframe.attachEvent("onload", function() {  
-												    	$("#numberquestion"+a.index).contents().find("#editor").html(decodeURIComponent(a.answer));
-												    });  
-												} else {  
-												    iframe.onload = function() {  
-												    	$("#numberquestion"+a.index).contents().find("#editor").html(decodeURIComponent(a.answer));
-												    };  
-												}  
-	        									$("#scorequestion"+a.index).html(pfscore);
-	    									</c:if>
-    								
-            							}
-	            					}
-	            				}
-	            			}); */
+	                    		<c:if test="${qd.type == 6}">
+		                    		var osanswer = "${qd.osanswer}";
+		                    		if (osanswer)
+		                   			{
+		                    			$("#osquestion"+index).html(decodeURIComponent(osanswer));
+		                   			}
+	                			</c:if>
+	                			<c:if test="${qd.right == 1}">
+	                				$("#index"+index).addClass("right");
+		                		</c:if>
+		                		<c:if test="${qd.right == 2}">
+		                			$("#index"+index).addClass("wrong");
+		            			</c:if>
+	            			</c:if>
 	               		</c:forEach>
                	</c:forEach>
                 </c:forEach>

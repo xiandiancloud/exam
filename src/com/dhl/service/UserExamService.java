@@ -388,10 +388,12 @@ public class UserExamService {
 											if (Integer.parseInt(pfscore) == quscore)
 											{
 												right ++;
+												qd.setRight(CommonConstant.PRIGHT_1);
 											}
 											else
 											{
 												wrong ++;
+												qd.setRight(CommonConstant.PRIGHT_2);
 											}
 										}
 										else
@@ -408,6 +410,7 @@ public class UserExamService {
 														qd.setUserscore(quscore);
 														cscore += quscore;
 														right++;
+														qd.setRight(CommonConstant.PRIGHT_1);
 													}
 													else if (isflag == 2)
 													{
@@ -415,15 +418,18 @@ public class UserExamService {
 														qd.setUserscore(temp);
 														cscore += temp;
 														wrong ++;
+														qd.setRight(CommonConstant.PRIGHT_2);
 													}
 													else
 													{
 														wrong ++;
+														qd.setRight(CommonConstant.PRIGHT_2);
 													}
 												}
 												else
 												{
 													wrong ++;
+													qd.setRight(CommonConstant.PRIGHT_2);
 												}
 											}
 										}
@@ -431,11 +437,13 @@ public class UserExamService {
 										if (useranswer == null)
 										{
 											noanswer ++;
+											qd.setRight(CommonConstant.PRIGHT_3);
 										}
 									}
 									else
 									{
 										noanswer ++;
+										qd.setRight(CommonConstant.PRIGHT_3);
 									}
 								}
 							}
@@ -486,10 +494,12 @@ public class UserExamService {
 										if (Integer.parseInt(pfscore) == quscore)
 										{
 											right ++;
+											qd.setRight(CommonConstant.PRIGHT_1);
 										}
 										else
 										{
 											wrong ++;
+											qd.setRight(CommonConstant.PRIGHT_2);
 										}
 									}
 									else
@@ -511,6 +521,7 @@ public class UserExamService {
 												qd.setUserscore(quscore);
 												cscore += quscore;
 												right++;
+												qd.setRight(CommonConstant.PRIGHT_1);
 											}
 											else if (isflag2 == 2)
 											{
@@ -518,10 +529,12 @@ public class UserExamService {
 												qd.setUserscore(temp);
 												cscore += temp;
 												wrong++;
+												qd.setRight(CommonConstant.PRIGHT_2);
 											}
 											else
 											{
 												wrong++;
+												qd.setRight(CommonConstant.PRIGHT_2);
 											}
 										}
 										else if (useranswer != null)
@@ -533,6 +546,7 @@ public class UserExamService {
 												qd.setUserscore(quscore);
 												cscore += quscore;
 												right++;
+												qd.setRight(CommonConstant.PRIGHT_1);
 											}
 											else if (isflag == 2)
 											{
@@ -540,10 +554,12 @@ public class UserExamService {
 												qd.setUserscore(temp);
 												cscore += temp;
 												wrong++;
+												qd.setRight(CommonConstant.PRIGHT_2);
 											}
 											else
 											{
 												wrong++;
+												qd.setRight(CommonConstant.PRIGHT_2);
 											}
 										}
 									}
@@ -551,11 +567,13 @@ public class UserExamService {
 									if (useranswer == null && revalue == null)
 									{
 										noanswer ++;
+										qd.setRight(CommonConstant.PRIGHT_3);
 									}
 								}
 								else
 								{
 									noanswer ++;
+									qd.setRight(CommonConstant.PRIGHT_3);
 								}
 							}
 						}
@@ -575,7 +593,7 @@ public class UserExamService {
 	}
 	
 	//试卷开始前的介绍页面，提供试卷总体信息
-	public List getUserExamCount2(Exam exam)
+	public List getExamIntroduce(Exam exam)
 	{
 		int index = 0;
 		int score = 0;
@@ -599,18 +617,21 @@ public class UserExamService {
 						Question q = eq.getQuestion();
 						if (q != null)
 						{
-							List<QuestionData> qdlist = ParseQuestion.changetohtml(q.getContent(), q.getId());
-							if (qdlist != null && qdlist.size() > 0)
+							if (q.getType() != 1)
 							{
-								for (QuestionData qd:qdlist)
+								List<QuestionData> qdlist = ParseQuestion.changetohtml(q.getContent(), q.getId());
+								if (qdlist != null && qdlist.size() > 0)
+								{
+									for (QuestionData qd:qdlist)
+									{
+										index ++;
+										score += qd.getScore();
+									}
+								}
+								else
 								{
 									index ++;
-									score += qd.getScore();
 								}
-							}
-							else
-							{
-								index ++;
 							}
 						}
 						else

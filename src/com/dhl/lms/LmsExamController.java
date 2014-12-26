@@ -163,7 +163,7 @@ public class LmsExamController extends BaseController {
 		Exam exam = examService.get(examId);
 		view.addObject("exam", exam);
 		
-		List clist = userExamService.getUserExamCount2(exam);
+		List clist = userExamService.getExamIntroduce(exam);
 		view.addObject("score", clist.get(0));
 		view.addObject("index", clist.get(1));
 		view.addObject("size", clist.get(2));
@@ -192,7 +192,7 @@ public class LmsExamController extends BaseController {
 		Exam exam = examService.get(examId);
 		view.addObject("exam", exam);
 
-		List clist = userExamService.getUserExamCount2(exam);
+		List clist = userExamService.getExamIntroduce(exam);
 		view.addObject("score", clist.get(0));
 		view.addObject("index", clist.get(1));
 		view.addObject("size", clist.get(2));

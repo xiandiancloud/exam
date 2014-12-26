@@ -244,7 +244,7 @@ box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);}
 }
 .msg-block{
 	min-height:41px;
-	max-height: 87px;
+	/* max-height: 87px; */
 	overflow: auto; 
 }
 .msg-block:before {

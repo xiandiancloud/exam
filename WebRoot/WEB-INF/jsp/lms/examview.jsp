@@ -12,7 +12,7 @@
 <html>
   <head>
     <base href="<%=basePath%>">
-	<title>我的考试</title>
+	<title>试卷预览</title>
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 	<meta content='text/html;charset=utf-8' http-equiv='content-type'>
 	<meta content='Flat administration template for Twitter Bootstrap. Twitter Bootstrap 3 template with Ruby on Rails support.' name='description'>
@@ -185,7 +185,7 @@
 														</c:forEach>
 														<div class='form-group'>
 															<div class='col-sm-12'>
-																<a id="hrefnumber${index}" href="javascript:void(0);" onclick="entertrain('${competionId}','${exam.id}','${vertical.id}','${qd.id}','hrefnumber${index}','${index}');" target="_blank" class='btn btn-danger'>
+																<a id="hrefnumber${index}" href="javascript:void(0);" target="_blank" class='btn btn-danger'>
 																<i class='icon-circle-arrow-right'></i>进入实训</a>
 															</div>
 														</div>
@@ -219,7 +219,7 @@
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
 																<label class='radio'>
-																	<input type="radio" name="${qd.id}" onclick="submitquesstion('${qd.id}','${nn.index+1}','${qdcontent}','${index}');" value="${qdcontent}"/>${qdcontent}
+																	<input type="radio" name="${qd.id}" value="${qdcontent}"/>${qdcontent}
 																</label> 
 															</div>
 														</c:forEach>
@@ -241,7 +241,7 @@
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
 																<label class='checkbox'>
-																	<input type="checkbox" name="${qd.id}" onclick="submitmultiquesstion('${qd.id}','${nn.index+1}','${examq.id}${qd.id}','${index}');" value="${qdcontent}"/>${qdcontent}
+																	<input type="checkbox" name="${qd.id}" value="${qdcontent}"/>${qdcontent}
 																</label> 
 															</div>
 														</c:forEach>
@@ -266,8 +266,7 @@
 														</c:forEach>
 														<div class='form-group'>
 															<div class='col-sm-12'>
-																<%-- <input class='form-control' type="text" id="numberquestion${index}" onblur="submittextquesstion('${qd.id}','${nn.index+1}',this,'${index}');" /> --%>
-																<textarea class='form-control' rows='5' id="numberquestion${index}" onblur="submittextquesstion('${qd.id}','${nn.index+1}',this,'${index}');"></textarea>
+																<textarea class='form-control' rows='5' id="numberquestion${index}"></textarea>
 															</div>
 														</div>
 													</form>
@@ -290,13 +289,10 @@
 														</c:forEach>
 														<div class='form-group'>
 															<div class='col-sm-12'>
-																<%-- <textarea class='form-control' rows='5' id="numberquestion${index}" onblur="submittextareaquesstion('${qd.id}','${nn.index+1}',this,'${index}');"></textarea> --%>
-																<%-- <iframe width="100%" height="250" scrolling="no"  frameborder="0" id="numberquestion${index}" src="input.html" ></iframe> --%>
-																
 																<script id="numberquestion${index}" type="text/plain" style="width:100%;margin-bottom:5px;min-height: 100px;"></script>
 															</div>
 															<div class='col-sm-12'>
-																<a id="hrefnumber${index}" href="javascript:void(0);" onclick="submittextareaquesstion('${qd.id}','${nn.index+1}','numberquestion${index}','${index}');" class='btn btn-danger'>
+																<a id="hrefnumber${index}" href="javascript:void(0);" class='btn btn-danger'>
 																<i class='icon-circle-arrow-right'></i>提交答案</a>
 															</div>
 														</div>
@@ -327,18 +323,6 @@
 					<div class='box bordered-box blue-border'>
 						<div class='box-content'>
 							<div class='row'>
-								<div class='col-xs-3'>
-									<div id="timer" style="color:green;font-family:Arial;font-size:170%;"></div>
-								</div>
-								<div class='col-xs-12'>
-									<div class="pull-right">
-										<!-- <a class="btn">暂停</a>  -->
-										<a href="lms/myexam.action" class="btn">下次再做</a>
-									</div>
-								</div>
-							</div>
-							<hr class='hr-normal'>
-							<div class='row'>
 								<div class='col-xs-12'>
 									<div data-offset-top="125" class="nav nav-tabs nav-stacked section">
 										<c:set value="0" var="sum" />
@@ -361,21 +345,6 @@
 									</div>
 								</div>
 							</div>
-							<div class='row'>
-								<div class='col-xs-12'>
-									<div class='box-content' style="padding:0">
-										<c:if test="${userexam.state == 0}">
-											<a class="btn btn-danger btn-block btn-lg" href="lms/submitallquesstion.action?competionId=${competionId}&examId=${exam.id}">提交试卷</a>
-										</c:if>
-										<c:if test="${userexam.state == 1}">
-										    <!--测试放开  -->
-											<%-- <c:if test="${exam.isnormal == 0}"> --%>
-												<a class="btn btn-danger btn-block btn-lg" href="lms/toagainexamintroduce.action?competionId=${competionId}&examId=${exam.id}">再做一次</a>
-											<%-- </c:if> --%>
-										</c:if>
-									</div>
-								</div>
-							</div>									
 						</div>
 					</div>
 		        </div>
@@ -413,19 +382,6 @@
 	<script src="js/stickUp.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(function() {
-			/* $("#scroll2").width($("#scroll1").width()); */
-	            //是否显示考试成绩
-				/* if ("${userexam.state}" == 1)
-				{
-					if ("${exam.isnormal}" == 0)
-					{
-						$("#firesult").show();
-					}
-				}
-				else
-				{
-					$("#firesult").hide();
-				} */		
 		});
 		jQuery(function($) {
 	        $(document).ready( function() {
@@ -447,22 +403,10 @@
 	        });
 	      	//填充试卷内容，判断对错，或者是否已经做过  
 			initquestion();
-			//一个小时，按秒计算，可以自己调整时间
-			var maxtime = "${examtime}";//2*60 * 60;
-			if (maxtime)
-			{
-				timer = setInterval("CountDown()", 1000);
-			}
 	      });
 		//这个方法多次提交，如果性能有问题再优化
 		function initquestion()
 		{
-			/* var usercount = 0;
-			<c:forEach var="ued" items="${uedlist}" varStatus="i">
-				usercount += parseInt("${ued.cscore}");
-			</c:forEach>
-			$("#usercount").html(usercount); */
-			
 			var index = 0;
 			<c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
             <c:forEach var="sequential" items="${chapter.esequentials}" varStatus="j">
@@ -510,277 +454,12 @@
 									$("#index"+index).css("background","#999999");
 								}
 							</c:if>
-                    		/* var examId = "${exam.id}";
-                    		var questionId = "${qd.id}";
-                    		var number = "${nn.index+1}";
-	                    	var data = {examId:examId,questionId:questionId,number:number,index:index};
-	            			$.ajax({
-	            				url : "lms/getQuestionAnswer.action",
-	            				type : "post",
-	            				data : data,
-	            				success : function(s) {
-	            					var a = eval("(" + s + ")");
-	            					if ("sucess" == a.sucess) {
-	            						var answer = a.answer;
-	            						if (a.index)
-	            						$("#index"+a.index).css("background","#999999");
-	            						if (answer)
-            							{
-	            							<c:if test="${qd.type == 2}">
-            									$("#numberquestion"+a.index+" :radio").each(function(){
-											         if ($(this).val() == decodeURIComponent(a.answer))
-										        	 {
-											        	 $(this).attr("checked","checked");
-										        	 }
-											     });
-            								</c:if>
-            								<c:if test="${qd.type == 3}">
-            								var strs = decodeURIComponent(a.answer).split('#');
-        									$("#numberquestion"+a.index+" :checkbox").each(function(i){
-        										 if ($.inArray($(this).val(), strs) != -1)
-									        	 {
-										        	 $(this).attr("checked","checked");
-									        	 }
-										     });
-        									</c:if>
-            								<c:if test="${qd.type == 4}">
-            									$("#numberquestion"+a.index).attr("value",decodeURIComponent(a.answer));
-	        								</c:if>
-	        								<c:if test="${qd.type == 5}">
-	        									$("#numberquestion"+a.index).html(decodeURIComponent(a.answer));
-	        									UE.getEditor("numberquestion"+a.index);
-	    									</c:if>
-            							}
-	            						else
-            							{
-	            							<c:if test="${qd.type == 5}">
-        									UE.getEditor("numberquestion"+a.index);
-    										</c:if>
-            							}
-	            					}
-	            				}
-	            			}); */
 	               		</c:forEach>
                	</c:forEach>
                 </c:forEach>
             </c:forEach>
           </c:forEach>
 		}
-		 
-		
-		function CountDown() {
-			if (maxtime >= 0) {
-				var s = maxtime;
-				hours = Math.floor(s / 3600);
-				s = s%3600;
-				minutes = Math.floor(s / 60);
-				s = s%60;
-				seconds = Math.floor(s);
-				//seconds = Math.floor(maxtime % 60)>9?Math.floor(maxtime % 60):"0"+Math.floor(maxtime % 60);
-				msg = hours + ":" +minutes + ":" + seconds ;
-				$("#timer").html(msg);
-				//if (maxtime == 5 * 60)
-					//alert('注意，还有5分钟!');
-				--maxtime;
-			} else {
-				clearInterval(timer);
-				//alert("时间到，结束!");
-			}
-		}
-		
-		//提交答案------单选
-		function submitquesstion(questionId,number,useranswer,index)
-		{
-			var isover = examisover();
-			if (!isover)
-			{
-				alert("答题已经结束");
-				return;
-			}
-			var examId = "${exam.id}";
-			var competionId = "${competionId}";
-			useranswer = encodeURIComponent(useranswer);
-			var data = {competionId:competionId,examId:examId,questionId:questionId,number:number,useranswer:useranswer};
-			$.ajax({
-				url : "lms/submitquesstion.action",
-				type : "post",
-				data : data,
-				success : function(s) {
-					var a = eval("(" + s + ")");
-					if ("sucess" == a.sucess) {
-						//alert("提交了");
-						$("#index"+index).css("background","#999999");
-						$.jGrowl("提交了", {
-							position: 'bottom-right',
-					        });
-					}
-					else
-					{
-						location.href="lms/toexamerror.action";
-					}
-				}
-			});
-		}
-		//提交答案------多选
-		function submitmultiquesstion(questionId,number,id,index)
-		{
-			var isover = examisover();
-			if (!isover)
-			{
-				alert("答题已经结束");
-				return;
-			}
-			var s='';
-			$("#"+id+" input[type='checkbox']:checked").each(function(){ 
-			   s+=$(this).val()+'#'; 
-			}); 
-			if (s.length > 0) { 
-			    s = s.substring(0,s.length - 1); 
-			} 
- 			var examId = "${exam.id}";
- 			var competionId = "${competionId}";
- 			var useranswer = encodeURIComponent(s);
-			var data = {competionId:competionId,examId:examId,questionId:questionId,number:number,useranswer:useranswer};
-			$.ajax({
-				url : "lms/submitquesstion.action",
-				type : "post",
-				data : data,
-				success : function(s) {
-					var a = eval("(" + s + ")");
-					if ("sucess" == a.sucess) {
-						//alert("提交了");
-						$("#index"+index).css("background","#999999");
-						$.jGrowl("提交了", {
-							position: 'bottom-right',
-					        });
-					}
-					else
-					{
-						location.href="lms/toexamerror.action";
-					}
-				}
-			});
-		}
-		//提交答案------文本输入
-		function submittextquesstion(questionId,number,element,index)
-		{
-			var isover = examisover();
-			if (!isover)
-			{
-				alert("答题已经结束");
-				return;
-			}
- 			var examId = "${exam.id}";
- 			var competionId = "${competionId}";
- 			var useranswer = $(element).val();
- 			if (isNull(useranswer))
-			{
- 				return;
-			}
- 			
- 			useranswer = encodeURIComponent(useranswer);
-			var data = {competionId:competionId,examId:examId,questionId:questionId,number:number,useranswer:useranswer};
-			$.ajax({
-				url : "lms/submitquesstion.action",
-				type : "post",
-				data : data,
-				success : function(s) {
-					var a = eval("(" + s + ")");
-					if ("sucess" == a.sucess) {
-						//alert("提交了");
-						$("#index"+index).css("background","#999999");
-						$.jGrowl("提交了", {
-							position: 'bottom-right',
-					        });
-					}
-					else
-					{
-						location.href="lms/toexamerror.action";
-					}
-				}
-			});
-		}
-		//提交答案------论述题输入
-		function submittextareaquesstion(questionId,number,element,index)
-		{
-			var isover = examisover();
-			if (!isover)
-			{
-				alert("答题已经结束");
-				return;
-			}
-			var useranswer = UE.getEditor(element).getContent();//$("#"+element).contents().find("#editor").html();
-			if (isNull(useranswer))
-			{
- 				return;
-			}
-			useranswer = encodeURIComponent(useranswer);
-			//var useranswer = replaceTextarea1($(element).val());
- 			var examId = "${exam.id}";
- 			var competionId = "${competionId}";
-			var data = {competionId:competionId,examId:examId,questionId:questionId,number:number,useranswer:useranswer};
-			$.ajax({
-				url : "lms/submitquesstion.action",
-				type : "post",
-				data : data,
-				success : function(s) {
-					var a = eval("(" + s + ")");
-					if ("sucess" == a.sucess) {
-						//alert("提交了");
-						$("#index"+index).css("background","#999999");
-						$.jGrowl("提交了", {
-							position: 'bottom-right',
-					        });
-					}
-					else
-					{
-						location.href="lms/toexamerror.action";
-					}
-				}
-			});
-		}
-		function entertrain(competionId,examId,everticalId,trainId,hrefId,index)
-		{
-			var isover = examisover();
-			if (!isover)
-			{
-				alert("答题已经结束");
-				return;
-			}
-			$("#index"+index).css("background","#999999");
-			$("#"+hrefId).attr("href","lms/toexamtrainone.action?competionId="+competionId+"&examId="+examId+"&everticalId="+everticalId+"&trainId="+trainId);
-		}
-		function examisover()
-		{
-			var examstate = "${userexam.state}";
-			if (examstate == 1)
-			{
-				return false;
-			}
-			return true;
-		}
-		//提交答案
-		/* function submitallquesstion()
-		{
- 			var examId = "${exam.id}";
- 			var competionId = "${competionId}";
-			var data = {competionId:competionId,examId:examId};
-			$.ajax({
-				url : "lms/submitallquesstion.action",
-				type : "post",
-				data : data,
-				success : function(s) {
-					var a = eval("(" + s + ")");
-					if ("sucess" == a.sucess) {
-						location.href = "lms/toexamingtohistoryexam.action?examId="+examId+"&docounts=-1";
-					}
-					else
-					{
-						location.href="lms/toexamerror.action";
-					}
-				}
-			});
-		} */
 	</script>
 </body>
 </html>

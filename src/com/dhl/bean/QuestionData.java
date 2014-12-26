@@ -30,7 +30,16 @@ public class QuestionData {
 	private String useranswer;
 	//机器答案
 	private String osanswer;
-	
+	//答题的对错   1：right 2：wrong 3：no
+	private int right;
+	public int getRight() {
+		return right;
+	}
+
+	public void setRight(int right) {
+		this.right = right;
+	}
+
 	public String getOsanswer() {
 		return osanswer;
 	}

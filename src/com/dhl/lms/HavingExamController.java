@@ -159,6 +159,22 @@ public class HavingExamController extends BaseController {
 		return view;
 	}
 
+	/**
+	 * 跳转到试卷预览页面
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/toexamview")
+	public ModelAndView toexamview(HttpServletRequest request,int examId) {
+		ModelAndView view = new ModelAndView();
+		Exam exam = examService.get(examId);
+		User user = getSessionUser(request);
+		userExamService.getUserExamCount(user.getId(), exam,-1);
+		view.addObject("exam", exam);
+		view.setViewName("/lms/examview");
+		return view;
+	}
 	
 	/**
 	 * 跳转到学生考试的历史记录试卷页面

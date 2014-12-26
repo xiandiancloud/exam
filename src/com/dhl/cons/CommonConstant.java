@@ -80,4 +80,8 @@ public class CommonConstant
    public static final String CONTROL_NODE = "iaas.host.controller.ip";//controller 节点
    public static final String DYNAMIC = "dynamic";//动态模板
    
+   //答题的对错  1：right 2：wrong 3：no
+   public static final int PRIGHT_1 = 1;
+   public static final int PRIGHT_2 = 2;
+   public static final int PRIGHT_3 = 3;
 }

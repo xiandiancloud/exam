@@ -60,8 +60,7 @@ public class ShellController extends BaseController {
 			HttpServletResponse response, int examId, int trainId,
 			String name) {
 		try {
-			String rp = request.getSession().getServletContext()
-					.getRealPath("/");
+			String rp = request.getSession().getServletContext().getRealPath("/");
 			System.out.println(rp);
 			PrintWriter out = response.getWriter();
 			User user = getSessionUser(request);
@@ -82,7 +81,6 @@ public class ShellController extends BaseController {
 			if (conn != null) {
 //				Session ssh = conn.openSession();
 				SCPClient scpClient = conn.createSCPClient();
-				
 				List<TrainExt> trainExtList = trainService.getTrainExtList(trainId);
 				int len = trainExtList.size();
 				String rdata = "";
@@ -166,40 +164,6 @@ public class ShellController extends BaseController {
 						str = "{'sucess':'fail','msg':'脚本运行环境为空'}";
 						out.write(str);
 						return;
-						
-//						UserEnvironment uce = userEnvironmenteService.getMyUCE(user.getId(), examId, trainId);
-//						if (uce != null)
-//						{
-//							String ip = uce.getHostname();
-//							String userName = uce.getUsername();
-//							String passWord = uce.getPassword();
-//							
-//							RestShell rs = new RestShell();
-//							rs.setIp(ip);
-//							rs.setUserName(userName);
-//							rs.setPassWord(passWord);
-//							rs.setPath(shellpath);
-//							rs.setShellparameter(shellparameter);
-//							HttpEntity<RestShell> entity = new HttpEntity<RestShell>(rs);
-//							
-//							String resturl = UtilTools.getConfig().getProperty("REST_URL");
-//							ResponseEntity<RestShell> res = restTemplate.postForEntity(resturl, 
-//									entity, RestShell.class);
-//							
-//							RestShell e = res.getBody();
-//							
-//							rdata += e.getCondition();
-//							if (i < (len -1))
-//							{
-//								rdata += "</hr>";
-//							}
-//						}
-//						else
-//						{
-//							str = "{'sucess':'fail','msg':'环境还没有创建'}";
-//							out.write(str);
-//							return;
-//						}
 					}
 				}
 				if (rdata != null)
@@ -229,7 +193,7 @@ public class ShellController extends BaseController {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			} finally {
-				String str = "{'sucess':'fail','msg':'服务器有异常，请联系管理员'}";
+				String str = "{'sucess':'fail','msg':'服务器有异常，请联系管理员,有可能你的控制节点的ssh服务没有安装，请在控制节点执行如下命令：yum install openssh-clients'}";
 				if (out != null)
 					out.write(str);
 			}
