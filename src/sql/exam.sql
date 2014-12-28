@@ -400,4 +400,27 @@ create table t_log
    primary key (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_examcategory` VALUES ('1', '国赛', '国赛');
+drop table if exists t_action;
+create table t_action
+(
+   id                int not null AUTO_INCREMENT,
+   actionname        varchar(255) default null,
+   actiondesc        varchar(255) default null,
+   primary key (id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+drop table if exists t_actionuser;
+create table t_actionuser
+(
+  id        int not null AUTO_INCREMENT,
+  userId    int(20) not null,
+  actionId    int(20) not null,
+  primary key (id),
+  CONSTRAINT receivet_actionuser_ibfk_1 FOREIGN KEY (actionId) REFERENCES t_action (id) ON DELETE CASCADE
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+insert into t_examcategory values ('1', '国赛', '国赛');
+insert into t_action values ('1', '首页', '首页');
+insert into t_action values ('2', '题库', '题库');
+insert into t_action values ('3', '竞赛', '竞赛');
+insert into t_action values ('4', '我的云试卷', '我的云试卷');

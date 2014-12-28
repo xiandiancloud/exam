@@ -33,7 +33,6 @@ import com.dhl.dao.ExamQuestionDao;
 import com.dhl.dao.ExamSequentialDao;
 import com.dhl.dao.ExamVerticalDao;
 import com.dhl.dao.LogDao;
-import com.dhl.dao.Page;
 import com.dhl.dao.QuestionDao;
 import com.dhl.dao.TeacherExamDao;
 import com.dhl.dao.TrainDao;
@@ -367,16 +366,16 @@ public void sortVertical(String charpters) {
 		return null;
 	}
 	
-	/**
-	 * 取得所有的试卷
-	 * 
-	 * @param pageNo
-	 * @param pageSize
-	 * @return 返回试卷的分页对象
-	 */
-	public Page getAllExamnotcompetion(int pageNo, int pageSize) {
-		return examDao.getAllExamnotcompetion(pageNo, pageSize);
-	}
+//	/**
+//	 * 取得所有的试卷
+//	 * 
+//	 * @param pageNo
+//	 * @param pageSize
+//	 * @return 返回试卷的分页对象
+//	 */
+//	public Page getAllExamnotcompetion(int pageNo, int pageSize) {
+//		return examDao.getAllExamnotcompetion(pageNo, pageSize);
+//	}
 	
 	/**
 	 * 得到所有发布的普通试卷
