@@ -1,1 +1,1 @@
-<% response.sendRedirect("lms/tologin.action"); %>
+<% response.sendRedirect("lms/home.action"); %>

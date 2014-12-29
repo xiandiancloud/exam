@@ -13,7 +13,7 @@
 				         <span class="icon-bar"></span>
 				         <span class="icon-bar"></span>
 				      </button>
-					<a class='navbar-brand' href='lms/getteamCategory.action'> <img
+					<a class='navbar-brand' href='lms/home.action'> <img
 						width="51" height="48" class="logo" src="images/logo.png" /><img width="160" height="30"
 							class="logo" alt="Flatty" src="images/logo-lab.png" />
 					</a>
@@ -21,10 +21,18 @@
 				<div class="collapse navbar-collapse l3back" id="example-navbar-collapse">
 					<!--向左对齐-->
 					<ul class="nav navbar-nav navbar-left pleft15">
-						<li><a href="lms/getteamCategory.action">首页</a></li>
-						<li><a href="lms/examlist.action?currentpage=1&c=0&r=0">题库</a></li>
-						<li><a href="lms/competionlist.action?currentpage=1&c=0&r=0">竞赛</a></li>
-						<li><a href="lms/myexam.action">我的云试卷</a></li>
+						<c:if test="${fn:contains(USER_PERMISSION,'首页') || USER_CONTEXT.role.roleName eq '老师'}"> 
+							<li><a href="lms/getteamCategory.action">首页</a></li>
+						</c:if>
+						<c:if test="${fn:contains(USER_PERMISSION,'题库') || USER_CONTEXT.role.roleName eq '老师'}"> 
+							<li><a href="lms/examlist.action?currentpage=1&c=0&r=0">题库</a></li>
+						</c:if>
+						<c:if test="${fn:contains(USER_PERMISSION,'竞赛') || USER_CONTEXT.role.roleName eq '老师'}"> 
+							<li><a href="lms/competionlist.action?currentpage=1&c=0&r=0">竞赛</a></li>
+						</c:if>
+						<c:if test="${fn:contains(USER_PERMISSION,'我的云试卷') || USER_CONTEXT.role.roleName eq '老师'}"> 
+							<li><a href="lms/myexam.action">我的云试卷</a></li>
+						</c:if>
 					</ul>
 					<!--向右对齐-->
 					<ul class="nav navbar-nav navbar-right">
@@ -54,9 +62,11 @@
 										class='caret'></b>
 								</a>
 									<ul class='dropdown-menu gtop'>
-										<li><a href='lms/myexam.action'> <i
-												class='icon-signout'></i> 我的云试卷
-										</a></li>
+										<c:if test="${fn:contains(USER_PERMISSION,'我的云试卷') || USER_CONTEXT.role.roleName eq '老师'}"> 
+											<li><a href='lms/myexam.action'> <i
+													class='icon-signout'></i> 我的云试卷
+											</a></li>
+										</c:if>
 										<c:if test="${USER_CONTEXT.role.roleName=='老师'}">
 										<li><a href="cms"><i
 												class='icon-signout'></i>制作试卷</a></li>

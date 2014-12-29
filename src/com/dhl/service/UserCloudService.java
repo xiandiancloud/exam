@@ -10,7 +10,6 @@ import com.dhl.dao.CloudDao;
 import com.dhl.dao.UserCloudDao;
 import com.dhl.domain.Cloud;
 import com.dhl.domain.UserCloud;
-import com.dhl.util.Configuration;
 import com.woorea.openstack.base.client.OpenStackSimpleTokenProvider;
 import com.woorea.openstack.keystone.Keystone;
 import com.woorea.openstack.keystone.model.Access;
@@ -58,25 +57,26 @@ public class UserCloudService {
 	
 	public boolean save(int userId,String ip,String name,String password)
 	{
-		Cloud cloud = ceDao.getCloud(ip);
+		Cloud cloud = ceDao.getCloud(ip,userId);
 		UserCloud userCloud = uceDao.getMyUCE(userId);
 		if (cloud != null)
 		{
-			//别人的云平台
+			//别人的云平台-----暂时不能绑定
 			if (cloud.getUserId() != userId)
 			{
-				if (userCloud == null)
+				/*if (userCloud == null)
 				{
 					UserCloud uce = new UserCloud();
 					uce.setUserId(userId);
 					uce.setCloudId(cloud.getId());
 					uceDao.save(uce);
 					return true;
-				}
+				}*/
 				return false;
 			}
 			else
 			{
+				cloud.setIp(ip);
 				cloud.setName(name);
 				cloud.setPassword(password);
 				ceDao.update(cloud);
@@ -89,7 +89,12 @@ public class UserCloudService {
 					uceDao.save(uce);
 					return true;
 				}
-				return true;
+				else
+				{
+					userCloud.setCloudId(cloud.getId());
+					uceDao.update(userCloud);
+					return true;
+				}
 			}
 		}
 		else
@@ -114,7 +119,6 @@ public class UserCloudService {
 				uceDao.save(uce);
 				return true;
 			}
-			
 		}
 	}
 	

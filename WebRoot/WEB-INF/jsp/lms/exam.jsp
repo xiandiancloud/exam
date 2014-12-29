@@ -469,46 +469,48 @@
                 <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
                     <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
                     	<c:forEach var="qd" items="${examq.qdlist}" varStatus="nn">
-                    		index ++;
-                    		var useranswer = "${qd.useranswer}";
-                    		if (useranswer)
-                   			{
-                    			$("#index"+index).css("background","#999999");
-                    			
-                    			<c:if test="${qd.type == 2}">
-    							$("#numberquestion"+index+" :radio").each(function(){
-    						         if ($(this).val() == decodeURIComponent(useranswer))
-    					        	 {
-    						        	 $(this).attr("checked","checked");
-    					        	 }
-    						     });
-    							</c:if>
-    							<c:if test="${qd.type == 3}">
-    							var strs = decodeURIComponent(useranswer).split('#');
-    							$("#numberquestion"+index+" :checkbox").each(function(i){
-    								 if ($.inArray($(this).val(), strs) != -1)
-    					        	 {
-    						        	 $(this).attr("checked","checked");
-    					        	 }
-    						     });
-    							</c:if>
-    							<c:if test="${qd.type == 4}">
-    								$("#numberquestion"+index).attr("value",decodeURIComponent(useranswer));
-    							</c:if>
-                   			}
-							<c:if test="${qd.type == 5}">
-								if (useranswer)
-								{
-									$("#numberquestion"+index).html(decodeURIComponent(useranswer));
-								}
-								UE.getEditor("numberquestion"+index);
-							</c:if>
-							<c:if test="${qd.type == 6}">
-								var osanswer = "${qd.osanswer}";
-								if (osanswer)
-								{
-									$("#index"+index).css("background","#999999");
-								}
+                    		<c:if test="${qd.type != 1}">
+	                    		index ++;
+	                    		var useranswer = "${qd.useranswer}";
+	                    		if (useranswer)
+	                   			{
+	                    			$("#index"+index).css("background","#999999");
+	                    			
+	                    			<c:if test="${qd.type == 2}">
+	    							$("#numberquestion"+index+" :radio").each(function(){
+	    						         if ($(this).val() == decodeURIComponent(useranswer))
+	    					        	 {
+	    						        	 $(this).attr("checked","checked");
+	    					        	 }
+	    						     });
+	    							</c:if>
+	    							<c:if test="${qd.type == 3}">
+	    							var strs = decodeURIComponent(useranswer).split('#');
+	    							$("#numberquestion"+index+" :checkbox").each(function(i){
+	    								 if ($.inArray($(this).val(), strs) != -1)
+	    					        	 {
+	    						        	 $(this).attr("checked","checked");
+	    					        	 }
+	    						     });
+	    							</c:if>
+	    							<c:if test="${qd.type == 4}">
+	    								$("#numberquestion"+index).attr("value",decodeURIComponent(useranswer));
+	    							</c:if>
+	                   			}
+								<c:if test="${qd.type == 5}">
+									if (useranswer)
+									{
+										$("#numberquestion"+index).html(decodeURIComponent(useranswer));
+									}
+									UE.getEditor("numberquestion"+index);
+								</c:if>
+								<c:if test="${qd.type == 6}">
+									var osanswer = "${qd.osanswer}";
+									if (osanswer)
+									{
+										$("#index"+index).css("background","#999999");
+									}
+								</c:if>
 							</c:if>
                     		/* var examId = "${exam.id}";
                     		var questionId = "${qd.id}";

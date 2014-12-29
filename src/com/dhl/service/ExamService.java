@@ -785,10 +785,17 @@ public void sortVertical(String charpters) {
 				Document document = reader.read(rootxml);
 				Element rt = document.getRootElement();
 				String display_name = rt.attributeValue("display_name");
-
+				int sortnumber = 10000;
+				try
+				{
+				sortnumber = Integer.parseInt(rt.attributeValue("sortnumber"));
+				}
+				catch(Exception e)
+				{}
 				ExamChapter chapter = new ExamChapter();
 				chapter.setName(display_name);
 				chapter.setExam(course);
+				chapter.setSortnumber(sortnumber);
 				chapterDao.save(chapter);
 				Iterator iter = rt.elementIterator("sequential");
 				while (iter.hasNext()) {
@@ -816,10 +823,17 @@ public void sortVertical(String charpters) {
 				Document document = reader.read(rootxml);
 				Element rt = document.getRootElement();
 				String display_name = rt.attributeValue("display_name");
-
+				int sortnumber = 10000;
+				try
+				{
+				sortnumber = Integer.parseInt(rt.attributeValue("sortnumber"));
+				}
+				catch(Exception e)
+				{}
 				ExamSequential s = new ExamSequential();
 				s.setName(display_name);
 				s.setEchapter(c);
+				s.setSortnumber(sortnumber);
 				sequentialDao.save(s);
 				Iterator iter = rt.elementIterator("vertical");
 				while (iter.hasNext()) {
@@ -847,10 +861,17 @@ public void sortVertical(String charpters) {
 				Document document = reader.read(rootxml);
 				Element rt = document.getRootElement();
 				String display_name = rt.attributeValue("display_name");
-
+				int sortnumber = 10000;
+				try
+				{
+				sortnumber = Integer.parseInt(rt.attributeValue("sortnumber"));
+				}
+				catch(Exception e)
+				{}
 				ExamVertical v = new ExamVertical();
 				v.setName(display_name);
 				v.setEsequential(c);
+				v.setSortnumber(sortnumber);
 				verticalDao.save(v);
 				Iterator iter = rt.elementIterator("train");
 				if (iter != null)

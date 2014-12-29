@@ -377,7 +377,7 @@ create table t_cloud
    name              varchar(255) not null,
    password          varchar(255) not null,
    primary key (id),
-   UNIQUE KEY (ip)
+   UNIQUE KEY (ip,userId)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 drop table if exists t_user_cloud;
@@ -387,6 +387,7 @@ create table t_user_cloud
    userId            int(10) not null,
    cloudId           int(10) not null,
    primary key (id),
+   UNIQUE KEY (userId),
    CONSTRAINT receivet_user_clound_1 FOREIGN KEY (cloudId) REFERENCES t_cloud (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -425,3 +426,10 @@ insert into t_action values ('1', '首页', '首页');
 insert into t_action values ('2', '题库', '题库');
 insert into t_action values ('3', '竞赛', '竞赛');
 insert into t_action values ('4', '我的云试卷', '我的云试卷');
+
+INSERT INTO `t_environment` VALUES ('1', 'iaas.host.controller.ip', '', 'IP', '云平台');
+INSERT INTO `t_environment` VALUES ('2', 'pass.host.compute.dynamic', '', 'IP', '你自己的虚拟机');
+INSERT INTO `t_environment` VALUES ('3', 'paas.rhc.compute.dynamic', '', 'IP', '你自己的虚拟机');
+INSERT INTO `t_environment` VALUES ('4', 'iaas.host.compute.ip', '192.168.20.60', 'IP', '计算节点IP');
+INSERT INTO `t_environment` VALUES ('5', 'iaas.host.compute.username', 'root', 'string', '计算节点登录用户名');
+INSERT INTO `t_environment` VALUES ('6', 'iaas.host.compute.password', '000000', 'string', '计算节点登录密码');

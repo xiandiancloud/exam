@@ -8,8 +8,8 @@ import com.dhl.domain.Cloud;
 @Repository
 public class CloudDao extends BaseDao<Cloud> {
 	
-	public Cloud getCloud(String ip) {
-		String hql = "from Cloud where ip = '" + ip +"'";
+	public Cloud getCloud(String ip,int userId) {
+		String hql = "from Cloud where ip = '" + ip +"' and userId="+userId;
 		List<Cloud> list = find(hql);
 		if (list != null && list.size() > 0)
 		{

@@ -565,7 +565,7 @@ public class CmsUploadExamController extends BaseController {
 		// 定义根节点Element
 		Element rootGen = document.addElement("chapter");
 		rootGen.addAttribute("display_name", chapter.getName());
-
+		rootGen.addAttribute("sortnumber", chapter.getSortnumber()+"");
 		Set<ExamSequential> sequentialset = chapter.getEsequentials();
 		Iterator<ExamSequential> it = sequentialset.iterator();
 
@@ -606,7 +606,7 @@ public class CmsUploadExamController extends BaseController {
 		// 定义根节点Element
 		Element rootGen = document.addElement("sequential");
 		rootGen.addAttribute("display_name", sequential.getName());
-
+		rootGen.addAttribute("sortnumber", sequential.getSortnumber()+"");
 		Set<ExamVertical> verticalset = sequential.getExamVerticals();
 		Iterator<ExamVertical> it = verticalset.iterator();
 		while (it.hasNext()) {
@@ -647,7 +647,7 @@ public class CmsUploadExamController extends BaseController {
 		// 定义根节点Element
 		Element rootGen = document.addElement("vertical");
 		rootGen.addAttribute("display_name", vertical.getName());
-
+		rootGen.addAttribute("sortnumber", vertical.getSortnumber()+"");
 		Set<ExamQuestion> verticalTrainset = vertical.getExamQuestion();
 		Iterator<ExamQuestion> it = verticalTrainset.iterator();
 		while (it.hasNext()) {

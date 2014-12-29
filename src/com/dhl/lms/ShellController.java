@@ -107,13 +107,13 @@ public class ShellController extends BaseController {
 						String ip;// = environmenteService.getDevIP(devinfo);
 						String userName;// = environmenteService.getDevUserName(devinfo.substring(0,devinfo.lastIndexOf('.'))+".username");
 						String passWord;// = environmenteService.getDevPassword(devinfo.substring(0,devinfo.lastIndexOf('.'))+".password");
-						if (CommonConstant.CONTROL_NODE.equals(devinfo))
+						if (CommonConstant.CONTROL_NODE.equalsIgnoreCase(devinfo))
 						{
 							ip = restid;
 							userName = restusername;
 							passWord = restpassword;
 						}
-						else if (CommonConstant.DYNAMIC.equals(endt.trim()))//如果是动态模板，查看用户是否赋值了
+						else if (CommonConstant.DYNAMIC.equalsIgnoreCase(endt.trim()))//如果是动态模板，查看用户是否赋值了
 						{
 							UserEnvironment uce = userEnvironmentService.getMyUCE(user.getId(), examId,devinfo);
 							if (uce != null)
