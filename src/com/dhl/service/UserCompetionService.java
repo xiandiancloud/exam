@@ -12,9 +12,11 @@ import com.dhl.bean.QuestionData;
 import com.dhl.bean.UserCompetionData;
 import com.dhl.bean.UserQuestionData;
 import com.dhl.cons.CommonConstant;
+import com.dhl.dao.ActionDao;
 import com.dhl.dao.CompetionDao;
 import com.dhl.dao.CompetionExamDao;
 import com.dhl.dao.TrainExtDao;
+import com.dhl.dao.UserActionDao;
 import com.dhl.dao.UserCompetionDao;
 import com.dhl.dao.UserExamDao;
 import com.dhl.dao.UserQuestionChildDao;
@@ -28,6 +30,7 @@ import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Question;
 import com.dhl.domain.Train;
 import com.dhl.domain.TrainExt;
+import com.dhl.domain.UserAction;
 import com.dhl.domain.UserCompetion;
 import com.dhl.domain.UserExam;
 import com.dhl.domain.UserQuestion;
@@ -59,6 +62,10 @@ public class UserCompetionService {
 	private TrainExtDao trainExtDao;	
 //	@Autowired
 //	private UserInterface userInterface;
+	@Autowired
+	private UserActionDao userActionDao;
+	@Autowired
+	private ActionDao actionDao;
 	
 	public UserCompetion get(int id)
 	{
@@ -77,6 +84,11 @@ public class UserCompetionService {
 		uc.setCompetion(competionDao.get(competionId));
 		uc.setJob(job);
 		userCompetionDao.save(uc);
+		
+		UserAction ua = new UserAction();
+		ua.setUserId(userId);
+		ua.setAction(actionDao.getActionByname(CommonConstant.PERMISSION_3));
+		userActionDao.save(ua);
 	}
 	
 	public void remove(int id)

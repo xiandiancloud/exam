@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -109,10 +110,12 @@
 									<i class="icon-book"></i> 我的题库
 								</div>
 								<div class="box-content">
-									<a href="lms/myexam.action" class="list-group-item active"> <i class='icon-plus'></i> 我的考卷
-									</a>
-									<a href="lms/mycompetion.action" class="list-group-item"> <i class='icon-plus'></i> 我的竞赛
-									</a>
+									<c:if test="${fn:contains(USER_PERMISSION,'首页') || fn:contains(USER_PERMISSION,'题库') || USER_CONTEXT.role.roleName eq '老师'}"> 
+									<a href="lms/myexam.action" class="list-group-item active"> <i class='icon-plus'></i> 我的考卷</a>
+									</c:if>
+									<c:if test="${fn:contains(USER_PERMISSION,'竞赛') || USER_CONTEXT.role.roleName eq '老师'}"> 
+									<a href="lms/mycompetion.action" class="list-group-item"> <i class='icon-plus'></i> 我的竞赛</a>
+									</c:if>
 									<!-- <hr class="hr-normal"> -->
 									<!-- <p>增加竞赛</p> -->
 									<%-- <c:if test="${USER_CONTEXT.role.roleName=='老师'}">

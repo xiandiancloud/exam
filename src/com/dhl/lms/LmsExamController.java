@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.dhl.cons.CommonConstant;
 import com.dhl.dao.Page;
 import com.dhl.domain.Competion;
-import com.dhl.domain.CompetionCategory;
 import com.dhl.domain.CompetionExam;
 import com.dhl.domain.ECategory;
 import com.dhl.domain.Exam;
@@ -36,6 +35,7 @@ import com.dhl.service.UserExamHistoryService;
 import com.dhl.service.UserExamService;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
+import com.xiandian.model.Role;
 import com.xiandian.model.User;
 
 /**
@@ -67,16 +67,61 @@ public class LmsExamController extends BaseController {
 	private CompetionCategoryService competionCategoryService;
 	@Autowired
 	private ExamQuestionService examquestionService;
+//	/**
+//	 * 跳转到学生考试首页
+//	 * 
+//	 * @param request
+//	 * @return
+//	 */
+//	@RequestMapping("/lms")
+//	public ModelAndView cms(HttpServletRequest request) {
+//		String url = "redirect:/lms/getteamCategory.action";
+//		return new ModelAndView(url);
+//	}
+	
 	/**
-	 * 跳转到学生考试首页
-	 * 
+	 * 首页选择
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/lms")
-	public ModelAndView cms(HttpServletRequest request) {
-		String url = "redirect:/lms/getteamCategory.action";
-		return new ModelAndView(url);
+	@RequestMapping("/home")
+	public ModelAndView home(HttpServletRequest request) {
+		//判断是否是老师，还是学生，如果是学生的话，查看action，根据action调整跳转的页面
+		User user = getSessionUser(request);
+		Role role = user.getRole();
+		if (CommonConstant.ROLE_T.equals(role.getRoleName()))
+		{
+			String url = "redirect:/lms/getteamCategory.action";
+			return new ModelAndView(url);
+		}
+		else
+		{
+			List<String> ualist = getSessionUserAction(request);
+			if (ualist.contains(CommonConstant.PERMISSION_1))
+			{
+				String url = "redirect:/lms/getteamCategory.action";
+				return new ModelAndView(url);
+			}
+			else if (ualist.contains(CommonConstant.PERMISSION_2))
+			{
+				String url = "redirect:/lms/examlist.action?currentpage=1&c=0&r=0";
+				return new ModelAndView(url);
+			}
+			else if (ualist.contains(CommonConstant.PERMISSION_3))
+			{
+				//?currentpage=1&c=0&r=0
+				String url = "redirect:/lms/competionlist.action";
+				return new ModelAndView(url);
+			}
+			else if (ualist.contains(CommonConstant.PERMISSION_4))
+			{
+				String url = "redirect:/lms/myexam.action";
+				return new ModelAndView(url);
+			}
+			//简陋版本，以上4种action都不满足的话，调整到错误页面			
+			String url = "/lms/error";
+			return new ModelAndView(url);
+		}
 	}
 	
 	@RequestMapping("/getteamCategory")
@@ -262,38 +307,48 @@ public class LmsExamController extends BaseController {
 		return view;
 	}
 	
-	/**
-	 * 竞赛列表
-	 * @param request
-	 * @return
-	 */
+//	/**
+//	 * 竞赛列表
+//	 * @param request
+//	 * @return
+//	 */
+//	@RequestMapping("/competionlist")
+//	public ModelAndView competionlist(HttpServletRequest request, int currentpage,int c,int r,String s) {
+//		ModelAndView view = new ModelAndView();
+//		if (s != null)
+//		s=UtilTools.converStr(s);
+//		Page page = competionCategoryService.searchExam(c, r, s, currentpage, CommonConstant.EXAMLIST_PAGE_SIZE);
+//		List<CompetionCategory> cclist = page.getResult();
+//		
+//		User user = getSessionUser(request);
+//		for (CompetionCategory cc:cclist)
+//		{
+//			Competion com = cc.getCompetion();
+//			List<UserCompetion> uclist = userCompetionService.getMyCompetionByuserIdAndCompetionId(user.getId(), com.getId());
+//			cc.setUclist(uclist);
+//		}
+//		int totalpage = (int) page.getTotalPageCount();
+//		view.addObject("competionlist", cclist);
+//		view.addObject("totalpage", totalpage);
+//		view.addObject("currentpage", currentpage);
+//		view.addObject("category",c);
+//		view.addObject("rank",r);
+//		view.addObject("search",s);
+//		view.addObject("totalcounts",page.getTotalCount());
+//		view.setViewName("/lms/oncompetion");
+//		return view;
+//	}
+	
 	@RequestMapping("/competionlist")
-	public ModelAndView competionlist(HttpServletRequest request, int currentpage,int c,int r,String s) {
+	public ModelAndView competionlist(HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
-		if (s != null)
-		s=UtilTools.converStr(s);
-		Page page = competionCategoryService.searchExam(c, r, s, currentpage, CommonConstant.EXAMLIST_PAGE_SIZE);
-		List<CompetionCategory> cclist = page.getResult();
 		
 		User user = getSessionUser(request);
-		for (CompetionCategory cc:cclist)
-		{
-			Competion com = cc.getCompetion();
-			List<UserCompetion> uclist = userCompetionService.getMyCompetionByuserIdAndCompetionId(user.getId(), com.getId());
-			cc.setUclist(uclist);
-		}
-		int totalpage = (int) page.getTotalPageCount();
-		view.addObject("competionlist", cclist);
-		view.addObject("totalpage", totalpage);
-		view.addObject("currentpage", currentpage);
-		view.addObject("category",c);
-		view.addObject("rank",r);
-		view.addObject("search",s);
-		view.addObject("totalcounts",page.getTotalCount());
+		List<UserCompetion> uclist = userCompetionService.getMyAllCompetion(user.getId());
+		view.addObject("competionlist", uclist);
 		view.setViewName("/lms/oncompetion");
 		return view;
 	}
-	
 	/**
 	 * 进入竞赛
 	 * @param request

@@ -13,7 +13,7 @@ public class CommonConstant
     * 用户对象放到Session中的键名称
     */
    public static final String USER_CONTEXT = "USER_CONTEXT";
-   
+   public static final String USER_PERMISSION = "USER_PERMISSION";
    public static final String USER_ROLE = "USER_ROLE";
    
    public static final String USER_GROUP = "USER_GROUP";
@@ -84,4 +84,10 @@ public class CommonConstant
    public static final int PRIGHT_1 = 1;
    public static final int PRIGHT_2 = 2;
    public static final int PRIGHT_3 = 3;
+   
+   //permission
+   public static final String PERMISSION_1 = "首页";
+   public static final String PERMISSION_2 = "题库";
+   public static final String PERMISSION_3 = "竞赛";
+   public static final String PERMISSION_4 = "我的云试卷";
 }

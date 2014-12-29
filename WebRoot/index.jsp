@@ -1,1 +1,1 @@
-<% response.sendRedirect("lms/getteamCategory.action"); %>
+<% response.sendRedirect("lms/tologin.action"); %>

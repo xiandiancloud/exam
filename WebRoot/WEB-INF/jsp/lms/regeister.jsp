@@ -519,7 +519,7 @@
 				var a = eval("(" + s + ")");
 				
 				if (a.sucess == "sucess") {
-					location.href="lms/getteamCategory.action";
+					location.href="lms/home.action";
 				}
 				else
 				{

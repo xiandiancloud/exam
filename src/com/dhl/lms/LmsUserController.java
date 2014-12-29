@@ -1,6 +1,7 @@
 package com.dhl.lms;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Cloud;
+import com.dhl.domain.UserAction;
 import com.dhl.domain.UserEnvironment;
+import com.dhl.service.UserActionService;
 import com.dhl.service.UserCloudService;
 import com.dhl.service.UserEnvironmentService;
 import com.dhl.util.UtilTools;
@@ -39,16 +42,12 @@ public class LmsUserController extends BaseController {
 	 */
 	@Autowired
 	private UserInterface userInterface;
-//	@Autowired
-//	private UCEService uceService;
+	@Autowired
+	private UserActionService userActionService;
 	@Autowired
 	private UserEnvironmentService ueService;
 	@Autowired
 	private UserCloudService userCloudService;
-//	@Autowired
-//	private UserTrainService userTrainService;
-//	@Autowired
-//	private UserCourseService userCourseService;
 
 	/**
 	 * 跳转到登陆界面
@@ -118,7 +117,12 @@ public class LmsUserController extends BaseController {
 					gender, mailing_address, year_of_birth, level_of_education,
 					goals, school_name, major, class_name, admission_time);
 			setSessionUser(request, user);
-
+			List<String> list = new ArrayList();
+			list.add(CommonConstant.PERMISSION_1);
+			list.add(CommonConstant.PERMISSION_2);
+			list.add(CommonConstant.PERMISSION_4);
+			userActionService.saveActionList(user.getId(), list);
+			setSessionUserAction(request, list);
 			String result = "{'sucess':'sucess'}";
 			out.write(result);
 		} catch (Exception e) {
@@ -207,48 +211,25 @@ public class LmsUserController extends BaseController {
 			Role role = user.getRole();
 			user.setRole(role);
 			setSessionUser(request, user);
-			String toUrl = (String) request.getSession().getAttribute(
-					CommonConstant.LOGIN_TO_URL);
+			
+			List<UserAction> ualist = userActionService.getActionList(user.getId());
+			List<String> list = new ArrayList(); 
+			for (UserAction ua:ualist)
+			{
+				list.add(ua.getAction().getActionname());
+			}
+			setSessionUserAction(request, list);
+			String toUrl = (String) request.getSession().getAttribute(CommonConstant.LOGIN_TO_URL);
 			request.getSession().removeAttribute(CommonConstant.LOGIN_TO_URL);
 			// 如果当前会话中没有保存登录之前的请求URL，则直接跳转到主页
 			if (StringUtils.isEmpty(toUrl)) {
-				toUrl = "lms/getteamCategory.action";
+				toUrl = "lms/home.action";
 			}
 			String result = "{'sucess':'sucess','toUrl':'" + toUrl + "'}";
 			out.write(result);
 		} catch (Exception e) {
 		}
 	}
-
-//	/**
-//	 * 个人设置，环境准备，个人课程情况等等总结信息
-//	 * 
-//	 * @param request
-//	 * @param index
-//	 * @return
-//	 */
-//	@RequestMapping("/setting")
-//	public ModelAndView setting(HttpServletRequest request, int index) {
-//		ModelAndView view = new ModelAndView();
-//
-//		User user = getSessionUser(request);
-//		if (index == 2) {
-//			List<UCEnvironment> uce = uceService.getMyUCE(user.getId());
-//			view.addObject("uce", uce);
-//		}
-//		if (index == 3) {
-//			List<UserCourse> having = userCourseService.getMyHavingCourse(user
-//					.getId());
-//			List<UserCourse> finish = userCourseService.getMyFinishCourse(user
-//					.getId());
-//
-//			view.addObject("having", having);
-//			view.addObject("finish", finish);
-//		}
-//		view.addObject("setindex", index);
-//		view.setViewName("/lms/setting");
-//		return view;
-//	}
 
 	/**
 	 * 个人设置，环境准备，个人课程情况等等总结信息

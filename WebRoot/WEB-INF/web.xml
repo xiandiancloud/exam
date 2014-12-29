@@ -131,18 +131,18 @@
 		<servlet-name>dhl</servlet-name>
 		<url-pattern>/cms</url-pattern>
 	</servlet-mapping>
-	<servlet-mapping>
+<!-- 	<servlet-mapping>
 		<servlet-name>dhl</servlet-name>
 		<url-pattern>/lms</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> -->
 	<servlet-mapping>
 		<servlet-name>dhl</servlet-name>
 		<url-pattern>*.action</url-pattern>
 	</servlet-mapping>
-	<servlet-mapping>
+<!-- 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
 		<url-pattern>/static/*</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> -->
 		<servlet>
       <servlet-name>DruidStatView</servlet-name>
       <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>

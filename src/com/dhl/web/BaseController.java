@@ -1,8 +1,9 @@
 package com.dhl.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
-import org.jasig.cas.client.util.AssertionHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dhl.cons.CommonConstant;
@@ -61,4 +62,12 @@ public class BaseController {
 				user);
 	}
 	
+	protected List<String> getSessionUserAction(HttpServletRequest request) {
+		List<String> ualist = (List<String>)request.getSession().getAttribute(CommonConstant.USER_PERMISSION);
+		return ualist;
+	}
+	
+	protected void setSessionUserAction(HttpServletRequest request,List<String> ualist) {
+		request.getSession().setAttribute(CommonConstant.USER_PERMISSION,ualist);
+	}
 }

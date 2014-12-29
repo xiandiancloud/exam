@@ -1171,13 +1171,10 @@
 		//console.log('11111',nodes); 
 		//var a = eval("(" + $(nodes) + ")");
 		//alert(a);
-		//console.log('22222',$(nodes));
 		var userlist = "";
 		$.each(nodes,function(index,node){
-			//alert(node.data.title);
 			if (!node.data.isFolder)
 			{
-				//alert("222222222"+node.data.key);
 				userlist += node.data.key +",";
 			}
 		});

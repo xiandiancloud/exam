@@ -65,7 +65,7 @@
 		<section id=''>
 			<div class="container">
 			
-				<div class="row">
+				<!-- <div class="row">
 					<div class="col-xs-12 center">
 						<h1 class="h1font"><a id="allcounts"></a>+的竞赛，造就你的云梦想！</h1>
 					</div>
@@ -80,7 +80,7 @@
 							</div>
 							<div class="col-xs-3">
 								<select class='select2 form-control' name="major" id="category" onchange="loaddata();">
-									<!-- <option value='NY' selected="selected">-专业-</option> -->
+									<option value='NY' selected="selected">-专业-</option>
 								</select>
 							</div>
 							<div class="col-xs-3">
@@ -107,7 +107,7 @@
 						</div>
 					</div>
 					<div class="h5"></div>
-				</div>
+				</div> -->
 				<div class="clear"></div>
 				<c:forEach var="ec" items="${competionlist}">
 				<div class="row wback ">
@@ -135,32 +135,32 @@
 						<div class="wrap">
 							<div class="subwrap">
 								<div class="content">
-									<c:forEach var="usercompetion" items="${ec.uclist}">
-									<c:if test="${usercompetion.job=='主裁判'}">
+									<%-- <c:forEach var="usercompetion" items="${ec.uclist}"> --%>
+									<c:if test="${ec.job=='主裁判'}">
 										<p>
 											<a href="cms/totcompetion.action?competionId=${ec.competion.id}"><button
 													type="button" class="btn btn-danger">主裁判进入</button> </a>
 										</p>
 									</c:if>
-									<c:if test="${usercompetion.job=='命题裁判'}">
+									<c:if test="${ec.job=='命题裁判'}">
 										<p>
 											<a href="cms/totcompetionmt.action?competionId=${ec.competion.id}"><button
 													type="button" class="btn btn-danger">命题裁判进入</button> </a>
 										</p>
 									</c:if>
-									<c:if test="${usercompetion.job=='判分裁判'}">
+									<c:if test="${ec.job=='判分裁判'}">
 										<p>
 											<a href="cms/totcompetionpf.action?competionId=${ec.competion.id}"><button
 													type="button" class="btn btn-danger">判分裁判进入</button> </a>
 										</p>
 									</c:if>
-									<c:if test="${usercompetion.job=='考生'}">
+									<c:if test="${ec.job=='考生'}">
 										<p>
 											<a href="javascript:void(0);" onclick="starttocompetion(${ec.competion.id});"><button
 													type="button" class="btn btn-danger">考生进入</button> </a>
 										</p>
 									</c:if>
-									</c:forEach>
+									<%-- </c:forEach> --%>
 								</div>
 							</div>
 						</div>
@@ -212,11 +212,11 @@
 
 	<script>
 		$(function() {
-			initlist();
-			initcategory();
+			//initlist();
+			//initcategory();
 			//根据搜索条件填充
-			$("#rank").attr("value","${rank}");
-			$("#search").attr("value","${search}");
+			//$("#rank").attr("value","${rank}");
+			//$("#search").attr("value","${search}");
 		});
 		
 		function initcategory()
@@ -234,7 +234,6 @@
 						var name = category.name;
 						tmp += '<option value='+id+'>'+name+'</option>';
 					}
-					//alert(tmp);
 					$("#category").html(tmp);
 					
 					$("#category").attr("value","${category}");
@@ -252,7 +251,6 @@
 			$("#allcounts").html("${totalcounts}");
 			var currentpage = "${currentpage}";
 			currentpage = parseInt(currentpage);
-			//alert(totalpage+"  ,   "+currentpage);
 			$
 					.jqPaginator(
 							'#pagination',
