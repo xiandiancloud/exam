@@ -14,7 +14,7 @@
 				         <span class="icon-bar"></span>
 				         <span class="icon-bar"></span>
 				      </button>
-					<a class='navbar-brand' href='lms/getteamCategory.action'> <img
+					<a class='navbar-brand' href='lms/home.action'> <img
 						width="51" height="48" class="logo" src="images/logo.png" /><img width="160" height="30"
 							class="logo" alt="Flatty" src="images/logo-lab.png" />
 					</a>

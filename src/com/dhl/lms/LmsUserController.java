@@ -63,7 +63,7 @@ public class LmsUserController extends BaseController {
 		int type = Integer.parseInt(UtilTools.getConfig().getProperty("SSO_TYPE"));
 		if (type == CommonConstant.SSO_CAS)
 		{
-			url = "redirect:/lms/getteamCategory.action";
+			url = "redirect:/lms/home.action";
 		}
 		else
 		{
@@ -162,7 +162,7 @@ public class LmsUserController extends BaseController {
 		setSessionUser(request, null);
 		HttpSession session = request.getSession(false);
 		session.setAttribute("_const_cas_assertion_", null);
-		String url = "redirect:/lms/getteamCategory.action";
+		String url = "redirect:/lms/home.action";
 		return new ModelAndView(url);
 	}
 	
@@ -177,7 +177,7 @@ public class LmsUserController extends BaseController {
 		}
 		else
 		{
-			url = "redirect:/lms/getteamCategory.action";
+			url = "redirect:/lms/home.action";
 		}
 		return new ModelAndView(url);
 	}
@@ -194,6 +194,9 @@ public class LmsUserController extends BaseController {
 	public void login(HttpServletRequest request, HttpServletResponse response,
 			String email, String password) {
 		try {
+			
+			User olduser = getSessionUser(request);
+			
 			PrintWriter out = response.getWriter();
 			User user = userInterface.getUserBymail(email);
 			if (user == null) {
@@ -222,7 +225,7 @@ public class LmsUserController extends BaseController {
 			String toUrl = (String) request.getSession().getAttribute(CommonConstant.LOGIN_TO_URL);
 			request.getSession().removeAttribute(CommonConstant.LOGIN_TO_URL);
 			// 如果当前会话中没有保存登录之前的请求URL，则直接跳转到主页
-			if (StringUtils.isEmpty(toUrl)) {
+			if (StringUtils.isEmpty(toUrl) || (olduser != null && olduser.getId() != user.getId())) {
 				toUrl = "lms/home.action";
 			}
 			String result = "{'sucess':'sucess','toUrl':'" + toUrl + "'}";

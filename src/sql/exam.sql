@@ -416,6 +416,7 @@ create table t_actionuser
   userId    int(20) not null,
   actionId    int(20) not null,
   primary key (id),
+  UNIQUE KEY (userId,actionId),
   CONSTRAINT receivet_actionuser_ibfk_1 FOREIGN KEY (actionId) REFERENCES t_action (id) ON DELETE CASCADE
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

@@ -113,8 +113,8 @@
 									</a>
 									<a href="lms/mycloudenv.action" class="list-group-item"> <i class='icon-plus'></i> 我的云平台
 									</a>
-									<a href="lms/myexamenv.action" class="list-group-item"> <i class='icon-plus'></i> 我的云虚机
-									</a>
+									<!-- <a href="lms/myexamenv.action" class="list-group-item"> <i class='icon-plus'></i> 我的云虚机
+									</a> -->
 									<%-- <hr class="hr-normal">
 									<c:if test="${USER_CONTEXT.role.roleName=='老师'}">
 									<a href="cms" class='btn btn-success'> <i

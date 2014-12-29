@@ -101,8 +101,8 @@
 									</a>
 									<a href="lms/mycloudenv.action" class="list-group-item active"> <i class='icon-plus'></i> 我的云平台
 									</a>
-									<a href="lms/myexamenv.action" class="list-group-item"> <i class='icon-plus'></i> 我的云虚机
-									</a>
+									<!-- <a href="lms/myexamenv.action" class="list-group-item"> <i class='icon-plus'></i> 我的云虚机
+									</a> -->
 								</div>
 							</div>
 						</div>
