@@ -62,14 +62,10 @@
 
 								<ol class="list-input">
 									<li class="field text required" id="field-email"><label
-										for="email">电子邮件地址</label> <input id="email" type="email"
-										name="email" placeholder="e.g. jane.doe@gmail.com" /></li>
+										for="username">登录名</label> <input id="username" type="text"/></li>
 
-									<li class="field text required" id="field-password"><a
-										href="//localhost:8000/login#forgot-password-modal"
-										class="action action-forgotpassword" tabindex="-1">忘记密码？</a> <label
-										for="password">密码</label> <input id="password" type="password"
-										name="password" /></li>
+									<li class="field text required" id="field-password"><label
+										for="password">密码</label> <input id="password" type="password"/></li>
 								</ol>
 							</fieldset>
 
@@ -112,9 +108,9 @@
 		
 		function tlogin()
 		{
-			var email = $("#email").val();
+			var username = $("#username").val();
 			var password = $("#password").val();
-			var data = {email:email,password:password};
+			var data = {username:username,password:password};
 			$.ajax({
 				url:"cms/tlogin.action",
 				type:"post",

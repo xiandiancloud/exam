@@ -81,13 +81,13 @@
 					<div class="col-sm-7">
 						<form role="form">
 							<div class="form-group">
-								<a>电子邮件&nbsp;*</a>
+								<a>用户名&nbsp;*</a>
 								<div class="h5"></div>
-								<input type="text" class="form-control" id="email" placeholder="dhl@163.com">
+								<input type="text" class="form-control" id="username">
 								<div class="clear"></div>
 								<a>密码&nbsp;*</a>
 								<div class="h5"></div>
-								<input type="password" class="form-control" id="password" placeholder="文本输入">
+								<input type="password" class="form-control" id="password">
 								<div class="clear"></div>
 								<div class="clear"></div>
 								<button type="button" class="btn btn-danger btn-lg btn-block" onclick="login();">
@@ -156,10 +156,9 @@
 	
 	function login()
 	{
-		var email = $("#email").val();
+		var username = $("#username").val();
 		var password = $("#password").val();
-		//var url = "${url}";
-		var data = {email:email,password:password};
+		var data = {username:username,password:password};
 		$.ajax({
 			url:"lms/login.action",
 			type:"post",
@@ -169,12 +168,6 @@
 				if (a.sucess=="sucess")
 				{
 					location.href=a.toUrl;
-					/*if (url)
-					{
-						location.href=url;
-					}
-					else
-					location.href="mycourse.action";*/
 				}
 				else
 				{

@@ -61,7 +61,7 @@ public class WordTools {
 	public static void writeVertical(WordprocessingMLPackage wordMLPackage,ExamVertical ev)
 	{
 		MainDocumentPart mdp = wordMLPackage.getMainDocumentPart();
-		mdp.addStyledParagraphOfText("4", ev.getName());
+		/*mdp.addStyledParagraphOfText("4", ev.getName());*/
 	}
 
 	//文档问题
@@ -193,10 +193,10 @@ public class WordTools {
 
 			//实验名称
 			String trainTitle=eq.getTrain().getName();
-			//实验编号
+			/*//实验编号
 			String traincode=eq.getTrain().getCodenum();
 			//环境模板
-			String envmodel=eq.getTrain().getEnvname();
+			String envmodel=eq.getTrain().getEnvname();*/
 			//实验内容
 			//			String strTrain=UtilTools.htmlText(eq.getTrain().getConContent());
 			String strTrain=UtilTools.delTagSpan(eq.getTrain().getConContent());
@@ -204,9 +204,9 @@ public class WordTools {
 			/*System.out.println("字符串aa:"+strTrain);*/
 			//分值
 			int score=eq.getTrain().getScore();
-			mdp.addStyledParagraphOfText("a", traincode);
+			/*mdp.addStyledParagraphOfText("a", traincode);*/
 			mdp.addStyledParagraphOfText("a", trainTitle+"(本题"+score+"分)");
-			mdp.addStyledParagraphOfText("a", "环境模板："+envmodel);
+			/*mdp.addStyledParagraphOfText("a", "环境模板："+envmodel);*/
 			mdp.addStyledParagraphOfText("a", strTrain);
 			int index=eq.getTrain().getConContent().indexOf("img");
 			if(index!=-1&&index>0){

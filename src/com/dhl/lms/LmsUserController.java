@@ -192,15 +192,15 @@ public class LmsUserController extends BaseController {
 	 */
 	@RequestMapping("/login")
 	public void login(HttpServletRequest request, HttpServletResponse response,
-			String email, String password) {
+			String username, String password) {
 		try {
 			
 			User olduser = getSessionUser(request);
 			
 			PrintWriter out = response.getWriter();
-			User user = userInterface.getUserBymail(email);
+			User user = userInterface.getUserByUserName(username);
 			if (user == null) {
-				String result = "{'sucess':'fail','msg':'电子邮件不对'}";
+				String result = "{'sucess':'fail','msg':'用户名不对'}";
 				out.write(result);
 				return;
 			}

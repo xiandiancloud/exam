@@ -136,7 +136,7 @@
 				<c:forEach var="category" items="${category}">
 					<div class="row">
 						<div class="col-xs-12 left nospace" id="name${category.id}">
-							<div class="numberfont">${category.name}</div>
+							<div class="cfont">${category.name}</div>
 						</div>
 						<%-- <div class="col-xs-12 center">
 							<h4>${category.describle}</h4>

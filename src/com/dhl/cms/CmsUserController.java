@@ -114,12 +114,12 @@ public class CmsUserController extends BaseController {
 	 */
 	@RequestMapping("/tlogin")
 	public void tlogin(HttpServletRequest request, HttpServletResponse response,
-			String email, String password) {
+			String username, String password) {
 		try {
 			PrintWriter out = response.getWriter();
-			User user = userInterface.getUserBymail(email);
+			User user = userInterface.getUserByUserName(username);
 			if (user == null) {
-				String result = "{'sucess':'fail','msg':'电子邮件不对'}";
+				String result = "{'sucess':'fail','msg':'登录名不对'}";
 				out.write(result);
 				return;
 			}
@@ -134,7 +134,7 @@ public class CmsUserController extends BaseController {
 			Role role = user.getRole();
 			if (!CommonConstant.ROLE_T.equals(role.getRoleName()))
 			{
-				String result = "{'sucess':'fail','msg':'登陆邮件不是老师身份'}";
+				String result = "{'sucess':'fail','msg':'登陆名不是老师身份'}";
 				out.write(result);
 				return;
 			}
