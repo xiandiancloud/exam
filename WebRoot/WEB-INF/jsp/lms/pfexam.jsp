@@ -157,7 +157,7 @@
                               <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
                               <ol class='dd-list'>
                                 <li class='dd-item' data-id='4'>
-                                  <div class='dd-handle noborder'><%-- ${vertical.name} --%></div>
+                                  <%-- <div class='dd-handle noborder'>${vertical.name}</div> --%>
                                   <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
 			                 		<c:forEach var="qd" items="${examq.qdlist}" varStatus="nn">
 			                 			<%-- 实训 --%>
@@ -526,7 +526,7 @@
 											</div>
 							   			</c:if>
 			                 		</c:forEach>
-			                 		<div class="clear"></div>
+			                 		<!-- <div class="clear"></div> -->
 			                 	</c:forEach>
                                 </li>
                               </ol>

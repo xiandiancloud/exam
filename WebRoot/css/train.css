@@ -478,7 +478,10 @@ input:placeholder {
 	background: #fbfbf9;
 	border: 1px solid gray;
 }
-
+.examMode:hover {
+background-color: #e9fff0;
+transition: background 0.1s ease-in 0s;
+}
 .highlighted-courses .courses,.find-courses .courses {
 	padding: 40px 0px 15px
 }

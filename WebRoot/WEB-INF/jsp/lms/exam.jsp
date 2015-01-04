@@ -166,14 +166,14 @@
                               <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
                               <ol class='dd-list'>
                                 <li class='dd-item' data-id='4'>
-                                  <div class='dd-handle noborder'><%-- ${vertical.name} --%></div>
+                                  <%-- <div class='dd-handle noborder'> ${vertical.name}</div> --%>
                                   <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
 			                 		<c:forEach var="qd" items="${examq.qdlist}" varStatus="nn">
 			                 			<%-- 实训 --%>
 							   			<c:if test="${qd.type == 6}">
 							   				<div class='row'>
 												<div class='col-xs-12'>
-													<form class="form form-horizontal" method="post" action="#">
+													<form class="form form-horizontal examMode" method="post" action="#">
 														<div class='form-group col-sm-12'>
 														    <c:set value="${index + 1}" var="index" />
 															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
@@ -210,7 +210,7 @@
 							   			<c:if test="${qd.type == 2}">																						
 											<div class='row'>
 												<div class='col-xs-12'>
-													<form class="form form-horizontal" method="post" action="#">
+													<form class="form form-horizontal examMode" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
 															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
@@ -232,7 +232,7 @@
 							   			<c:if test="${qd.type == 3}">
 							   				<div class='row'>
 												<div class='col-xs-12'>
-													<form class="form form-horizontal" method="post" action="#" id="${examq.id}${qd.id}">
+													<form class="form form-horizontal examMode" method="post" action="#" id="${examq.id}${qd.id}">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
 															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
@@ -254,7 +254,7 @@
 							   			<c:if test="${qd.type == 4}">
 											<div class='row'>
 												<div class='col-xs-12'>
-													<form class="form form-horizontal" method="post" action="#">
+													<form class="form form-horizontal examMode" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
 															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
@@ -278,7 +278,7 @@
 							   			<c:if test="${qd.type == 5}">
 							   				<div class='row'>
 												<div class='col-xs-12'>
-													<form class="form form-horizontal" method="post" action="#">
+													<form class="form form-horizontal examMode" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
 															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
@@ -305,7 +305,7 @@
 											</div>
 							   			</c:if>
 			                 		</c:forEach>
-			                 		<div class="clear"></div>
+			                 		<!-- <div class="clear"></div> -->
 			                 	</c:forEach>
                                 </li>
                               </ol>
