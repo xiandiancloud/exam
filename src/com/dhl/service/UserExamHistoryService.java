@@ -22,7 +22,7 @@ public class UserExamHistoryService {
 		return userExamHistoryDao.getMyHistoryExam(userId);
 	}
 	
-	public UserExamHistory getUserExam(int userId, int examId) {
-		return userExamHistoryDao.getUserExam(userId, examId);
+	public UserExamHistory getUserExam(int userId, int examId,int docounts) {
+		return userExamHistoryDao.getUserExam(userId, examId,docounts);
 	}
 }

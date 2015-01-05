@@ -25,14 +25,14 @@ public class TrainExt extends BaseDomain {
 	private String shellname;//脚本name
 	private String shellparameter;//脚本参数，已#号分割
 	private String devinfo;//执行环境机器情况----如果为空，代表是动态产生的，比如虚拟机
-	private String scoretag;
+//	private String scoretag;
 	
-	public String getScoretag() {
-		return scoretag;
-	}
-	public void setScoretag(String scoretag) {
-		this.scoretag = scoretag;
-	}
+//	public String getScoretag() {
+//		return scoretag;
+//	}
+//	public void setScoretag(String scoretag) {
+//		this.scoretag = scoretag;
+//	}
 	public String getDevinfo() {
 		return devinfo;
 	}

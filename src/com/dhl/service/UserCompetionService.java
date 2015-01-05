@@ -29,7 +29,6 @@ import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Question;
 import com.dhl.domain.Train;
-import com.dhl.domain.TrainExt;
 import com.dhl.domain.UserAction;
 import com.dhl.domain.UserCompetion;
 import com.dhl.domain.UserExam;
@@ -340,13 +339,13 @@ public class UserCompetionService {
 											else
 											{		
 												List<String> answerlist = qd.getAnswer();
-												List<TrainExt> te = trainExtDao.getTrainExtList(t.getId());
-												String REGEX = "";
-												for (TrainExt text:te)
-												{
-													REGEX += text.getScoretag();
-													REGEX += "#";
-												}
+//												List<TrainExt> te = trainExtDao.getTrainExtList(t.getId());
+												String REGEX = t.getScoretag();
+//												for (TrainExt text:te)
+//												{
+//													REGEX += text.getScoretag();
+//													REGEX += "#";
+//												}
 												if (revalue != null)
 												{
 													List list2 = UtilTools.isCorrect(CommonConstant.QTYPE_6,revalue,answerlist,REGEX,quscore);

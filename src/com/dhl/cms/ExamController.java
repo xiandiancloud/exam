@@ -759,6 +759,7 @@ public class ExamController extends BaseController {
 		try {
 			PrintWriter out = response.getWriter();
 			String str = userQuestionService.getTrainQuestion(trainId);
+			str = str.replaceAll("null", "");
 			out.write(str);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -63,11 +63,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    font-size: 16px;
 	    background-color: #FFF0BD;
 	}
-	.dhltext2{width: 100px;}
+	.dhltext2{width: 160px;}
 	.dhlselect2
  {
 height: 100%;
-width: 100px;
+width: 160px;
 min-width: 100px;
 padding: 10px;
 border-radius: 3px;
@@ -188,10 +188,10 @@ width:600px;
 		<td class="dhltd">分值<font color="red">*</font></td>
 		<td class="dhltd2"><input id="score" type="text" class="input setting-input dhltext"/></td>
 		</tr>
-		<!-- <tr>
+		<tr>
 		<td class="dhltd">判分标准</td>
-		<td class="dhltd2"><input id="scoretag" type="text" class="input setting-input dhltext"/><span>以，号分割字符</span></td>
-		</tr> -->
+		<td class="dhltd2"><input id="scoretag" type="text" class="input setting-input dhltext"/><span>&nbsp;&nbsp;以#号分割正则表达式</span></td>
+		</tr>
 		<tr>
 		<td class="dhltd dhltd3">答案</td>
 		<td><iframe width="600" height="372" scrolling="no"  frameborder="0" id="conAnswer" src="input.html" ></iframe>  </td>
@@ -320,14 +320,14 @@ width:600px;
 						opttmp += '<option value="'+name+'">'+name+'</option>';
 					}
 					
-					//插入脚本元素
+					//插入脚本元素'&nbsp;<a>判分：</a>&nbsp;<input type="text" class="input setting-input dhltext2 five"/>'+
 					var tmp = '<li class=" dhlalert dhlalert-success">'+
 						'<input type="hidden" class="one" value="'+path+'"/>'+
 						'<span class="qq-upload-file four">'+fileName+'</span>'+
 		    			'<a>环境：</a>&nbsp;<select class="dhlselect2 two">'+opttmp+
 		               	'</select>'+
 						'&nbsp;<a>参数：</a>&nbsp;<input type="text" class="input setting-input dhltext2 three"/>'+
-						'&nbsp;<a>判分：</a>&nbsp;<input type="text" class="input setting-input dhltext2 five"/>'+
+						
 						'&nbsp;&nbsp;&nbsp;&nbsp;<a class="qq-upload-delete" href="javascript:void(0);" onclick="removeshelltext(this);">删除</a>'+
 					'</li>';
 					$("#shelltext").append(tmp);
@@ -364,13 +364,13 @@ width:600px;
 						}
 						
 						var select = '<select class="dhlselect2 two">'+opttmp+'</select>';
-						
+						//'&nbsp;<a>判分：</a>&nbsp;<input type="text" class="input setting-input dhltext2 five" value="'+extlist[i]['scoretag']+'"/>'+
 						html+='<li class=" dhlalert dhlalert-success">'+
     					'<input type="hidden" class="one" value="'+extlist[i]['shellpath']+'"/>'+
 	    				'<span class="qq-upload-file four">'+extlist[i]['shellname']+'</span>'+
     	    			'<a>环境：</a>&nbsp;'+select+
 	    				'&nbsp;<a>参数：</a>&nbsp;<input type="text" class="input setting-input dhltext2 three" value="'+extlist[i]['shellparameter']+'"/>'+
-	    				'&nbsp;<a>判分：</a>&nbsp;<input type="text" class="input setting-input dhltext2 five" value="'+extlist[i]['scoretag']+'"/>'+
+	    				
 	    				'&nbsp;&nbsp;&nbsp;&nbsp;<a class="qq-upload-delete" href="javascript:void(0);" onclick="removeshelltext(this);">删除</a>'+
     					'</li>';
 						
@@ -410,7 +410,7 @@ width:600px;
 						$("#conAnswer").contents().find("#editor").html(conAnswer);
 						//conAnswer = replaceTextarea1(conAnswer);
 						$("#score").attr("value",a.basiclist.score);
-						//$("#scoretag").attr("value",a.basiclist.scoretag);
+						$("#scoretag").attr("value",a.basiclist.scoretag);
 						
 						if (a.extlist)
 						{	
@@ -460,9 +460,10 @@ width:600px;
 			/* $("#conShell").attr("value",""); */
 			$("#conAnswer").contents().find("#editor").html("");
 			$("#score").attr("value","");
-			//$("#scoretag").attr("value","");
+			$("#scoretag").attr("value","");
 			$("#savebutton").show();
 			$("#editbutton").hide();
+			$("#shelltext").html("");
     	}
     	function savetrain()
     	{
@@ -495,18 +496,18 @@ width:600px;
 				return ;
 			}
 			var score = parseInt(temp);
-			//var scoretag = $("#scoretag").val();
+			var scoretag = $("#scoretag").val();
 			//$('#editor').wysiwyg();
-			var prodata = {name:name,codenum:codenum,envname:envname,conContent:conContent,conAnswer:conAnswer,score:score,examId:examId,everticalId:verticalId};
-			
+			var prodata = {name:name,codenum:codenum,scoretag:scoretag,envname:envname,conContent:conContent,conAnswer:conAnswer,score:score,examId:examId,everticalId:verticalId};
+			//mo += "scoretag:'"+$(this).children(".five").val()+"',";
 			var mo ="[";
 			$("#shelltext > li").each(function(i){  
 	  		    mo += "{";					
 				mo += "shellpath:'"+$(this).children(".one").val()+"',";		
 				mo += "devinfo:'"+$(this).children(".two").val()+"',";		
 				mo += "shellparameter:'"+$(this).children(".three").val()+"',";
-				mo += "shellname:'"+$(this).children(".four").html()+"',";
-				mo += "scoretag:'"+$(this).children(".five").val()+"',";
+				mo += "shellname:'"+$(this).children(".four").html()+"'";
+				
 				mo += "},";	
   			});  
 			if (mo.length > 1)
@@ -576,18 +577,18 @@ width:600px;
 				return ;
 			}
 			var score = parseInt(temp);
-			//var scoretag = $("#scoretag").val();
+			var scoretag = $("#scoretag").val();
 			//$('#editor').wysiwyg();
-			var prodata = {trainId:trainId,name:name,codenum:codenum,envname:envname,conContent:conContent,conAnswer:conAnswer,score:score};
-			
+			var prodata = {trainId:trainId,name:name,codenum:codenum,envname:envname,scoretag:scoretag,conContent:conContent,conAnswer:conAnswer,score:score};
+			//mo += "scoretag:'"+$(this).children(".five").val()+"'";
 			var mo ="[";
 			$("#shelltext > li").each(function(i){  
 	  		    mo += "{";					
 				mo += "shellpath:'"+$(this).children(".one").val()+"',";		
 				mo += "devinfo:'"+$(this).children(".two").val()+"',";		
 				mo += "shellparameter:'"+$(this).children(".three").val()+"',";
-				mo += "shellname:'"+$(this).children(".four").html()+"',";
-				mo += "scoretag:'"+$(this).children(".five").val()+"'";
+				mo += "shellname:'"+$(this).children(".four").html()+"'";
+				
 				mo += "},";	
   			});  
 			if (mo.length > 1)

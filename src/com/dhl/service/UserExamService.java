@@ -95,23 +95,37 @@ public class UserExamService {
 		UserExam ucs = getUserExam(userId, examId);
 		if (ucs != null)
 		{
-			UserExamHistory ueh = new UserExamHistory();
-			ueh.setActivestate(ucs.getActivestate());
-			ueh.setDocounts(ucs.getDocounts());
-			ueh.setExam(ucs.getExam());
-			ueh.setState(ucs.getState());
-			ueh.setUserId(ucs.getUserId());
-			ueh.setUsetime(ucs.getUsetime());
-			ueh.setAgaindotime(UtilTools.timeTostrHMS(new Date()));
-			userExamHistoryDao.save(ueh);
-			
+			int docounts = ucs.getDocounts();
+			UserExamHistory ueh = userExamHistoryDao.getUserExam(userId, examId, docounts);
+			if (ueh == null)
+			{
+				ueh = new UserExamHistory();
+				ueh.setActivestate(ucs.getActivestate());
+				ueh.setDocounts(docounts);
+				ueh.setExam(ucs.getExam());
+				ueh.setState(ucs.getState());
+				ueh.setUserId(ucs.getUserId());
+				ueh.setUsetime(ucs.getUsetime());
+				ueh.setAgaindotime(UtilTools.timeTostrHMS(new Date()));
+				userExamHistoryDao.save(ueh);
+			}
+			else
+			{
+				ueh.setActivestate(ucs.getActivestate());
+				ueh.setDocounts(docounts);
+				ueh.setExam(ucs.getExam());
+				ueh.setState(ucs.getState());
+				ueh.setUserId(ucs.getUserId());
+				ueh.setUsetime(ucs.getUsetime());
+				ueh.setAgaindotime(UtilTools.timeTostrHMS(new Date()));
+				userExamHistoryDao.update(ueh);
+			}
 			//更新用户考试的相关信息
 			ucs.setState(0);
 			int oldcounts = ucs.getDocounts();
 			int newdocounts = oldcounts + 1;
 			ucs.setDocounts(newdocounts);
 			userExamDao.update(ucs);
-			
 			//copy用户对应的问题相关信息进历史记录
 			List<UserQuestion> list = userQuestionDao.getUserQueston(userId, examId);
 			for (UserQuestion uq:list)
@@ -505,13 +519,13 @@ public class UserExamService {
 									else
 									{	
 										List<String> answerlist = qd.getAnswer();
-										List<TrainExt> te = trainExtDao.getTrainExtList(t.getId());
-										String REGEX = "";
-										for (TrainExt text:te)
-										{
-											REGEX += text.getScoretag();
-											REGEX += "#";
-										}
+//										List<TrainExt> te = trainExtDao.getTrainExtList(t.getId());
+										String REGEX = t.getScoretag();
+//										for (TrainExt text:te)
+//										{
+//											REGEX += text.getScoretag();
+//											REGEX += "#";
+//										}
 										if (revalue != null)
 										{
 											List list2 = UtilTools.isCorrect(CommonConstant.QTYPE_6,revalue,answerlist,REGEX,quscore);

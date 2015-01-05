@@ -646,7 +646,7 @@ public void sortVertical(String charpters) {
 								te.setShellname(ext.getShellname());
 								te.setShellparameter(ext.getShellparameter());
 								te.setDevinfo(ext.getDevinfo());
-								te.setScoretag(ext.getScoretag());
+//								te.setScoretag(ext.getScoretag());
 								trainExtDao.save(te);
 							}
 						}
@@ -947,7 +947,7 @@ public void sortVertical(String charpters) {
 				String envname = rt.attributeValue("envname");
 				String display_name = rt.attributeValue("display_name");
 				String score = rt.attributeValue("score");
-//				String scoretag = rt.attributeValue("scoretag");
+				String scoretag = rt.attributeValue("scoretag");
 
 //				File imgdir = new File(path + File.separator + "shell");
 //				if (!imgdir.exists())
@@ -967,7 +967,7 @@ public void sortVertical(String charpters) {
 					train.setEnvname(envname);
 					train.setName(display_name);
 					train.setScore(Integer.parseInt(score));
-//					train.setScoretag(scoretag);
+					train.setScoretag(scoretag);
 					trainDao.save(train);
 //				}
 				ExamQuestion vt = new ExamQuestion();
@@ -1008,7 +1008,7 @@ public void sortVertical(String charpters) {
 				String shellname = rt.attributeValue("shellname");
 				String shellparameter = rt.attributeValue("shellparameter");
 				String devinfo = rt.attributeValue("devinfo");
-				String scoretag = rt.attributeValue("scoretag");
+//				String scoretag = rt.attributeValue("scoretag");
 
 				File imgdir = new File(path + File.separator + "shell");
 				if (!imgdir.exists())
@@ -1023,7 +1023,7 @@ public void sortVertical(String charpters) {
 				te.setShellname(shellname);
 				te.setShellparameter(shellparameter);
 				te.setDevinfo(devinfo);
-				te.setScoretag(scoretag);
+//				te.setScoretag(scoretag);
 				trainExtDao.save(te);
 
 			} catch (Exception e) {

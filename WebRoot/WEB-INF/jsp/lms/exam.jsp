@@ -126,20 +126,16 @@
 	<div id='wrapper'>
 		<div class='container'>
 			<div class='row'>
-						<div class='col-xs-12'>
-							<div class='row'>
-								<div class="col-xs-12">
-									<div class="box ">
-										<div class="box-content">
-											<div class='row'>
-												<div class="col-xs-12">
-													<h2>${exam.name}</h2>
-												</div>
-											</div>											
-										</div>
-									</div>
+				<div class='col-xs-12'>
+					<div class='row'>
+						<div class="col-xs-12">
+							<div class="box ">
+								<div class="box-content">
+									<h2>${exam.name}</h2>									
 								</div>
+							</div>
 						</div>
+					</div>
 				</div>
 			</div>
 			<div class='row' id='content-wrapper'>
@@ -176,7 +172,7 @@
 													<form class="form form-horizontal examMode" method="post" action="#">
 														<div class='form-group col-sm-12'>
 														    <c:set value="${index + 1}" var="index" />
-															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}&nbsp;&nbsp;(本题${qd.score}分)</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -213,7 +209,7 @@
 													<form class="form form-horizontal examMode" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}&nbsp;&nbsp;(本题${qd.score}分)</span>
 														</div>
 														<div id="numberquestion${index}">
 														<c:forEach var="qdcontent" items="${qd.content}">
@@ -235,7 +231,7 @@
 													<form class="form form-horizontal examMode" method="post" action="#" id="${examq.id}${qd.id}">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}&nbsp;&nbsp;(本题${qd.score}分)</span>
 														</div>
 														<div id="numberquestion${index}">
 														<c:forEach var="qdcontent" items="${qd.content}">
@@ -257,7 +253,7 @@
 													<form class="form form-horizontal examMode" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}&nbsp;&nbsp;(本题${qd.score}分)</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -281,7 +277,7 @@
 													<form class="form form-horizontal examMode" method="post" action="#">
 														<div class='form-group col-sm-12'>
 															<c:set value="${index + 1}" var="index" />
-															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}</span>
+															<span id="number${index}"><label class="numberfont">${index}&nbsp;</label>${qd.title}&nbsp;&nbsp;(本题${qd.score}分)</span>
 														</div>
 														<c:forEach var="qdcontent" items="${qd.content}">
 															<div class='form-group col-sm-12'>
@@ -365,7 +361,7 @@
 								<div class='col-xs-12'>
 									<div class='box-content' style="padding:0">
 										<c:if test="${userexam.state == 0}">
-											<a class="btn btn-danger btn-block btn-lg" href="lms/submitallquesstion.action?competionId=${competionId}&examId=${exam.id}">提交试卷</a>
+											<a class="btn btn-danger btn-block btn-lg" href="lms/submitallquesstion.action?competionId=${competionId}&examId=${exam.id}" onclick="return submitexam();">提交试卷</a>
 										</c:if>
 										<c:if test="${userexam.state == 1}">
 										    <!--测试放开  -->
@@ -675,11 +671,6 @@
  			var examId = "${exam.id}";
  			var competionId = "${competionId}";
  			var useranswer = $(element).val();
- 			if (isNull(useranswer))
-			{
- 				return;
-			}
- 			
  			useranswer = encodeURIComponent(useranswer);
 			var data = {competionId:competionId,examId:examId,questionId:questionId,number:number,useranswer:useranswer};
 			$.ajax({
@@ -712,10 +703,6 @@
 				return;
 			}
 			var useranswer = UE.getEditor(element).getContent();//$("#"+element).contents().find("#editor").html();
-			if (isNull(useranswer))
-			{
- 				return;
-			}
 			useranswer = encodeURIComponent(useranswer);
 			//var useranswer = replaceTextarea1($(element).val());
  			var examId = "${exam.id}";
@@ -760,6 +747,14 @@
 				return false;
 			}
 			return true;
+		}
+		function submitexam()
+		{
+			if(confirm("你确定要提交试卷吗,提交后将无法修改试卷！"))
+			{
+				return true;
+			}
+			return false;
 		}
 		//提交答案
 		/* function submitallquesstion()

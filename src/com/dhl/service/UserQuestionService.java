@@ -58,7 +58,7 @@ public class UserQuestionService {
 		String con = UtilTools.replaceBackett(t.getConContent());
 		String conanswer = UtilTools.replaceBackett(t.getConAnswer());
 		String str = "{'name':'"+t.getName()+"','codenum':'"+t.getCodenum()
-				+"','envname':'"+t.getEnvname()+"','conContent':'"+con+"','conAnswer':'"+conanswer+"','score':'"+t.getScore()+"'},";
+				+"','envname':'"+t.getEnvname()+"','conContent':'"+con+"','scoretag':'"+t.getScoretag()+"','conAnswer':'"+conanswer+"','score':'"+t.getScore()+"'},";
 		buffer.append(str);
 		
 		List<TrainExt> zyList = trainExtDao.getTrainExtList(trainId);
@@ -73,7 +73,7 @@ public class UserQuestionService {
 				{
 					TrainExt pm = zyList.get(i);
 					String tsp = UtilTools.replaceBackett(pm.getShellpath());
-					temp += "{\"shellpath\":\""+tsp+"\",\"devinfo\":\""+pm.getDevinfo()+"\",\"scoretag\":\""+pm.getScoretag()+"\",\"shellparameter\":\""+pm.getShellparameter()+"\",\"shellname\":\""+pm.getShellname()+"\"},";
+					temp += "{\"shellpath\":\""+tsp+"\",\"devinfo\":\""+pm.getDevinfo()+"\",\"shellparameter\":\""+pm.getShellparameter()+"\",\"shellname\":\""+pm.getShellname()+"\"},";
 				}
 				if (temp.length() > 1)
 				{
@@ -106,6 +106,7 @@ public class UserQuestionService {
 				t.setConContent((String)usermap.get("conContent"));
 				t.setConAnswer((String)usermap.get("conAnswer"));
 				t.setScore((int)usermap.get("score"));
+				t.setScoretag((String)usermap.get("scoretag"));
 				trainDao.update(t);
 				
 				ArrayList slist = (ArrayList)map.get("shelllist");
@@ -126,7 +127,7 @@ public class UserQuestionService {
 						te.setDevinfo((String)shellmap.get("devinfo"));
 						te.setShellparameter((String)shellmap.get("shellparameter"));
 						te.setShellname((String)shellmap.get("shellname"));
-						te.setScoretag((String)shellmap.get("scoretag"));
+//						te.setScoretag((String)shellmap.get("scoretag"));
 						trainExtDao.save(te);
 					}
 				}
@@ -148,6 +149,7 @@ public class UserQuestionService {
 //			t.setConShell(conShell);
 			t.setConAnswer((String)usermap.get("conAnswer"));
 			t.setScore((int)usermap.get("score"));
+			t.setScoretag((String)usermap.get("scoretag"));
 			trainDao.save(t);
 			
 			ArrayList slist = (ArrayList)map.get("shelllist");
@@ -168,7 +170,7 @@ public class UserQuestionService {
 					te.setDevinfo((String)shellmap.get("devinfo"));
 					te.setShellparameter((String)shellmap.get("shellparameter"));
 					te.setShellname((String)shellmap.get("shellname"));
-					te.setScoretag((String)shellmap.get("scoretag"));
+//					te.setScoretag((String)shellmap.get("scoretag"));
 					trainExtDao.save(te);
 				}
 			}

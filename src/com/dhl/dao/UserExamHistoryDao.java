@@ -15,9 +15,9 @@ public class UserExamHistoryDao extends BaseDao<UserExamHistory> {
 		return find(hql);
 	}
 	
-	public UserExamHistory getUserExam(int userId, int examId) {
+	public UserExamHistory getUserExam(int userId, int examId,int docounts) {
 		String hql = "from UserExamHistory where examId = " + examId
-				+ " and userId = " + userId;
+				+ " and userId = " + userId+" and docounts = "+docounts;
 		List<UserExamHistory> list = find(hql);
 		if (list.size() == 0) {
 			return null;

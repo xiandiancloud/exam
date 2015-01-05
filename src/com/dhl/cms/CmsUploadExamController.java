@@ -746,7 +746,7 @@ public class CmsUploadExamController extends BaseController {
 //		}
 //		rootGen.addAttribute("shell", shellname);
 		rootGen.addAttribute("score", train.getScore() + "");
-//		rootGen.addAttribute("scoretag", train.getScoretag());
+		rootGen.addAttribute("scoretag", train.getScoretag());
 
 		List<TrainExt> telist = trainExtDao.getTrainExtList(train.getId());
 		for (TrainExt te:telist)
@@ -799,7 +799,7 @@ public class CmsUploadExamController extends BaseController {
 		rootGen.addAttribute("shellname", trainExt.getShellname());
 		rootGen.addAttribute("shellparameter", trainExt.getShellparameter());
 		rootGen.addAttribute("devinfo", trainExt.getDevinfo());
-		rootGen.addAttribute("scoretag", trainExt.getScoretag());
+//		rootGen.addAttribute("scoretag", trainExt.getScoretag());
 				
 		File imgdir = new File(coursepath + File.separator + "shell");
 		if (!imgdir.exists())

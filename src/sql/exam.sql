@@ -166,7 +166,7 @@ create table t_train
    /*conShell            varchar(255) default null,*/
    conAnswer           longtext default null,
    score               int(10) not null,
-   /*scoretag            varchar(255) default null,*/
+   scoretag            varchar(255) default null,
    iscreate            int(10) default 0,
    primary key (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -180,8 +180,7 @@ create table t_train_ext
    shellpath           varchar(255) default null,
    shellname           varchar(255) default null,
    shellparameter      varchar(255) default null,
-   devinfo             varchar(255) default null,
-   scoretag            varchar(255) default null,
+   devinfo             varchar(255) default null,   
    primary key (id),
    CONSTRAINT receivet_train_ext_1 FOREIGN KEY (trainId) REFERENCES t_train (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
