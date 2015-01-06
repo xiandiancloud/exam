@@ -1075,8 +1075,13 @@ public class UtilTools {
 		else if (type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5 || type == CommonConstant.QTYPE_6)
 		{
 			//主观题用正则表达式判断
-			String[] regex = REGEX.split("#");
-			int len = regex.length;
+			int len = 0;
+			String[] regex = null;
+			if (REGEX != null)
+			{
+				regex = REGEX.split("#");
+				len = regex.length;
+			}
 			//如果没有判分法则，直接返回
 			if (len < 1)
 			{

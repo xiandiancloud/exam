@@ -37,7 +37,7 @@
     <!-- / coloring file [optional] (if you are going to use custom contrast color) -->
     <link href="assets/stylesheets/theme-colors.css" media="all" rel="stylesheet" type="text/css" />
     <!-- / demo file [not required!] -->
-    <!-- <link href="assets/stylesheets/demo.css" media="all" rel="stylesheet" type="text/css" /> -->
+    <link href="assets/stylesheets/demo.css" media="all" rel="stylesheet" type="text/css" />
     <link href="css/train.css" rel="stylesheet">
     <!--[if lt IE 9]>
       <script src="assets/javascripts/ie/html5shiv.js" type="text/javascript"></script>
@@ -61,27 +61,45 @@
     <!-- / theme file [required] -->
     <script src="assets/javascripts/theme.js" type="text/javascript"></script>
     <!-- / demo file [not required!] -->
-    <!-- <script src="assets/javascripts/demo.js" type="text/javascript"></script> -->
+    <script src="assets/javascripts/demo.js" type="text/javascript"></script>
     <!-- / START - page related files and scripts [optional] -->
-	<!-- <script src="js/inputtext/bootstrap-wysiwyg.js" type="text/javascript"></script> -->
+	<script src="js/inputtext/bootstrap-wysiwyg.js" type="text/javascript"></script>
 	<script src="js/inputtext/jquery.hotkeys.js" type="text/javascript"></script>
     <!-- / END - page related files and scripts [optional] -->
     <script src="js/common.js" type="text/javascript"></script>
     <script src="js/holder.js"></script>
 	<script src="js/jqPaginator.js"></script>
+	<script src="assets/javascripts/plugins/slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>	
+	<link rel="stylesheet" type="text/css" href="easyui/themes/bootstrap/easyui.css">
 
-    <script type="text/javascript" charset="utf-8" src="ueditor.config.js"></script>
-    <script type="text/javascript" charset="utf-8" src="ueditor.all.js"> </script>
-    
+    <style>
+		#editor {overflow:auto;height: 150px;}
+		#leftpanel{margin-right: 5px;border:0;}
+		#editor img{
+			  padding: 4px;
+			  line-height: 1.42857;
+			  background-color: white;
+			  border: 0px solid #dddddd;
+			  border-radius: 4px;
+			  -webkit-transition: all 0.2s ease-in-out;
+			  transition: all 0.2s ease-in-out;
+			  display: inline-block;
+			  max-width: 100%;
+			  height: auto;
+		}
+	</style>
   </head>
-<body class='contrast-red fixed-header'>
-<jsp:include page="../common/header.jsp"></jsp:include>
-<div id='wrapper'>
-	<div class='container'>
-		<div class='row' id='content-wrapper'>
-			<div class='col-xs-12'>
-			<h2><a href="javascript:gotouppage();"><span class="glyphicon glyphicon-arrow-left">${exam.name}</span></a></h2>
+<body class='easyui-layout'>
+<div data-options="region:'north',border:false" style="height:60px;padding:0px">
+	<div class="tt"><jsp:include page="theader.jsp"></jsp:include></div>
+</div>
+<div data-options="region:'west',split:true" style="width:450px;overflow: hidden;" id="left">
+	<div id="leftpanel">
+			<div style="height:70px;;">
 			<div id="pagination" class="center"></div>
+			</div>
+			
 			<div class='box-content noborder nospace'>
 			<div id="leftcon" class='scrollable' data-scrollable-height='' data-scrollable-start='top'>
 				<div class='box box-bordered searchback box-nomargin cmargin5'>
@@ -103,17 +121,17 @@
 								      <input type="text" class="form-control" id="trainname" disabled="disabled">
 								    </div>
 								  </div>
-		<!-- 						  <div class="form-group">
+								  <div class="form-group">
 								    <label for="traincode" class="col-sm-2 control-label"><div class="h2font">编号</div></label>
 								    <div class="col-sm-10">
 								      <input type="text" class="form-control" id="traincode" disabled="disabled">
 								    </div>
-								  </div> -->
+								  </div>
 								</form>
 			                    </div>
 			    </div>
 				
-				<!-- <div class='box box-bordered searchback box-nomargin cmargin5'>
+				<div class='box box-bordered searchback box-nomargin cmargin5'>
 	                   <div class='box-header box-header-small searchback'>
 	                     <div class='title'>环境</div>
 	                     <div class='actions'>
@@ -160,7 +178,7 @@
 							<img src="images/Loading.gif" class="none" id="imgenv"/>
 						</form>
 	                   </div>
-			    </div> -->
+			    </div>
 				
 				<div class='box box-bordered searchback box-nomargin cmargin5'>
 	                    <div class='box-header box-header-small searchback'>
@@ -196,6 +214,25 @@
 							<p><div class="h2font">完成实训后点击下面的提交按钮,否则机器将无法自动评分,如果实训有用户自己的环境还没有保存的，先保存环境再提交。</div></p>
 							
 							<div id="userenv">
+							     <!-- <p><div class="h2font">desc</div></p>
+							     <label class="col-sm-2 control-label"><div class="h2font">IP</div></label>
+							     <div class="col-sm-10">
+							      <input type="text" class="form-control">
+							     </div>
+							     <label class="col-sm-12 control-label">&nbsp;</label>
+							     <label class="col-sm-2 control-label"><div class="h2font">用户名</div></label>
+							     <div class="col-sm-10">
+							      <input type="text" class="form-control">
+							     </div>
+							     <label class="col-sm-12 control-label">&nbsp;</label>
+							     <label class="col-sm-2 control-label"><div class="h2font">密码</div></label>
+							     <div class="col-sm-10">
+							      <input type="text" class="form-control">
+							     </div>
+							    <label class="col-sm-12 control-label">&nbsp;</label>
+							     <a href="javascript:void(0);">
+							     <button type="button" class="col-sm-12 btn btn-primary" onclick="saveuserenv();">保存环境</button>
+							     </a> -->
 						    </div>
 						  
 							<p></p>
@@ -205,15 +242,13 @@
 							<img src="images/Loading.gif" class="none" id="imgsubmit"/>
 							</div>
 							</form>
-							<label for="useranswer"><div class="h2font">你也可以手工输入你的答案</div></label>
-							    <!-- <textarea class="form-control" rows="3" id="useranswer"></textarea> -->
-							<script id="traineditor" type="text/plain" style="width:100%;margin-bottom:5px;min-height: 100px;"></script>
 							<form role="form">
 							  <div class="form-group">
 						<!-- 	    <label for="trainresult"><div class="h2font">内容</div></label>
 							    <textarea class="form-control" rows="6" id="trainresult"></textarea> -->
+							    <label for="useranswer"><div class="h2font">你也可以手工输入你的答案</div></label>
 							    <!-- <textarea class="form-control" rows="3" id="useranswer"></textarea> -->
-<!-- 								<div>
+								<div>
 									<div id="alerts"></div>
 								    <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
 								      <div class="btn-group">
@@ -230,24 +265,28 @@
 								    </div>
 								    <div id="editor">
 								    </div>
-								 </div> -->
+								 </div>
 							    <div class="h10"></div>
-							    <!-- <a href="javascript:void(0);" id="usertrainsubmit"> -->
-									<button type="button" class="btn btn-primary" id="usertrainsubmit">手工提交</button>
-								<!-- </a> -->
+							    <a href="javascript:void(0);" id="usertrainsubmit">
+									<button type="button" class="btn btn-primary" id="usertrainbutton">手工提交</button>
+								</a>
 							  </div>
 							</form>
 	                    </div>
 			    </div>
 			</div>
 			</div>
-			</div>
-		</div>
 	</div>
 </div>
 
-	<div class="clear"></div>
+<div data-options="region:'south',border:false" style="height:50px;background:#EEEEEE;padding:0px;">
 	<jsp:include page="../common/footer.jsp"></jsp:include>
+</div>
+
+<div data-options="region:'center'" style="padding:0px;overflow:hidden;">
+	<iframe id="iframe" src="http://${gateone}:8090/" frameBorder="0"
+						width="100%" scrolling="no" height="100%"></iframe>
+</div>
 
    <div class="modal fade" id="myModal" data-backdrop="static">
 		<div class="modal-dialog">
@@ -271,12 +310,6 @@
 	</div>
     <script>
     var currentPage;
-    jQuery(function($) {
-    $(document).ready( function() {
-    	
-    	
-    });
-    });
 	$(function() {
 		/* $("#trainjoin").click(function() {
 			createServer();
@@ -288,19 +321,55 @@
 			submituseranswer();
 		});
 		//initClock();
-		//var mainheight = document.body.clientHeight - 175;
-		//$("#leftcon").height(mainheight);
-		//$("#leftcon").attr("data-scrollable-height",mainheight);
-		//$(".slimScrollBar").hide();
+		var mainheight = document.body.clientHeight - 175;
+		$("#leftcon").height(mainheight);
+		$("#leftcon").attr("data-scrollable-height",mainheight);
+		$(".slimScrollBar").hide();
 		//$("#iframe").height(mainheight);
-		
+		initlist();
 		//edit----------
-	    //initToolbarBootstrapBindings(); 
-		//$('#editor').wysiwyg({ fileUploadError: showErrorAlert} );
-		UE.getEditor('traineditor',{onready:function(){//创建一个编辑器实例
-			initlist();
-		}});
+	    initToolbarBootstrapBindings(); 
+		$('#editor').wysiwyg({ fileUploadError: showErrorAlert} );
 	});
+	window.onresize = function(){ 
+		var mainheight = document.body.clientHeight - 175;
+		$("#leftcon").height(mainheight);
+		$("#leftcon").attr("data-scrollable-height",mainheight);
+	}
+	function initToolbarBootstrapBindings() {
+      var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier', 
+            'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
+            'Times New Roman', 'Verdana'],
+            fontTarget = $('[title=Font]').siblings('.dropdown-menu');
+      $.each(fonts, function (idx, fontName) {
+          fontTarget.append($('<li><a data-edit="fontName ' + fontName +'" style="font-family:\''+ fontName +'\'">'+fontName + '</a></li>'));
+      });
+      $('a[title]').tooltip({container:'body'});
+    	$('.dropdown-menu input').click(function() {return false;})
+		    .change(function () {$(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');})
+        .keydown('esc', function () {this.value='';$(this).change();});
+
+      $('[data-role=magic-overlay]').each(function () { 
+        var overlay = $(this), target = $(overlay.data('target')); 
+        overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
+      });
+      if ("onwebkitspeechchange"  in document.createElement("input")) {
+        var editorOffset = $('#editor').offset();
+        $('#voiceBtn').css('position','absolute').offset({top: editorOffset.top, left: editorOffset.left+$('#editor').innerWidth()-35});
+      } else {
+        $('#voiceBtn').hide();
+      }
+	};
+	function showErrorAlert (reason, detail) {
+		var msg='';
+		if (reason==='unsupported-file-type') { msg = "Unsupported format " +detail; }
+		else {
+			console.log("error uploading file", reason, detail);
+		}
+		$('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+ 
+		 '<strong>File upload error</strong> '+msg+' </div>').prependTo('#alerts');
+	};
+	
 	function initlist()
 	{
 		var totalPages = "${fn:length(tlist)}";
@@ -478,7 +547,7 @@
 		if ("${status.count}" == currentPage) {
 			var examId = parseInt("${exam.id}");
 			var trainId = parseInt("${train.id}");
-			var useranswer = UE.getEditor("traineditor").getContent();//$("#editor").html();
+			var useranswer = $("#editor").html();
 			useranswer = encodeURIComponent(useranswer);
 			var data = {
 				examId : examId,
@@ -643,25 +712,7 @@
 							$("#trainjoin").show();
 						}
 					} */
-					//var ue = UE.getEditor('traineditor');
-					
-					if (a.useranswer)
-					{
-						//alert("1111111111111"+ue);
-						//$("#traineditor").html(decodeURIComponent(a.useranswer));
-						//UE.getEditor('traineditor').execCommand('insertHtml', '');
-						//UE.getEditor('traineditor').selection.getRange();
-						//UE.getEditor('traineditor').execCommand('insertHtml', decodeURIComponent(a.useranswer));
-				        UE.getEditor('traineditor').setContent(decodeURIComponent(a.useranswer), false);
-					}
-					else
-					{
-						//alert("2222222222222"+ue);
-						//UE.getEditor('traineditor').selection.getRange();
-						//$("#traineditor").html('');
-						//UE.getEditor('traineditor').execCommand('insertHtml', '&nbsp;');
-						UE.getEditor('traineditor').setContent("", false);
-					}
+					$("#editor").html(decodeURIComponent(a.useranswer));
 					$("#traincon").html(a.conContent);
 					if (a.revalue && a.revalue.length > 0)
 					{
