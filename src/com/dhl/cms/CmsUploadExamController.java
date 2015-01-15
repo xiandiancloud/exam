@@ -309,49 +309,23 @@ public class CmsUploadExamController extends BaseController {
 			String ctxPath = path + "export";
 			Exam exam = examService.get(examId);
 			 //获得WebRoot的路径  
-			ClassLoader classLoader = Thread.currentThread()  
-		            .getContextClassLoader();  
-		    if (classLoader == null) {  
-		        classLoader = ClassLoader.getSystemClassLoader();  
-		    }  
-		    java.net.URL url = classLoader.getResource("");  
-		    String ROOT_CLASS_PATH = url.getPath() + "/";  
-		    File rootFile = new File(ROOT_CLASS_PATH);  
-		    String WEB_INFO_DIRECTORY_PATH = rootFile.getParent() + "/";  
-		    File webInfoDir = new File(WEB_INFO_DIRECTORY_PATH);  
-		    String SERVLET_CONTEXT_PATH = webInfoDir.getParent() + "/";  
-		    String filepath = SERVLET_CONTEXT_PATH + "template/template.docx";  
-		    System.out.println("file"+filepath);
+//			ClassLoader classLoader = Thread.currentThread()  
+//		            .getContextClassLoader();  
+//		    if (classLoader == null) {  
+//		        classLoader = ClassLoader.getSystemClassLoader();  
+//		    }  
+//		    java.net.URL url = classLoader.getResource("");  
+//		    String ROOT_CLASS_PATH = url.getPath() + "/";  
+//		    File rootFile = new File(ROOT_CLASS_PATH);  
+//		    String WEB_INFO_DIRECTORY_PATH = rootFile.getParent() + "/";  
+//		    File webInfoDir = new File(WEB_INFO_DIRECTORY_PATH);  
+//		    String SERVLET_CONTEXT_PATH = webInfoDir.getParent() + "/";  
+		    String filepath = path + "template/template.docx";  
+//		    System.out.println("file"+filepath);
 //			String inputfilepath = "e:\\template.docx";
 			WordprocessingMLPackage wordMLPackage =
-					WordprocessingMLPackage.load(new java.io.File(filepath));
-			WordTools.writeTitle(wordMLPackage, exam);
-			Set<ExamChapter> chapterset = exam.getExamchapters();
-			Iterator it = chapterset.iterator();
-			while (it.hasNext()) {
-				ExamChapter chapter = (ExamChapter) it.next();
-				WordTools.writeChapter(wordMLPackage, chapter);
-				Set<ExamSequential> sequentialset = chapter.getEsequentials();
-				Iterator it2 = sequentialset.iterator();
-				while (it2.hasNext()) {
-					ExamSequential sequential = (ExamSequential) it2.next();
-					WordTools.writeSequential(wordMLPackage, sequential);
-					Set<ExamVertical> verticalset = sequential.getExamVerticals();
-					Iterator it3 = verticalset.iterator();
-					while (it3.hasNext()) {
-						ExamVertical vertical = (ExamVertical) it3.next();
-						WordTools.writeVertical(wordMLPackage, vertical);
-						Set<ExamQuestion> vt = vertical.getExamQuestion();
-						int i=0;
-						for (ExamQuestion eq:vt)
-						{
-							
-							i=i+1;
-							WordTools.writeQuestion(wordMLPackage,i,eq);
-						}
-					}
-				}
-			}
+					WordprocessingMLPackage.load(new File(filepath));
+			WordTools.writeALLQuestion(wordMLPackage,exam);
 			String name = exam.getName()+".docx";
 			String filename = ctxPath + "/"+name;
 			File file = new File(filename);

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.dhl.cons.CommonConstant;
+import com.dhl.domain.UserAction;
 import com.dhl.domain.UserCompetion;
 
 @Repository
@@ -31,6 +32,17 @@ public class UserCompetionDao extends BaseDao<UserCompetion> {
 				+ CommonConstant.CROLE_3 + "' or job = '"
 				+ CommonConstant.CROLE_4 + "')";
 		return find(hql);
+	}
+	
+	public UserCompetion getUserCompetion(int userId,int competionId,String job)
+	{
+		String hql = "from UserCompetion where userId = " + userId+" and competionId = "+competionId + " and job = '"+job+"'";
+		List<UserCompetion> list = find(hql);
+		if (list != null && list.size() > 0)
+		{
+			return list.get(0);
+		}
+		return null;
 	}
 	
 	public List<UserCompetion> getCompetionStudent(int competionId) {

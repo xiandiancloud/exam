@@ -13,4 +13,15 @@ public class UserActionDao extends BaseDao<UserAction> {
 		String hql = "from UserAction where userId = " + userId;
 		return find(hql);
 	}
+	
+	public UserAction getUserAction(int userId,int actionId)
+	{
+		String hql = "from UserAction where userId = " + userId +" and actionId = "+actionId;
+		List<UserAction> list = find(hql);
+		if (list != null && list.size() > 0)
+		{
+			return list.get(0);
+		}
+		return null;
+	}
 }

@@ -6,9 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -161,11 +160,55 @@ public class Test {
         return sb.toString();     
         }  
     
+    
+    public static void StringControl(String s){
+        String[] ma = Pattern.compile("<IMG.*src=(.*?)[^>]*?>").split(s);
+        List<String> strL=new ArrayList<String>();
+        for(int i=0;i<ma.length;i++){
+            System.out.println(ma[i]);
+        }
+    }
+    
+    public static void aaa(String s,String regex,int bbb)
+    {
+    	 int index = s.indexOf(regex);
+		 if (index != -1)
+		 {
+			 String one = s.substring(0,index);
+			 if (one ==null || "".equals(one))
+			 {
+				 
+			 }
+			 else
+			 {
+			 System.out.println("one ---- "+one);
+			 }
+			 String two = regex;
+			 bbb++;
+			 System.out.println(bbb);
+			 System.out.println("two ---- "+two);
+			 String three = s.substring(index+regex.length());
+			 System.out.println("three ---- "+three);
+			 s = three;
+//				 System.out.println("s ---- "+s);
+			 aaa(s,regex, bbb);
+		 }
+		 else
+		 {
+			 System.out.println("four -------- "+s);
+		 }
+    }
+    public static int aaaa = 0;
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		
+		 String s="11111TtTtTt33333333TtTtTt22TtTtTt2222"; 
+		 String regex = "TtTtTt";
+//		 String regex="<(img|a|p|b|div|br)\\s*([\\w]*=(\"|\')([^\"\'<]*)(\"|\')\\s*)*(/>|>)";
+		 int bbb = 0;
+		 aaa(s,regex,bbb);
 //		readFileByLines("D://aaa.txt");
 //		String REGEX = "11111 22222 333333";
 //		String[] regex = REGEX.split("#");
@@ -185,10 +228,29 @@ public class Test {
 //	       int M = s;
 //	       System.out.println("时间是："+N+"小时 "+K+"分钟 "+M+"秒"); 
 	      
-		Map<String, Object> metadata = new HashMap<String, Object>();
-		metadata.put("isDir", "false");
-		metadata.put("path", "sssss");
-		System.out.println(metadata.get("path"));
+//		Map<String, Object> metadata = new HashMap<String, Object>();
+//		metadata.put("isDir", "false");
+//		metadata.put("path", "sssss");
+//		System.out.println(metadata.get("path"));
+		
+		
+		
+//		Pattern p = Pattern.compile("controller*192.168.10.10(\\s|\\S)*Permissive(\\s|\\S)*192.168.10.20(\\s|\\S)*Permissive(\\s|\\S)*baseurl=ftp://192.168.10.10//icehouse-allinone/(\\s|\\S)*");
+//		Pattern p = Pattern.compile("controller(.|\\s)*192.168.10.10(.|\\s)*Permissive(.|\\s)*192.168.10.20(.|\\s)*Permissive(.|\\s)*baseurl=ftp://192.168.10.10//icehouse-allinone/(.|\\s)*");
+//		Matcher m = p.matcher("controllereth0      Link encap:Ethernet  HWaddr 0C:C4:7A:05:C3:22            inet addr:192.168.10.10  Bcast:192.168.10.255  Mask:255.255.255.0          inet6 addr: fe80::ec4:7aff:fe05:c322/64 Scope:Link          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1          RX packets:5263 errors:0 dropped:0 overruns:0 frame:0          TX packets:5563 errors:0 dropped:0 overruns:0 carrier:0          collisions:0 txqueuelen:1000           RX bytes:1317655 (1.2 MiB)  TX bytes:3053398 (2.9 MiB)          Interrupt:16 Memory:fbc00000-fbc20000 eth1      Link encap:Ethernet  HWaddr 0C:C4:7A:05:C3:23            inet6 addr: fe80::ec4:7aff:fe05:c323/64 Scope:Link          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1          RX packets:7 errors:0 dropped:0 overruns:0 frame:0          TX packets:18 errors:0 dropped:0 overruns:0 carrier:0          collisions:0 txqueuelen:1000           RX bytes:508 (508.0 b)  TX bytes:1292 (1.2 KiB)          Interrupt:17 Memory:fbb00000-fbb20000 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4::1         localhost localhost.localdomain localhost6 localhost6.localdomain6192.168.10.10 controller192.168.10.20 computePermissivecentos6.5icehouse-allinone[centos]baseurl=file:///opt/centos6.5/gpgcheck=0enabled=1name=centos[openstack-icehouse]name=OpenStack Icehouse Repositorybaseurl=file:///opt/icehouse-allinone/gpgcheck=0enabled=1anonymous_enable=YESlocal_enable=YESwrite_enable=YESlocal_umask=022dirmessage_enable=YESxferlog_enable=YESconnect_from_port_20=YESxferlog_std_format=YESlisten=YESpam_service_name=vsftpduserlist_enable=YEStcp_wrappers=YESanon_root=/optcomputeeth0      Link encap:Ethernet  HWaddr 00:25:90:AA:8B:F8            inet addr:192.168.10.20  Bcast:192.168.10.255  Mask:255.255.255.0          inet6 addr: fe80::225:90ff:feaa:8bf8/64 Scope:Link          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1          RX packets:2920 errors:0 dropped:0 overruns:0 frame:0          TX packets:2508 errors:0 dropped:0 overruns:0 carrier:0          collisions:0 txqueuelen:1000           RX bytes:2107687 (2.0 MiB)  TX bytes:598597 (584.5 KiB)          Interrupt:16 Memory:fbc00000-fbc20000 eth1      Link encap:Ethernet  HWaddr 00:25:90:AA:8B:F9            inet6 addr: fe80::225:90ff:feaa:8bf9/64 Scope:Link          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1          RX packets:0 errors:0 dropped:0 overruns:0 frame:0          TX packets:7 errors:0 dropped:0 overruns:0 carrier:0          collisions:0 txqueuelen:1000           RX bytes:0 (0.0 b)  TX bytes:538 (538.0 b)          Interrupt:17 Memory:fbb00000-fbb20000 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4::1         localhost localhost.localdomain localhost6 localhost6.localdomain6192.168.10.10 controller192.168.10.20 computePermissiverh[centos]baseurl=ftp://192.168.10.10//centos6.5/gpgcheck=0enabled=1name=centos[openstack-icehouse]name=OpenStack Icehouse Repositorybaseurl=ftp://192.168.10.10//icehouse-allinone/gpgcheck=0enabled=1");
+//	    if (m.find())
+//	    {
+//	    	System.out.println("111111");
+//	    }
+//		String regex = "controller*192.168.10.10(\\s|\\S)*Permissive(\\s|\\S)*192.168.10.20(\\s|\\S)*Permissive(\\s|\\S)*baseurl=ftp://192.168.10.10//icehouse-allinone/(\\s|\\S)*";
+//		String aaa = "controllereth0      Link encap:Ethernet  HWaddr 0C:C4:7A:05:C3:22            inet addr:192.168.10.10  Bcast:192.168.10.255  Mask:255.255.255.0          inet6 addr: fe80::ec4:7aff:fe05:c322/64 Scope:Link          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1          RX packets:5263 errors:0 dropped:0 overruns:0 frame:0          TX packets:5563 errors:0 dropped:0 overruns:0 carrier:0          collisions:0 txqueuelen:1000           RX bytes:1317655 (1.2 MiB)  TX bytes:3053398 (2.9 MiB)          Interrupt:16 Memory:fbc00000-fbc20000 eth1      Link encap:Ethernet  HWaddr 0C:C4:7A:05:C3:23            inet6 addr: fe80::ec4:7aff:fe05:c323/64 Scope:Link          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1          RX packets:7 errors:0 dropped:0 overruns:0 frame:0          TX packets:18 errors:0 dropped:0 overruns:0 carrier:0          collisions:0 txqueuelen:1000           RX bytes:508 (508.0 b)  TX bytes:1292 (1.2 KiB)          Interrupt:17 Memory:fbb00000-fbb20000 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4::1         localhost localhost.localdomain localhost6 localhost6.localdomain6192.168.10.10 controller192.168.10.20 computePermissivecentos6.5icehouse-allinone[centos]baseurl=file:///opt/centos6.5/gpgcheck=0enabled=1name=centos[openstack-icehouse]name=OpenStack Icehouse Repositorybaseurl=file:///opt/icehouse-allinone/gpgcheck=0enabled=1anonymous_enable=YESlocal_enable=YESwrite_enable=YESlocal_umask=022dirmessage_enable=YESxferlog_enable=YESconnect_from_port_20=YESxferlog_std_format=YESlisten=YESpam_service_name=vsftpduserlist_enable=YEStcp_wrappers=YESanon_root=/optcomputeeth0      Link encap:Ethernet  HWaddr 00:25:90:AA:8B:F8            inet addr:192.168.10.20  Bcast:192.168.10.255  Mask:255.255.255.0          inet6 addr: fe80::225:90ff:feaa:8bf8/64 Scope:Link          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1          RX packets:2920 errors:0 dropped:0 overruns:0 frame:0          TX packets:2508 errors:0 dropped:0 overruns:0 carrier:0          collisions:0 txqueuelen:1000           RX bytes:2107687 (2.0 MiB)  TX bytes:598597 (584.5 KiB)          Interrupt:16 Memory:fbc00000-fbc20000 eth1      Link encap:Ethernet  HWaddr 00:25:90:AA:8B:F9            inet6 addr: fe80::225:90ff:feaa:8bf9/64 Scope:Link          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1          RX packets:0 errors:0 dropped:0 overruns:0 frame:0          TX packets:7 errors:0 dropped:0 overruns:0 carrier:0          collisions:0 txqueuelen:1000           RX bytes:0 (0.0 b)  TX bytes:538 (538.0 b)          Interrupt:17 Memory:fbb00000-fbb20000 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4::1         localhost localhost.localdomain localhost6 localhost6.localdomain6192.168.10.10 controller192.168.10.20 computePermissiverh[centos]baseurl=ftp://192.168.10.10//centos6.5/gpgcheck=0enabled=1name=centos[openstack-icehouse]name=OpenStack Icehouse Repositorybaseurl=ftp://192.168.10.10//icehouse-allinone/gpgcheck=0enabled=1";
+//		boolean flag = aaa.matches(regex);
+//		System.out.println("0000----------- "+flag);
+//		String answer = "fffff11111xxxxfsa" +
+//				"22fzzz2333";
+//		String regex = "11111&22,33&333";
+//		boolean flag = UtilTools.matches(answer, regex);
+//		System.out.println(flag);
 		
 //		String s ="shell\\8958772f-13bd-4eeb-a84a-12f5a63c1b4eunit3.4.1.sh";
 //		//把s中的反斜杠\ 替换为\\

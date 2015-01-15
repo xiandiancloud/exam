@@ -21,6 +21,7 @@ import com.dhl.dao.UserCompetionDao;
 import com.dhl.dao.UserExamDao;
 import com.dhl.dao.UserQuestionChildDao;
 import com.dhl.dao.UserQuestionDao;
+import com.dhl.domain.Action;
 import com.dhl.domain.CompetionExam;
 import com.dhl.domain.Exam;
 import com.dhl.domain.ExamChapter;
@@ -78,16 +79,29 @@ public class UserCompetionService {
 	 */
 	public void save(int userId,int competionId,String job)
 	{
-		UserCompetion uc = new UserCompetion();
-		uc.setUserId(userId);
-		uc.setCompetion(competionDao.get(competionId));
-		uc.setJob(job);
-		userCompetionDao.save(uc);
 		
-		UserAction ua = new UserAction();
-		ua.setUserId(userId);
-		ua.setAction(actionDao.getActionByname(CommonConstant.PERMISSION_3));
-		userActionDao.save(ua);
+		UserCompetion ucc = userCompetionDao.getUserCompetion(userId,competionId,job);
+		if (ucc == null)
+		{
+			UserCompetion uc = new UserCompetion();
+			uc.setUserId(userId);
+			uc.setCompetion(competionDao.get(competionId));
+			uc.setJob(job);
+			userCompetionDao.save(uc);
+			
+			Action action = actionDao.getActionByname(CommonConstant.PERMISSION_3);
+			if (action != null)
+			{
+				UserAction uaa =userActionDao.getUserAction(userId, action.getId());
+				if (uaa == null)
+				{
+					UserAction ua = new UserAction();
+					ua.setUserId(userId);
+					ua.setAction(action);
+					userActionDao.save(ua);
+				}
+			}
+		}
 	}
 	
 	public void remove(int id)

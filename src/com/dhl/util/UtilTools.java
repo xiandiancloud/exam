@@ -855,10 +855,12 @@ public class UtilTools {
 	
 	 private static final String regEx_script = "<script[^>]*?>[\\s\\S]*?<\\/script>"; // 定义script的正则表达式  
 	    private static final String regEx_style = "<style[^>]*?>[\\s\\S]*?<\\/style>"; // 定义style的正则表达式  
-	    private static final String regEx_html = "<[^>]+>"; // 定义HTML标签的正则表达式  
+	    private static final String regEx_o = "<!--.*?-->";//"<\\!--.*-->";//html注释 
+	    private static final String regEx_html = "<[^>]+>"; // 定义HTML标签的正则表达式
+	    private static final String regEx_htmlIMG = "<(?!img)[^>]*>"; // 定义HTML标签的正则表达式    (不包含img)
 //	    private static final String regEx_space = "\\s*|\t|\r|\n";//定义空格回车换行符  
 	    private static final String regEx_br="<\\/br>";
-	    public static String delHTMLTag(String htmlStr) {  
+	    private static String delHTMLTag(String htmlStr) {  
 	        Pattern p_script = Pattern.compile(regEx_script, Pattern.CASE_INSENSITIVE);  
 	        Matcher m_script = p_script.matcher(htmlStr);  
 	        htmlStr = m_script.replaceAll(""); // 过滤script标签  
@@ -867,6 +869,11 @@ public class UtilTools {
 	        Matcher m_style = p_style.matcher(htmlStr);  
 	        htmlStr = m_style.replaceAll(""); // 过滤style标签  
 	  
+	        
+	        Pattern p_o = Pattern.compile(regEx_o, Pattern.CASE_INSENSITIVE);
+	        Matcher m_o = p_o.matcher(htmlStr);
+	        htmlStr = m_o.replaceAll("");
+	           
 	        Pattern p_html = Pattern.compile(regEx_html, Pattern.CASE_INSENSITIVE);  
 	        Matcher m_html = p_html.matcher(htmlStr);  
 	        htmlStr = m_html.replaceAll(""); // 过滤html标签  
@@ -877,6 +884,39 @@ public class UtilTools {
 	        return htmlStr.trim(); // 返回文本字符串  
 	    }  
 	      
+	    private static String delHTMLTagIMG(String htmlStr) {  
+	        Pattern p_script = Pattern.compile(regEx_script, Pattern.CASE_INSENSITIVE);  
+	        Matcher m_script = p_script.matcher(htmlStr);  
+	        htmlStr = m_script.replaceAll(""); // 过滤script标签  
+	  
+	        Pattern p_style = Pattern.compile(regEx_style, Pattern.CASE_INSENSITIVE);  
+	        Matcher m_style = p_style.matcher(htmlStr);  
+	        htmlStr = m_style.replaceAll(""); // 过滤style标签  
+	  
+	        
+	        Pattern p_o = Pattern.compile(regEx_o, Pattern.CASE_INSENSITIVE);
+	        Matcher m_o = p_o.matcher(htmlStr);
+	        htmlStr = m_o.replaceAll("");
+	           
+	        Pattern p_html = Pattern.compile(regEx_htmlIMG, Pattern.CASE_INSENSITIVE);  
+	        Matcher m_html = p_html.matcher(htmlStr);  
+	        htmlStr = m_html.replaceAll(""); // 过滤html标签  
+	  
+//	        Pattern p_space = Pattern.compile(regEx_space, Pattern.CASE_INSENSITIVE);  
+//	        Matcher m_space = p_space.matcher(htmlStr);  
+//	        htmlStr = m_space.replaceAll(""); // 过滤空格回车标签  
+	        return htmlStr.trim(); // 返回文本字符串  
+	    }  
+	    public static final String SPLIT_IMG = "TtTtTt";
+	    public static String getTextFromHtmlIMG(String htmlStr){  
+	        htmlStr = delHTMLTagIMG(htmlStr);  
+	        htmlStr = htmlStr.replaceAll("&nbsp;", "");  
+	        String regex="<(img|a|p|b|div|br)\\s*([\\w]*=(\"|\')([^\"\'<]*)(\"|\')\\s*)*(/>|>)";
+	        htmlStr = htmlStr.replaceAll(regex, SPLIT_IMG);  
+//	        htmlStr = htmlStr.substring(0, htmlStr.indexOf("。")+1);  
+	        return htmlStr;  
+	    }  
+	    
 	    public static String getTextFromHtml(String htmlStr){  
 	        htmlStr = delHTMLTag(htmlStr);  
 	        htmlStr = htmlStr.replaceAll("&nbsp;", "");  
@@ -1020,12 +1060,10 @@ public class UtilTools {
 		try {
 			useranswer = java.net.URLDecoder.decode(useranswer,"UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if (type == CommonConstant.QTYPE_2)
 		{
-//			return useranswer.trim().equalsIgnoreCase(answerlist.get(0).trim());
 			if (useranswer.trim().equalsIgnoreCase(answerlist.get(0).trim()))
 			{
 				list.add(1);
@@ -1041,10 +1079,8 @@ public class UtilTools {
 		{
 			String[] strs = useranswer.split("#");
 			int size = answerlist.size();
-//			boolean flag = true;
 			if (size != strs.length)
 			{
-//				flag = false;
 				list.add(0);
 				list.add(0);
 			}
@@ -1070,7 +1106,6 @@ public class UtilTools {
 					list.add(0);
 				}
 			}
-//			return flag;
 		}
 		else if (type == CommonConstant.QTYPE_4 || type == CommonConstant.QTYPE_5 || type == CommonConstant.QTYPE_6)
 		{
@@ -1085,7 +1120,6 @@ public class UtilTools {
 			//如果没有判分法则，直接返回
 			if (len < 1)
 			{
-//				return false;
 				list.add(0);
 				list.add(0);
 			}
@@ -1093,14 +1127,24 @@ public class UtilTools {
 			{
 				int istrue = 0;
 				String tempuseranswer = UtilTools.getTextFromHtml(useranswer);
-				for (String str:regex)
+				try
 				{
-					Pattern p = Pattern.compile(str);
-				    Matcher m = p.matcher(tempuseranswer);
-				    if (m.find())
-				    {
-				    	istrue ++;
-				    }
+					for (String str:regex)
+					{
+//						Pattern p = Pattern.compile(str);
+//						System.out.println("length -------- "+tempuseranswer.length());
+//					    Matcher m = p.matcher(tempuseranswer);
+					    boolean isr = matches(tempuseranswer, str);//tempuseranswer.matches(str);
+//					    if (m.find())
+					    if (isr)
+					    {
+					    	istrue ++;
+					    }
+					}
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
 				}
 				if (istrue == len)
 				{
@@ -1121,12 +1165,54 @@ public class UtilTools {
 					String uscore = formater.format(b);
 					list.add(uscore);
 				}
-//				return true;
 			}
 		}
-//		else
-//			return false;
 		return list;
 	}
 	
+	public static boolean matches(String answer,String regex)
+	{
+		if (regex == null || "".equals(regex))
+		{
+			return false;
+		}
+		String copyanswer = answer;
+		String[] regexs = regex.split("&");
+		for (String str:regexs)
+		{
+			String[] strs = str.split(",");
+			int lens = strs.length;
+			if (lens > 1)
+			{
+				boolean flag = false;
+				for (String stres:strs)
+				{
+					int index = copyanswer.indexOf(stres);
+					if (index != -1)
+					{
+						copyanswer = copyanswer.substring(index+stres.length());
+						flag = true;
+						break;
+					}
+				}
+				if (!flag)
+				{
+					return false;
+				}
+			}
+			else
+			{
+				int index = copyanswer.indexOf(str);
+				if (index != -1)
+				{
+					copyanswer = copyanswer.substring(index+str.length());
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 }

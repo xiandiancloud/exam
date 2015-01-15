@@ -30,7 +30,7 @@
 	<link href="assets/stylesheets/plugins/bootstrap_daterangepicker/bootstrap-daterangepicker.css" media="all" rel="stylesheet" type="text/css" />
 	<link href="assets/stylesheets/plugins/bootstrap_datetimepicker/bootstrap-datetimepicker.min.css" media="all" rel="stylesheet" type="text/css" />
 	<link href="assets/stylesheets/plugins/bootstrap_switch/bootstrap-switch.css" media="all" rel="stylesheet" type="text/css" />
-	<link href="assets/stylesheets/plugins/common/bootstrap-wysihtml5.css" media="all" rel="stylesheet" type="text/css" />
+		<link href="assets/stylesheets/plugins/jgrowl/jquery.jgrowl.min.css" media="all" rel="stylesheet" type="text/css" />
 	<!-- / END - page related stylesheets [optional] -->
 	<!-- / bootstrap [required] -->
 	<link href="assets/stylesheets/bootstrap/bootstrap.css" media="all" rel="stylesheet" type="text/css" />
@@ -227,7 +227,7 @@
 														                	<div class='input-group controls-group'>
 																				<input class="form-control" type="text" id="textquestion${index}"/>
 																				<span class='input-group-btn'>
-																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
+																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}','${qd.score}');">改分</button>
 																				</span>
 																			</div>
 														              </div>
@@ -303,7 +303,7 @@
 														                	<div class='input-group controls-group'>
 																				<input class="form-control" type="text" id="textquestion${index}"/>
 																				<span class='input-group-btn'>
-																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
+																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}','${qd.score}');">改分</button>
 																				</span>
 																			</div>
 														              </div>
@@ -367,7 +367,7 @@
 														                	<div class='input-group controls-group'>
 																				<input class="form-control" type="text" id="textquestion${index}"/>
 																				<span class='input-group-btn'>
-																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
+																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}','${qd.score}');">改分</button>
 																				</span>
 																			</div>
 														              </div>
@@ -429,7 +429,7 @@
 														                	<div class='input-group controls-group'>
 																				<input class="form-control" type="text" id="textquestion${index}"/>
 																				<span class='input-group-btn'>
-																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
+																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}','${qd.score}');">改分</button>
 																				</span>
 																			</div>
 														              </div>
@@ -491,7 +491,7 @@
 														                	<div class='input-group controls-group'>
 																				<input class="form-control" type="text" id="textquestion${index}"/>
 																				<span class='input-group-btn'>
-																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}');">改分</button>
+																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}','${qd.score}');">改分</button>
 																				</span>
 																			</div>
 														              </div>
@@ -615,6 +615,7 @@
     <script src="assets/javascripts/demo.js" type="text/javascript"></script>
     <!-- / START - page related files and scripts [optional] -->
     <script src="assets/javascripts/plugins/nestable/jquery.nestable.js" type="text/javascript"></script>
+    <script src="assets/javascripts/plugins/jgrowl/jquery.jgrowl.min.js" type="text/javascript"></script>
     <!-- / END - page related files and scripts [optional] -->
 	<script src="js/common.js" type="text/javascript"></script>
 	<script src="js/holder.js" type="text/javascript"></script>
@@ -690,11 +691,27 @@
 		}
 		
 		//裁判修改了判分
-		function resetquesstionscore(type,questionId,number,index)
+		function resetquesstionscore(type,questionId,number,index,score)
 		{
 			var userId = "${userId}";
 			var examId = "${exam.id}";
 			var pfscore = $("#textquestion"+index).val();
+			//alert(pfscore+"   ,   "+score)
+			if (!isInteger(pfscore))
+			{
+				$.jGrowl("修改分值必须是整数格式", {
+					position: 'bottom-right',
+			        });
+				return;
+			}
+			var tt = parseInt(pfscore);
+			if (tt > score)
+			{
+				$.jGrowl("修改分值不允许大于最高分", {
+					position: 'bottom-right',
+			        });
+				return;
+			}
 			var data = {type:type,userId:userId,examId:examId,questionId:questionId,number:number,pfscore:pfscore};
 			$.ajax({
 				url : "lms/setquesstionpfscore.action",
@@ -703,12 +720,16 @@
 				success : function(s) {
 					var a = eval("(" + s + ")");
 					if ("sucess" == a.sucess) {
-						alert("修改了分值");
+						$.jGrowl("修改了分值", {
+							position: 'bottom-right',
+					        });
 						$("#scorequestion"+index).html(pfscore);
 					}
 					else
 					{
-						alert(a.msg);
+						$.jGrowl(a.msg, {
+							position: 'bottom-right',
+					        });
 					}
 				}
 			});
