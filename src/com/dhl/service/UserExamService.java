@@ -478,6 +478,7 @@ public class UserExamService {
 								qd.setAnswer(qa);
 								qd.setType(CommonConstant.QTYPE_6);
 								qd.setScore(t.getScore());
+								qd.setExplain(t.getScoretag());
 								trainList.add(qd);
 								eq.setQdlist(trainList);
 								//---------------分析实训--------可以拆分出去

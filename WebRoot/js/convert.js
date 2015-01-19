@@ -181,8 +181,8 @@
 
       // replace explanations
       xml = xml.replace(/\[判分规则\]\n?([^\]]*)\[\/?判分规则\]/gmi, function(match, p1) {
-          var selectString = '<solution>\n<div class="detailed-solution">\n判分规则\n\n' + p1 + '\n</div>\n</solution>';
-
+          /*var selectString = '<solution>\n<div class="detailed-solution">\n判分规则\n\n' + p1 + '\n</div>\n</solution>';*/
+    	  var selectString = '<solution>\n<div class="detailed-solution">\n' + p1 + '\n</div>\n</solution>';
           return selectString;
       });
       

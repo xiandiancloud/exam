@@ -224,12 +224,14 @@
 														              <div class='col-xs-10 l7back'>
 														                	本题满分：<span class="bscore"><strong>${qd.score}</strong></span>
 														                	&nbsp;&nbsp;你的得分：<span class="bscore" id="scorequestion${index}"><strong>${qd.userscore}</strong></span>
+														                	<c:if test="${empty qd.explain}">
 														                	<div class='input-group controls-group'>
 																				<input class="form-control" type="text" id="textquestion${index}"/>
 																				<span class='input-group-btn'>
 																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}','${qd.score}');">改分</button>
 																				</span>
 																			</div>
+																			</c:if>
 														              </div>
 														          </div>
 														</div>
@@ -300,12 +302,14 @@
 														              <div class='col-xs-10 l7back'>
 														                	本题满分：<span class="bscore"><strong>${qd.score}</strong></span>
 														                	&nbsp;&nbsp;你的得分：<span class="bscore" id="scorequestion${index}"><strong>${qd.userscore}</strong></span>
+														                	<c:if test="${empty qd.explain}">
 														                	<div class='input-group controls-group'>
 																				<input class="form-control" type="text" id="textquestion${index}"/>
 																				<span class='input-group-btn'>
 																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}','${qd.score}');">改分</button>
 																				</span>
 																			</div>
+																			</c:if>
 														              </div>
 														          </div>
 														</div>
@@ -364,12 +368,14 @@
 														              <div class='col-xs-10 l7back'>
 														                	本题满分：<span class="bscore"><strong>${qd.score}</strong></span>
 														                	&nbsp;&nbsp;你的得分：<span class="bscore" id="scorequestion${index}"><strong>${qd.userscore}</strong></span>
+														                	<c:if test="${empty qd.explain}">
 														                	<div class='input-group controls-group'>
 																				<input class="form-control" type="text" id="textquestion${index}"/>
 																				<span class='input-group-btn'>
 																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}','${qd.score}');">改分</button>
 																				</span>
 																			</div>
+																			</c:if>
 														              </div>
 														          </div>
 														</div>													
@@ -426,12 +432,14 @@
 														              <div class='col-xs-10 l7back'>
 														                	本题满分：<span class="bscore"><strong>${qd.score}</strong></span>
 														                	&nbsp;&nbsp;你的得分：<span class="bscore" id="scorequestion${index}"><strong>${qd.userscore}</strong></span>
+														                	<c:if test="${empty qd.explain}">
 														                	<div class='input-group controls-group'>
 																				<input class="form-control" type="text" id="textquestion${index}"/>
 																				<span class='input-group-btn'>
 																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}','${qd.score}');">改分</button>
 																				</span>
 																			</div>
+																			</c:if>
 														              </div>
 														          </div>
 														</div>
@@ -488,12 +496,14 @@
 														              <div class='col-xs-10 l7back'>
 														                	本题满分：<span class="bscore"><strong>${qd.score}</strong></span>
 														                	&nbsp;&nbsp;你的得分：<span class="bscore" id="scorequestion${index}"><strong>${qd.userscore}</strong></span>
+														                	<c:if test="${empty qd.explain}">
 														                	<div class='input-group controls-group'>
 																				<input class="form-control" type="text" id="textquestion${index}"/>
 																				<span class='input-group-btn'>
 																					<button class='btn btn-danger' type='button' onclick="resetquesstionscore('${qd.type}','${qd.id}','${nn.index+1}','${index}','${qd.score}');">改分</button>
 																				</span>
 																			</div>
+																			</c:if>
 														              </div>
 														          </div>
 														</div>
@@ -557,6 +567,28 @@
 									                 		<a href="javascript:void(0)" onclick="document.getElementById('number${sum}').scrollIntoView();" class="j-item item  f-fl"  id="index${sum}">
 									                 		${sum}
 									                 		</a>
+														</c:if>
+								                 		</c:forEach>
+								                 	</c:forEach>
+					                              </c:forEach>
+					                          </c:forEach>
+					                      </c:forEach>
+									</div>
+									<div data-offset-top="125" class="nav nav-tabs nav-stacked section">
+										<div>裁判可以修改评分的题目</div>
+										<c:set value="0" var="sum" />
+										<c:forEach var="chapter" items="${exam.examchapters}" varStatus="i">
+					                          <c:forEach var="sequential" items="${chapter.esequentials}" varStatus="j">
+					                              <c:forEach var="vertical" items="${sequential.examVerticals}" varStatus="k">
+					                                  <c:forEach var="examq" items="${vertical.examQuestion}" varStatus="l">
+								                 		<c:forEach var="qd" items="${examq.qdlist}">
+								                 		<c:if test="${qd.type != 1}">
+									                 		<c:set value="${sum + 1}" var="sum" /> 
+									                 		<c:if test="${empty qd.explain}">
+									                 		<a href="javascript:void(0)" onclick="document.getElementById('number${sum}').scrollIntoView();" class="j-item item  f-fl">
+									                 		${sum}
+									                 		</a>
+									                 		</c:if>
 														</c:if>
 								                 		</c:forEach>
 								                 	</c:forEach>

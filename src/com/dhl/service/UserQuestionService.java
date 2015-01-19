@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.dhl.cons.CommonConstant;
 import com.dhl.dao.ExamDao;
@@ -18,6 +21,7 @@ import com.dhl.dao.TrainExtDao;
 import com.dhl.dao.UserQuestionChildDao;
 import com.dhl.dao.UserQuestionDao;
 import com.dhl.domain.ExamQuestion;
+import com.dhl.domain.RestShell;
 import com.dhl.domain.Train;
 import com.dhl.domain.TrainExt;
 import com.dhl.domain.UserQuestion;
@@ -340,7 +344,7 @@ public class UserQuestionService {
 	/**
 	 * 提交答案
 	 */
-	public void saveQuestion(String username,int userId,int examId,int questionId,int number,String useranswer)
+	public void saveQuestion(RestTemplate restTemplate,String username,int userId,int examId,int questionId,int number,String useranswer)
 	{
 		UserQuestion uq = userQuestionDao.getUserQuestionByquestion(userId, examId, questionId);
 		if (uq == null)
@@ -379,6 +383,26 @@ public class UserQuestionService {
 			uqc.setUserquestionId(uq.getId());
 			userQuestionChildDao.update(uqc);
 			logDao.saveLog(username,CommonConstant.LOG_5+"examId:"+examId+" , questionId:"+questionId+" , number:"+number);
+		}
+		
+		//提交答案后开始触发监控系统
+		String isstart = UtilTools.getConfig().getProperty("SURVEY");
+		if ("1".equals(isstart))
+		{
+			try
+			{
+				String url  = UtilTools.getConfig().getProperty("SURVEY_URL");
+				RestShell rs = new RestShell();
+				rs.setUserName(username);
+				rs.setCondition(username+"提交了一个问题");
+				rs.setResult(uq.getId()+"");
+				HttpEntity<RestShell> entity = new HttpEntity<RestShell>(rs);
+				ResponseEntity<RestShell> response = restTemplate.postForEntity(url,entity, RestShell.class);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 	

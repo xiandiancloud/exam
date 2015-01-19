@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.cons.CommonConstant;
@@ -71,6 +72,8 @@ public class HavingExamController extends BaseController {
 	private TrainService trainService;
 	@Autowired
 	private EnvironmentService environmentService;
+	@Autowired
+	private RestTemplate restTemplate;
 	
 	//判断是否有权限去考试
 	private boolean isHaving(Exam exam)
@@ -309,7 +312,7 @@ public class HavingExamController extends BaseController {
 			else
 			{
 				User user = getSessionUser(request);
-				userQuestionService.saveQuestion(user.getUsername(),user.getId(),examId,questionId, number, useranswer);
+				userQuestionService.saveQuestion(restTemplate,user.getUsername(),user.getId(),examId,questionId, number, useranswer);
 				str = "{'sucess':'sucess'}";
 			}
 			PrintWriter out = response.getWriter();
