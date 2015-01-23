@@ -434,6 +434,7 @@
                           						<td>选用试卷</td>
                           						<td width="400px;">
                           						<select class='select2 form-control' id="selectexam"  onchange="selectexam();">
+                          							<option value=''>--</option>
                           							<c:forEach var="ce" items="${celist}">
 													<option value='${ce.exam.id}' <c:if test="${sexam.id == ce.id}">selected="selected"</c:if>>${ce.exam.name}</option>
 													</c:forEach>
@@ -1044,6 +1045,12 @@
 	}
 	function showuserdialog()
 	{
+		var examv = $("#selectexam").attr("value");
+		if (examv=="")
+		{
+			alert("试卷还没有选择，无法增加考生");
+			return;
+		}
 		$("#modal-example3").modal('show');
 	}
 	function showexamdialog()
@@ -1100,6 +1107,12 @@
 	}
 	function startcompetion()
 	{
+		var examv = $("#selectexam").attr("value");
+		if (examv=="")
+		{
+			alert("试卷还没有选择，无法开始竞赛");
+			return;
+		}
 		var competionId = parseInt($("#competionId").attr("value"));
 		var data={competionId:competionId};
 		$.ajax({
@@ -1281,7 +1294,14 @@
 	function selectexam()
 	{
 		var competionId = parseInt($("#competionId").attr("value"));
-		var examId = parseInt($("#selectexam").attr("value"));
+		var examv = $("#selectexam").attr("value");
+		if (examv=="")
+		{
+			alert("选卷不能为空");
+			location.reload();
+			return;
+		}
+		var examId = parseInt(examv);
 		var data={competionId:competionId,examId:examId};
 		$.ajax({
 			url : "cms/selectexam.action",

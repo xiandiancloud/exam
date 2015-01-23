@@ -1051,7 +1051,7 @@ public class UtilTools {
 	public static List isCorrect(int type,String useranswer,List<String> answerlist,String REGEX,int score)
 	{
 		List list = new ArrayList();
-		if (answerlist == null)
+		if (answerlist == null || answerlist.size() == 0)
 		{
 			list.add(0);
 			list.add(0);

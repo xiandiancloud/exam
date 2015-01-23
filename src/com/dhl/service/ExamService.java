@@ -539,10 +539,16 @@ public void sortVertical(String charpters) {
 		//复制图片
 		// copy试卷图片到upload目录
 		String oldimage = exam.getImgpath();
-		String newimage = "upload"+ File.separator+UUID.randomUUID().toString()+oldimage.substring(oldimage.lastIndexOf('.'));
-		UtilTools.copyFile(upath + oldimage, upath+newimage);
-		
-		texam.setImgpath(newimage);
+		if (oldimage != null)
+		{
+			int index = oldimage.lastIndexOf('.');
+			if (index != -1)
+			{
+				String newimage = "upload"+ File.separator+UUID.randomUUID().toString()+oldimage.substring(index);
+				UtilTools.copyFile(upath + oldimage, upath+newimage);
+				texam.setImgpath(newimage);
+			}
+		}
 		texam.setOrg(exam.getOrg());
 		texam.setStarttime(exam.getStarttime());
 		texam.setStarttimedetail(exam.getStarttimedetail());
