@@ -75,13 +75,14 @@ public class AdminUserController extends BaseController {
 				while ((line = br.readLine()) != null) {
 					// 把一行数据分割成多个字段 
 					String[] strs = line.split(",");
-					System.out.println("---------- "+strs.length);
+//					System.out.println("---------- "+strs.length);
 					if (strs != null && strs[0] != null && strs[0].substring(0,1).equals("#"))
 					{
 						continue;
 					}
-					int len = strs.length;
-					for (int i=0;i<len;i++)
+//					int len = strs.length;
+//					for (int i=0;i<len;i++)
+					
 					{
 						User user = userInterface.getUserBymail(strs[1]);
 						if (user != null)

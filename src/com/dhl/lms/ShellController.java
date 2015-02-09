@@ -143,7 +143,7 @@ public class ShellController extends BaseController {
 						rs.setShellparameter(shellparameter);
 						HttpEntity<RestShell> entity = new HttpEntity<RestShell>(rs);
 						
-						String resturl = "http://"+restid+":8080/rest/service/shell";//UtilTools.getConfig().getProperty("REST_URL");
+						String resturl = "http://"+restid+":7080/rest/service/shell";//UtilTools.getConfig().getProperty("REST_URL");
 						ResponseEntity<RestShell> res = restTemplate.postForEntity(resturl, entity, RestShell.class);
 						
 						RestShell e = res.getBody();
@@ -170,9 +170,9 @@ public class ShellController extends BaseController {
 				}
 				UserQuestion uq = userQuestionService.getUserExamTrainQuestion(user.getId(), examId, trainId);
 				if (uq == null) {
-					userQuestionService.saveQuestionTrain(user.getUsername(),user.getId(), examId, trainId,rdata,1);
+					userQuestionService.saveQuestionTrain(restTemplate,user.getUsername(),user.getId(), examId, trainId,rdata,1);
 				} else {
-					userQuestionService.updateQuestionTrain(user.getUsername(),uq, user.getId(),examId,trainId, rdata,1);
+					userQuestionService.updateQuestionTrain(restTemplate,user.getUsername(),uq, user.getId(),examId,trainId, rdata,1);
 				}
 				
 				conn.close();
@@ -211,9 +211,9 @@ public class ShellController extends BaseController {
 			
 			UserQuestion uq = userQuestionService.getUserExamTrainQuestion(user.getId(), examId, trainId);
 			if (uq == null) {
-				userQuestionService.saveUserAnswer(user.getId(), examId, trainId,useranswer);
+				userQuestionService.saveUserAnswer(restTemplate,user, examId, trainId,useranswer);
 			} else {
-				userQuestionService.updateUserAnswer(uq, user.getId(), useranswer);
+				userQuestionService.updateUserAnswer(restTemplate,uq, user, useranswer);
 			}
 			String str = "{'sucess':'sucess'}";
 			out.write(str);

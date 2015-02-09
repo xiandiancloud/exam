@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.bean.UserCompetionData;
@@ -49,6 +50,8 @@ public class CompetionController extends BaseController {
 	private TeacherExamService teacherExamService;
 	@Autowired
 	private UserInterface userInterface;
+	@Autowired
+	private RestTemplate restTemplate;
 	
 	/**
 	 * 到竞赛页面
@@ -523,9 +526,9 @@ public class CompetionController extends BaseController {
 			HttpServletResponse response,int competionId) {
 		try {
 			PrintWriter out = response.getWriter();
-			Competion cp = competionService.get(competionId);
-			cp.setIsstart(1);
-			competionService.update(cp);
+//			Competion cp = competionService.get(competionId);
+//			cp.setIsstart(1);
+			competionService.updateCom(restTemplate,competionId,userInterface);
 			//examService.createExam(name, userId, competionId);
 			String str = "{'sucess':'sucess'}";
 			out.write(str);

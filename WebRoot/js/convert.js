@@ -194,7 +194,6 @@
       var didinput = false;
       for (i = 0; i < split.length; i++) {
         line = split[i];
-        alert(line);
         if (match = line.match(/>>(.*)<</)) {
           curlabel = match[1].replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')

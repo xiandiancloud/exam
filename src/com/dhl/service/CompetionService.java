@@ -1,9 +1,14 @@
 package com.dhl.service;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.dhl.cons.CommonConstant;
 import com.dhl.dao.CompetionCategoryDao;
@@ -18,7 +23,15 @@ import com.dhl.domain.CompetionCategory;
 import com.dhl.domain.CompetionExam;
 import com.dhl.domain.CompetionSchool;
 import com.dhl.domain.Exam;
+import com.dhl.domain.ExamChapter;
+import com.dhl.domain.ExamQuestion;
+import com.dhl.domain.ExamSequential;
+import com.dhl.domain.ExamVertical;
+import com.dhl.domain.Question;
+import com.dhl.domain.RestShell;
 import com.dhl.domain.UserCompetion;
+import com.dhl.util.UtilTools;
+import com.xiandian.cai.UserInterface;
 import com.xiandian.model.User;
 
 /**
@@ -278,4 +291,82 @@ public class CompetionService {
 	{
 		return competionCategoryDao.getCompetionCategory(competionId);
 	}
+	
+	public void updateCom(RestTemplate restTemplate,int competionId,UserInterface userInterface)
+	{
+		Competion cp = get(competionId);
+		cp.setIsstart(1);
+		update(cp);
+		//提交答案后开始触发监控系统
+		String isstart = UtilTools.getConfig().getProperty("SURVEY");
+		if ("1".equals(isstart))
+		{
+			try
+			{
+				String url  = UtilTools.getConfig().getProperty("SURVEY_URL")+"counts";
+				RestShell rs = new RestShell();
+				rs.setUserName(cp.getName());
+				rs.setIp(cp.getExamstarttime());
+				rs.setPath(cp.getExamendtime());
+				
+				List<UserCompetion> ucslist = userCompetionDao.getCompetionStudent(competionId);
+				String username = "";
+				for (UserCompetion uc:ucslist)
+				{
+					User user = userInterface.getUserById(uc.getUserId());
+					username += user.getUsername()+"&";
+				}
+				if (username.length() > 0)
+				{
+					username = username.substring(0,username.length() - 1);
+				}
+				//竞赛下的试卷
+				CompetionExam ce = competionExamDao.getCompetionSelectExam(competionId);
+				int index  = 0;
+				if (ce != null)
+				{
+					Exam exam = ce.getExam();
+					Set<ExamChapter> chapterset = exam.getExamchapters();
+					Iterator it = chapterset.iterator();
+					while (it.hasNext()) {
+						ExamChapter chapter = (ExamChapter) it.next();
+						Set<ExamSequential> sequentialset = chapter.getEsequentials();
+						Iterator it2 = sequentialset.iterator();
+						while (it2.hasNext()) {
+							ExamSequential sequential = (ExamSequential) it2.next();
+							Set<ExamVertical> verticalset = sequential.getExamVerticals();
+							Iterator it3 = verticalset.iterator();
+							while (it3.hasNext()) {
+								ExamVertical vertical = (ExamVertical) it3.next();
+								Set<ExamQuestion> vt = vertical.getExamQuestion();
+								for (ExamQuestion eq:vt)
+								{
+									Question q = eq.getQuestion();
+									//问题
+									if (q != null)
+									{
+										String content = q.getContent();
+										if (q.getType() == 1)
+										{
+											continue;
+										}
+									}
+									index ++;
+								}
+							}
+						}
+					}
+				}
+				rs.setCondition(username);
+				rs.setResult(index+"");
+				HttpEntity<RestShell> entity = new HttpEntity<RestShell>(rs);
+				ResponseEntity<RestShell> res =  restTemplate.postForEntity(url,entity, RestShell.class);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	
 }

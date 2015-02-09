@@ -27,6 +27,7 @@ import com.dhl.domain.TrainExt;
 import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
 import com.dhl.util.UtilTools;
+import com.xiandian.model.User;
 
 /**
  *
@@ -261,7 +262,7 @@ public class UserQuestionService {
 	 * @param examId
 	 * @param trainId
 	 */
-	public void saveQuestionTrain(String username,int userId,int examId,int trainId,String rdata,int number)
+	public void saveQuestionTrain(RestTemplate restTemplate,String username,int userId,int examId,int trainId,String rdata,int number)
 	{
 		UserQuestion uq = new UserQuestion();
 		uq.setExamId(examId);
@@ -278,6 +279,26 @@ public class UserQuestionService {
 		uqc.setUserquestionId(uq.getId());
 		userQuestionChildDao.save(uqc);
 		logDao.saveLog(username,CommonConstant.LOG_1+"examId:"+examId+" , trainId:"+trainId);
+		
+		//提交答案后开始触发监控系统
+		String isstart = UtilTools.getConfig().getProperty("SURVEY");
+		if ("1".equals(isstart))
+		{
+			try
+			{
+				String url  = UtilTools.getConfig().getProperty("SURVEY_URL")+"submit";
+				RestShell rs = new RestShell();
+				rs.setUserName(username);
+				rs.setCondition(username+"提交了一个问题");
+				rs.setResult(uq.getId()+"");
+				HttpEntity<RestShell> entity = new HttpEntity<RestShell>(rs);
+				ResponseEntity<RestShell> res = restTemplate.postForEntity(url,entity, RestShell.class);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	/**
@@ -286,41 +307,80 @@ public class UserQuestionService {
 	 * @param examId
 	 * @param trainId
 	 */
-	public void saveUserAnswer(int userId,int examId,int trainId,String useranswer)
+	public void saveUserAnswer(RestTemplate restTemplate,User user,int examId,int trainId,String useranswer)
 	{
 		UserQuestion uq = new UserQuestion();
 		uq.setExamId(examId);
 		uq.setQuestion(null);
-		uq.setUserId(userId);
+		uq.setUserId(user.getId());
 		uq.setTrain(trainDao.get(trainId));
 		userQuestionDao.save(uq);
 		
 		
 		UserQuestionChild uqc = new UserQuestionChild();
-		uqc.setUserId(userId);
+		uqc.setUserId(user.getId());
 		uqc.setNumber(1);
 		uqc.setUseranswer(useranswer);
 		uqc.setUserquestionId(uq.getId());
 		userQuestionChildDao.save(uqc);
 		
+		//提交答案后开始触发监控系统
+		String isstart = UtilTools.getConfig().getProperty("SURVEY");
+		if ("1".equals(isstart))
+		{
+			try
+			{
+				String url  = UtilTools.getConfig().getProperty("SURVEY_URL")+"submit";
+				RestShell rs = new RestShell();
+				rs.setUserName(user.getUsername());
+				rs.setCondition(user.getUsername()+"提交了一个问题");
+				rs.setResult(uq.getId()+"");
+				HttpEntity<RestShell> entity = new HttpEntity<RestShell>(rs);
+				ResponseEntity<RestShell> res = restTemplate.postForEntity(url,entity, RestShell.class);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 	/**
 	 * 更新考试系统的实训答案
 	 */
-	public void updateUserAnswer(UserQuestion uq,int userId,String useranswer)
+	public void updateUserAnswer(RestTemplate restTemplate,UserQuestion uq,User user,String useranswer)
 	{
-		UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(userId,1,uq.getId());
+		UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByuserquestionId(user.getId(),1,uq.getId());
 		if (uqc != null)
 		{
 			uqc.setUseranswer(useranswer);
 			userQuestionChildDao.update(uqc);
+			
+			//提交答案后开始触发监控系统
+			String isstart = UtilTools.getConfig().getProperty("SURVEY");
+			if ("1".equals(isstart))
+			{
+				try
+				{
+					String url  = UtilTools.getConfig().getProperty("SURVEY_URL")+"submit";
+					RestShell rs = new RestShell();
+					rs.setUserName(user.getUsername());
+					rs.setCondition(user.getUsername()+"提交了一个问题");
+					rs.setResult(uq.getId()+"");
+					HttpEntity<RestShell> entity = new HttpEntity<RestShell>(rs);
+					ResponseEntity<RestShell> res = restTemplate.postForEntity(url,entity, RestShell.class);
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 	
 	/**
 	 * 更新考试系统的实训答案
 	 */
-	public void updateQuestionTrain(String username,UserQuestion uq,int userId,int examId,int trainId,String rdata,int number)
+	public void updateQuestionTrain(RestTemplate restTemplate,String username,UserQuestion uq,int userId,int examId,int trainId,String rdata,int number)
 	{
 		UserQuestionChild uqc = userQuestionChildDao.getUserQuestionByusertrainId(userId,uq.getId());
 		if (uqc != null)
@@ -338,6 +398,26 @@ public class UserQuestionService {
 			uqc.setUserquestionId(uq.getId());
 			userQuestionChildDao.save(uqc);
 			logDao.saveLog(username,CommonConstant.LOG_1+"examId:"+examId+" , trainId:"+trainId);
+		}
+		
+		//提交答案后开始触发监控系统
+		String isstart = UtilTools.getConfig().getProperty("SURVEY");
+		if ("1".equals(isstart))
+		{
+			try
+			{
+				String url  = UtilTools.getConfig().getProperty("SURVEY_URL")+"submit";
+				RestShell rs = new RestShell();
+				rs.setUserName(username);
+				rs.setCondition(username+"提交了一个问题");
+				rs.setResult(uq.getId()+"");
+				HttpEntity<RestShell> entity = new HttpEntity<RestShell>(rs);
+				ResponseEntity<RestShell> res =  restTemplate.postForEntity(url,entity, RestShell.class);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -391,13 +471,13 @@ public class UserQuestionService {
 		{
 			try
 			{
-				String url  = UtilTools.getConfig().getProperty("SURVEY_URL");
+				String url  = UtilTools.getConfig().getProperty("SURVEY_URL")+"submit";
 				RestShell rs = new RestShell();
 				rs.setUserName(username);
 				rs.setCondition(username+"提交了一个问题");
 				rs.setResult(uq.getId()+"");
 				HttpEntity<RestShell> entity = new HttpEntity<RestShell>(rs);
-				ResponseEntity<RestShell> response = restTemplate.postForEntity(url,entity, RestShell.class);
+				ResponseEntity<RestShell> res = restTemplate.postForEntity(url,entity, RestShell.class);
 			}
 			catch(Exception e)
 			{
