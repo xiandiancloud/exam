@@ -20,6 +20,7 @@ import com.dhl.domain.ECategory;
 import com.dhl.domain.Exam;
 import com.dhl.domain.ExamCategory;
 import com.dhl.domain.TeacherExam;
+import com.dhl.domain.User;
 import com.dhl.domain.UserCompetion;
 import com.dhl.domain.UserExam;
 import com.dhl.domain.UserExamHistory;
@@ -35,8 +36,6 @@ import com.dhl.service.UserExamHistoryService;
 import com.dhl.service.UserExamService;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
-import com.xiandian.model.Role;
-import com.xiandian.model.User;
 
 /**
  * 
@@ -87,41 +86,43 @@ public class LmsExamController extends BaseController {
 	@RequestMapping("/home")
 	public ModelAndView home(HttpServletRequest request) {
 		//判断是否是老师，还是学生，如果是学生的话，查看action，根据action调整跳转的页面
-		User user = getSessionUser(request);
-		Role role = user.getRole();
-		if (CommonConstant.ROLE_T.equals(role.getRoleName()))
-		{
-			String url = "redirect:/lms/getteamCategory.action";
-			return new ModelAndView(url);
-		}
-		else
-		{
-			List<String> ualist = getSessionUserAction(request);
-			if (ualist.contains(CommonConstant.PERMISSION_1))
-			{
-				String url = "redirect:/lms/getteamCategory.action";
-				return new ModelAndView(url);
-			}
-			else if (ualist.contains(CommonConstant.PERMISSION_2))
-			{
-				String url = "redirect:/lms/examlist.action?currentpage=1&c=0&r=0";
-				return new ModelAndView(url);
-			}
-			else if (ualist.contains(CommonConstant.PERMISSION_3))
-			{
-				//?currentpage=1&c=0&r=0
-				String url = "redirect:/lms/competionlist.action";
-				return new ModelAndView(url);
-			}
-			else if (ualist.contains(CommonConstant.PERMISSION_4))
-			{
-				String url = "redirect:/lms/myexam.action";
-				return new ModelAndView(url);
-			}
-			//简陋版本，以上4种action都不满足的话，调整到错误页面			
-			String url = "/lms/error";
-			return new ModelAndView(url);
-		}
+//		User user = getSessionUser(request);
+//		Role role = user.getRole();
+//		if (CommonConstant.ROLE_T.equals(role.getRoleName()))
+//		{
+//			String url = "redirect:/lms/getteamCategory.action";
+//			return new ModelAndView(url);
+//		}
+//		else
+//		{
+//			List<String> ualist = getSessionUserAction(request);
+//			if (ualist.contains(CommonConstant.PERMISSION_1))
+//			{
+//				String url = "redirect:/lms/getteamCategory.action";
+//				return new ModelAndView(url);
+//			}
+//			else if (ualist.contains(CommonConstant.PERMISSION_2))
+//			{
+//				String url = "redirect:/lms/examlist.action?currentpage=1&c=0&r=0";
+//				return new ModelAndView(url);
+//			}
+//			else if (ualist.contains(CommonConstant.PERMISSION_3))
+//			{
+//				String url = "redirect:/lms/competionlist.action";
+//				return new ModelAndView(url);
+//			}
+//			else if (ualist.contains(CommonConstant.PERMISSION_4))
+//			{
+//				String url = "redirect:/lms/myexam.action";
+//				return new ModelAndView(url);
+//			}
+//			//简陋版本，以上4种action都不满足的话，调整到错误页面			
+//			String url = "/lms/error";
+//			return new ModelAndView(url);
+//		}
+		
+		String url = "redirect:/lms/competionlist.action";
+		return new ModelAndView(url);
 	}
 	
 	@RequestMapping("/getteamCategory")

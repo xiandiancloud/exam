@@ -18,6 +18,7 @@ import com.dhl.dao.CompetionSchoolDao;
 import com.dhl.dao.ECategoryDao;
 import com.dhl.dao.ExamDao;
 import com.dhl.dao.UserCompetionDao;
+import com.dhl.dao.UserDao;
 import com.dhl.domain.Competion;
 import com.dhl.domain.CompetionCategory;
 import com.dhl.domain.CompetionExam;
@@ -29,10 +30,9 @@ import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Question;
 import com.dhl.domain.RestShell;
+import com.dhl.domain.User;
 import com.dhl.domain.UserCompetion;
 import com.dhl.util.UtilTools;
-import com.xiandian.cai.UserInterface;
-import com.xiandian.model.User;
 
 /**
  * 竞赛
@@ -54,6 +54,8 @@ public class CompetionService {
 	private ExamDao examDao;
 	@Autowired
 	private ECategoryDao ecategoryDao;
+	@Autowired
+	private UserDao userDao;
 	
 	/**
 	 * 取得竞赛
@@ -143,8 +145,7 @@ public class CompetionService {
 	 */
 	public Competion createCompetion(String imgpath,int rank,int categoryId,String name, String starttime,
 			String endtime, String wstarttime, String wendtime,
-			String examstarttime, String examendtime, int type,
-			String score, String passscore, String describle, String schoolId,User user)
+			String examstarttime, String examendtime, String score, String passscore, String describle, String schoolId,User user)
 	{
 		Competion c = new Competion();
 		c.setName(name);
@@ -155,9 +156,9 @@ public class CompetionService {
 		c.setWendtime(wendtime);
 		c.setExamstarttime(examstarttime);
 		c.setExamendtime(examendtime);
-		c.setScore(passscore);
+		c.setScore(score);
 		c.setPassscore(passscore);
-		c.setType(type);
+//		c.setType(type);
 		c.setImgpath(imgpath);
 		if (rank > 0)
 		{
@@ -203,8 +204,7 @@ public class CompetionService {
 	
 	public void updateCompetion(String imgpath,int rank,int categoryId,int id,String name, String starttime,
 			String endtime, String wstarttime, String wendtime,
-			String examstarttime, String examendtime, int type,
-			String score, String passscore, String describle, String schoolId)
+			String examstarttime, String examendtime, String score, String passscore, String describle, String schoolId)
 	{
 		Competion c = get(id);
 		c.setName(name);
@@ -215,9 +215,9 @@ public class CompetionService {
 		c.setWendtime(wendtime);
 		c.setExamstarttime(examstarttime);
 		c.setExamendtime(examendtime);
-		c.setScore(passscore);
+		c.setScore(score);
 		c.setPassscore(passscore);
-		c.setType(type);
+//		c.setType(type);
 		c.setImgpath(imgpath);
 		if (rank > 0)
 		{
@@ -292,7 +292,7 @@ public class CompetionService {
 		return competionCategoryDao.getCompetionCategory(competionId);
 	}
 	
-	public void updateCom(RestTemplate restTemplate,int competionId,UserInterface userInterface)
+	public void updateCom(RestTemplate restTemplate,int competionId)
 	{
 		Competion cp = get(competionId);
 		cp.setIsstart(1);
@@ -313,7 +313,7 @@ public class CompetionService {
 				String username = "";
 				for (UserCompetion uc:ucslist)
 				{
-					User user = userInterface.getUserById(uc.getUserId());
+					User user = userDao.get(uc.getUserId());//.getUserById(uc.getUserId());
 					username += user.getUsername()+"&";
 				}
 				if (username.length() > 0)

@@ -90,8 +90,8 @@
                     <div class='box-header blue-background'>
                       <div class='title'>所有日志</div>
                       <div class='actions'>
-                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
-                        </a>
+                        <!-- <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                        </a> -->
                         
                         <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
                         </a>

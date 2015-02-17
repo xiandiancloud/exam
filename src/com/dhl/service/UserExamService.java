@@ -371,6 +371,10 @@ public class UserExamService {
 								List<QuestionData> qdlist = ParseQuestion.changetohtml(content,q.getId());
 								eq.setQdlist(qdlist);
 								//------------分析问题--------可以拆分出去
+								if (qdlist == null)
+								{
+									System.out.println("qdlist ------------------");
+								}
 								int len = qdlist.size();
 								for (int i=0;i<len;i++)
 								{
@@ -674,7 +678,7 @@ public class UserExamService {
 		{
 			long startT = UtilTools.fromDateStringToLong(s);
 			long endT = UtilTools.fromDateStringToLong(e);
-			long ss=(startT-endT)/(1000); //共计秒数
+			long ss=(endT-startT)/(1000); //共计秒数
 			int mm = (int)ss/60;   //共计分钟数
 			mmm = mm+"";
 		}

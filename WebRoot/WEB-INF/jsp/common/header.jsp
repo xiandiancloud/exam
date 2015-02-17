@@ -15,25 +15,27 @@
 				         <span class="icon-bar"></span>
 				      </button>
 					<a class='navbar-brand' href='lms/home.action'> <img
-						width="51" height="48" class="logo" src="images/logo.png" /><img width="160" height="30"
-							class="logo" alt="Flatty" src="images/logo-lab.png" />
+						width="51" height="48" class="logo" src="images/logo.png" />
+						<!-- <img width="160" height="30"
+							class="logo" alt="Flatty" src="images/logo-lab.png" /> -->
+							<label>高职云计算技术与应用-竞赛系统</label>
 					</a>
 				</div>
 				<div class="collapse navbar-collapse l3back" id="example-navbar-collapse">
 					<!--向左对齐--> 
 					<ul class="nav navbar-nav navbar-left pleft15">
-						<c:if test="${fn:contains(USER_PERMISSION,'首页') || USER_CONTEXT.role.roleName eq '老师'}"> 
+						<%-- <c:if test="${fn:contains(USER_PERMISSION,'首页') || USER_CONTEXT.role.roleName eq '老师'}"> 
 							<li><a href="lms/getteamCategory.action">首页</a></li>
 						</c:if>
 						<c:if test="${fn:contains(USER_PERMISSION,'题库') || USER_CONTEXT.role.roleName eq '老师'}"> 
 						<li><a href="lms/examlist.action?currentpage=1&c=0&r=0">题库</a></li>
-						</c:if>
-						<c:if test="${fn:contains(USER_PERMISSION,'竞赛') || USER_CONTEXT.role.roleName eq '老师'}"> 
-						<li><a href="lms/competionlist.action">竞赛</a></li><!-- ?currentpage=1&c=0&r=0 -->
-						</c:if>
-						<c:if test="${fn:contains(USER_PERMISSION,'我的云试卷') || USER_CONTEXT.role.roleName eq '老师'}"> 
+						</c:if> --%>
+						<%-- <c:if test="${fn:contains(USER_PERMISSION,'竞赛') || USER_CONTEXT.role.roleName eq '老师'}">  --%>
+						<li><a href="lms/competionlist.action">竞赛</a></li>
+						<%-- </c:if> --%>
+						<%-- <c:if test="${fn:contains(USER_PERMISSION,'我的云试卷') || USER_CONTEXT.role.roleName eq '老师'}">  --%>
 						<li><a href="lms/myexam.action">我的云试卷</a></li>
-						</c:if>
+						<%-- </c:if> --%>
 						<%-- <c:if test="${USER_CONTEXT.role.roleName=='老师'}">
 						<li><a href="cms">制作试卷</a></li>
 						<li><a href="cms/totcompetion.action?competionId=-1">增加竞赛</a></li>
@@ -43,9 +45,9 @@
 					<ul class="nav navbar-nav navbar-right">
 						<c:choose>
 							<c:when test="${empty USER_CONTEXT}">
-								<li class='dropdown light only-icon'><a
+								<!-- <li class='dropdown light only-icon'><a
 									href='lms/toregeister.action'> <i class='icon-signin'>注册</i>
-								</a></li>
+								</a></li> -->
 								<li class='dropdown light only-icon'><a
 									href='lms/tologin.action'> <i class='icon-signin'>登录</i>
 								</a></li>
@@ -69,7 +71,7 @@
 										<li><a href="cms/totcompetion.action?competionId=-1"><i
 												class='icon-signout'></i>增加竞赛</a></li>
 										</c:if>
-										<li><a href='lms/mysetting.action'> <i
+										<li><a href='lms/mycloudenv.action'> <i
 												class='icon-signout'></i> 设置
 										</a></li>
 										<li class='divider'></li>

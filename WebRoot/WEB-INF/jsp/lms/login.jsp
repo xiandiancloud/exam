@@ -96,11 +96,11 @@
 						</form>
 					</div>
 					<div class="col-sm-5">
-					<a>尚未注册？</a></br>
+					<!-- <a>尚未注册？</a></br>
 					<div class="clear"></div>
 					<p>
 					现在就注册加入<a href="lms/toregeister.action" class="hrefcolor">在这儿注册您的云平台账号！</a> 
-					</p>
+					</p> -->
 					<div class="clear"></div>
 					<a>需要帮助？</a></br>
 					<div class="clear"></div>

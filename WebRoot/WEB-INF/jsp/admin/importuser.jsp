@@ -84,6 +84,9 @@
                         <div class='col-sm-2'>
                           <div id="bootstrapped-fine-uploader"></div>
                         </div>
+                        <div class='col-sm-2'>
+                          <button type="button" class="btn btn-warning" onclick="removeAllUser();">清空用户</button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -96,7 +99,6 @@
                     <div class='box-header blue-background'>
                       <div class='title'>所有用户</div>
                       <div class='actions'>
-                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
                         </a>
                         
                         <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
@@ -236,6 +238,19 @@
 				}
 				else
 				alert(a.msg);
+			}
+		});
+	}
+	function removeAllUser()
+	{
+		$.ajax({
+			url : "admin/removealluser.action",
+			type : "post",
+			success : function(s) {
+				var a = eval("(" + s + ")");
+				if (a.sucess == "sucess") {
+					location.reload();
+				}
 			}
 		});
 	}

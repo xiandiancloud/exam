@@ -15,12 +15,14 @@ import com.dhl.cons.CommonConstant;
 import com.dhl.domain.ECategory;
 import com.dhl.domain.Exam;
 import com.dhl.domain.Log;
+import com.dhl.domain.School;
+import com.dhl.domain.User;
 import com.dhl.service.ECategoryService;
 import com.dhl.service.ExamService;
+import com.dhl.service.SchoolService;
+import com.dhl.service.UserService;
+import com.dhl.util.MD5;
 import com.dhl.web.BaseController;
-import com.xiandian.cai.SchoolInterface;
-import com.xiandian.cai.UserInterface;
-import com.xiandian.model.School;
 
 /**
  * 管理员使用
@@ -36,11 +38,11 @@ public class AdminController extends BaseController {
 	@Autowired
 	private ECategoryService ecategoryService;
 	@Autowired
-	private SchoolInterface schoolInterface;
+	private SchoolService schoolService;
 	@Autowired
 	private ExamService examService;
 	@Autowired
-	private UserInterface userInterface;
+	private UserService userService;
 	
 	/**
 	 * 根据id删除用户
@@ -52,7 +54,7 @@ public class AdminController extends BaseController {
 	@RequestMapping("/deluser")
 	public ModelAndView deluser(HttpServletRequest request,
 			HttpServletResponse response, int userId) {
-		userInterface.remove(userId);
+		userService.remove(userId);
 		String url = "redirect:/admin/importuser.action";
 		return new ModelAndView(url);
 	}
@@ -109,6 +111,42 @@ public class AdminController extends BaseController {
 	}
 	
 	/**
+	 * 管理员到log日志頁面
+	 * 
+	 * @param request
+	 * @param index
+	 * @return
+	 */
+	@RequestMapping("/sysset")
+	public ModelAndView sysset(HttpServletRequest request) {
+		ModelAndView view = new ModelAndView();
+		view.setViewName("/admin/sysset");
+		return view;
+	}
+	
+	@RequestMapping("/resetpwd")
+	public void resetpwd(HttpServletRequest request,
+			HttpServletResponse response, String password) {
+		String result = "{'sucess':'sucess','msg':'" + CommonConstant.ERROR_0
+				+ "'}";
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+			User user = getSessionUser(request);
+			MD5 md5 = new MD5();
+			String pw = md5.getMD5ofStr(password);
+			user.setPassword(pw);
+			userService.update(user);
+			result = "{'sucess':'sucess','msg':'" + CommonConstant.ERROR_2
+					+ "'}";
+			out.write(result);
+		} catch (Exception e) {
+			if (out != null)
+				out.write(result);
+		}
+	}
+	
+	/**
 	 * 推荐试卷
 	 * @param request
 	 * @param examId
@@ -134,7 +172,7 @@ public class AdminController extends BaseController {
 	public ModelAndView school(HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
 
-		List<School> school = schoolInterface.getAllSchool();
+		List<School> school = schoolService.getAllSchool();
 		view.addObject("schoollist", school);
 		view.setViewName("/admin/school");
 		return view;
@@ -150,7 +188,7 @@ public class AdminController extends BaseController {
 	@RequestMapping("/delschool")
 	public ModelAndView delschool(HttpServletRequest request,
 			HttpServletResponse response, int schoolId) {
-		schoolInterface.remove(schoolId);
+		schoolService.remove(schoolId);
 		String url = "redirect:/admin/school.action";
 		return new ModelAndView(url);
 	}
@@ -170,7 +208,7 @@ public class AdminController extends BaseController {
 		PrintWriter out = null;
 		try {
 			out = response.getWriter();
-			String str = schoolInterface.saveSchool(name);
+			String str = schoolService.saveSchool(name);
 			if (CommonConstant.ERROR_2.equals(str)) {
 				result = "{'sucess':'sucess','msg':'" + str + "'}";
 				out.write(result);
@@ -184,35 +222,19 @@ public class AdminController extends BaseController {
 		}
 	}
 
-//	/**
-//	 * 添加分类
-//	 * 
-//	 * @param request
-//	 * @param response
-//	 * @param name
-//	 */
-//	@RequestMapping("/addcategory")
-//	public void addcategory(HttpServletRequest request,
-//			HttpServletResponse response, String name) {
-//		String result = "{'sucess':'sucess','msg':'" + CommonConstant.ERROR_0
-//				+ "'}";
-//		PrintWriter out = null;
-//		try {
-//			out = response.getWriter();
-//			String str = categoryService.saveCategory(name);
-//			if (CommonConstant.ERROR_2.equals(str)) {
-//				result = "{'sucess':'sucess','msg':'" + str + "'}";
-//				out.write(result);
-//			} else {
-//				result = "{'sucess':'fail','msg':'" + str + "'}";
-//				out.write(result);
-//			}
-//		} catch (Exception e) {
-//			if (out != null)
-//				out.write(result);
-//		}
-//	}
-
+	@RequestMapping("/removealluser")
+	public void removealluser(HttpServletRequest request, HttpServletResponse response) {
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+			userService.removeAlluser();
+			out.write("{'sucess':'sucess'}");
+		} catch (Exception e) {
+			if (out != null)
+				out.write("{'sucess':'fail'}");
+		}
+	}
+	
 	/**
 	 * 添加试卷分类
 	 * 

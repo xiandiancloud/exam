@@ -178,8 +178,13 @@
 							</a>
 
 								<ul class="item-actions course-actions">
-								<table><tr><td><li class="action"><a href="cms/delexam.action?examId=${texam.exam.id}" rel="external"
-										class="button view-button view-live-button">删除</a></li></td><td>&nbsp;&nbsp;</td><td><li class="action"><a href="cms/totexam.action?examId=${texam.exam.id}" rel="external"
+								<table><tr>
+										<c:if test="${texam.exam.isnormal==0}">
+										<td><li class="action"><a href="cms/delexam.action?examId=${texam.exam.id}" rel="external"
+										class="button view-button view-live-button">删除</a></li></td>
+										<td>&nbsp;&nbsp;</td>
+										</c:if>
+										<td><li class="action"><a href="cms/totexam.action?examId=${texam.exam.id}" rel="external"
 										class="button view-button view-live-button">在线查看</a></li></td></tr></table>
 								    
 									
@@ -199,10 +204,10 @@
 
 					<ol class="list-actions">
 						<li class="action-item"><a
-							href="http://edx.readthedocs.org/projects/edx-partner-course-staff/en/latest/getting_started/get_started.html"
+							href="#"
 							target="_blank"><!-- Getting Started with edX Studio -->从云考试平台开始</a></li>
 						<li class="action-item"><a
-							href="http://help.edge.edx.org/discussion/new"
+							href="#"
 							class="show-tender"
 							title="Use our feedback tool, Tender, to request help"><!-- Request
 								help with edX Studio -->

@@ -96,7 +96,7 @@
 									</div>
 									<div class='col-sm-6'>
 										<p>
-											<strong>赛项图片</strong>
+											<strong>赛项图片(图片宽高：256*256)</strong>
 										</p>
 										<div class='row'>
 										
@@ -225,7 +225,7 @@
 									</div>
 								</div>
 								<div class='h10'></div>
-								<div class='row'>
+								<%-- <div class='row'>
 									<div class='col-sm-12'>
 										<p>
 											<strong>是否公开</strong>
@@ -236,7 +236,7 @@
 										</select>
 									</div>
 								</div>
-								<div class='h10'></div>
+								<div class='h10'></div> --%>
 								<div class='row'>
 									<div class='col-sm-6'>
 										<p>
@@ -956,7 +956,7 @@
 		var wendtime = $("#wendtime").attr("value");
 		var examstarttime = $("#examstarttime").attr("value");
 		var examendtime = $("#examendtime").attr("value");
-		var type = $("#type").attr("value");
+		//var type = $("#type").attr("value");
 		var score = $("#score").attr("value");
 		var passscore = $("#passscore").attr("value");
 		var describle = $("#describle").attr("value");
@@ -974,12 +974,12 @@
 			alert("举办方不能为空");
 			return ;
 		}
-		if (isNull(type))	
+		/* if (isNull(type))	
 		{
 			alert("是否公开不能为空");
 			return ;
-		}
-		var data={imgpath:imgpath,rank:rank,categoryId:categoryId,name:name,starttime:starttime,endtime:endtime,wstarttime:wstarttime,wendtime:wendtime,examstarttime:examstarttime,examendtime:examendtime,type:type,score:score,passscore:passscore,describle:describle,schoolId:schoolId};
+		} */
+		var data={imgpath:imgpath,rank:rank,categoryId:categoryId,name:name,starttime:starttime,endtime:endtime,wstarttime:wstarttime,wendtime:wendtime,examstarttime:examstarttime,examendtime:examendtime,score:score,passscore:passscore,describle:describle,schoolId:schoolId};
 		$.ajax({
 			url : "cms/createcompetion.action",
 			type : "post",
@@ -1006,7 +1006,7 @@
 		var wendtime = $("#wendtime").attr("value");
 		var examstarttime = $("#examstarttime").attr("value");
 		var examendtime = $("#examendtime").attr("value");
-		var type = $("#type").attr("value");
+		//var type = $("#type").attr("value");
 		var score = $("#score").attr("value");
 		var passscore = $("#passscore").attr("value");
 		var describle = $("#describle").attr("value");
@@ -1024,12 +1024,12 @@
 			alert("举办方不能为空");
 			return ;
 		}
-		if (isNull(type))	
+		/* if (isNull(type))	
 		{
 			alert("是否公开不能为空");
 			return ;
-		}
-		var data={imgpath:imgpath,rank:rank,categoryId:categoryId,competionId:competionId,name:name,starttime:starttime,endtime:endtime,wstarttime:wstarttime,wendtime:wendtime,examstarttime:examstarttime,examendtime:examendtime,type:type,score:score,passscore:passscore,describle:describle,schoolId:schoolId};
+		} */
+		var data={imgpath:imgpath,rank:rank,categoryId:categoryId,competionId:competionId,name:name,starttime:starttime,endtime:endtime,wstarttime:wstarttime,wendtime:wendtime,examstarttime:examstarttime,examendtime:examendtime,score:score,passscore:passscore,describle:describle,schoolId:schoolId};
 		$.ajax({
 			url : "cms/updatecompetion.action",
 			type : "post",

@@ -21,6 +21,7 @@ import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Cloud;
 import com.dhl.domain.RestShell;
 import com.dhl.domain.TrainExt;
+import com.dhl.domain.User;
 import com.dhl.domain.UserEnvironment;
 import com.dhl.domain.UserQuestion;
 import com.dhl.service.EnvironmentService;
@@ -30,7 +31,6 @@ import com.dhl.service.UserEnvironmentService;
 import com.dhl.service.UserQuestionService;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
-import com.xiandian.model.User;
 
 /**
  * 实验提交检测control
@@ -70,7 +70,7 @@ public class ShellController extends BaseController {
 			String str = "";
 			if (cloud == null)
 			{
-				str = "{'sucess':'fail','msg':'你还没有配置你的云平台'}";
+				str = "{'sucess':'fail','msg':'你还没有配置你的云平台,<a href=\"lms/mycloudenv.action\" target=\"_blank\" class=\"f_blue\">点击链接配置你的云平台</a>'}";
 				out.write(str);
 				return;
 			}
@@ -191,7 +191,7 @@ public class ShellController extends BaseController {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			} finally {
-				String str = "{'sucess':'fail','msg':'服务器有异常，有些可能你可以排除下：1 控制节点的ssh没有安装 2 rest传输服务没有启动'}";
+				String str = "{'sucess':'fail','msg':'服务器有异常，有些可能你可以排除下：1 控制节点的ssh有没有安装 2 rest传输服务有没有启动'}";
 				if (out != null)
 					out.write(str);
 			}

@@ -130,7 +130,7 @@
 						<div class="col-xs-12">
 							<div class="box ">
 								<div class="box-content">
-									<h2>${exam.name}</h2>									
+									<h2>${exam.name}</h2>开始时间：${exam.starttimedetail}——结束时间：${exam.endtimedetail}								
 								</div>
 							</div>
 						</div>
@@ -182,6 +182,7 @@
 															<div class='col-sm-12'>
 																<a id="hrefnumber${index}" href="javascript:void(0);" onclick="entertrain('${competionId}','${exam.id}','${vertical.id}','${qd.id}','hrefnumber${index}','${index}');" target="_blank" class='btn btn-danger'>
 																<i class='icon-circle-arrow-right'></i>进入实训</a>
+																<i class='icon-edit-sign none' id="mark${index}"></i>
 															</div>
 														</div>
 													</form>
@@ -293,6 +294,7 @@
 															<div class='col-sm-12'>
 																<a id="hrefnumber${index}" href="javascript:void(0);" onclick="submittextareaquesstion('${qd.id}','${nn.index+1}','numberquestion${index}','${index}');" class='btn btn-danger'>
 																<i class='icon-circle-arrow-right'></i>提交答案</a>
+																<i class='icon-edit-sign none' id="mark${index}"></i>
 															</div>
 														</div>
 													</form>
@@ -328,7 +330,7 @@
 								<div class='col-xs-12'>
 									<div class="pull-right">
 										<!-- <a class="btn">暂停</a>  -->
-										<a href="lms/myexam.action" class="btn">下次再做</a>
+										<!-- <a href="lms/myexam.action" class="btn">下次再做</a> -->
 									</div>
 								</div>
 							</div>
@@ -496,6 +498,7 @@
 									if (useranswer)
 									{
 										$("#numberquestion"+index).html(decodeURIComponent(useranswer));
+										$("#mark"+index).show();
 									}
 									UE.getEditor("numberquestion"+index);
 								</c:if>
@@ -504,6 +507,11 @@
 									if (osanswer)
 									{
 										$("#index"+index).css("background","#999999");
+										$("#mark"+index).show();
+									}
+									if (useranswer)
+									{
+										$("#mark"+index).show();
 									}
 								</c:if>
 							</c:if>
@@ -716,6 +724,7 @@
 					if ("sucess" == a.sucess) {
 						//alert("提交了");
 						$("#index"+index).css("background","#999999");
+						$("#mark"+index).show();
 						$.jGrowl("提交了", {
 							position: 'bottom-right',
 					        });
@@ -736,6 +745,7 @@
 				return;
 			}
 			$("#index"+index).css("background","#999999");
+			$("#mark"+index).show();
 			$("#"+hrefId).attr("href","lms/toexamtrainone.action?competionId="+competionId+"&examId="+examId+"&everticalId="+everticalId+"&trainId="+trainId);
 		}
 		function examisover()

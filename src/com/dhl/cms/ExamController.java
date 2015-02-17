@@ -32,7 +32,10 @@ import com.dhl.domain.ExamShellEnvironment;
 import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Question;
 import com.dhl.domain.RestTrain;
+import com.dhl.domain.School;
 import com.dhl.domain.TeacherExam;
+import com.dhl.domain.User;
+import com.dhl.domain.UserRole;
 import com.dhl.service.ECategoryService;
 import com.dhl.service.EnvironmentService;
 import com.dhl.service.ExamChapterService;
@@ -40,16 +43,14 @@ import com.dhl.service.ExamQuestionService;
 import com.dhl.service.ExamSequentialService;
 import com.dhl.service.ExamService;
 import com.dhl.service.ExamVerticalService;
+import com.dhl.service.SchoolService;
 import com.dhl.service.TeacherExamService;
 import com.dhl.service.TrainService;
 import com.dhl.service.UserQuestionService;
+import com.dhl.service.UserService;
 import com.dhl.util.ParseQuestion;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
-import com.xiandian.cai.SchoolInterface;
-import com.xiandian.cai.UserInterface;
-import com.xiandian.model.School;
-import com.xiandian.model.User;
 
 /**
  * 老师定义试卷，使用等使用
@@ -82,9 +83,9 @@ public class ExamController extends BaseController {
 	@Autowired
 	private EnvironmentService environmentService;
 	@Autowired
-	private UserInterface userInterface;
+	private UserService userService;
 	@Autowired
-	private SchoolInterface schoolInterface;
+	private SchoolService schoolService;
 	@Autowired
 	private UserQuestionService userQuestionService;
 	//定义单元内容的时候取实训系统的课程
@@ -1074,7 +1075,7 @@ public class ExamController extends BaseController {
 		
 		try {
 			PrintWriter out = response.getWriter();
-			List<User> school = userInterface.getAllTeacher(CommonConstant.ROLE_T);
+			List<UserRole> school = userService.getAllTeacher(CommonConstant.ROLE_T);
 			String str = getTeacherStr(school);
 			out.write(str);
 			// }
@@ -1088,13 +1089,13 @@ public class ExamController extends BaseController {
 	 * @param list
 	 * @return
 	 */
-	private String getTeacherStr(List<User> list) {
+	private String getTeacherStr(List<UserRole> list) {
 		StringBuffer buffer = new StringBuffer();
 		int count = list.size();
 		buffer.append("{\"total\":" + count + ",\"rows\":[");
 		for (int i = 0; i < count; i++) {
-			User user = list.get(i);
-//			User user = userService.getUserById(p.getUserId());
+			UserRole p = list.get(i);
+			User user = userService.getUserById(p.getUserId());
 			buffer.append("{");
 			buffer.append("\"id\":");
 			buffer.append("\"" + user.getId() + "\"");
@@ -1124,7 +1125,7 @@ public class ExamController extends BaseController {
 		
 		try {
 			PrintWriter out = response.getWriter();
-			List<School> school = schoolInterface.getAllSchool();
+			List<School> school = schoolService.getAllSchool();
 			String str = getSchoolStr(school);
 			out.write(str);
 			// }
@@ -1144,7 +1145,7 @@ public class ExamController extends BaseController {
 			buffer.append("\"id\":");
 			buffer.append("\"" + p.getId() + "\"");
 			String sn = p.getSchool_name();
-			List<User> uplist = userInterface.getStudentBySchoolName(CommonConstant.ROLE_S,sn);
+			List<User> uplist = userService.getStudentBySchoolName(CommonConstant.ROLE_S,sn);
 			buffer.append(",\"user\":"+getUserStr(uplist));
 			buffer.append(",\"name\":");
 			buffer.append("\"" +sn+ "\"");

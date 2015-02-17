@@ -18,6 +18,7 @@ import com.dhl.dao.CompetionExamDao;
 import com.dhl.dao.TrainExtDao;
 import com.dhl.dao.UserActionDao;
 import com.dhl.dao.UserCompetionDao;
+import com.dhl.dao.UserDao;
 import com.dhl.dao.UserExamDao;
 import com.dhl.dao.UserQuestionChildDao;
 import com.dhl.dao.UserQuestionDao;
@@ -30,6 +31,7 @@ import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Question;
 import com.dhl.domain.Train;
+import com.dhl.domain.User;
 import com.dhl.domain.UserAction;
 import com.dhl.domain.UserCompetion;
 import com.dhl.domain.UserExam;
@@ -37,8 +39,6 @@ import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
 import com.dhl.util.ParseQuestion;
 import com.dhl.util.UtilTools;
-import com.xiandian.cai.UserInterface;
-import com.xiandian.model.User;
 
 /**
  *
@@ -60,8 +60,8 @@ public class UserCompetionService {
 	private UserQuestionChildDao userQuestionChildDao;
 	@Autowired
 	private TrainExtDao trainExtDao;	
-//	@Autowired
-//	private UserInterface userInterface;
+	@Autowired
+	private UserDao userDao;
 	@Autowired
 	private UserActionDao userActionDao;
 	@Autowired
@@ -207,7 +207,7 @@ public class UserCompetionService {
 	 * @param competionId
 	 * @return
 	 */
-	public List<UserCompetionData> getCompetionStudentData(int competionId,UserInterface userInterface) {
+	public List<UserCompetionData> getCompetionStudentData(int competionId) {
 		
 		List<UserCompetion> ucslist = getCompetionStudent(competionId);
 		List<UserCompetionData> ucdlist = new ArrayList<UserCompetionData>();
@@ -220,7 +220,7 @@ public class UserCompetionService {
 			{
 				UserCompetionData ucd = new UserCompetionData();
 				ucd.setUserCompetionId(uc.getId());
-				User user = userInterface.getUserById(uc.getUserId());//uc.getUser();
+				User user = userDao.get(uc.getUserId());//.getUserById(uc.getUserId());//uc.getUser();
 				ucd.setUsername(user.getUsername());
 				int userId = user.getId();
 				ucd.setUserId(userId);

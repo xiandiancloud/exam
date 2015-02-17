@@ -137,7 +137,7 @@ public class WordTools {
 											choiceString=UtilTools.getTextFromHtml(choiceString);
 											String[] strs=choiceString.split(",");
 											
-											addObject(mdp, sampleTextBold, numberIndex+" ",title);
+											addObject(mdp, sampleTextBold, numberIndex+" ",title+"(本题"+list.get(i).getScore()+"分)");
 											
 //											mdp.addStyledParagraphOfText("a",tindex + title + endindex);
 											//					mdp.addStyledParagraphOfText("a",s+"、"+list.get(i).getTitle()+"（本题共"+String.valueOf(list.get(i).getScore())+"分)");
@@ -160,7 +160,7 @@ public class WordTools {
 											multichoice=UtilTools.getTextFromHtml(multichoice);
 											String[] strs=multichoice.split(",");
 											
-											addObject(mdp, sampleTextBold, numberIndex+" ",title);
+											addObject(mdp, sampleTextBold, numberIndex+" ",title+"(本题"+list.get(i).getScore()+"分)");
 											
 //											mdp.addStyledParagraphOfText("a",tindex + title  + endindex);
 											//					mdp.addStyledParagraphOfText("a", s+"、"+list.get(i).getTitle()+"（本题共"+String.valueOf(list.get(i).getScore())+"分)");
@@ -174,7 +174,7 @@ public class WordTools {
 											blank=UtilTools.delTagSpan(blank);
 											blank=UtilTools.getTextFromHtml(blank);
 											
-											addObject(mdp, sampleTextBold, numberIndex+" ",blank);
+											addObject(mdp, sampleTextBold, numberIndex+" ",blank+"(本题"+list.get(i).getScore()+"分)");
 											
 //											mdp.addStyledParagraphOfText("a", blank);
 //											mdp.addObject(tindex + blank + endindex);  
@@ -188,7 +188,7 @@ public class WordTools {
 											multiblank=UtilTools.delTagSpan(multiblank);
 											multiblank = UtilTools.getTextFromHtml(multiblank);//
 											
-											addObject(mdp, sampleTextBold, numberIndex+" ",multiblank);
+											addObject(mdp, sampleTextBold, numberIndex+" ",multiblank+"(本题"+list.get(i).getScore()+"分)");
 //											mdp.addStyledParagraphOfText("a", multiblank);
 //											mdp.addObject(tindex + multiblank + endindex);  
 											/*mdp.addStyledParagraphOfText("a",s+"、"+ss+" (本题共"+list.get(i).getScore()+"分)");*/

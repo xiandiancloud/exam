@@ -18,12 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.cons.CommonConstant;
+import com.dhl.domain.Role;
+import com.dhl.domain.User;
+import com.dhl.service.UserService;
+import com.dhl.util.MD5;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
-import com.xiandian.cai.UserInterface;
-import com.xiandian.model.Role;
-import com.xiandian.model.User;
-import com.xiandian.util.MD5;
 
 /**
  * 
@@ -37,7 +37,7 @@ public class AdminUserController extends BaseController {
 	 * 自动注入
 	 */
 	@Autowired
-	private UserInterface userInterface;
+	private UserService userService;
 
 	/**
 	 * 管理员到用户頁面
@@ -49,7 +49,7 @@ public class AdminUserController extends BaseController {
 	@RequestMapping("/importuser")
 	public ModelAndView importuser(HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
-		List<User> userlist = userInterface.getAllUser();
+		List<User> userlist = userService.getAllUser();
 		view.addObject("userlist", userlist);
 		view.setViewName("/admin/importuser");
 		return view;
@@ -84,12 +84,12 @@ public class AdminUserController extends BaseController {
 //					for (int i=0;i<len;i++)
 					
 					{
-						User user = userInterface.getUserBymail(strs[1]);
+						User user = userService.getUserBymail(strs[1]);
 						if (user != null)
 						{
 							continue;
 						}
-						userInterface.save(strs[0], strs[1], strs[2], strs[3], strs[4],
+						userService.save(strs[0], strs[1], strs[2], strs[3], strs[4],
 								strs[5], strs[6], strs[7], strs[8],
 								strs[9],strs[10],"","","");
 					}
@@ -197,12 +197,12 @@ public class AdminUserController extends BaseController {
 	 */
 	@RequestMapping("/alogin")
 	public void alogin(HttpServletRequest request, HttpServletResponse response,
-			String email, String password) {
+			String username, String password) {
 		try {
 			PrintWriter out = response.getWriter();
-			User user = userInterface.getUserBymail(email);
+			User user = userService.getUserByUserName(username);//.getUserBymail(email);
 			if (user == null) {
-				String result = "{'sucess':'fail','msg':'电子邮件不对'}";
+				String result = "{'sucess':'fail','msg':'用户名不对'}";
 				out.write(result);
 				return;
 			}
@@ -217,7 +217,7 @@ public class AdminUserController extends BaseController {
 			Role role = user.getRole();
 			if (!CommonConstant.ROLE_A.equals(role.getRoleName()))
 			{
-				String result = "{'sucess':'fail','msg':'登陆邮件不是管理员身份'}";
+				String result = "{'sucess':'fail','msg':'用户名不是管理员身份'}";
 				out.write(result);
 				return;
 			}

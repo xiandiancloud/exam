@@ -24,10 +24,10 @@ import com.dhl.domain.ExamQuestion;
 import com.dhl.domain.RestShell;
 import com.dhl.domain.Train;
 import com.dhl.domain.TrainExt;
+import com.dhl.domain.User;
 import com.dhl.domain.UserQuestion;
 import com.dhl.domain.UserQuestionChild;
 import com.dhl.util.UtilTools;
-import com.xiandian.model.User;
 
 /**
  *

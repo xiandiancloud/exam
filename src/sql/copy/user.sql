@@ -84,7 +84,7 @@ create table t_roleuser
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 INSERT INTO `auth_school` VALUES ('1', '先电');
-INSERT INTO `auth_user` VALUES ('1', 'admin', '', '', 'admin@163.com', 'e10adc3949ba59abbe56e057f20f883e', '1', '1', '1', '2014-10-13 15:33:02', '2014-10-21 15:32:59');
+INSERT INTO `auth_user` VALUES ('1', 'admin', '', '', 'admin@163.com', 'f01a9af1f623ed4b05f0310ca1b5acd3', '1', '1', '1', '2014-10-13 15:33:02', '2014-10-21 15:32:59');
 INSERT INTO `t_role` VALUES ('1', '学生', '学生');
 INSERT INTO `t_role` VALUES ('2', '老师', '老师');
 INSERT INTO `t_role` VALUES ('3', '管理员', '管理员');

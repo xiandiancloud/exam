@@ -355,7 +355,7 @@
          		<ul class="list-input picker datepair">
             		<li class="field field-start-date">
               			<label for="start_date">名称</label>
-              			<input type="text" autocomplete="off" size="15" value="" name="start_date" class="start-date date hasDatepicker" id="dialogtext">
+              			<input type="text" autocomplete="off" size="15" value="" name="start_date" class="new-subsection-name-input" id="dialogtext">
             		</li>
           		</ul>
         	</div>

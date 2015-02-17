@@ -47,6 +47,12 @@
                 <span>日志管理</span>
               </a>
             </li>
+            <li>
+              <a href='admin/sysset.action'>
+                <i class='icon-cog'></i>
+                <span>修改密码</span>
+              </a>
+            </li>
           </ul>
         </div>
       </nav>

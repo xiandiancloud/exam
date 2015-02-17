@@ -2,6 +2,78 @@ drop database if exists exam;
 create database exam character set utf8;
 use exam;
 
+drop table if exists t_school;
+CREATE TABLE t_school (
+  id int(10) NOT NULL auto_increment,
+  school_name varchar(255) NOT NULL,
+  PRIMARY KEY  (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+drop table if exists t_user;
+CREATE TABLE t_user (
+  id int(11) NOT NULL auto_increment,
+  username varchar(30) NOT NULL,
+  first_name varchar(30) NOT NULL,
+  last_name varchar(30) NOT NULL,
+  email varchar(75) NOT NULL,
+  password varchar(128) NOT NULL,
+  is_staff tinyint(1) NOT NULL,
+  is_active tinyint(1) NOT NULL,
+  is_superuser tinyint(1) NOT NULL,
+  last_login datetime NOT NULL,
+  date_joined datetime NOT NULL,
+  PRIMARY KEY  (id),
+  UNIQUE KEY (username),
+  UNIQUE KEY (email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+drop table if exists t_userprofile;
+CREATE TABLE t_userprofile (
+  id int(11) NOT NULL auto_increment,
+  user_id int(11) NOT NULL,
+  name varchar(255) NOT NULL,
+  language varchar(255) NOT NULL,
+  location varchar(255) NOT NULL,
+  meta longtext NOT NULL,
+  courseware varchar(255) NOT NULL,
+  gender varchar(6) default NULL,
+  mailing_address longtext,
+  year_of_birth int(11) default NULL,
+  level_of_education varchar(6) default NULL,
+  goals longtext,
+  allow_certificate tinyint(1) NOT NULL,
+  country varchar(2) default NULL,
+  city longtext,
+  school_name varchar(255) default NULL,
+  major varchar(255) default NULL,
+  class_name varchar(255) default NULL,
+  admission_time varchar(255) default NULL,
+  PRIMARY KEY  (id),
+  UNIQUE KEY (user_id),
+  CONSTRAINT receivet_userprofile_ibfk_1 FOREIGN KEY (user_id) REFERENCES t_user (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+drop table if exists t_role;
+create table t_role
+(
+ id          int not null AUTO_INCREMENT,
+ roleName    char(100) not null,
+ roleDesc    varchar(255) default null,
+ primary key (id),
+ UNIQUE KEY (roleName)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+drop table if exists t_roleuser;
+create table t_roleuser
+(
+  id        int not null AUTO_INCREMENT,
+  userId    int(20) not null,
+  roleId    int(20) not null,
+  primary key (id),
+  CONSTRAINT receivet_roleuser_ibfk_1 FOREIGN KEY (userId) REFERENCES t_user (id) ON DELETE CASCADE,
+  CONSTRAINT receivet_roleuser_ibfk_2 FOREIGN KEY (roleId) REFERENCES t_role (id) ON DELETE CASCADE
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
 /*试卷分类*/
 drop table if exists t_examcategory;
 create table t_examcategory
@@ -43,7 +115,8 @@ create table t_competion_school
    competionId         int(10) not null,
    schoolId            int(10) not null,
    primary key (id),
-   CONSTRAINT receivet_competion_school_1 FOREIGN KEY (competionId) REFERENCES t_competion (id) ON DELETE CASCADE
+   CONSTRAINT receivet_competion_school_1 FOREIGN KEY (schoolId) REFERENCES t_school (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_competion_school_2 FOREIGN KEY (competionId) REFERENCES t_competion (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*用户竞赛的对应关系定义*/
@@ -55,7 +128,8 @@ create table t_user_competion
    competionId         int(10) not null,
    job                 varchar(255) not null,
    primary key (id),
-   CONSTRAINT receivet_user_competion_1 FOREIGN KEY (competionId) REFERENCES t_competion (id) ON DELETE CASCADE
+   CONSTRAINT receivet_user_competion_1 FOREIGN KEY (competionId) REFERENCES t_competion (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_user_competion_2 FOREIGN KEY (userId) REFERENCES t_user (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*试卷定义*/
@@ -75,7 +149,8 @@ create table t_exam
    rank                varchar(255) default null,
    lockexam            int(10) default 0,
    isnormal            int(10) default 0,
-   isgroom           int(10) default 0,
+   isgroom             int(10) default 0,
+   attach              varchar(255) default null,
    primary key (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -225,7 +300,8 @@ create table t_user_question
    primary key (id),
    CONSTRAINT receivet_user_question_ibfk_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE,
    CONSTRAINT receivet_user_question_ibfk_2 FOREIGN KEY (trainId) REFERENCES t_train (id) ON DELETE CASCADE,
-   CONSTRAINT receivet_user_question_ibfk_3 FOREIGN KEY (questionId) REFERENCES t_question (id) ON DELETE CASCADE
+   CONSTRAINT receivet_user_question_ibfk_3 FOREIGN KEY (questionId) REFERENCES t_question (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_user_question_ibfk_4 FOREIGN KEY (userId) REFERENCES t_user (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*考试系统下问题跟子问题的对应关系*/
@@ -242,7 +318,8 @@ create table t_user_questionchild
    pfscore             int(10) default null,
    devinfo             varchar(255) default null,
    primary key (id),
-   CONSTRAINT receivet_user_questionchild_ibfk_1 FOREIGN KEY (userquestionId) REFERENCES t_user_question (id) ON DELETE CASCADE
+   CONSTRAINT receivet_user_questionchild_ibfk_1 FOREIGN KEY (userquestionId) REFERENCES t_user_question (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_user_questionchild_ibfk_2 FOREIGN KEY (userId) REFERENCES t_user (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
@@ -259,8 +336,9 @@ create table t_user_question_history
    docounts            int(10) not null,
    primary key (id),
    CONSTRAINT receivet_user_question_history_ibfk_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE,
-   CONSTRAINT receivet_user_question_history_2 FOREIGN KEY (trainId) REFERENCES t_train (id) ON DELETE CASCADE,
-   CONSTRAINT receivet_user_question_history_3 FOREIGN KEY (questionId) REFERENCES t_question (id) ON DELETE CASCADE
+   CONSTRAINT receivet_user_question_history_ibfk_2 FOREIGN KEY (trainId) REFERENCES t_train (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_user_question_history_ibfk_3 FOREIGN KEY (questionId) REFERENCES t_question (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_user_question_history_ibfk_4 FOREIGN KEY (userId) REFERENCES t_user (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*考试系统下问题跟子问题的对应关系的历史记录*/
@@ -276,7 +354,8 @@ create table t_user_questionchild_history
    result              varchar(255) default null,
    pfscore             int(10) default null,
    primary key (id),
-   CONSTRAINT receivet_user_questionchild_history_ibfk_1 FOREIGN KEY (userquestionId) REFERENCES t_user_question_history (id) ON DELETE CASCADE
+   CONSTRAINT receivet_user_questionchild_history_ibfk_1 FOREIGN KEY (userquestionId) REFERENCES t_user_question_history (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_user_questionchild_history_ibfk_2 FOREIGN KEY (userId) REFERENCES t_user (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*老师相关试卷定义*/
@@ -288,7 +367,8 @@ create table t_teacher_exam
    examId              int(10) not null,
    primary key (id),
    UNIQUE KEY (userId,examId),
-   CONSTRAINT receivet_teacher_exam_ibfk_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE
+   CONSTRAINT receivet_teacher_exam_ibfk_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_teacher_exam_ibfk_2 FOREIGN KEY (userId) REFERENCES t_user (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*学生（用户）相关试卷定义*/
@@ -305,7 +385,8 @@ create table t_user_exam
    docounts            int(10) default 1,
    primary key (id),
    UNIQUE KEY (userId,examId),
-   CONSTRAINT receivet_user_exam_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE
+   CONSTRAINT receivet_user_exam_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_user_exam_2 FOREIGN KEY (userId) REFERENCES t_user (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*学生（用户）相关试卷定义的历史记录*/
@@ -322,7 +403,8 @@ create table t_user_exam_history
    docounts            int(10) default 1,
    primary key (id),
    UNIQUE KEY (userId,examId,docounts),
-   CONSTRAINT receivet_user_exam_history_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE
+   CONSTRAINT receivet_user_exam_history_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_user_exam_history_2 FOREIGN KEY (userId) REFERENCES t_user (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*环境模板*/
@@ -364,7 +446,8 @@ create table t_user_environment
    password            varchar(255) default null,
    primary key (id),
    UNIQUE KEY (userId,examId,name),
-   CONSTRAINT receivet_user_environment_ibfk_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE
+   CONSTRAINT receivet_user_environment_ibfk_1 FOREIGN KEY (examId) REFERENCES t_exam (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_user_environment_ibfk_2 FOREIGN KEY (userId) REFERENCES t_user (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 drop table if exists t_cloud;
@@ -376,7 +459,8 @@ create table t_cloud
    name              varchar(255) not null,
    password          varchar(255) not null,
    primary key (id),
-   UNIQUE KEY (ip,userId)
+   UNIQUE KEY (ip,userId),
+   CONSTRAINT receivet_clour_ibfk_1 FOREIGN KEY (userId) REFERENCES t_user (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 drop table if exists t_user_cloud;
@@ -387,7 +471,8 @@ create table t_user_cloud
    cloudId           int(10) not null,
    primary key (id),
    UNIQUE KEY (userId),
-   CONSTRAINT receivet_user_clound_1 FOREIGN KEY (cloudId) REFERENCES t_cloud (id) ON DELETE CASCADE
+   CONSTRAINT receivet_user_clound_ibfk_1 FOREIGN KEY (cloudId) REFERENCES t_cloud (id) ON DELETE CASCADE,
+   CONSTRAINT receivet_user_clound_ibfk_2 FOREIGN KEY (userId) REFERENCES t_user (id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 drop table if exists t_log;
@@ -417,8 +502,16 @@ create table t_actionuser
   actionId    int(20) not null,
   primary key (id),
   UNIQUE KEY (userId,actionId),
-  CONSTRAINT receivet_actionuser_ibfk_1 FOREIGN KEY (actionId) REFERENCES t_action (id) ON DELETE CASCADE
+  CONSTRAINT receivet_actionuser_ibfk_1 FOREIGN KEY (actionId) REFERENCES t_action (id) ON DELETE CASCADE,
+  CONSTRAINT receivet_actionuser_ibfk_2 FOREIGN KEY (userId) REFERENCES t_user (id) ON DELETE CASCADE
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+INSERT INTO `t_school` VALUES ('1', '先电');
+INSERT INTO `t_user` VALUES ('1', 'admin', '', '', 'admin@163.com', 'f01a9af1f623ed4b05f0310ca1b5acd3', '1', '1', '1', '2014-10-13 15:33:02', '2014-10-21 15:32:59');
+INSERT INTO `t_role` VALUES ('1', '学生', '学生');
+INSERT INTO `t_role` VALUES ('2', '老师', '老师');
+INSERT INTO `t_role` VALUES ('3', '管理员', '管理员');
+INSERT INTO `t_roleuser` VALUES ('1', '1', '3');
 
 insert into t_examcategory values ('1', '国赛', '国赛');
 insert into t_action values ('1', '首页', '首页');

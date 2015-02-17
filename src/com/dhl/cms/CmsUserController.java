@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.cons.CommonConstant;
+import com.dhl.domain.Role;
+import com.dhl.domain.User;
+import com.dhl.service.UserService;
+import com.dhl.util.MD5;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
-import com.xiandian.cai.UserInterface;
-import com.xiandian.model.Role;
-import com.xiandian.model.User;
-import com.xiandian.util.MD5;
 
 /**
  * 
@@ -31,7 +31,7 @@ public class CmsUserController extends BaseController {
 	 * 自动注入
 	 */
 	@Autowired
-	private UserInterface userInterface;
+	private UserService userService;
 
 	/**
 	 * 跳转到注册页面
@@ -60,19 +60,19 @@ public class CmsUserController extends BaseController {
 			String level_of_education, String goals,String school_name) {
 		try {
 			PrintWriter out = response.getWriter();
-			User user = userInterface.getUserBymail(email);
+			User user = userService.getUserBymail(email);
 			if (user != null) {
 				String result = "{'sucess':'fail','msg':'电子邮件已经注册'}";
 				out.write(result);
 				return;
 			}
-			user = userInterface.getUserByUserName(username);
+			user = userService.getUserByUserName(username);
 			if (user != null) {
 				String result = "{'sucess':'fail','msg':'公开用户名已经注册'}";
 				out.write(result);
 				return;
 			}
-			user = userInterface.save(roleName, email, password, username, name,
+			user = userService.save(roleName, email, password, username, name,
 					gender, mailing_address, year_of_birth, level_of_education,
 					goals,school_name,"","","");
 			setSessionUser(request, user);
@@ -117,7 +117,7 @@ public class CmsUserController extends BaseController {
 			String username, String password) {
 		try {
 			PrintWriter out = response.getWriter();
-			User user = userInterface.getUserByUserName(username);
+			User user = userService.getUserByUserName(username);
 			if (user == null) {
 				String result = "{'sucess':'fail','msg':'登录名不对'}";
 				out.write(result);

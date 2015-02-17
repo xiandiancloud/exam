@@ -26,6 +26,7 @@ import com.dhl.domain.ExamSequential;
 import com.dhl.domain.ExamVertical;
 import com.dhl.domain.Train;
 import com.dhl.domain.TrainExt;
+import com.dhl.domain.User;
 import com.dhl.domain.UserEnvironment;
 import com.dhl.domain.UserExam;
 import com.dhl.domain.UserQuestionChild;
@@ -41,7 +42,6 @@ import com.dhl.service.UserExamService;
 import com.dhl.service.UserQuestionService;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
-import com.xiandian.model.User;
 
 /**
  * 开始考试使用
@@ -130,8 +130,7 @@ public class HavingExamController extends BaseController {
 		List clist = userExamService.getUserExamCount(user.getId(), exam,-1);
 		
 		userExamService.setMyExamActiveState(user.getId());
-		UserExam ucs = userExamService
-				.getUserExam(user.getId(), examId);
+		UserExam ucs = userExamService.getUserExam(user.getId(), examId);
 		if (ucs == null) {
 			UserExam uc = new UserExam();
 			uc.setUserId(user.getId());

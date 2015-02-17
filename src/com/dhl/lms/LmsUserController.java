@@ -16,18 +16,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.cons.CommonConstant;
 import com.dhl.domain.Cloud;
+import com.dhl.domain.Role;
+import com.dhl.domain.User;
 import com.dhl.domain.UserAction;
 import com.dhl.domain.UserEnvironment;
+import com.dhl.domain.UserProfile;
 import com.dhl.service.UserActionService;
 import com.dhl.service.UserCloudService;
 import com.dhl.service.UserEnvironmentService;
+import com.dhl.service.UserService;
+import com.dhl.util.MD5;
 import com.dhl.util.UtilTools;
 import com.dhl.web.BaseController;
-import com.xiandian.cai.UserInterface;
-import com.xiandian.model.Role;
-import com.xiandian.model.User;
-import com.xiandian.model.UserProfile;
-import com.xiandian.util.MD5;
 
 /**
  * 
@@ -41,7 +41,7 @@ public class LmsUserController extends BaseController {
 	 * 自动注入
 	 */
 	@Autowired
-	private UserInterface userInterface;
+	private UserService userService;
 	@Autowired
 	private UserActionService userActionService;
 	@Autowired
@@ -101,19 +101,19 @@ public class LmsUserController extends BaseController {
 			String major, String class_name, String admission_time) {
 		try {
 			PrintWriter out = response.getWriter();
-			User user = userInterface.getUserBymail(email);
+			User user = userService.getUserBymail(email);
 			if (user != null) {
 				String result = "{'sucess':'fail','msg':'电子邮件已经注册'}";
 				out.write(result);
 				return;
 			}
-			user = userInterface.getUserByUserName(username);
+			user = userService.getUserByUserName(username);
 			if (user != null) {
 				String result = "{'sucess':'fail','msg':'公开用户名已经注册'}";
 				out.write(result);
 				return;
 			}
-			user = userInterface.save(roleName, email, password, username, name,
+			user = userService.save(roleName, email, password, username, name,
 					gender, mailing_address, year_of_birth, level_of_education,
 					goals, school_name, major, class_name, admission_time);
 			setSessionUser(request, user);
@@ -144,10 +144,10 @@ public class LmsUserController extends BaseController {
 			String level_of_education, String goals) {
 		try {
 			PrintWriter out = response.getWriter();
-			userInterface.update(email,username, name, gender,
-				mailing_address, year_of_birth,level_of_education, goals);
 			User user = getSessionUser(request);
 			user.setUsername(username);
+			userService.update(user, name, gender,
+				mailing_address, year_of_birth,level_of_education, goals);
 			setSessionUser(request, user);
 			String result = "{'sucess':'sucess'}";
 			out.write(result);
@@ -198,7 +198,7 @@ public class LmsUserController extends BaseController {
 			User olduser = getSessionUser(request);
 			
 			PrintWriter out = response.getWriter();
-			User user = userInterface.getUserByUserName(username);
+			User user = userService.getUserByUserName(username);
 			if (user == null) {
 				String result = "{'sucess':'fail','msg':'用户名不对'}";
 				out.write(result);
@@ -245,7 +245,7 @@ public class LmsUserController extends BaseController {
 	public ModelAndView mysetting(HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
 		User user = getSessionUser(request);
-		UserProfile up = userInterface.getUserProfileByuserId(user.getId());
+		UserProfile up = userService.getUserProfileByuserId(user.getId());
 		view.addObject("up", up);
 		view.setViewName("/lms/mysetting");
 		return view;

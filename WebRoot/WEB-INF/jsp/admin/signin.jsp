@@ -63,7 +63,7 @@
                   <form class='validate-form'>
                     <div class='form-group'>
                       <div class='controls with-icon-over-input'>
-                        <input value="" placeholder="E-mail" class="form-control" data-rule-required="true" name="email" id="email" type="text" />
+                        <input value="" placeholder="username" class="form-control" data-rule-required="true" name="username" id="username" type="text" />
                         <i class='icon-user text-muted'></i>
                       </div>
                     </div>
@@ -143,9 +143,9 @@
 		
 		function alogin()
 		{
-			var email = $("#email").val();
+			var username = $("#username").val();
 			var password = $("#password").val();
-			var data = {email:email,password:password};
+			var data = {username:username,password:password};
 			$.ajax({
 				url:"admin/alogin.action",
 				type:"post",

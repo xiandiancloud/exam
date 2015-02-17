@@ -8,9 +8,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhl.cons.CommonConstant;
+import com.dhl.domain.User;
 import com.dhl.web.BaseController;
-import com.xiandian.model.Role;
-import com.xiandian.model.User;
 
 /**
  * 学生登录的拦截器

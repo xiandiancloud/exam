@@ -38,6 +38,16 @@ public class Exam extends BaseDomain {
 	private int lockexam;//1:试卷锁定
 	private int isnormal;//0:普通试卷 1：竞赛试卷
 	private int isgroom;//0:普通 1：推荐试卷
+	private String attach;//附件
+	
+	public String getAttach() {
+		return attach;
+	}
+
+	public void setAttach(String attach) {
+		this.attach = attach;
+	}
+
 	public int getIsgroom() {
 		return isgroom;
 	}

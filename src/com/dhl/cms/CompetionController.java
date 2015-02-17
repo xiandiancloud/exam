@@ -21,14 +21,14 @@ import com.dhl.domain.CompetionCategory;
 import com.dhl.domain.CompetionExam;
 import com.dhl.domain.CompetionSchool;
 import com.dhl.domain.TeacherExam;
+import com.dhl.domain.User;
 import com.dhl.domain.UserCompetion;
 import com.dhl.service.CompetionService;
 import com.dhl.service.ExamService;
 import com.dhl.service.TeacherExamService;
 import com.dhl.service.UserCompetionService;
+import com.dhl.service.UserService;
 import com.dhl.web.BaseController;
-import com.xiandian.cai.UserInterface;
-import com.xiandian.model.User;
 
 /**
  * 定义竞赛等使用
@@ -49,7 +49,7 @@ public class CompetionController extends BaseController {
 	@Autowired
 	private TeacherExamService teacherExamService;
 	@Autowired
-	private UserInterface userInterface;
+	private UserService userService;
 	@Autowired
 	private RestTemplate restTemplate;
 	
@@ -69,7 +69,7 @@ public class CompetionController extends BaseController {
 		List<UserCompetion> uclist = usercompetionService.getCompetionjudgment(competionId);
 		for (UserCompetion uc:uclist)
 		{
-			User user = userInterface.getUserById(uc.getUserId());
+			User user = userService.getUserById(uc.getUserId());
 			uc.setUser(user);
 		}
 		view.addObject("judgmentlist", uclist);
@@ -80,7 +80,7 @@ public class CompetionController extends BaseController {
 		for (CompetionExam ce:celist)
 		{
 			TeacherExam te = teacherExamService.getTeacherExamByExamId(ce.getExam().getId());
-			ce.setExamuser(userInterface.getUserById(te.getUserId()).getUsername());
+			ce.setExamuser(userService.getUserById(te.getUserId()).getUsername());
 			if (ce.getSelectexam() == 1)
 			{
 				view.addObject("sexam", ce);
@@ -88,7 +88,7 @@ public class CompetionController extends BaseController {
 		}
 		view.addObject("celist", celist);
 		//竞赛学生
-		List<UserCompetionData> ucslist = usercompetionService.getCompetionStudentData(competionId,userInterface);
+		List<UserCompetionData> ucslist = usercompetionService.getCompetionStudentData(competionId);
 		view.addObject("studentlist", ucslist);
 		
 		view.setViewName("/cms/competion");
@@ -105,7 +105,7 @@ public class CompetionController extends BaseController {
 	public void exportdata(HttpServletRequest request,HttpServletResponse response,int competionId) {
 		try {
 			
-			List<UserCompetionData> list = usercompetionService.getCompetionStudentData(competionId,userInterface);
+			List<UserCompetionData> list = usercompetionService.getCompetionStudentData(competionId);
 			
 //			 String path = request.getSession().getServletContext().getRealPath("/export/");
 //			 File file = new File(path+"/比赛信息.csv");
@@ -196,7 +196,7 @@ public class CompetionController extends BaseController {
 		{
 			TeacherExam te = teacherExamService.getTeacherExamByExamId(ce.getExam().getId());
 			
-			ce.setExamuser(userInterface.getUserById(te.getUserId()).getUsername());
+			ce.setExamuser(userService.getUserById(te.getUserId()).getUsername());
 			if (user.getId() == te.getUserId())
 			{
 				celist.add(ce);
@@ -221,7 +221,7 @@ public class CompetionController extends BaseController {
 		Competion competion = competionService.get(competionId);
 		view.addObject("competion", competion);
 		//竞赛学生
-		List<UserCompetionData> ucslist = usercompetionService.getCompetionStudentData(competionId,userInterface);
+		List<UserCompetionData> ucslist = usercompetionService.getCompetionStudentData(competionId);
 		view.addObject("studentlist", ucslist);
 		
 		CompetionExam ce = competionService.getCompetionSelectExam(competionId);
@@ -240,15 +240,14 @@ public class CompetionController extends BaseController {
 	public void createcompetion(HttpServletRequest request,
 			HttpServletResponse response,String imgpath,int rank,int categoryId, String name, String starttime,
 			String endtime, String wstarttime, String wendtime,
-			String examstarttime, String examendtime, int type,
-			String score, String passscore, String describle, String schoolId) {
+			String examstarttime, String examendtime, String score, String passscore, String describle, String schoolId) {
 		try {
 			PrintWriter out = response.getWriter();
 			User user = getSessionUser(request);
 			if (user != null) {
 				Competion c = competionService.createCompetion(imgpath, rank, categoryId,name, starttime,
 						endtime, wstarttime, wendtime, examstarttime,
-						examendtime, type, score, passscore, describle,
+						examendtime, score, passscore, describle,
 						schoolId, user);
 
 				String str = "{'sucess':'sucess','competionId':'" + c.getId()
@@ -271,13 +270,12 @@ public class CompetionController extends BaseController {
 	public void updatecompetion(HttpServletRequest request,
 			HttpServletResponse response,String imgpath,int rank,int categoryId,int competionId, String name, String starttime,
 			String endtime, String wstarttime, String wendtime,
-			String examstarttime, String examendtime, int type,
-			String score, String passscore, String describle, String schoolId) {
+			String examstarttime, String examendtime, String score, String passscore, String describle, String schoolId) {
 		try {
 			PrintWriter out = response.getWriter();
 			competionService.updateCompetion(imgpath, rank,categoryId,competionId,name, starttime,
 					endtime, wstarttime, wendtime, examstarttime,
-					examendtime, type, score, passscore, describle,
+					examendtime, score, passscore, describle,
 					schoolId);
 
 			String str = "{'sucess':'sucess'}";
@@ -451,7 +449,7 @@ public class CompetionController extends BaseController {
 			buffer.append("\"id\":");
 			buffer.append("\"" + p.getUserId() + "\"");
 			buffer.append(",\"name\":");
-			String name = userInterface.getUserById(p.getUserId()).getUsername();
+			String name = userService.getUserById(p.getUserId()).getUsername();
 			buffer.append("\"" + name + "\"");
 			buffer.append("},");
 		}
@@ -528,7 +526,7 @@ public class CompetionController extends BaseController {
 			PrintWriter out = response.getWriter();
 //			Competion cp = competionService.get(competionId);
 //			cp.setIsstart(1);
-			competionService.updateCom(restTemplate,competionId,userInterface);
+			competionService.updateCom(restTemplate,competionId);
 			//examService.createExam(name, userId, competionId);
 			String str = "{'sucess':'sucess'}";
 			out.write(str);

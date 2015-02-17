@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -204,11 +205,28 @@ public class Test {
 	 */
 	public static void main(String[] args) {
 		
-		 String s="11111TtTtTt33333333TtTtTt22TtTtTt2222"; 
-		 String regex = "TtTtTt";
-//		 String regex="<(img|a|p|b|div|br)\\s*([\\w]*=(\"|\')([^\"\'<]*)(\"|\')\\s*)*(/>|>)";
-		 int bbb = 0;
-		 aaa(s,regex,bbb);
+		
+		Date a1=new Date("2014/1/11 09:00");
+		Date a2=new Date("2014/1/11 12:00");
+		//计算他们之间时间差（相差多少毫秒 1000毫秒等于一秒）
+		long l=a2.getTime()-a1.getTime();
+		//计算相差多少分钟
+		double m=l/1000.0/60;
+//		System.out.println(m);
+		
+		long startT = UtilTools.fromDateStringToLong("2014-01-11 09:00");
+		long endT = UtilTools.fromDateStringToLong("2014-01-11 12:00");
+		long ss=(endT-startT)/(1000); //共计秒数
+		double mm = ss/60;   //共计分钟数
+		System.out.println(mm);
+		
+		
+//		
+//		 String s="11111TtTtTt33333333TtTtTt22TtTtTt2222"; 
+//		 String regex = "TtTtTt";
+////		 String regex="<(img|a|p|b|div|br)\\s*([\\w]*=(\"|\')([^\"\'<]*)(\"|\')\\s*)*(/>|>)";
+//		 int bbb = 0;
+//		 aaa(s,regex,bbb);
 //		readFileByLines("D://aaa.txt");
 //		String REGEX = "11111 22222 333333";
 //		String[] regex = REGEX.split("#");

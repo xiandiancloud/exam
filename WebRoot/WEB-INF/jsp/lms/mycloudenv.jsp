@@ -97,8 +97,8 @@
 									<i class="icon-book"></i> 我的信息
 								</div>
 								<div class="box-content">
-									<a href="lms/mysetting.action" class="list-group-item"> <i class='icon-plus'></i> 个人设置
-									</a>
+									<!-- <a href="lms/mysetting.action" class="list-group-item"> <i class='icon-plus'></i> 个人设置
+									</a> -->
 									<a href="lms/mycloudenv.action" class="list-group-item active"> <i class='icon-plus'></i> 我的云平台
 									</a>
 									<!-- <a href="lms/myexamenv.action" class="list-group-item"> <i class='icon-plus'></i> 我的云虚机

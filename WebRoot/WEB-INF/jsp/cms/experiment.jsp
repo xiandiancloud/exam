@@ -190,7 +190,7 @@ width:600px;
 		</tr>
 		<tr>
 		<td class="dhltd">判分标准</td>
-		<td class="dhltd2"><input id="scoretag" type="text" class="input setting-input dhltext"/><span>&nbsp;&nbsp;以#号分割正则表达式</span></td>
+		<td class="dhltd2"><input id="scoretag" type="text" class="input setting-input dhltext"/><span>&nbsp;&nbsp;||分割代表都要匹配,号分割代表多个匹配</span></td>
 		</tr>
 		<tr>
 		<td class="dhltd dhltd3">答案</td>

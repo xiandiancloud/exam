@@ -106,7 +106,7 @@ public class UtilTools {
 
 	public static long fromDateStringToLong(String inVal) { //此方法计算时间毫秒
 		  Date date = null;   //定义时间类型       
-		  SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd hh:ss"); 
+		  SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		  try { 
 		  date = inputFormat.parse(inVal); //将字符型转换成日期型
 		  } catch (Exception e) { 
@@ -1177,7 +1177,7 @@ public class UtilTools {
 			return false;
 		}
 		String copyanswer = answer;
-		String[] regexs = regex.split("&");
+		String[] regexs = regex.split("||");
 		for (String str:regexs)
 		{
 			String[] strs = str.split(",");
