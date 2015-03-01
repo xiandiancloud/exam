@@ -501,6 +501,10 @@
                             						</a>
                             						<a class='btn btn-success' href="cms/exportdata.action?competionId=${competion.id}">
                             							<i class='icon-plus'></i>
+                            							成绩导出
+                            						</a>
+                            						<a class='btn btn-success' href="cms/exportsql.action">
+                            							<i class='icon-plus'></i>
                             							数据导出
                             						</a>
                           						</div>
@@ -811,6 +815,7 @@
 			}
 		}); 
 	}
+	
 	function selectcategory()
 	{
 		var id = $("#competionId").attr("value");
@@ -1225,9 +1230,10 @@
 			alert("命题裁判不能为空");
 			return;
 		}
-		var userId = parseInt(tuserID);;
+		var categoryId = $("#category").val();
+		var userId = parseInt(tuserID);
 		var competionId = parseInt($("#competionId").attr("value"));
-		var data={userId:userId,competionId:competionId,name:name};
+		var data={userId:userId,competionId:competionId,name:name,categoryId:categoryId};
 		$.ajax({
 			url : "cms/addexam.action",
 			type : "post",

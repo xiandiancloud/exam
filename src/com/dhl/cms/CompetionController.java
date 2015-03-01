@@ -1,5 +1,9 @@
 package com.dhl.cms;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -28,6 +32,7 @@ import com.dhl.service.ExamService;
 import com.dhl.service.TeacherExamService;
 import com.dhl.service.UserCompetionService;
 import com.dhl.service.UserService;
+import com.dhl.util.MySqlImportAndExport;
 import com.dhl.web.BaseController;
 
 /**
@@ -176,6 +181,46 @@ public class CompetionController extends BaseController {
 		}
 	}
 	
+	/**
+	 * 导出整个
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/exportsql")
+	public void exportsql(HttpServletRequest request,HttpServletResponse response) {
+		try {
+			 String path = request.getSession().getServletContext().getRealPath("/export/");
+			 File file = new File(path+"/data.sql");
+			 if (!file.exists())
+			 {
+				 file.createNewFile();
+			 }
+			String exportPath = path+"/data.sql";
+            MySqlImportAndExport.export(exportPath);
+          
+            long fileLength = file.length();
+			//
+			response.setContentType("application/octet-stream");
+			response.setHeader("Content-disposition", "attachment; filename="
+					+ new String("data.sql".getBytes("utf-8"), "ISO8859-1"));
+			response.setHeader("Content-Length", String.valueOf(fileLength));
+			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+			BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());
+			byte[] buff = new byte[2048];
+			int bytesRead;
+			while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+				bos.write(buff, 0, bytesRead);
+			}
+			bis.close();
+			bos.close();
+
+			file.delete();
+	            
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * 到竞赛的命卷页面
 	 * @param request
@@ -334,10 +379,10 @@ public class CompetionController extends BaseController {
 	 */
 	@RequestMapping("/addexam")
 	public void addexam(HttpServletRequest request,
-			HttpServletResponse response,int userId,int competionId, String name) {
+			HttpServletResponse response,int userId,int competionId, String name,int categoryId) {
 		try {
 			PrintWriter out = response.getWriter();
-			examService.createExam(name, userId, competionId);
+			examService.createExam(name, userId, competionId,categoryId);
 			String str = "{'sucess':'sucess'}";
 			out.write(str);
 		} catch (Exception e) {

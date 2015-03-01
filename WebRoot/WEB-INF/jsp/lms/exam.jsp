@@ -130,7 +130,18 @@
 						<div class="col-xs-12">
 							<div class="box ">
 								<div class="box-content">
-									<h2>${exam.name}</h2>开始时间：${exam.starttimedetail}——结束时间：${exam.endtimedetail}								
+									<div class='row'>
+									<div class="col-xs-7">
+									<h2>${exam.name}</h2>	
+									</div>
+									<div class="col-xs-3">		
+									<h4>开始时间：${exam.starttimedetail}</h4>
+									<h4>结束时间：${exam.endtimedetail}</h4>		
+									</div>
+									<div class="col-xs-2">		
+									<h4><a href="${exam.attach}"><i class="icon-download-alt"></i>下载试卷附件</a></h4>
+									</div>
+									</div>		
 								</div>
 							</div>
 						</div>

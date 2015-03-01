@@ -29,7 +29,7 @@
 <link href="tcss/jquery-ui-1.8.22.custom.css" rel="stylesheet"
 	type="text/css" />
 <link href="tcss/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
-<link href="tcss//style.css" rel="stylesheet" type="text/css" />
+<link href="tcss/style.css" rel="stylesheet" type="text/css" />
 <link href="tcss/content.min.css" rel="stylesheet" type="text/css" />
 <link href="tcss/tinymce-studio-content.css" rel="stylesheet"
 	type="text/css" />
@@ -46,7 +46,18 @@
 </head>
 
 <style>
-
+	.qq-upload-button-hover {
+	    background: none;
+	}
+	.aaaa{
+	-webkit-transition:background-color 0.15s,box-shadow 0.15s;
+	-moz-transition:background-color 0.15s,box-shadow 0.15s;
+	transition:background-color 0.15s,box-shadow 0.15s;
+	box-shadow:0 1px 0 rgba(255,255,255,0.3) inset,0 0 0 transparent;
+	display:inline-block;
+	padding:0;background-color:rgba(255,255,255,0.3);
+	background-image:-webkit-linear-gradient(top, rgba(255,255,255,0.3),rgba(255,255,255,0));
+	}
 .tab{ 
 
 width: 100%; 
@@ -335,8 +346,22 @@ border-top: solid 1px #326e87;
 									<a href="javascript:void(0);" onclick="saveExamName();" class="button view-button view-live-button">保存</a>
 									</li>
 								</ol>
+								<ol class="list-input">
+									<li class="field text required">
+										<div class="field date">
+											<label >附件</label> 
+											<input
+												type="text"
+												class="start-date date start datepicker hasDatepicker"
+												id="examattach" value="${exam.attach}">
+										
+										</div>            
+									</li>
+									<li class="action">
+									<a href="javascript:void(0);" class="aaaa"><div id="bootstrapped-fine-uploader"></div></a>
+									</li>
+								</ol>
 							</section>
-
 							<hr class="divide">
 							<section class="group-settings schedule">
 								<header>
@@ -458,7 +483,60 @@ border-top: solid 1px #326e87;
 
 		<script type="text/javascript">
         $(document).ready(function(){
+        	createUploader();
     	});
+        function createUploader() { 
+    		var uploader = new qq.FineUploader({ 
+    	    	element: document.getElementById('bootstrapped-fine-uploader'), 
+    	    	request: { 
+    	    	endpoint: 'cms/uploadexamattach.action' 
+    	    	}, 
+    	    	text: { 
+    	    	uploadButton: '<button class="button view-button view-live-button">上传</button>' 
+    	    	},   
+    	    	validation:{
+        			allowedExtensions: ['zip']
+        		},
+    	    	template: 
+    	    		 '<div class="qq-uploader">' +
+    	    		  '<pre class="qq-upload-drop-area"><span>{dragZoneText}</span></pre>' +
+    	    		  '<div class="qq-upload-button btn btn-success" style="width: auto;">{uploadButtonText}</div>' +
+    	    		  '<span class="qq-drop-processing" style="display:none"><span>{dropProcessingText}</span>'+
+    	    		  '<span class="qq-drop-processing-spinner"></span></span>' +
+    	    		  '<ul class="qq-upload-list" style="margin-top: 10px; text-align: center;display:none;"></ul>' +
+    	    		  '</div>', 
+    	    	classes: { 
+    	    	success: 'dhlalert dhlalert-success', 
+    	    	fail: 'dhlalert alert-error' 
+    	    	}, 
+    	    	callbacks:{
+    	    		onComplete: function(id,  fileName,  responseJSON){		
+    	    			if (responseJSON.success == "true")
+    	    			{
+    	    				insertattachtext(responseJSON.path);
+    	    			}
+    	    		}
+    	    	}
+    	    	}); 
+    	}
+        function insertattachtext(path)
+    	{
+        	var examId = "${exam.id}";
+        	var data = {examId:examId,path:path};
+    		$.ajax({
+				url:"cms/saveexamattach.action",
+				type:"post",
+				data:data,
+				success:function(s){
+					var a=eval("("+s+")");	
+					if (a.sucess = "sucess")
+					{
+						$("#examattach").val(path);
+						alert("上传成功");
+					}
+				}
+			});
+    	}
         function showshell()
 		{
         	$("#shell").show();

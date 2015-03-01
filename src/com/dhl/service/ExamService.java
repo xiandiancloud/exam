@@ -449,15 +449,22 @@ public void sortVertical(String charpters) {
 	 * @param userId
 	 * @param competionId
 	 */
-	public void createExam(String name,int userId, int competionId) {
+	public void createExam(String name,int userId, int competionId,int categoryId) {
 		Competion competion = competionDao.get(competionId);
 		
 		Exam c = new Exam();
 		c.setName(name);
 		c.setIsnormal(1);
+		c.setStarttime(UtilTools.timeTostr(new Date()));//先设置个时间，导出试卷会用这个时间来定义导出名称
 		c.setStarttimedetail(competion.getExamstarttime());
 		c.setEndtimedetail(competion.getExamendtime());
 		save(c);
+		
+		ECategory ec = ecategoryDao.get(categoryId);
+		ExamCategory ecate = new ExamCategory();
+		ecate.setEcategory(ec);
+		ecate.setExam(c);
+		examCategoryDao.save(ecate);
 		
 		CompetionExam ce = new CompetionExam();
 		ce.setCompetionId(competionId);

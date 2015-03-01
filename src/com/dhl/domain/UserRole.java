@@ -13,7 +13,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name= "t_roleuser")
-public class UserRole {
+public class UserRole extends BaseDomain{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

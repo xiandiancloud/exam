@@ -303,6 +303,25 @@ public class ExamController extends BaseController {
 	}
 	
 	/**
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/saveexamattach")
+	public void saveexamattach(HttpServletRequest request,HttpServletResponse response, int examId,String path) {
+		try {
+			PrintWriter out = response.getWriter();
+			Exam exam = examService.get(examId);
+			exam.setAttach(path);
+			examService.update(exam);
+			String str = "{'sucess':'sucess'}";
+			out.write(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * 删除环境参数
 	 * 
 	 * @param request
